@@ -3,13 +3,13 @@ package com.project.DAO;
 import java.sql.*;
 
 public class mysqlConnect {
-     public static Connection getConnection() {
+    public static Connection getConnection() {
         Connection c = null;
         try {
             // Dang ky MySQL Driver voi DriverManager
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             // Cac thong so
-            String url = "jdbc:mySQL://localhost:3306/java_demo";
+            String url = "jdbc:mySQL://localhost:3306/mydb";
             String userName = "root";
             String password = "";
             // Tao ket noi
