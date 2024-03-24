@@ -196,7 +196,7 @@ public class Main extends javax.swing.JFrame {
                                                                                                                                 javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                                                                                 .addComponent(jLabel8)
                                                                                                                 .addGap(15, 15, 15)))));
-
+                // hello
                 BoxUser.setBackground(new java.awt.Color(255, 255, 255));
                 BoxUser.setPreferredSize(new java.awt.Dimension(250, 100));
 
