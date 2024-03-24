@@ -8,9 +8,14 @@
 
 ## bước 1: git add .
 ## bước 2: git commit -m "`lời nhắn`"
-## bước 3: git push origin `thuan`
+## bước 3: git push origin `name_branch`
 
-note: thuan là tên branch của mỗi người
+note: `name_branch` là tên branch của mỗi người
+
+# kéo code từ git về máy
+## git pull origin `name_branch`
+
+
 
 # tạo nhanh mới và chuyển sang nhánh đó (new branch):
 
