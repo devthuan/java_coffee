@@ -8,7 +8,7 @@ public class mysqlConnect {
         try {
             // Dang ky MySQL Driver voi DriverManager
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-            // Cac thong so
+            // Các thống số database
             String url = "jdbc:mySQL://localhost:3306/mydb";
             String userName = "root";
             String password = "";
