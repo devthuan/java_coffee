@@ -11,3 +11,7 @@
 ## bước 3: git push origin `thuan`
 
 note: thuan là tên branch của mỗi người
+
+# tạo nhanh mới và chuyển sang nhánh đó (new branch):
+
+## git checkout -b n`new_branch`
