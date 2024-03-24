@@ -13,8 +13,7 @@ public class Main extends javax.swing.JFrame {
 
         public Main() {
                 initComponents();
-                SwitchControl();
-                Right.add(new BuyProduct()).setVisible(true);
+               
         }
 
         @SuppressWarnings("unchecked")
