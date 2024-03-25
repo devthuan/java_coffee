@@ -13,7 +13,8 @@ public class Main extends javax.swing.JFrame {
 
         public Main() {
                 initComponents();
-               
+                SwitchControl();
+                Right.add(new BuyProduct()).setVisible(true);
         }
 
         @SuppressWarnings("unchecked")
@@ -963,9 +964,9 @@ public class Main extends javax.swing.JFrame {
         // ------------------------------
 
         private void HomeLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                // SwitchControl();
-                // HomeMenu homeMenu = new HomeMenu();
-                // Right.add(homeMenu);
+                SwitchControl();
+                BuyProduct buyProduct = new BuyProduct();
+                Right.add(buyProduct);
         }
 
         public void ProductLabelMouseClicked(java.awt.event.MouseEvent evt) {
@@ -993,9 +994,9 @@ public class Main extends javax.swing.JFrame {
         }
 
         private void StatisticalLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                // SwitchControl();
-                // StatisticalMenu statisticalMenu = new StatisticalMenu();
-                // Right.add(statisticalMenu);
+                SwitchControl();
+                Statistical statistical = new Statistical();
+                Right.add(statistical);
         }
 
         private void PermissionLabelMouseClicked(java.awt.event.MouseEvent evt) {
