@@ -55,6 +55,7 @@ public class BuyProduct extends javax.swing.JPanel {
                 jTabbedPane1 = new javax.swing.JTabbedPane();
                 CoffeeContent = new javax.swing.JPanel();
                 MilkTeaContent = new javax.swing.JPanel();
+                SodaContent = new javax.swing.JPanel();
                 Item6 = new javax.swing.JPanel();
                 ImageBtn2 = new javax.swing.JButton();
                 nameItem1 = new javax.swing.JLabel();
@@ -140,6 +141,13 @@ public class BuyProduct extends javax.swing.JPanel {
                 java.awt.FlowLayout flowLayout4 = new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 25, 20);
                 flowLayout4.setAlignOnBaseline(true);
                 MilkTeaContent.setLayout(flowLayout4);
+                MilkTeaContent.setLayout(flowLayout4);
+
+                SodaContent.setBackground(new java.awt.Color(248, 249, 250));
+                SodaContent.setMinimumSize(new java.awt.Dimension(571, 768));
+                java.awt.FlowLayout flowLayout5 = new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 25, 20);
+                flowLayout4.setAlignOnBaseline(true);
+                SodaContent.setLayout(flowLayout4);
 
                 // render menu Coffee
                 ArrayList<ProductDTO> list_product = ProductDAO.get_all_product();
@@ -164,8 +172,9 @@ public class BuyProduct extends javax.swing.JPanel {
                                 JLabel nameItem = new JLabel(); // Tạo mới JLabel cho mỗi item
                                 JLabel priceItem = new JLabel(); // Tạo mới JLabel cho mỗi item
                                 JButton btnChoose = new JButton(); // Tạo mới JButton cho mỗi item
-                                nameItem.setFont(new java.awt.Font("Arial", 0, 18));
+                                nameItem.setFont(new java.awt.Font("Arial", 0, 17));
                                 nameItem.setText(product.getProduct_name());
+
                                 priceItem.setFont(new java.awt.Font("Arial", 0, 14));
                                 priceItem.setText(String.valueOf(product.getPrice()));
                                 btnChoose.setFont(new java.awt.Font("Arial", 0, 14));
@@ -198,7 +207,7 @@ public class BuyProduct extends javax.swing.JPanel {
                                                                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                                                                                 .addComponent(nameItem,
                                                                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                                                93,
+                                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
                                                                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                                                                                 .addGroup(ItemLayout
                                                                                                                                                 .createSequentialGroup()
@@ -240,8 +249,11 @@ public class BuyProduct extends javax.swing.JPanel {
                                         if (product.getCategory().equals("Coffee")) {
                                                 CoffeeContent.add(boxItem);
 
-                                        } else if (product.getCategory().equals("Tea")) {
+                                        } else if (product.getCategory().equals("Milk tea")) {
                                                 MilkTeaContent.add(boxItem);
+
+                                        } else if (product.getCategory().equals("Soda")) {
+                                                SodaContent.add(boxItem);
 
                                         }
                                 }
@@ -265,26 +277,6 @@ public class BuyProduct extends javax.swing.JPanel {
 
                                         }
                                 });
-                                // btnChoose.addActionListener(new ActionListener() {
-                                // @Override
-                                // public void actionPerformed(ActionEvent e) {
-                                // // list_cart.add(new CartDTO(1, product.getId(), 1));
-                                // CartDAO.insertCart(new CartDTO(1, product.getId(), 1));
-                                // CartContent.removeAll();
-                                // ArrayList<CartDTO> list_cart = CartDAO.getCartByAccountId(1);
-
-                                // for (CartDTO cart : list_cart) {
-                                // componentItemCart(cart);
-
-                                // }
-
-                                // updateTotalMoney();
-                                // // Refresh the UI to reflect the changes
-                                // CartContent.revalidate();
-                                // CartContent.repaint();
-
-                                // }
-                                // });
 
                         }
 
@@ -292,6 +284,7 @@ public class BuyProduct extends javax.swing.JPanel {
 
                 jTabbedPane1.addTab("Cà phê", CoffeeContent);
                 jTabbedPane1.addTab("Trà sữa", MilkTeaContent);
+                jTabbedPane1.addTab("Soda", SodaContent);
 
                 javax.swing.GroupLayout BuyProductLeftLayout = new javax.swing.GroupLayout(BuyProductLeft);
                 BuyProductLeft.setLayout(BuyProductLeftLayout);
@@ -582,6 +575,7 @@ public class BuyProduct extends javax.swing.JPanel {
         private javax.swing.JPanel CartContent;
         private javax.swing.JPanel CoffeeContent;
         private javax.swing.JPanel MilkTeaContent;
+        private javax.swing.JPanel SodaContent;
         private javax.swing.JScrollPane ContainerCart;
         private javax.swing.JPanel GroupBtn;
         private javax.swing.JButton ImageBtn2;
