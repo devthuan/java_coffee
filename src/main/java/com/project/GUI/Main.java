@@ -969,9 +969,10 @@ public class Main extends javax.swing.JFrame {
         }
 
         public void ProductLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                // SwitchControl();
-                // ProductMenu productMenu = new ProductMenu();
-                // Right.add(productMenu);
+                 SwitchControl();
+                 ProductMenu productMenu = new ProductMenu();
+                 Right.add(productMenu).setVisible(true);
+                 
         }
 
         public void WareHouseLabelMouseClicked(java.awt.event.MouseEvent evt) {

@@ -9,9 +9,9 @@ public class mysqlConnect {
             // Dang ky MySQL Driver voi DriverManager
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             // Các thống số database
-            String url = "jdbc:mySQL://localhost:3306/mydb";
-            String userName = "root";
-            String password = "";
+            String url = "jdbc:mySQL://103.130.216.163:3306/phuocthu_java_coffee";
+            String userName = "phuocthu_java";
+            String password = "thuan.java";
             // Tao ket noi
             c = DriverManager.getConnection(url, userName, password);
         } catch (Exception e) {
