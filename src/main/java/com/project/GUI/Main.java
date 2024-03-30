@@ -987,9 +987,10 @@ public class Main extends javax.swing.JFrame {
         }
 
         private void OrderLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                // SwitchControl();
-                // OrderMenu orderMenu = new OrderMenu();
-                // Right.add(orderMenu);
+                SwitchControl();
+                TaiKhoan orderMenu = new TaiKhoan();
+                Right.add(orderMenu);
+                
         }
 
         private void StatisticalLabelMouseClicked(java.awt.event.MouseEvent evt) {
