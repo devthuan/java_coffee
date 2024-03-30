@@ -981,9 +981,9 @@ public class Main extends javax.swing.JFrame {
         }
 
         private void EmployeeLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                // SwitchControl();
-                // EmployeeMenu employeeMenu = new EmployeeMenu();
-                // Right.add(employeeMenu);
+                SwitchControl();
+                EmployeeMenu employeeMenu = new EmployeeMenu();
+                Right.add(employeeMenu);
         }
 
         private void OrderLabelMouseClicked(java.awt.event.MouseEvent evt) {
