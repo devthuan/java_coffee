@@ -246,10 +246,10 @@ public class BuyProduct extends javax.swing.JPanel {
                                 // Thêm JPanel vào CoffeeContent (cần phải kiểm tra xem CoffeeContent đã được
                                 // khai báo và khởi tạo)
                                 if (CoffeeContent != null) {
-                                        if (product.getCategory().equals("Coffee")) {
+                                        if (product.getCategory().equals("Cà phê")) {
                                                 CoffeeContent.add(boxItem);
 
-                                        } else if (product.getCategory().equals("Milk tea")) {
+                                        } else if (product.getCategory().equals("Trà sữa")) {
                                                 MilkTeaContent.add(boxItem);
 
                                         } else if (product.getCategory().equals("Soda")) {
