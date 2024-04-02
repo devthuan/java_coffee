@@ -14,7 +14,7 @@ public class Main extends javax.swing.JFrame {
         public Main() {
                 initComponents();
                 SwitchControl();
-                Right.add(new BuyProduct()).setVisible(true);
+                Right.add(new BuyProduct1()).setVisible(true);
         }
 
         @SuppressWarnings("unchecked")
