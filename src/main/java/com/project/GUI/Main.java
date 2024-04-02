@@ -987,9 +987,9 @@ public class Main extends javax.swing.JFrame {
         }
 
         private void OrderLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                SwitchControl();
-                TaiKhoan orderMenu = new TaiKhoan();
-                Right.add(orderMenu);
+                // SwitchControl();
+                // TaiKhoan orderMenu = new TaiKhoan();
+                // Right.add(orderMenu);
                 
         }
 
@@ -1000,9 +1000,9 @@ public class Main extends javax.swing.JFrame {
         }
 
         private void PermissionLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                // SwitchControl();
-                // PermissionMenu permissionMenu = new PermissionMenu();
-                // Right.add(permissionMenu);
+                SwitchControl();
+                TaiKhoan orderMenu = new TaiKhoan();
+                Right.add(orderMenu);
         }
 
         private void LogoutLabelMouseClicked(java.awt.event.MouseEvent evt) {

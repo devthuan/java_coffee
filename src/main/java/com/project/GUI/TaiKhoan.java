@@ -93,16 +93,16 @@ public class TaiKhoan extends javax.swing.JPanel {
 
         jTextField6.setText("Nhập nội dung tìm kiếm");
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/refresh.png"))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon("./src/assets/icon/refresh.png")); // NOI18N
         jButton3.setText("Làm mới");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/add.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon("./src/assets/icon/add.png")); // NOI18N
         jButton1.setText("Thêm");
         jButton1.setToolTipText("");
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/warning (1).png"))); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon("./src/assets/icon/warning (1).png")); // NOI18N
         jButton4.setText("Chi tiết");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,10 +110,10 @@ public class TaiKhoan extends javax.swing.JPanel {
             }
         });
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/remove (1).png"))); // NOI18N
+        jButton5.setIcon(new javax.swing.ImageIcon("./src/assets/icon/remove (1).png")); // NOI18N
         jButton5.setText("Hủy");
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/xls.png"))); // NOI18N
+        jButton6.setIcon(new javax.swing.ImageIcon("./src/assets/icon/xls.png")); // NOI18N
         jButton6.setText("Xuất");
         jButton6.setMaximumSize(new java.awt.Dimension(568, 519));
         jButton6.setMinimumSize(new java.awt.Dimension(568, 519));
