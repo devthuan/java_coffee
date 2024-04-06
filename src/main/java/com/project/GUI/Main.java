@@ -23,7 +23,7 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         SwitchControl();
-        Right.add(new BuyProduct1()).setVisible(true);
+        Right.add(new BuyProduct()).setVisible(true);
     }
 
     /**
@@ -186,7 +186,7 @@ public class Main extends javax.swing.JFrame {
         ItemAccount.setBackground(new java.awt.Color(248, 249, 250));
         ItemAccount.setMinimumSize(new java.awt.Dimension(182, 55));
         ItemAccount.setPreferredSize(new java.awt.Dimension(182, 55));
-       
+
         ItemAccount.setLayout(new java.awt.CardLayout(7, 0));
 
         AccountLabel.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -230,7 +230,7 @@ public class Main extends javax.swing.JFrame {
         ItemWarehouse.setBackground(new java.awt.Color(248, 249, 250));
         ItemWarehouse.setMinimumSize(new java.awt.Dimension(182, 55));
         ItemWarehouse.setPreferredSize(new java.awt.Dimension(182, 55));
-        
+
         ItemWarehouse.setLayout(new java.awt.CardLayout(7, 0));
 
         WarehouseLabel.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -254,7 +254,7 @@ public class Main extends javax.swing.JFrame {
         ItemReceipt.setBackground(new java.awt.Color(248, 249, 250));
         ItemReceipt.setMinimumSize(new java.awt.Dimension(182, 55));
         ItemReceipt.setPreferredSize(new java.awt.Dimension(182, 55));
-       
+
         ItemReceipt.setLayout(new java.awt.CardLayout(7, 0));
 
         ReceiptLabel.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -278,7 +278,7 @@ public class Main extends javax.swing.JFrame {
         ItemSupplier.setBackground(new java.awt.Color(248, 249, 250));
         ItemSupplier.setMinimumSize(new java.awt.Dimension(182, 55));
         ItemSupplier.setPreferredSize(new java.awt.Dimension(182, 55));
-      
+
         ItemSupplier.setLayout(new java.awt.CardLayout(7, 0));
 
         SupplierLabel.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -302,7 +302,7 @@ public class Main extends javax.swing.JFrame {
         ItemStatistical.setBackground(new java.awt.Color(248, 249, 250));
         ItemStatistical.setMinimumSize(new java.awt.Dimension(182, 55));
         ItemStatistical.setPreferredSize(new java.awt.Dimension(182, 55));
-       
+
         ItemStatistical.setLayout(new java.awt.CardLayout(7, 0));
 
         StatisticalLabel.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -411,7 +411,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
     }
-    
+
     private JLabel selectedLabel = null;
     private JPanel selectedPanel = null;
 
@@ -461,7 +461,7 @@ public class Main extends javax.swing.JFrame {
         addHoverMenu(StatisticalLabel, ItemStatistical);
 
     }
-    
+
     private void addClickEffectElement() {
         addClickEffect(HomeLabel, ItemHome);
         addClickEffect(ProductLabel, ItemProduct);
@@ -487,9 +487,8 @@ public class Main extends javax.swing.JFrame {
 
     private void HomeLabelMouseClicked(java.awt.event.MouseEvent evt) {
         SwitchControl();
-        Right.add(new BuyProduct1()).setVisible(true);
+        Right.add(new BuyProduct()).setVisible(true);
     }
-
 
     private void ProductLabelMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
@@ -512,11 +511,13 @@ public class Main extends javax.swing.JFrame {
     }
 
     private void SupplierLabelMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
+        SwitchControl();
+        Right.add(new Supplier()).setVisible(true);
     }
 
     private void StatisticalLabelMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
+        SwitchControl();
+        Right.add(new Statistical()).setVisible(true);
     }
 
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {
@@ -526,7 +527,6 @@ public class Main extends javax.swing.JFrame {
     private void WarehouseLabelMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
     }
-
 
     /**
      * @param args the command line arguments
