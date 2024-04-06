@@ -4,8 +4,6 @@
  */
 package com.project.GUI;
 
-import javax.swing.Icon;
-
 /**
  *
  * @author admin
@@ -95,8 +93,8 @@ public class TaiKhoan extends javax.swing.JPanel {
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 682, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(63, 63, 63))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,7 +112,7 @@ public class TaiKhoan extends javax.swing.JPanel {
 
         jPanel4.setLayout(new java.awt.GridLayout(1, 0, 2, 0));
 
-        jButton1.setIcon( new javax.swing.ImageIcon("./src/assets/icon/add.png")); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon("./src/assets/icon/add.png")); // NOI18N
         jButton1.setText("Thêm");
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
@@ -142,7 +140,7 @@ public class TaiKhoan extends javax.swing.JPanel {
 
         jPanel4.add(jPanel5);
 
-        jButton2.setIcon( new javax.swing.ImageIcon("./src/assets/icon/warning (1).png")); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon("./src/assets/icon/warning (1).png")); // NOI18N
         jButton2.setText("Chi tiết");
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
@@ -198,7 +196,7 @@ public class TaiKhoan extends javax.swing.JPanel {
 
         jPanel4.add(jPanel7);
 
-        jButton4.setIcon(new javax.swing.ImageIcon("./src/assets/icon/xls.png")); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon("./src/assets/icon/xls.png"));// NOI18N
         jButton4.setText("Xuất");
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton4.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
@@ -226,7 +224,7 @@ public class TaiKhoan extends javax.swing.JPanel {
 
         jPanel4.add(jPanel8);
 
-        jPanel3.setLayout(new java.awt.GridLayout());
+        jPanel3.setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel10.setPreferredSize(new java.awt.Dimension(200, 56));
 
@@ -278,7 +276,7 @@ public class TaiKhoan extends javax.swing.JPanel {
         jPanel3.add(jPanel13);
 
         jButton6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton6.setIcon( new javax.swing.ImageIcon("./src/assets/icon/refresh.png")); // NOI18N
+        jButton6.setIcon(new javax.swing.ImageIcon("./src/assets/icon/refresh(1).png")); // NOI18N
         jButton6.setText("Làm mới");
         jButton6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
