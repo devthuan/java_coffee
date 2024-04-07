@@ -507,7 +507,8 @@ public class Main extends javax.swing.JFrame {
     }
 
     private void ReceiptLabelMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
+        SwitchControl();
+        Right.add(new Receipt()).setVisible(true);
     }
 
     private void SupplierLabelMouseClicked(java.awt.event.MouseEvent evt) {

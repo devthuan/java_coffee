@@ -1,9 +1,8 @@
-package com.project.GUI;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+package com.project.GUI;
 
 /**
  *
@@ -14,7 +13,13 @@ public class FormSupplier extends javax.swing.JFrame {
     /**
      * Creates new form FormSupplier
      */
-    public FormSupplier() {
+    public FormSupplier(String titleForm) {
+
+        initComponents();
+        jLabel1.setText(titleForm);
+    }
+
+    public FormSupplier(String titleForm, String data) {
         initComponents();
     }
 
@@ -47,7 +52,7 @@ public class FormSupplier extends javax.swing.JFrame {
         BtnAdd = new javax.swing.JButton();
 
         // setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(722, 453));
+        setMaximumSize(new java.awt.Dimension(1085, 768));
         setMinimumSize(new java.awt.Dimension(722, 453));
 
         jPanel1.setMinimumSize(new java.awt.Dimension(100, 70));
@@ -156,7 +161,7 @@ public class FormSupplier extends javax.swing.JFrame {
 
         BtnClose.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         BtnClose.setText("Đóng");
-        BtnClose.setBorder(null);
+        BtnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         BtnClose.setMaximumSize(new java.awt.Dimension(100, 55));
         BtnClose.setMinimumSize(new java.awt.Dimension(100, 55));
         BtnClose.setPreferredSize(new java.awt.Dimension(100, 55));
@@ -169,7 +174,7 @@ public class FormSupplier extends javax.swing.JFrame {
 
         BtnAdd.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         BtnAdd.setText("Thêm");
-        BtnAdd.setBorder(null);
+        BtnAdd.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         BtnAdd.setMaximumSize(new java.awt.Dimension(100, 55));
         BtnAdd.setMinimumSize(new java.awt.Dimension(100, 55));
         BtnAdd.setPreferredSize(new java.awt.Dimension(100, 55));
@@ -209,7 +214,7 @@ public class FormSupplier extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
+                if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -230,11 +235,11 @@ public class FormSupplier extends javax.swing.JFrame {
         // </editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormSupplier().setVisible(true);
-            }
-        });
+        // java.awt.EventQueue.invokeLater(new Runnable() {
+        // public void run() {
+        // new FormSupplier().setVisible(true);
+        // }
+        // });
     }
 
     // Variables declaration - do not modify
