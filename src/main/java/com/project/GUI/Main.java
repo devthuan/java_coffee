@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.GroupLayout;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -13,7 +13,7 @@ public class Main extends javax.swing.JFrame {
 
         public Main() {
                 initComponents();
-               
+
         }
 
         @SuppressWarnings("unchecked")
@@ -987,9 +987,9 @@ public class Main extends javax.swing.JFrame {
         }
 
         private void OrderLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                // SwitchControl();
-                // OrderMenu orderMenu = new OrderMenu();
-                // Right.add(orderMenu);
+                SwitchControl();
+                OrderMenu orderMenu = new OrderMenu();
+                Right.add(orderMenu);
         }
 
         private void StatisticalLabelMouseClicked(java.awt.event.MouseEvent evt) {
