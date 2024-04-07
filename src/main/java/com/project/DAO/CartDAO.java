@@ -17,7 +17,7 @@ public class CartDAO {
             CartDTO check_cart = getCartByProductId(cart.getProduct_id(), cart.getAccount_id());
 
             if (check_cart == null) {
-                String sql = "insert into cart (product_id,quantity, account_id)  values (?, ?, ?)";
+                String sql = "insert into giohang (SanPham_id,so_luong, TaiKhoan_id)  values (?, ?, ?)";
                 PreparedStatement pst = conn.prepareStatement(sql);
                 pst.setInt(1, cart.getProduct_id());
                 pst.setInt(2, cart.getQuantity());
@@ -29,7 +29,7 @@ public class CartDAO {
                 }
 
             } else {
-                String sql = "update cart set quantity = ?  where id = ?";
+                String sql = "update giohang set so_luong = ?  where id = ?";
                 PreparedStatement pst = conn.prepareStatement(sql);
                 int new_quantity = check_cart.getQuantity() + 1;
                 pst.setInt(1, new_quantity);
@@ -53,7 +53,7 @@ public class CartDAO {
         int result = 0;
         try {
             Connection conn = mysqlConnect.getConnection();
-            String sql = "update cart set quantity = ? where id = ?";
+            String sql = "update giohang set so_luong = ? where id = ?";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setInt(1, quantity);
             pst.setInt(2, cart_id);
@@ -71,7 +71,7 @@ public class CartDAO {
         int result = 0;
         try {
             Connection conn = mysqlConnect.getConnection();
-            String sql = "delete from cart where id = ?";
+            String sql = "delete from giohang where id = ?";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setInt(1, cart_id);
             result = pst.executeUpdate();
@@ -89,22 +89,22 @@ public class CartDAO {
 
         try {
             Connection conn = mysqlConnect.getConnection();
-            String sql = "SELECT cart.id, product_id, account_id,product_name,  price, quantity,  account_id, cart.created_date\r\n"
+            String sql = "SELECT giohang.id, SanPham_id, TaiKhoan_id,ten_SP,  gia, giohang.so_luong AS so_luong,  TaiKhoan_id, giohang.createdAt\r\n"
                     + //
-                    "FROM cart\r\n" + //
-                    "JOIN products ON cart.product_id = products.id\r\n" + //
-                    "JOIN account ON cart.account_id = account.id\r\n" + //
-                    "WHERE account_id = ?\r\n" + //
-                    "GROUP BY product_name";
+                    "FROM giohang\r\n" + //
+                    "JOIN sanpham ON giohang.SanPham_id = sanpham.id\r\n" + //
+                    "JOIN taikhoan ON giohang.TaiKhoan_id = taikhoan.id\r\n" + //
+                    "WHERE TaiKhoan_id = ?\r\n" + //
+                    "GROUP BY ten_SP";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setInt(1, user_id);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
-                String product_name = rs.getString("product_name");
-                Float price = rs.getFloat("price");
-                int quantity = rs.getInt("quantity");
-                int account_id = rs.getInt("account_id");
+                String product_name = rs.getString("ten_SP");
+                Float price = rs.getFloat("gia");
+                int quantity = rs.getInt("so_luong");
+                int account_id = rs.getInt("TaiKhoan_id");
                 ProductDTO product = new ProductDTO(product_name, price);
                 list_cart.add(new CartDTO(id, product, quantity, account_id));
             }
@@ -121,16 +121,16 @@ public class CartDAO {
         CartDTO cart = null;
         try {
             Connection conn = mysqlConnect.getConnection();
-            String sql = "select * from cart where product_id = ? and account_id = ?";
+            String sql = "select * from giohang where SanPham_id = ? and TaiKhoan_id = ?";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setInt(1, product_id);
             pst.setInt(2, id_account);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
-                int account_id = rs.getInt("account_id");
-                int productId = rs.getInt("product_id");
-                int quantity = rs.getInt("quantity");
+                int account_id = rs.getInt("TaiKhoan_id");
+                int productId = rs.getInt("SanPham_id");
+                int quantity = rs.getInt("so_luong");
                 cart = new CartDTO(id, quantity, productId, account_id);
             }
             return cart;

@@ -1,6 +1,8 @@
 
 package com.project.GUI;
 
+import java.awt.Color;
+
 import javax.swing.JFrame;
 
 import org.jfree.chart.*;
@@ -16,9 +18,10 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.ui.TextAnchor;
 
-class TestBarChart {
+class BarChart {
 
         public static ChartPanel createChart(String TitleChart) {
                 JFreeChart barChart = ChartFactory.createBarChart(
@@ -60,16 +63,52 @@ class TestBarChart {
 
 }
 
+class PieChart {
+
+        public ChartPanel createChart() {
+                // Create the chart
+                JFreeChart chart = ChartFactory.createPieChart(
+                                "Fruit Distribution", // chart title
+                                createDataset(), // data
+                                true, // include legend
+                                true,
+                                false);
+
+                // Customize the appearance
+                chart.setBackgroundPaint(Color.WHITE);
+
+                // Create a panel to display the chart
+                ChartPanel chartPanel = new ChartPanel(chart);
+                // chartPanel.setPreferredSize(new Dimension(400, 300));
+
+                return chartPanel;
+
+        }
+
+        public DefaultPieDataset createDataset() {
+                DefaultPieDataset dataset = new DefaultPieDataset();
+                dataset.setValue("Apples", 50);
+                dataset.setValue("Oranges", 30);
+                dataset.setValue("Bananas", 20);
+
+                return dataset;
+        }
+}
+
 public class Statistical extends javax.swing.JPanel {
 
         /**
-         * Creates new form Chart
+         * Creates new form Statistical
          */
         public Statistical() {
                 initComponents();
-                TestBarChart barchartOverview = new TestBarChart();
-                BoxChart.add(barchartOverview.createChart("Doanh thu theo các tháng"));
-                BoxChartProduct.add(barchartOverview.createChart("Số lượng sản phẩm đã bán theo sản phẩm"));
+
+                BarChart barChart = new BarChart();
+                PieChart pieChart = new PieChart();
+                BoxChart.add(barChart.createChart("Doanh thu theo các tháng"));
+                BoxChartProduct.add(barChart.createChart("Số lượng sản phẩm đã bán theo sản phẩm"));
+                BoxChartTotalGredient.add(barChart.createChart("Số lượng nguyên liệu tồn kho"));
+                BoxChartTotalImportWarehouse.add(pieChart.createChart());
         }
 
         /**
@@ -113,6 +152,22 @@ public class Statistical extends javax.swing.JPanel {
                 TextBill1 = new javax.swing.JLabel();
                 TextBill3 = new javax.swing.JLabel();
                 BoxChartProduct = new javax.swing.JPanel();
+                BoxStatistalWarehouse = new javax.swing.JPanel();
+                BoxRevenueWarehouse = new javax.swing.JPanel();
+                IconWarehouse = new javax.swing.JButton();
+                TitleWarehouse = new javax.swing.JLabel();
+                TextWarehouse = new javax.swing.JLabel();
+                BoxTotalIngredient = new javax.swing.JPanel();
+                IconIngredient = new javax.swing.JButton();
+                TitleTotalIngredient = new javax.swing.JLabel();
+                TextIngredient = new javax.swing.JLabel();
+                BoxLeastSell1 = new javax.swing.JPanel();
+                IconBill2 = new javax.swing.JButton();
+                TitleBill2 = new javax.swing.JLabel();
+                TextBill2 = new javax.swing.JLabel();
+                BoxChartProduct1 = new javax.swing.JPanel();
+                BoxChartTotalGredient = new javax.swing.JPanel();
+                BoxChartTotalImportWarehouse = new javax.swing.JPanel();
 
                 setMinimumSize(new java.awt.Dimension(1085, 768));
                 setPreferredSize(new java.awt.Dimension(1085, 768));
@@ -327,37 +382,39 @@ public class Statistical extends javax.swing.JPanel {
                 BoxOverviewLayout.setHorizontalGroup(
                                 BoxOverviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addGroup(BoxOverviewLayout.createSequentialGroup()
-                                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                Short.MAX_VALUE)
-                                                                .addComponent(BoxRevenue,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(
-                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                Short.MAX_VALUE)
-                                                                .addComponent(BoxProduct,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(
-                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                Short.MAX_VALUE)
-                                                                .addComponent(BoxBill,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                Short.MAX_VALUE))
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BoxOverviewLayout
-                                                                .createSequentialGroup()
                                                                 .addContainerGap()
-                                                                .addComponent(BoxChart,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                Short.MAX_VALUE)
+                                                                .addGroup(BoxOverviewLayout
+                                                                                .createParallelGroup(
+                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                .addGroup(BoxOverviewLayout
+                                                                                                .createSequentialGroup()
+                                                                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                                                                .addComponent(BoxRevenue,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                .addPreferredGap(
+                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                Short.MAX_VALUE)
+                                                                                                .addComponent(BoxProduct,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                .addPreferredGap(
+                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                Short.MAX_VALUE)
+                                                                                                .addComponent(BoxBill,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                .addGap(0, 0, Short.MAX_VALUE))
+                                                                                .addComponent(BoxChart,
+                                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                Short.MAX_VALUE))
                                                                 .addContainerGap()));
                 BoxOverviewLayout.setVerticalGroup(
                                 BoxOverviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -690,6 +747,309 @@ public class Statistical extends javax.swing.JPanel {
 
                 TabbedPaneStatistical.addTab("Sản phẩm", BoxStatistalProduct);
 
+                BoxRevenueWarehouse.setBackground(new java.awt.Color(255, 255, 255));
+                BoxRevenueWarehouse.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
+                BoxRevenueWarehouse.setPreferredSize(new java.awt.Dimension(300, 150));
+
+                IconWarehouse.setIcon(new javax.swing.ImageIcon("./src/assets/icon/revenue-64.png")); // NOI18N
+                IconWarehouse.setBorder(null);
+
+                TitleWarehouse.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
+                TitleWarehouse.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                TitleWarehouse.setText("Giá trị tồn kho");
+
+                TextWarehouse.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
+                TextWarehouse.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                TextWarehouse.setText("tên sản phẩm");
+                TextWarehouse.setToolTipText("");
+
+                javax.swing.GroupLayout BoxRevenueWarehouseLayout = new javax.swing.GroupLayout(BoxRevenueWarehouse);
+                BoxRevenueWarehouse.setLayout(BoxRevenueWarehouseLayout);
+                BoxRevenueWarehouseLayout.setHorizontalGroup(
+                                BoxRevenueWarehouseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(BoxRevenueWarehouseLayout.createSequentialGroup()
+                                                                .addContainerGap()
+                                                                .addGroup(BoxRevenueWarehouseLayout
+                                                                                .createParallelGroup(
+                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                .addComponent(TitleWarehouse,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                Short.MAX_VALUE)
+                                                                                .addGroup(BoxRevenueWarehouseLayout
+                                                                                                .createSequentialGroup()
+                                                                                                .addComponent(IconWarehouse,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                90,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                .addPreferredGap(
+                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                                .addComponent(TextWarehouse,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                192,
+                                                                                                                Short.MAX_VALUE)))
+                                                                .addContainerGap()));
+                BoxRevenueWarehouseLayout.setVerticalGroup(
+                                BoxRevenueWarehouseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                BoxRevenueWarehouseLayout.createSequentialGroup()
+                                                                                .addGap(12, 12, 12)
+                                                                                .addComponent(TitleWarehouse,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                Short.MAX_VALUE)
+                                                                                .addGap(18, 18, 18)
+                                                                                .addGroup(BoxRevenueWarehouseLayout
+                                                                                                .createParallelGroup(
+                                                                                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                                                                                false)
+                                                                                                .addComponent(IconWarehouse,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                Short.MAX_VALUE)
+                                                                                                .addComponent(TextWarehouse,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                Short.MAX_VALUE))
+                                                                                .addGap(32, 32, 32)));
+
+                BoxTotalIngredient.setBackground(new java.awt.Color(255, 255, 255));
+                BoxTotalIngredient.setPreferredSize(new java.awt.Dimension(300, 150));
+
+                IconIngredient.setIcon(new javax.swing.ImageIcon("./src/assets/icon/best-product-64.png")); // NOI18N
+                IconIngredient.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+                TitleTotalIngredient.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
+                TitleTotalIngredient.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                TitleTotalIngredient.setText("Tổng số nguyên liệu");
+
+                TextIngredient.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
+                TextIngredient.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                TextIngredient.setText("tên sản phẩm");
+                TextIngredient.setToolTipText("");
+
+                javax.swing.GroupLayout BoxTotalIngredientLayout = new javax.swing.GroupLayout(BoxTotalIngredient);
+                BoxTotalIngredient.setLayout(BoxTotalIngredientLayout);
+                BoxTotalIngredientLayout.setHorizontalGroup(
+                                BoxTotalIngredientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                BoxTotalIngredientLayout
+                                                                                .createSequentialGroup()
+                                                                                .addContainerGap()
+                                                                                .addGroup(BoxTotalIngredientLayout
+                                                                                                .createParallelGroup(
+                                                                                                                javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                                                .addComponent(TitleTotalIngredient,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                Short.MAX_VALUE)
+                                                                                                .addGroup(BoxTotalIngredientLayout
+                                                                                                                .createSequentialGroup()
+                                                                                                                .addComponent(IconIngredient,
+                                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                                90,
+                                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                                .addPreferredGap(
+                                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                                                .addComponent(TextIngredient,
+                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                                192,
+                                                                                                                                Short.MAX_VALUE)))
+                                                                                .addContainerGap()));
+                BoxTotalIngredientLayout.setVerticalGroup(
+                                BoxTotalIngredientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                BoxTotalIngredientLayout.createSequentialGroup()
+                                                                                .addGap(12, 12, 12)
+                                                                                .addComponent(TitleTotalIngredient,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                Short.MAX_VALUE)
+                                                                                .addGap(18, 18, 18)
+                                                                                .addGroup(BoxTotalIngredientLayout
+                                                                                                .createParallelGroup(
+                                                                                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                                                                                false)
+                                                                                                .addComponent(IconIngredient,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                Short.MAX_VALUE)
+                                                                                                .addComponent(TextIngredient,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                Short.MAX_VALUE))
+                                                                                .addGap(32, 32, 32)));
+
+                BoxLeastSell1.setBackground(new java.awt.Color(255, 255, 255));
+                BoxLeastSell1.setPreferredSize(new java.awt.Dimension(300, 150));
+
+                IconBill2.setIcon(new javax.swing.ImageIcon("./src/assets/icon/disadvantage-64.png")); // NOI18N
+                IconBill2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+                TitleBill2.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
+                TitleBill2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                TitleBill2.setText("Tổng số giá trị nhập kho");
+
+                TextBill2.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
+                TextBill2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                TextBill2.setText("tên sản phẩm");
+                TextBill2.setToolTipText("");
+                TextBill2.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+
+                javax.swing.GroupLayout BoxLeastSell1Layout = new javax.swing.GroupLayout(BoxLeastSell1);
+                BoxLeastSell1.setLayout(BoxLeastSell1Layout);
+                BoxLeastSell1Layout.setHorizontalGroup(
+                                BoxLeastSell1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(BoxLeastSell1Layout.createSequentialGroup()
+                                                                .addContainerGap()
+                                                                .addGroup(BoxLeastSell1Layout
+                                                                                .createParallelGroup(
+                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                .addComponent(TitleBill2,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                288,
+                                                                                                Short.MAX_VALUE)
+                                                                                .addGroup(BoxLeastSell1Layout
+                                                                                                .createSequentialGroup()
+                                                                                                .addComponent(IconBill2,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                90,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                .addPreferredGap(
+                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                                .addComponent(TextBill2,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                Short.MAX_VALUE)))
+                                                                .addContainerGap()));
+                BoxLeastSell1Layout.setVerticalGroup(
+                                BoxLeastSell1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                BoxLeastSell1Layout.createSequentialGroup()
+                                                                                .addGap(12, 12, 12)
+                                                                                .addComponent(TitleBill2,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                24,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addGap(18, 18, 18)
+                                                                                .addGroup(BoxLeastSell1Layout
+                                                                                                .createParallelGroup(
+                                                                                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                                                                                false)
+                                                                                                .addComponent(IconBill2,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                Short.MAX_VALUE)
+                                                                                                .addComponent(TextBill2,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                Short.MAX_VALUE))
+                                                                                .addContainerGap(30, Short.MAX_VALUE)));
+
+                BoxChartProduct1.setBackground(new java.awt.Color(255, 255, 255));
+                BoxChartProduct1.setLayout(new java.awt.GridLayout(1, 2, 5, 0));
+
+                javax.swing.GroupLayout BoxChartTotalGredientLayout = new javax.swing.GroupLayout(
+                                BoxChartTotalGredient);
+                BoxChartTotalGredient.setLayout(new javax.swing.BoxLayout(
+                                BoxChartTotalGredient, javax.swing.BoxLayout.LINE_AXIS));
+                BoxChartTotalGredientLayout.setHorizontalGroup(
+                                BoxChartTotalGredientLayout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGap(0, 534, Short.MAX_VALUE));
+                BoxChartTotalGredientLayout.setVerticalGroup(
+                                BoxChartTotalGredientLayout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGap(0, 485, Short.MAX_VALUE));
+
+                BoxChartProduct1.add(BoxChartTotalGredient);
+
+                javax.swing.GroupLayout BoxChartTotalImportWarehouseLayout = new javax.swing.GroupLayout(
+                                BoxChartTotalImportWarehouse);
+                BoxChartTotalImportWarehouse.setLayout(
+                                new javax.swing.BoxLayout(BoxChartTotalImportWarehouse,
+                                                javax.swing.BoxLayout.LINE_AXIS));
+                BoxChartTotalImportWarehouseLayout.setHorizontalGroup(
+                                BoxChartTotalImportWarehouseLayout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGap(0, 534, Short.MAX_VALUE));
+                BoxChartTotalImportWarehouseLayout.setVerticalGroup(
+                                BoxChartTotalImportWarehouseLayout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGap(0, 485, Short.MAX_VALUE));
+
+                BoxChartProduct1.add(BoxChartTotalImportWarehouse);
+
+                javax.swing.GroupLayout BoxStatistalWarehouseLayout = new javax.swing.GroupLayout(
+                                BoxStatistalWarehouse);
+                BoxStatistalWarehouse.setLayout(BoxStatistalWarehouseLayout);
+                BoxStatistalWarehouseLayout.setHorizontalGroup(
+                                BoxStatistalWarehouseLayout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(BoxStatistalWarehouseLayout.createSequentialGroup()
+                                                                .addContainerGap()
+                                                                .addGroup(BoxStatistalWarehouseLayout
+                                                                                .createParallelGroup(
+                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                .addGroup(BoxStatistalWarehouseLayout
+                                                                                                .createSequentialGroup()
+                                                                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                                                                .addComponent(BoxRevenueWarehouse,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                .addPreferredGap(
+                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                Short.MAX_VALUE)
+                                                                                                .addComponent(BoxTotalIngredient,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                .addPreferredGap(
+                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                Short.MAX_VALUE)
+                                                                                                .addComponent(BoxLeastSell1,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                .addGap(0, 0, Short.MAX_VALUE))
+                                                                                .addComponent(BoxChartProduct1,
+                                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                Short.MAX_VALUE))
+                                                                .addContainerGap()));
+                BoxStatistalWarehouseLayout.setVerticalGroup(
+                                BoxStatistalWarehouseLayout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(BoxStatistalWarehouseLayout.createSequentialGroup()
+                                                                .addGap(56, 56, 56)
+                                                                .addGroup(BoxStatistalWarehouseLayout
+                                                                                .createParallelGroup(
+                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                .addComponent(BoxLeastSell1,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addComponent(BoxTotalIngredient,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addComponent(BoxRevenueWarehouse,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addGap(36, 36, 36)
+                                                                .addComponent(BoxChartProduct1,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                Short.MAX_VALUE)
+                                                                .addContainerGap()));
+
+                TabbedPaneStatistical.addTab("Kho nguyên liệu", BoxStatistalWarehouse);
+
                 add(TabbedPaneStatistical);
         }// </editor-fold>
 
@@ -698,33 +1058,49 @@ public class Statistical extends javax.swing.JPanel {
         private javax.swing.JPanel BoxBill;
         private javax.swing.JPanel BoxChart;
         private javax.swing.JPanel BoxChartProduct;
+        private javax.swing.JPanel BoxChartProduct1;
+        private javax.swing.JPanel BoxChartTotalGredient;
+        private javax.swing.JPanel BoxChartTotalImportWarehouse;
         private javax.swing.JPanel BoxLeastSell;
+        private javax.swing.JPanel BoxLeastSell1;
         private javax.swing.JPanel BoxOverview;
         private javax.swing.JPanel BoxProduct;
         private javax.swing.JPanel BoxRevenue;
         private javax.swing.JPanel BoxRevenueProduct;
+        private javax.swing.JPanel BoxRevenueWarehouse;
         private javax.swing.JPanel BoxStatistalProduct;
+        private javax.swing.JPanel BoxStatistalWarehouse;
+        private javax.swing.JPanel BoxTotalIngredient;
         private javax.swing.JButton IconBill;
         private javax.swing.JButton IconBill1;
+        private javax.swing.JButton IconBill2;
+        private javax.swing.JButton IconIngredient;
         private javax.swing.JButton IconProduct;
         private javax.swing.JButton IconProduct1;
         private javax.swing.JButton IconRevenue;
         private javax.swing.JButton IconRevenue1;
+        private javax.swing.JButton IconWarehouse;
         private javax.swing.JTabbedPane TabbedPaneStatistical;
         private javax.swing.JLabel TextBill;
         private javax.swing.JLabel TextBill1;
+        private javax.swing.JLabel TextBill2;
         private javax.swing.JLabel TextBill3;
+        private javax.swing.JLabel TextIngredient;
         private javax.swing.JLabel TextProduct;
         private javax.swing.JLabel TextProduct1;
         private javax.swing.JLabel TextProduct3;
         private javax.swing.JLabel TextRevenue;
         private javax.swing.JLabel TextRevenue1;
         private javax.swing.JLabel TextRevenue3;
+        private javax.swing.JLabel TextWarehouse;
         private javax.swing.JLabel TitleBill;
         private javax.swing.JLabel TitleBill1;
+        private javax.swing.JLabel TitleBill2;
         private javax.swing.JLabel TitleProduct;
         private javax.swing.JLabel TitleProduct1;
         private javax.swing.JLabel TitleRevenue;
         private javax.swing.JLabel TitleRevenue1;
+        private javax.swing.JLabel TitleTotalIngredient;
+        private javax.swing.JLabel TitleWarehouse;
         // End of variables declaration
 }

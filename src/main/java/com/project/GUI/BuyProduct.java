@@ -4,24 +4,10 @@
  */
 package com.project.GUI;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
-import com.project.DAO.CartDAO;
-import com.project.DAO.ProductDAO;
-import com.project.DTO.CartDTO;
-import com.project.DTO.ProductDTO;
-
+/**
+ *
+ * @author thuan
+ */
 public class BuyProduct extends javax.swing.JPanel {
 
         /**
@@ -30,12 +16,6 @@ public class BuyProduct extends javax.swing.JPanel {
         public BuyProduct() {
                 initComponents();
 
-                ArrayList<CartDTO> list_cart = CartDAO.getCartByAccountId(1);
-
-                for (CartDTO cart : list_cart) {
-                        componentItemCart(cart);
-
-                }
         }
 
         /**
@@ -51,50 +31,35 @@ public class BuyProduct extends javax.swing.JPanel {
                 jEditorPane1 = new javax.swing.JEditorPane();
                 jPanel3 = new javax.swing.JPanel();
                 jPanel2 = new javax.swing.JPanel();
-                BuyProductLeft = new javax.swing.JPanel();
+                jSplitPane2 = new javax.swing.JSplitPane();
+                ContentMemu = new javax.swing.JPanel();
                 jTabbedPane1 = new javax.swing.JTabbedPane();
-                CoffeeContent = new javax.swing.JPanel();
-                MilkTeaContent = new javax.swing.JPanel();
-                SodaContent = new javax.swing.JPanel();
+                BoxCoffee = new javax.swing.JPanel();
                 Item6 = new javax.swing.JPanel();
                 ImageBtn2 = new javax.swing.JButton();
                 nameItem1 = new javax.swing.JLabel();
                 priceItem1 = new javax.swing.JLabel();
                 btnItem1 = new javax.swing.JButton();
-                Item7 = new javax.swing.JPanel();
-                jButton19 = new javax.swing.JButton();
-                jLabel17 = new javax.swing.JLabel();
-                jLabel18 = new javax.swing.JLabel();
-                jButton20 = new javax.swing.JButton();
-                Item8 = new javax.swing.JPanel();
-                jButton21 = new javax.swing.JButton();
-                jLabel21 = new javax.swing.JLabel();
-                jLabel22 = new javax.swing.JLabel();
-                jButton22 = new javax.swing.JButton();
-                Item9 = new javax.swing.JPanel();
-                jButton23 = new javax.swing.JButton();
-                jLabel23 = new javax.swing.JLabel();
-                jLabel24 = new javax.swing.JLabel();
-                jButton24 = new javax.swing.JButton();
-                Item10 = new javax.swing.JPanel();
-                jButton25 = new javax.swing.JButton();
-                jLabel25 = new javax.swing.JLabel();
-                jLabel26 = new javax.swing.JLabel();
-                jButton26 = new javax.swing.JButton();
-                BuyProductRight = new javax.swing.JPanel();
-                ContainerCart = new javax.swing.JScrollPane();
-                CartContent = new javax.swing.JPanel();
+                ContentCart = new javax.swing.JPanel();
+                BoxCart = new javax.swing.JPanel();
+                ScrollPaneCart = new javax.swing.JScrollPane();
+                ListItemCart = new javax.swing.JPanel();
                 ItemCart = new javax.swing.JPanel();
                 nameProduct = new javax.swing.JLabel();
-                priceProduct = new javax.swing.JLabel();
-                btnRemove = new javax.swing.JButton();
-                btnQuantity = new javax.swing.JSpinner();
-                BoxMoney = new javax.swing.JPanel();
-                TitleMoney = new javax.swing.JLabel();
-                NumMoney = new javax.swing.JLabel();
-                GroupBtn = new javax.swing.JPanel();
-                BtnPay = new javax.swing.JPanel();
+                Price = new javax.swing.JLabel();
+                BtnRemove = new javax.swing.JButton();
+                Quantity = new javax.swing.JSpinner();
+                BoxTotalMoney = new javax.swing.JPanel();
+                TitleTotalMoney = new javax.swing.JLabel();
+                TextTotalMoney = new javax.swing.JLabel();
+                BoxBtnCart = new javax.swing.JPanel();
+                jButton1 = new javax.swing.JButton();
                 jButton2 = new javax.swing.JButton();
+                jPanel1 = new javax.swing.JPanel();
+                TitleTotalMoney1 = new javax.swing.JLabel();
+                jComboBox1 = new javax.swing.JComboBox<>();
+
+                FormListener formListener = new FormListener();
 
                 jScrollPane1.setViewportView(jEditorPane1);
 
@@ -118,503 +83,428 @@ public class BuyProduct extends javax.swing.JPanel {
 
                 setMinimumSize(new java.awt.Dimension(1085, 768));
                 setPreferredSize(new java.awt.Dimension(1085, 768));
+                setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
-                BuyProductLeft.setBackground(new java.awt.Color(255, 255, 255));
-                BuyProductLeft.setMinimumSize(new java.awt.Dimension(650, 768));
-                BuyProductLeft.setPreferredSize(new java.awt.Dimension(650, 768));
+                jSplitPane2.setResizeWeight(0.72);
+                jSplitPane2.setMinimumSize(new java.awt.Dimension(1085, 768));
+                jSplitPane2.setPreferredSize(new java.awt.Dimension(1085, 768));
 
-                jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
-                jTabbedPane1.setToolTipText("");
+                ContentMemu.setBackground(new java.awt.Color(255, 255, 255));
+                ContentMemu.setFocusTraversalPolicyProvider(true);
+                ContentMemu.setMinimumSize(new java.awt.Dimension(760, 768));
+                ContentMemu.setPreferredSize(new java.awt.Dimension(760, 768));
+                ContentMemu.setLayout(new java.awt.CardLayout());
+
                 jTabbedPane1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-                jTabbedPane1.setMinimumSize(new java.awt.Dimension(650, 768));
-                jTabbedPane1.setPreferredSize(new java.awt.Dimension(650, 768));
-                jTabbedPane1.setRequestFocusEnabled(false);
 
-                CoffeeContent.setBackground(new java.awt.Color(248, 249, 250));
-                CoffeeContent.setMinimumSize(new java.awt.Dimension(571, 768));
-                java.awt.FlowLayout flowLayout3 = new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 25, 20);
-                flowLayout3.setAlignOnBaseline(true);
-                CoffeeContent.setLayout(flowLayout3);
+                BoxCoffee.setBackground(new java.awt.Color(255, 255, 255));
+                BoxCoffee.setMaximumSize(null);
+                BoxCoffee.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 25, 15));
 
-                MilkTeaContent.setBackground(new java.awt.Color(248, 249, 250));
-                MilkTeaContent.setMinimumSize(new java.awt.Dimension(571, 768));
-                java.awt.FlowLayout flowLayout4 = new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 25, 20);
-                flowLayout4.setAlignOnBaseline(true);
-                MilkTeaContent.setLayout(flowLayout4);
-                MilkTeaContent.setLayout(flowLayout4);
+                Item6.setBackground(new java.awt.Color(248, 249, 250));
+                Item6.setMinimumSize(new java.awt.Dimension(180, 270));
+                Item6.setPreferredSize(new java.awt.Dimension(200, 290));
 
-                SodaContent.setBackground(new java.awt.Color(248, 249, 250));
-                SodaContent.setMinimumSize(new java.awt.Dimension(571, 768));
-                java.awt.FlowLayout flowLayout5 = new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 25, 20);
-                flowLayout4.setAlignOnBaseline(true);
-                SodaContent.setLayout(flowLayout4);
+                ImageBtn2.setIcon(new javax.swing.ImageIcon("./src/assets/icon/Hình 1.png")); // NOI18N
+                ImageBtn2.setBorder(null);
+                ImageBtn2.addActionListener(formListener);
 
-                // render menu Coffee
-                ArrayList<ProductDTO> list_product = ProductDAO.get_all_product();
-                for (ProductDTO product : list_product) {
+                nameItem1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+                nameItem1.setText("Cà phê đen");
 
-                        JPanel boxItem = new JPanel();
+                priceItem1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                priceItem1.setText("15.000 VNĐ");
 
-                        // Kiểm tra xem mỗi thành phần có tồn tại không
-                        if (boxItem != null) {
-                                boxItem.setBackground(new java.awt.Color(255, 255, 255));
-                                boxItem.setMinimumSize(new java.awt.Dimension(180, 250));
-                                boxItem.setPreferredSize(new java.awt.Dimension(180, 250));
+                btnItem1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                btnItem1.setText("Chọn sản phẩm");
+                btnItem1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-                                // Thiết lập hình ảnh cho nút ImageBtn (cần phải kiểm tra nếu ImageBtn đã được
-                                // khai báo và khởi tạo)
-                                JButton ImageBtn = new JButton(); // Tạo mới JButton cho mỗi item
-                                ImageBtn.setIcon(new javax.swing.ImageIcon(product.getUrl_image()));
-                                ImageBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-
-                                // Thiết lập font và text cho nameItem, priceItem, và btnItem (cần phải kiểm tra
-                                // xem các thành phần này đã được khai báo và khởi tạo)
-                                JLabel nameItem = new JLabel(); // Tạo mới JLabel cho mỗi item
-                                JLabel priceItem = new JLabel(); // Tạo mới JLabel cho mỗi item
-                                JButton btnChoose = new JButton(); // Tạo mới JButton cho mỗi item
-                                nameItem.setFont(new java.awt.Font("Arial", 0, 17));
-                                nameItem.setText(product.getProduct_name());
-
-                                priceItem.setFont(new java.awt.Font("Arial", 0, 14));
-                                priceItem.setText(String.valueOf(product.getPrice()));
-                                btnChoose.setFont(new java.awt.Font("Arial", 0, 14));
-                                btnChoose.setText("Chọn sản phẩm");
-                                btnChoose.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-
-                                // Thiết lập GroupLayout cho mỗi JPanel trong mảng list_item
-                                javax.swing.GroupLayout ItemLayout = new javax.swing.GroupLayout(boxItem);
-                                boxItem.setLayout(ItemLayout);
-                                ItemLayout.setHorizontalGroup(
-                                                ItemLayout.createParallelGroup(
-                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                .addGroup(ItemLayout.createSequentialGroup()
-                                                                                .addGroup(ItemLayout
-                                                                                                .createParallelGroup(
-                                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                                .addGroup(ItemLayout
-                                                                                                                .createSequentialGroup()
-                                                                                                                .addGap(57, 57, 57)
-                                                                                                                .addComponent(ImageBtn))
-                                                                                                .addGroup(ItemLayout
-                                                                                                                .createSequentialGroup()
-                                                                                                                .addGap(15, 15, 15)
-                                                                                                                .addGroup(ItemLayout
-                                                                                                                                .createParallelGroup(
-                                                                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                                                                .addComponent(priceItem,
-                                                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                                                76,
-                                                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                                                .addComponent(nameItem,
-                                                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                                                .addGroup(ItemLayout
-                                                                                                                                                .createSequentialGroup()
-                                                                                                                                                .addGap(6, 6, 6)
-                                                                                                                                                .addComponent(btnChoose,
-                                                                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                                                                138,
-                                                                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                                                                .addContainerGap(21,
-                                                                                                Short.MAX_VALUE)));
-                                ItemLayout.setVerticalGroup(
-                                                ItemLayout.createParallelGroup(
-                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                .addGroup(ItemLayout.createSequentialGroup()
-                                                                                .addComponent(ImageBtn,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                127,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addPreferredGap(
-                                                                                                javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                                .addComponent(nameItem,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                22,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addPreferredGap(
-                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                .addComponent(priceItem)
-                                                                                .addPreferredGap(
-                                                                                                javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                                .addComponent(btnChoose,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                42,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addGap(12, 12, 12)));
-
-                                // Thêm JPanel vào CoffeeContent (cần phải kiểm tra xem CoffeeContent đã được
-                                // khai báo và khởi tạo)
-                                if (CoffeeContent != null) {
-                                        if (product.getCategory().equals("Coffee")) {
-                                                CoffeeContent.add(boxItem);
-
-                                        } else if (product.getCategory().equals("Milk tea")) {
-                                                MilkTeaContent.add(boxItem);
-
-                                        } else if (product.getCategory().equals("Soda")) {
-                                                SodaContent.add(boxItem);
-
-                                        }
-                                }
-                                btnChoose.addActionListener(new ActionListener() {
-                                        @Override
-                                        public void actionPerformed(ActionEvent e) {
-                                                // list_cart.add(new CartDTO(1, product.getId(), 1));
-                                                CartDAO.insertCart(new CartDTO(1, product.getId(), 1));
-                                                CartContent.removeAll();
-                                                ArrayList<CartDTO> list_cart = CartDAO.getCartByAccountId(1);
-
-                                                for (CartDTO cart : list_cart) {
-                                                        componentItemCart(cart);
-
-                                                }
-
-                                                updateTotalMoney();
-                                                // Refresh the UI to reflect the changes
-                                                CartContent.revalidate();
-                                                CartContent.repaint();
-
-                                        }
-                                });
-
-                        }
-
-                }
-
-                jTabbedPane1.addTab("Cà phê", CoffeeContent);
-                jTabbedPane1.addTab("Trà sữa", MilkTeaContent);
-                jTabbedPane1.addTab("Soda", SodaContent);
-
-                javax.swing.GroupLayout BuyProductLeftLayout = new javax.swing.GroupLayout(BuyProductLeft);
-                BuyProductLeft.setLayout(BuyProductLeftLayout);
-                BuyProductLeftLayout.setHorizontalGroup(
-                                BuyProductLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE));
-                BuyProductLeftLayout.setVerticalGroup(
-                                BuyProductLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(BuyProductLeftLayout.createSequentialGroup()
-                                                                .addComponent(jTabbedPane1,
+                javax.swing.GroupLayout Item6Layout = new javax.swing.GroupLayout(Item6);
+                Item6.setLayout(Item6Layout);
+                Item6Layout.setHorizontalGroup(
+                                Item6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(Item6Layout.createSequentialGroup()
+                                                                .addGroup(Item6Layout.createParallelGroup(
+                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                .addGroup(Item6Layout
+                                                                                                .createSequentialGroup()
+                                                                                                .addGap(14, 14, 14)
+                                                                                                .addComponent(ImageBtn2,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                172,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                .addGap(0, 8, Short.MAX_VALUE))
+                                                                                .addGroup(Item6Layout
+                                                                                                .createSequentialGroup()
+                                                                                                .addContainerGap()
+                                                                                                .addGroup(Item6Layout
+                                                                                                                .createParallelGroup(
+                                                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                                .addComponent(nameItem1,
+                                                                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                                Short.MAX_VALUE)
+                                                                                                                .addComponent(priceItem1,
+                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                                Short.MAX_VALUE))))
+                                                                .addContainerGap())
+                                                .addGroup(Item6Layout.createSequentialGroup()
+                                                                .addGap(27, 27, 27)
+                                                                .addComponent(btnItem1,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                768,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(0, 0, Short.MAX_VALUE)));
-
-                BuyProductRight.setBackground(new java.awt.Color(255, 255, 255));
-                BuyProductRight.setMinimumSize(new java.awt.Dimension(430, 768));
-                BuyProductRight.setPreferredSize(new java.awt.Dimension(430, 768));
-
-                ContainerCart.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-                ContainerCart.setRowHeaderView(null);
-
-                CartContent.setLayout(new javax.swing.BoxLayout(CartContent, javax.swing.BoxLayout.Y_AXIS));
-
-                ContainerCart.setViewportView(CartContent);
-
-                TitleMoney.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-                TitleMoney.setText("Tổng tiền: ");
-
-                NumMoney.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-                NumMoney.setText("");
-
-                javax.swing.GroupLayout BoxMoneyLayout = new javax.swing.GroupLayout(BoxMoney);
-                BoxMoney.setLayout(BoxMoneyLayout);
-                BoxMoneyLayout.setHorizontalGroup(
-                                BoxMoneyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(BoxMoneyLayout.createSequentialGroup()
-                                                                .addGap(20, 20, 20)
-                                                                .addComponent(TitleMoney)
-                                                                .addGap(18, 18, 18)
-                                                                .addComponent(NumMoney,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                272,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addContainerGap(34, Short.MAX_VALUE)));
-                BoxMoneyLayout.setVerticalGroup(
-                                BoxMoneyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(BoxMoneyLayout.createSequentialGroup()
-                                                                .addContainerGap(21, Short.MAX_VALUE)
-                                                                .addGroup(BoxMoneyLayout.createParallelGroup(
-                                                                                javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                                .addComponent(TitleMoney,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                34,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addComponent(NumMoney,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                34,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                .addContainerGap(15, Short.MAX_VALUE)));
-
-                jButton2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-                jButton2.setText("Thanh toán");
-
-                javax.swing.GroupLayout BtnPayLayout = new javax.swing.GroupLayout(BtnPay);
-                BtnPay.setLayout(BtnPayLayout);
-                BtnPayLayout.setHorizontalGroup(
-                                BtnPayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(BtnPayLayout.createSequentialGroup()
-                                                                .addContainerGap()
-                                                                .addComponent(jButton2,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                154,
+                                                                                138,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
                                                                                 Short.MAX_VALUE)));
-                BtnPayLayout.setVerticalGroup(
-                                BtnPayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(BtnPayLayout.createSequentialGroup()
+                Item6Layout.setVerticalGroup(
+                                Item6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(Item6Layout.createSequentialGroup()
+                                                                .addContainerGap()
+                                                                .addComponent(ImageBtn2,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                144,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                Short.MAX_VALUE)
+                                                                .addComponent(nameItem1,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                32,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(priceItem1)
+                                                                .addGap(11, 11, 11)
+                                                                .addComponent(btnItem1,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                42,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addContainerGap()));
+
+                BoxCoffee.add(Item6);
+
+                jTabbedPane1.addTab("Cà phê", BoxCoffee);
+
+                ContentMemu.add(jTabbedPane1, "card2");
+
+                jSplitPane2.setLeftComponent(ContentMemu);
+
+                ContentCart.setMinimumSize(new java.awt.Dimension(370, 768));
+                ContentCart.setName(""); // NOI18N
+                ContentCart.setPreferredSize(new java.awt.Dimension(370, 768));
+                ContentCart.setLayout(new javax.swing.BoxLayout(ContentCart, javax.swing.BoxLayout.LINE_AXIS));
+
+                BoxCart.setBackground(new java.awt.Color(255, 255, 255));
+
+                ScrollPaneCart.setBackground(new java.awt.Color(248, 249, 250));
+                ScrollPaneCart.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+                ListItemCart.setLayout(new javax.swing.BoxLayout(ListItemCart, javax.swing.BoxLayout.PAGE_AXIS));
+
+                ItemCart.setBackground(new java.awt.Color(255, 255, 255));
+                ItemCart.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+                ItemCart.setMaximumSize(new java.awt.Dimension(12123123, 100));
+                ItemCart.setMinimumSize(new java.awt.Dimension(339, 100));
+                ItemCart.setPreferredSize(new java.awt.Dimension(339, 100));
+
+                nameProduct.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                nameProduct.setText("Tên sản phẩm");
+
+                Price.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                Price.setText("Giá");
+
+                BtnRemove.setText("Xoá");
+                BtnRemove.addActionListener(formListener);
+
+                Quantity.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                Quantity.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+                javax.swing.GroupLayout ItemCartLayout = new javax.swing.GroupLayout(ItemCart);
+                ItemCart.setLayout(ItemCartLayout);
+                ItemCartLayout.setHorizontalGroup(
+                                ItemCartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(ItemCartLayout.createSequentialGroup()
+                                                                .addContainerGap()
+                                                                .addGroup(ItemCartLayout.createParallelGroup(
+                                                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                                                false)
+                                                                                .addComponent(Price,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                Short.MAX_VALUE)
+                                                                                .addComponent(nameProduct,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                190, Short.MAX_VALUE))
+                                                                .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                Short.MAX_VALUE)
+                                                                .addComponent(Quantity,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                64,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addComponent(BtnRemove)
+                                                                .addGap(7, 7, 7)));
+                ItemCartLayout.setVerticalGroup(
+                                ItemCartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(ItemCartLayout.createSequentialGroup()
+                                                                .addGap(19, 19, 19)
+                                                                .addComponent(nameProduct)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(Price)
+                                                                .addContainerGap(25, Short.MAX_VALUE))
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ItemCartLayout
+                                                                .createSequentialGroup()
+                                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                Short.MAX_VALUE)
+                                                                .addGroup(ItemCartLayout.createParallelGroup(
+                                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                                .addComponent(BtnRemove,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                35,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addComponent(Quantity,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                35,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addGap(28, 28, 28)));
+
+                ListItemCart.add(ItemCart);
+
+                ScrollPaneCart.setViewportView(ListItemCart);
+
+                BoxTotalMoney.setBackground(new java.awt.Color(248, 249, 250));
+
+                TitleTotalMoney.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+                TitleTotalMoney.setText("Tổng tiền:");
+
+                TextTotalMoney.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+                TextTotalMoney.setText("0000");
+
+                javax.swing.GroupLayout BoxTotalMoneyLayout = new javax.swing.GroupLayout(BoxTotalMoney);
+                BoxTotalMoney.setLayout(BoxTotalMoneyLayout);
+                BoxTotalMoneyLayout.setHorizontalGroup(
+                                BoxTotalMoneyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(BoxTotalMoneyLayout.createSequentialGroup()
+                                                                .addContainerGap()
+                                                                .addComponent(TitleTotalMoney,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                75,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(TextTotalMoney,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                Short.MAX_VALUE)
+                                                                .addContainerGap()));
+                BoxTotalMoneyLayout.setVerticalGroup(
+                                BoxTotalMoneyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                BoxTotalMoneyLayout.createSequentialGroup()
+                                                                                .addContainerGap(
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                Short.MAX_VALUE)
+                                                                                .addGroup(BoxTotalMoneyLayout
+                                                                                                .createParallelGroup(
+                                                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                                                                false)
+                                                                                                .addComponent(TitleTotalMoney,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                33,
+                                                                                                                Short.MAX_VALUE)
+                                                                                                .addComponent(TextTotalMoney,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                Short.MAX_VALUE))
+                                                                                .addContainerGap()));
+
+                BoxBtnCart.setBackground(new java.awt.Color(248, 249, 250));
+                BoxBtnCart.setPreferredSize(new java.awt.Dimension(100, 65));
+
+                jButton1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+                jButton1.setText("Đặt hàng");
+
+                jButton2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+                jButton2.setText("In");
+
+                javax.swing.GroupLayout BoxBtnCartLayout = new javax.swing.GroupLayout(BoxBtnCart);
+                BoxBtnCart.setLayout(BoxBtnCartLayout);
+                BoxBtnCartLayout.setHorizontalGroup(
+                                BoxBtnCartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BoxBtnCartLayout
+                                                                .createSequentialGroup()
+                                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                Short.MAX_VALUE)
                                                                 .addComponent(jButton2,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                70,
+                                                                                82,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(0, 30, Short.MAX_VALUE)));
-
-                GroupBtn.add(BtnPay);
-
-                javax.swing.GroupLayout BuyProductRightLayout = new javax.swing.GroupLayout(BuyProductRight);
-                BuyProductRight.setLayout(BuyProductRightLayout);
-                BuyProductRightLayout.setHorizontalGroup(
-                                BuyProductRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(ContainerCart, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                430, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(BoxMoney, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(GroupBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 430,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE));
-                BuyProductRightLayout.setVerticalGroup(
-                                BuyProductRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(BuyProductRightLayout.createSequentialGroup()
-                                                                .addComponent(ContainerCart,
+                                                                .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(jButton1,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                616,
+                                                                                133,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(2, 2, 2)
-                                                                .addComponent(BoxMoney,
+                                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                Short.MAX_VALUE)));
+                BoxBtnCartLayout.setVerticalGroup(
+                                BoxBtnCartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(BoxBtnCartLayout.createSequentialGroup()
+                                                                .addGroup(BoxBtnCartLayout.createParallelGroup(
+                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                                false)
+                                                                                .addComponent(jButton2,
+                                                                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                Short.MAX_VALUE)
+                                                                                .addComponent(jButton1,
+                                                                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                65, Short.MAX_VALUE))
+                                                                .addGap(0, 0, Short.MAX_VALUE)));
+
+                TitleTotalMoney1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                TitleTotalMoney1.setText("Phương thức thanh toán:");
+
+                jComboBox1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                jComboBox1.setModel(
+                                new javax.swing.DefaultComboBoxModel<>(new String[] { "Tiền mặt", "Momo", "Banking" }));
+
+                javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+                jPanel1.setLayout(jPanel1Layout);
+                jPanel1Layout.setHorizontalGroup(
+                                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                                .addContainerGap()
+                                                                .addComponent(TitleTotalMoney1,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                169,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addComponent(jComboBox1, 0,
                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(2, 2, 2)
-                                                                .addComponent(GroupBtn,
+                                                                                Short.MAX_VALUE)
+                                                                .addGap(12, 12, 12)));
+                jPanel1Layout.setVerticalGroup(
+                                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout
+                                                                .createParallelGroup(
+                                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                .addComponent(TitleTotalMoney1,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                Short.MAX_VALUE)
+                                                                .addComponent(jComboBox1,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                80,
+                                                                                33,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)));
 
-                javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-                this.setLayout(layout);
-                layout.setHorizontalGroup(
-                                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(BuyProductLeft,
+                javax.swing.GroupLayout BoxCartLayout = new javax.swing.GroupLayout(BoxCart);
+                BoxCart.setLayout(BoxCartLayout);
+                BoxCartLayout.setHorizontalGroup(
+                                BoxCartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(ScrollPaneCart)
+                                                .addComponent(BoxBtnCart, javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE, 341,
+                                                                Short.MAX_VALUE)
+                                                .addComponent(BoxTotalMoney, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+                BoxCartLayout.setVerticalGroup(
+                                BoxCartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(BoxCartLayout.createSequentialGroup()
+                                                                .addComponent(ScrollPaneCart,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                607, Short.MAX_VALUE)
+                                                                .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(jPanel1,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addPreferredGap(
                                                                                 javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(BuyProductRight,
+                                                                .addComponent(BoxTotalMoney,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                Short.MAX_VALUE)));
-                layout.setVerticalGroup(
-                                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(BuyProductLeft,
+                                                                .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(BoxBtnCart,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(0, 0, Short.MAX_VALUE))
-                                                .addComponent(BuyProductRight, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)));
 
+                ContentCart.add(BoxCart);
+
+                jSplitPane2.setRightComponent(ContentCart);
+
+                add(jSplitPane2);
         }
 
-        private void componentItemCart(CartDTO cart) {
-                if (cart != null) {
-                        JPanel ItemCart = new JPanel();
-                        JLabel nameProduct = new JLabel();
-                        JLabel priceProduct = new JLabel();
-                        JSpinner btnQuantity = new JSpinner(
-                                        new SpinnerNumberModel(cart.getQuantity(), 0, Integer.MAX_VALUE, 1));
-                        btnRemove = new JButton();
+        // Code for dispatching events from components to event handlers.
 
-                        ItemCart.setBackground(new java.awt.Color(255, 255, 255));
-                        ItemCart.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-                        ItemCart.setAutoscrolls(true);
-                        ItemCart.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-                        ItemCart.setFocusTraversalPolicyProvider(true);
-                        ItemCart.setMaximumSize(new java.awt.Dimension(32767, 100));
-                        ItemCart.setName(""); // NOI18N
-                        ItemCart.setRequestFocusEnabled(false);
-
-                        nameProduct.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-                        nameProduct.setText(cart.getProduct().getProduct_name());
-
-                        priceProduct.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-                        priceProduct.setText(String.valueOf(cart.getProduct().getPrice()));
-
-                        btnRemove.setText("Xoá");
-
-                        btnQuantity.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-
-                        javax.swing.GroupLayout ItemCartLayout = new javax.swing.GroupLayout(ItemCart);
-                        ItemCart.setLayout(ItemCartLayout);
-                        ItemCartLayout.setHorizontalGroup(
-                                        ItemCartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(ItemCartLayout.createSequentialGroup()
-                                                                        .addGap(14, 14, 14)
-                                                                        .addGroup(ItemCartLayout.createParallelGroup(
-                                                                                        javax.swing.GroupLayout.Alignment.LEADING,
-                                                                                        false)
-                                                                                        .addComponent(nameProduct,
-                                                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                        195,
-                                                                                                        Short.MAX_VALUE)
-                                                                                        .addComponent(priceProduct,
-                                                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                        Short.MAX_VALUE))
-                                                                        .addGap(18, 18, 18)
-                                                                        .addComponent(btnQuantity,
-                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                        79,
-                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                        .addGap(37, 37, 37)
-                                                                        .addComponent(btnRemove)
-                                                                        .addContainerGap(44, Short.MAX_VALUE)));
-                        ItemCartLayout.setVerticalGroup(
-                                        ItemCartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(ItemCartLayout.createSequentialGroup()
-                                                                        .addGroup(ItemCartLayout.createParallelGroup(
-                                                                                        javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                        .addGroup(ItemCartLayout
-                                                                                                        .createSequentialGroup()
-                                                                                                        .addGap(11, 11, 11)
-                                                                                                        .addComponent(nameProduct,
-                                                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                        30,
-                                                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                        .addPreferredGap(
-                                                                                                                        javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                                                        .addComponent(priceProduct,
-                                                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                        30,
-                                                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                                        .addGroup(ItemCartLayout
-                                                                                                        .createSequentialGroup()
-                                                                                                        .addGap(29, 29, 29)
-                                                                                                        .addGroup(ItemCartLayout
-                                                                                                                        .createParallelGroup(
-                                                                                                                                        javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                                                                        .addComponent(btnQuantity,
-                                                                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                                        40,
-                                                                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                                        .addComponent(btnRemove,
-                                                                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                                        32,
-                                                                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                                                        .addGap(17, 17, 17)));
-
-                        CartContent.add(ItemCart);
-
-                        // tăng giảm số lượng giỏ hàng
-                        btnQuantity.addChangeListener(new ChangeListener() {
-                                public void stateChanged(ChangeEvent e) {
-                                        int newValue = (int) btnQuantity.getValue();
-                                        CartDAO.updateQuantityInCart(cart.getId(), newValue);
-                                        updateTotalMoney();
-                                }
-
-                        });
-
-                        btnRemove.addActionListener(new ActionListener() {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                        int choice = JOptionPane.showConfirmDialog(null, "bạn muốn xoá?", "Comfirm",
-                                                        JOptionPane.YES_NO_OPTION);
-                                        if (choice == JOptionPane.YES_OPTION) {
-                                                CartDAO.removeItemInCart(cart.getId());
-                                                // Tìm chỉ số của jPanel34 trong CartContent
-                                                int index = CartContent.getComponentZOrder(ItemCart);
-
-                                                CartContent.remove(index);
-                                                updateTotalMoney();
-                                                // Cập nhật giao diện
-                                                CartContent.revalidate();
-                                                CartContent.repaint();
-                                        }
-                                }
-                        });
+        private class FormListener implements java.awt.event.ActionListener {
+                FormListener() {
                 }
 
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        if (evt.getSource() == ImageBtn2) {
+                                BuyProduct.this.ImageBtn2ActionPerformed(evt);
+                        } else if (evt.getSource() == BtnRemove) {
+                                BuyProduct.this.BtnRemoveActionPerformed(evt);
+                        }
+                }
+        }// </editor-fold>
+
+        private void ImageBtn2ActionPerformed(java.awt.event.ActionEvent evt) {
+                // TODO add your handling code here:
         }
 
-        // Code for dispatching events from components to event handlers
-        public static void updateTotalMoney() {
-                ArrayList<CartDTO> list_cart = CartDAO.getCartByAccountId(1);
-
-                float totalPayment = 0;
-
-                for (CartDTO cart : list_cart) {
-                        totalPayment += cart.getQuantity() * cart.getProduct().getPrice();
-                }
-
-                NumMoney.setText(String.valueOf(totalPayment));
+        private void BtnRemoveActionPerformed(java.awt.event.ActionEvent evt) {
+                // TODO add your handling code here:
         }
 
         // Variables declaration - do not modify
-        private javax.swing.JPanel BoxMoney;
-        private javax.swing.JPanel BtnPay;
-        private javax.swing.JPanel BuyProductLeft;
-        private javax.swing.JPanel BuyProductRight;
-        private javax.swing.JPanel CartContent;
-        private javax.swing.JPanel CoffeeContent;
-        private javax.swing.JPanel MilkTeaContent;
-        private javax.swing.JPanel SodaContent;
-        private javax.swing.JScrollPane ContainerCart;
-        private javax.swing.JPanel GroupBtn;
+        private javax.swing.JPanel BoxBtnCart;
+        private javax.swing.JPanel BoxCart;
+        private javax.swing.JPanel BoxCoffee;
+        private javax.swing.JPanel BoxTotalMoney;
+        private javax.swing.JButton BtnRemove;
+        private javax.swing.JPanel ContentCart;
+        private javax.swing.JPanel ContentMemu;
         private javax.swing.JButton ImageBtn2;
-        private javax.swing.JPanel Item10;
         private javax.swing.JPanel Item6;
-        private javax.swing.JPanel Item7;
-        private javax.swing.JPanel Item8;
-        private javax.swing.JPanel Item9;
         private javax.swing.JPanel ItemCart;
-        private static javax.swing.JLabel NumMoney;
-        private javax.swing.JLabel TitleMoney;
+        private javax.swing.JPanel ListItemCart;
+        private javax.swing.JLabel Price;
+        private javax.swing.JSpinner Quantity;
+        private javax.swing.JScrollPane ScrollPaneCart;
+        private javax.swing.JLabel TextTotalMoney;
+        private javax.swing.JLabel TitleTotalMoney;
+        private javax.swing.JLabel TitleTotalMoney1;
         private javax.swing.JButton btnItem1;
-        private javax.swing.JSpinner btnQuantity;
-        private javax.swing.JButton btnRemove;
-        private javax.swing.JButton jButton19;
+        private javax.swing.JButton jButton1;
         private javax.swing.JButton jButton2;
-        private javax.swing.JButton jButton20;
-        private javax.swing.JButton jButton21;
-        private javax.swing.JButton jButton22;
-        private javax.swing.JButton jButton23;
-        private javax.swing.JButton jButton24;
-        private javax.swing.JButton jButton25;
-        private javax.swing.JButton jButton26;
+        private javax.swing.JComboBox<String> jComboBox1;
         private javax.swing.JEditorPane jEditorPane1;
-        private javax.swing.JLabel jLabel17;
-        private javax.swing.JLabel jLabel18;
-        private javax.swing.JLabel jLabel21;
-        private javax.swing.JLabel jLabel22;
-        private javax.swing.JLabel jLabel23;
-        private javax.swing.JLabel jLabel24;
-        private javax.swing.JLabel jLabel25;
-        private javax.swing.JLabel jLabel26;
+        private javax.swing.JPanel jPanel1;
         private javax.swing.JPanel jPanel2;
         private javax.swing.JPanel jPanel3;
         private javax.swing.JScrollPane jScrollPane1;
+        private javax.swing.JSplitPane jSplitPane2;
         private javax.swing.JTabbedPane jTabbedPane1;
         private javax.swing.JLabel nameItem1;
         private javax.swing.JLabel nameProduct;
         private javax.swing.JLabel priceItem1;
-        private javax.swing.JLabel priceProduct;
         // End of variables declaration
 }

@@ -15,24 +15,24 @@ public class ProductDAO {
         try {
             Connection conn = mysqlConnect.getConnection();
             String sql = "SELECT \r\n" + //
-                    "\tproducts.id,\r\n" + //
-                    "\tproducts.product_name AS product_name,\r\n" + //
-                    "\turl_image,\r\n" + //
-                    "\tprice,\r\n" + //
-                    "\tcategories.catgegory_name AS category,\r\n" + //
-                    "\tproducts.is_active,\r\n" + //
-                    "\tproducts.created_date\r\n" + //
-                    " from products join categories on products.category_id = categories.id";
+                    "\tsanpham.id,\r\n" + //
+                    "\tsanpham.ten_SP AS ten_SP,\r\n" + //
+                    "\turl_anh,\r\n" + //
+                    "\tgia,\r\n" + //
+                    "\tloaisanpham.ten_loai AS ten_loai,\r\n" + //
+                    "\tsanpham.is_active,\r\n" + //
+                    "\tsanpham.createdAt\r\n" + //
+                    " from sanpham join loaisanpham on sanpham.LoaiSanPham_id = loaisanpham.id";
             PreparedStatement pst = conn.prepareStatement(sql);
             ResultSet result = pst.executeQuery();
             while (result.next()) {
                 int id = result.getInt("id");
-                String product_name = result.getString("product_name");
-                String url_image = result.getString("url_image");
-                float price = result.getFloat("price");
-                String category = result.getString("category");
+                String product_name = result.getString("ten_SP");
+                String url_image = result.getString("url_anh");
+                float price = result.getFloat("gia");
+                String category = result.getString("ten_loai");
                 int is_active = result.getInt("is_active");
-                String created_date = result.getString("created_date");
+                String created_date = result.getString("createdAt");
                 list_product.add(new ProductDTO(id, product_name, url_image, price, is_active, created_date, category));
             }
             mysqlConnect.closeConnection(conn);
@@ -44,10 +44,10 @@ public class ProductDAO {
     }
 
     // public static void main(String[] args) {
-    //     ArrayList<ProductDTO> list = get_all_product();
-    //     for (ProductDTO productDTO : list) {
-    //         System.out.println(productDTO.getProduct_name());
-    //     }
+    // ArrayList<ProductDTO> list = get_all_product();
+    // for (ProductDTO productDTO : list) {
+    // System.out.println(productDTO.getProduct_name());
+    // }
     // }
 
 }
