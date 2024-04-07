@@ -500,7 +500,9 @@ public class Main extends javax.swing.JFrame {
     }
 
     private void AccountLabelMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
+            SwitchControl();
+            TaiKhoan orderMenu = new TaiKhoan();
+            Right.add(orderMenu);
     }
 
     private void EmployeeLabelMouseClicked(java.awt.event.MouseEvent evt) {
