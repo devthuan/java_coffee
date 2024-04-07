@@ -7,12 +7,20 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.project.BUS.*;
 import com.project.DAO.*;
 import com.project.DTO.*;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import javax.management.modelmbean.ModelMBean;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -63,7 +71,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         addUser = new javax.swing.JButton();
@@ -173,6 +181,12 @@ public class EmployeeMenu extends javax.swing.JPanel {
 
         jbPrint.setFont(new java.awt.Font("Segoe UI Semibold", 2, 16)); // NOI18N
         jbPrint.setText("In Ấn");
+        jbPrint.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt)
+                {
+                    jbPrintActionPerformed(evt);
+                }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -230,17 +244,17 @@ public class EmployeeMenu extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(244, 244, 244))
         );
-    }// </editor-fold>                        
+    }// </editor-fold>//GEN-END:initComponents
 
-    private void addUserActionPerformed(java.awt.event.ActionEvent evt) {                                        
+    private void addUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserActionPerformed
         new AddUser().setVisible(true);
-    }                                       
+    }//GEN-LAST:event_addUserActionPerformed
 
-    private void jtSearchActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    private void jtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtSearchActionPerformed
         
-    }                                        
+    }//GEN-LAST:event_jtSearchActionPerformed
     
-    private void deleteUserActionPerformed(java.awt.event.ActionEvent evt) {                                           
+    private void deleteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserActionPerformed
         int selectedRow = jTable1.getSelectedRow();
         if(selectedRow == -1)
         {
@@ -270,9 +284,9 @@ public class EmployeeMenu extends javax.swing.JPanel {
                 }
             }   
         }
-    }                                          
+    }//GEN-LAST:event_deleteUserActionPerformed
 
-    private void EditActionPerformed(java.awt.event.ActionEvent evt) {                                     
+    private void EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditActionPerformed
         int selectedRow = jTable1.getSelectedRow();
         if(selectedRow == -1)
         {
@@ -287,9 +301,9 @@ public class EmployeeMenu extends javax.swing.JPanel {
                 ex.printStackTrace();
             }
         }
-    }                                    
+    }//GEN-LAST:event_EditActionPerformed
 
-    private void SearchTextField(java.awt.event.KeyEvent evt) {                                 
+    private void SearchTextField(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SearchTextField
         String keyword = jtSearch.getText().trim();
         if (!keyword.isEmpty()) {
             DefaultTableModel dtm = new DefaultTableModel();
@@ -352,9 +366,9 @@ public class EmployeeMenu extends javax.swing.JPanel {
                 Logger.getLogger(EmployeeMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }                                
+    }//GEN-LAST:event_SearchTextField
 
-    private void jcbSearchActionPerformed(java.awt.event.ActionEvent evt) {                                          
+    private void jcbSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSearchActionPerformed
         jtSearch.setText("");
         jtSearch.requestFocus();
         try {
@@ -376,12 +390,13 @@ public class EmployeeMenu extends javax.swing.JPanel {
             } catch (Exception ex) {
                 Logger.getLogger(EmployeeMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
-    }                                         
+    }//GEN-LAST:event_jcbSearchActionPerformed
 
-    private void jbExportActionPerformed(java.awt.event.ActionEvent evt) {                                         
-    }                                        
+    private void jbExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExportActionPerformed
+        new ExportUser();
+    }//GEN-LAST:event_jbExportActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         dtm.setRowCount(0);
         List<User> users = null;
         try {
@@ -394,14 +409,137 @@ public class EmployeeMenu extends javax.swing.JPanel {
             dtm.addRow(new Object[] {user.getId(), user.getName(), user.getDate(), user.getAddress(), user.getPosition(), user.getPhone(),
             user.getSalary(), user.getDateCreate(), user.getAccountId()});
         }
-    }                                        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        
-    }                                        
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        File excelFile ;
+        FileInputStream excelFIS = null;
+        BufferedInputStream excelBIS = null;
+        XSSFWorkbook excelJTableImport = null;
+        String defaultCurrentDirectoryPath = "C:/Code/books.xlsx";
+        JFileChooser excelFileChooser = new JFileChooser(defaultCurrentDirectoryPath);
+        FileNameExtensionFilter fnef = new FileNameExtensionFilter("EXCEL FILES", "xls", "xlsx", "xlsm");
+        excelFileChooser.setFileFilter(fnef);
+        excelFileChooser.setDialogTitle("Select Excel File");
+        int excelChooser = excelFileChooser.showOpenDialog(null);
+        dtm.setRowCount(0);
+        if(excelChooser == JFileChooser.APPROVE_OPTION)
+        {
+            try 
+            {
+                excelFile = excelFileChooser.getSelectedFile();
+                excelFIS = new FileInputStream(excelFile);
+                excelBIS = new BufferedInputStream(excelFIS);
+                excelJTableImport = new XSSFWorkbook(excelBIS);
+                XSSFSheet excelSheet = excelJTableImport.getSheetAt(0);
+                for(int row = 1; row <= excelSheet.getLastRowNum(); row++)
+                {
+                    XSSFRow excelRow = excelSheet.getRow(row);
+                    
+                    XSSFCell excelId = excelRow.getCell(0);
+                    int idValue = 0;
+                    if (excelId != null) {
+                        if (excelId.getCellTypeEnum() == CellType.NUMERIC) {
+                            idValue = (int) excelId.getNumericCellValue();
+                        } else if (excelId.getCellTypeEnum() == CellType.STRING) {
+                            String idString = excelId.getStringCellValue();
+                            try {
+                                idValue = Integer.parseInt(idString);
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace(); 
+                            }
+                        }
+                    }
+                    
+                    XSSFCell excelName = excelRow.getCell(1);
+                    XSSFCell excelDate = excelRow.getCell(2);
+                    XSSFCell excelAddress = excelRow.getCell(3);
+                    XSSFCell excelPosition = excelRow.getCell(4);
+                    XSSFCell excelPhone = excelRow.getCell(5);
+                    XSSFCell excelSalary = excelRow.getCell(6);
+                    
+                    XSSFCell excelDateCreate = excelRow.getCell(7);
+                    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+                    String formattedDate = sdf.format(excelDateCreate.getDateCellValue());
 
+                    XSSFCell excelIdAccount = excelRow.getCell(8);
+                    int idAccountValue = 0;
+                    if (excelIdAccount != null) {
+                        if (excelIdAccount.getCellTypeEnum() == CellType.NUMERIC) {
+                            idAccountValue = (int) excelIdAccount.getNumericCellValue();
+                        } else if (excelIdAccount.getCellTypeEnum() == CellType.STRING) {
+                            String idAccountString = excelIdAccount.getStringCellValue();
+                            try {
+                                idAccountValue = Integer.parseInt(idAccountString);
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace(); 
+                            }
+                        }
+                    }
+                    
+                    dtm.addRow(new Object[] {idValue, excelName,excelDate, excelAddress, excelPosition, excelPhone, excelSalary, formattedDate, idAccountValue});
+                }
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
-    // Variables declaration - do not modify                     
+    private void jbPrintActionPerformed(java.awt.event.ActionEvent evt)
+    {
+        String path = "users.pdf";
+        UserService userService = new UserService();
+        List<User> users = null;
+
+        try {
+            Document document = new Document(PageSize.A3.rotate());
+            PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream(path));
+            document.open();
+
+            PdfPTable table = new PdfPTable(9);
+            table.setWidthPercentage(100);
+
+            float[] columnWidths = { 1f, 2f, 2f, 3f, 2f, 2f, 2f, 2f, 1f };
+            table.setWidths(columnWidths);
+            table.addCell("Id");
+            table.addCell("Name");
+            table.addCell("Date");
+            table.addCell("Address");
+            table.addCell("Position");
+            table.addCell("Phone");
+            table.addCell("Salary");
+            table.addCell("DateCreate");
+            table.addCell("Id Account");
+
+            try {
+                users = userService.getAllUser();
+                for (User user : users) {
+                    table.addCell(String.valueOf(user.getId()));
+                    table.addCell(user.getName());
+                    table.addCell(String.valueOf(user.getDate()));
+                    table.addCell(user.getAddress());
+                    table.addCell(user.getPosition());
+                    table.addCell(user.getPhone());
+                    table.addCell(String.valueOf(user.getSalary()));
+                    table.addCell(String.valueOf(user.getDateCreate()));
+                    table.addCell(String.valueOf(user.getAccountId()));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            document.add(table); // Thêm bảng vào tài liệu PDF
+
+            document.close();
+            System.out.println("Tạo tệp PDF thành công.");
+        } catch (DocumentException | FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Đã xảy ra lỗi khi tạo tệp PDF.");
+        }
+    }
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Edit;
     private javax.swing.JButton addUser;
     private javax.swing.JButton deleteUser;
@@ -413,5 +551,5 @@ public class EmployeeMenu extends javax.swing.JPanel {
     private javax.swing.JButton jbPrint;
     private javax.swing.JComboBox<String> jcbSearch;
     private javax.swing.JTextField jtSearch;
-    // End of variables declaration                   
+    // End of variables declaration//GEN-END:variables
 }
