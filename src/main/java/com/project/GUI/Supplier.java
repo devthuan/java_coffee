@@ -1,9 +1,10 @@
-package com.project.GUI;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
+package com.project.GUI;
+
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,16 +29,18 @@ public class Supplier extends javax.swing.JPanel {
         private void initComponents() {
 
                 SupplierTop = new javax.swing.JPanel();
+                BoxTitle = new javax.swing.JPanel();
+                TitleLabel = new javax.swing.JLabel();
                 BoxBtn = new javax.swing.JPanel();
-                BtnAdd = new javax.swing.JButton();
-                BtnDetail = new javax.swing.JButton();
-                BtnDelete = new javax.swing.JButton();
-                BtnImportExcel = new javax.swing.JButton();
-                BtnExportExcel = new javax.swing.JButton();
+                BtnAdd = new javax.swing.JToggleButton();
+                BtnDetail = new javax.swing.JToggleButton();
+                BtnRemove = new javax.swing.JToggleButton();
+                BtnImportExcel = new javax.swing.JToggleButton();
+                BtnExportExcel = new javax.swing.JToggleButton();
                 BoxSearch = new javax.swing.JPanel();
-                SearchTextField = new javax.swing.JTextField();
                 Filter = new javax.swing.JComboBox<>();
                 BtnRefresh = new javax.swing.JButton();
+                InputSearch = new javax.swing.JTextField();
                 SupplierCenter = new javax.swing.JPanel();
                 jScrollPane1 = new javax.swing.JScrollPane();
                 TableSupplier = new javax.swing.JTable();
@@ -45,125 +48,114 @@ public class Supplier extends javax.swing.JPanel {
                 setMinimumSize(new java.awt.Dimension(1085, 768));
                 setName(""); // NOI18N
                 setPreferredSize(new java.awt.Dimension(1085, 768));
-                setLayout(new java.awt.BorderLayout(0, 5));
+                setLayout(new java.awt.BorderLayout());
 
                 SupplierTop.setBackground(new java.awt.Color(255, 255, 255));
-                SupplierTop.setPreferredSize(new java.awt.Dimension(608, 100));
+                SupplierTop.setPreferredSize(new java.awt.Dimension(608, 170));
+
+                BoxTitle.setBackground(new java.awt.Color(255, 255, 255));
+                BoxTitle.setMinimumSize(new java.awt.Dimension(0, 84));
+                BoxTitle.setLayout(new java.awt.CardLayout());
+
+                TitleLabel.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+                TitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                TitleLabel.setIcon(new javax.swing.ImageIcon("./src/assets/icon/supplier-64.png")); // NOI18N
+                TitleLabel.setText("Quản lý nhà cung cấp");
+                TitleLabel.setBorder(
+                                javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+                TitleLabel.setIconTextGap(20);
+                TitleLabel.setPreferredSize(new java.awt.Dimension(0, 84));
+                TitleLabel.setRequestFocusEnabled(false);
+                BoxTitle.add(TitleLabel, "card2");
 
                 BoxBtn.setBackground(new java.awt.Color(255, 255, 255));
-                BoxBtn.setLayout(new java.awt.GridLayout(1, 4, 5, 0));
+                BoxBtn.setLayout(new java.awt.GridLayout(1, 5, 5, 0));
 
-                BtnAdd.setBackground(new java.awt.Color(248, 249, 250));
                 BtnAdd.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 BtnAdd.setIcon(new javax.swing.ImageIcon("./src/assets/icon/plus.png")); // NOI18N
                 BtnAdd.setText("Thêm");
-                BtnAdd.setBorder(null);
                 BtnAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-                BtnAdd.setIconTextGap(8);
-                BtnAdd.setMaximumSize(new java.awt.Dimension(80, 80));
-                BtnAdd.setMinimumSize(new java.awt.Dimension(80, 80));
-                BtnAdd.setPreferredSize(new java.awt.Dimension(80, 80));
-                BtnAdd.setVerifyInputWhenFocusTarget(false);
                 BtnAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-                BtnAdd.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                BtnAddActionPerformed(evt);
+                BtnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseClicked(java.awt.event.MouseEvent evt) {
+                                BtnAddMouseClicked(evt);
                         }
                 });
                 BoxBtn.add(BtnAdd);
 
-                BtnDetail.setBackground(new java.awt.Color(248, 249, 250));
                 BtnDetail.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 BtnDetail.setIcon(new javax.swing.ImageIcon("./src/assets/icon/info-rgb.png")); // NOI18N
                 BtnDetail.setText("Chi tiết");
-                BtnDetail.setBorder(null);
                 BtnDetail.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-                BtnDetail.setIconTextGap(8);
-                BtnDetail.setMaximumSize(new java.awt.Dimension(80, 80));
-                BtnDetail.setMinimumSize(new java.awt.Dimension(80, 80));
-                BtnDetail.setPreferredSize(new java.awt.Dimension(80, 80));
-                BtnDetail.setVerifyInputWhenFocusTarget(false);
                 BtnDetail.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-                BtnDetail.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                BtnDetailActionPerformed(evt);
+                BtnDetail.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseClicked(java.awt.event.MouseEvent evt) {
+                                BtnDetailMouseClicked(evt);
                         }
                 });
                 BoxBtn.add(BtnDetail);
 
-                BtnDelete.setBackground(new java.awt.Color(248, 249, 250));
-                BtnDelete.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-                BtnDelete.setIcon(new javax.swing.ImageIcon("./src/assets/icon/cancel.png")); // NOI18N
-                BtnDelete.setText("Xoá");
-                BtnDelete.setBorder(null);
-                BtnDelete.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-                BtnDelete.setIconTextGap(8);
-                BtnDelete.setMaximumSize(new java.awt.Dimension(80, 80));
-                BtnDelete.setMinimumSize(new java.awt.Dimension(80, 80));
-                BtnDelete.setPreferredSize(new java.awt.Dimension(80, 80));
-                BtnDelete.setVerifyInputWhenFocusTarget(false);
-                BtnDelete.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-                BtnDelete.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                BtnDeleteActionPerformed(evt);
+                BtnRemove.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                BtnRemove.setIcon(new javax.swing.ImageIcon("./src/assets/icon/cancel.png")); // NOI18N
+                BtnRemove.setText("Xoá");
+                BtnRemove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+                BtnRemove.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+                BtnRemove.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseClicked(java.awt.event.MouseEvent evt) {
+                                BtnRemoveMouseClicked(evt);
                         }
                 });
-                BoxBtn.add(BtnDelete);
+                BoxBtn.add(BtnRemove);
 
-                BtnImportExcel.setBackground(new java.awt.Color(248, 249, 250));
                 BtnImportExcel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 BtnImportExcel.setIcon(new javax.swing.ImageIcon("./src/assets/icon/upload-file.png")); // NOI18N
                 BtnImportExcel.setText("Nhập excel");
-                BtnImportExcel.setBorder(null);
                 BtnImportExcel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-                BtnImportExcel.setIconTextGap(8);
-                BtnImportExcel.setMaximumSize(new java.awt.Dimension(80, 80));
-                BtnImportExcel.setMinimumSize(new java.awt.Dimension(80, 80));
-                BtnImportExcel.setPreferredSize(new java.awt.Dimension(80, 80));
-                BtnImportExcel.setVerifyInputWhenFocusTarget(false);
+                BtnImportExcel.setMargin(new java.awt.Insets(2, 1, 2, 1));
                 BtnImportExcel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-                BtnImportExcel.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                BtnImportExcelActionPerformed(evt);
+                BtnImportExcel.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseClicked(java.awt.event.MouseEvent evt) {
+                                BtnImportExcelMouseClicked(evt);
                         }
                 });
                 BoxBtn.add(BtnImportExcel);
 
-                BtnExportExcel.setBackground(new java.awt.Color(248, 249, 250));
                 BtnExportExcel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 BtnExportExcel.setIcon(new javax.swing.ImageIcon("./src/assets/icon/xls.png")); // NOI18N
                 BtnExportExcel.setText("Xuất excel");
-                BtnExportExcel.setBorder(null);
                 BtnExportExcel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-                BtnExportExcel.setIconTextGap(8);
-                BtnExportExcel.setMaximumSize(new java.awt.Dimension(80, 80));
-                BtnExportExcel.setMinimumSize(new java.awt.Dimension(80, 80));
-                BtnExportExcel.setPreferredSize(new java.awt.Dimension(80, 80));
-                BtnExportExcel.setVerifyInputWhenFocusTarget(false);
+                BtnExportExcel.setMargin(new java.awt.Insets(2, 1, 2, 1));
                 BtnExportExcel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-                BtnExportExcel.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                BtnExportExcelActionPerformed(evt);
+                BtnExportExcel.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseClicked(java.awt.event.MouseEvent evt) {
+                                BtnExportExcelMouseClicked(evt);
                         }
                 });
                 BoxBtn.add(BtnExportExcel);
 
                 BoxSearch.setBackground(new java.awt.Color(255, 255, 255));
 
-                SearchTextField.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-                SearchTextField.setText("Tìm kiếm ....");
-                SearchTextField.setKeymap(null);
-                SearchTextField.setMargin(new java.awt.Insets(2, 10, 2, 6));
-
                 Filter.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-                Filter.setModel(
-                                new javax.swing.DefaultComboBoxModel<>(
-                                                new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+                Filter.setModel(new javax.swing.DefaultComboBoxModel<>(
+                                new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
                 Filter.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+                Filter.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                FilterActionPerformed(evt);
+                        }
+                });
 
                 BtnRefresh.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 BtnRefresh.setIcon(new javax.swing.ImageIcon("./src/assets/icon/refresh.png")); // NOI18N
                 BtnRefresh.setText("Làm mới");
+                BtnRefresh.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseClicked(java.awt.event.MouseEvent evt) {
+                                BtnRefreshMouseClicked(evt);
+                        }
+                });
+
+                InputSearch.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                InputSearch.setText("Tìm kiếm.....");
 
                 javax.swing.GroupLayout BoxSearchLayout = new javax.swing.GroupLayout(BoxSearch);
                 BoxSearch.setLayout(BoxSearchLayout);
@@ -171,40 +163,38 @@ public class Supplier extends javax.swing.JPanel {
                                 BoxSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BoxSearchLayout
                                                                 .createSequentialGroup()
-                                                                .addGap(20, 20, 20)
+                                                                .addContainerGap()
                                                                 .addComponent(Filter,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                130,
+                                                                                119,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(26, 26, 26)
-                                                                .addComponent(SearchTextField,
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(InputSearch,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                281,
+                                                                                256,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(
-                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                                                                36,
-                                                                                Short.MAX_VALUE)
-                                                                .addComponent(BtnRefresh)));
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(BtnRefresh)
+                                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                Short.MAX_VALUE)));
                 BoxSearchLayout.setVerticalGroup(
                                 BoxSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addGroup(BoxSearchLayout.createSequentialGroup()
-                                                                .addGap(16, 16, 16)
-                                                                .addGroup(
-                                                                                BoxSearchLayout.createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                                                .addComponent(SearchTextField,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                55,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addComponent(Filter,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                55,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addComponent(BtnRefresh,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                55,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addGap(10, 10, 10)
+                                                                .addGroup(BoxSearchLayout.createParallelGroup(
+                                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                                .addComponent(Filter,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                55,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addComponent(InputSearch,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                55,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addComponent(BtnRefresh,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                55,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
                                                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
                                                                                 Short.MAX_VALUE)));
 
@@ -213,40 +203,42 @@ public class Supplier extends javax.swing.JPanel {
                 SupplierTopLayout.setHorizontalGroup(
                                 SupplierTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addGroup(SupplierTopLayout.createSequentialGroup()
-                                                                .addGap(19, 19, 19)
+                                                                .addGap(21, 21, 21)
                                                                 .addComponent(BoxBtn,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                458,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addPreferredGap(
-                                                                                javax.swing.LayoutStyle.ComponentPlacement.UNRELATED,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                Short.MAX_VALUE)
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                                                37, Short.MAX_VALUE)
                                                                 .addComponent(BoxSearch,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(21, 21, 21)));
+                                                                .addGap(26, 26, 26))
+                                                .addComponent(BoxTitle, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
                 SupplierTopLayout.setVerticalGroup(
                                 SupplierTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SupplierTopLayout
                                                                 .createSequentialGroup()
-                                                                .addContainerGap()
-                                                                .addGroup(SupplierTopLayout
-                                                                                .createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.TRAILING)
-                                                                                .addGroup(SupplierTopLayout
-                                                                                                .createSequentialGroup()
-                                                                                                .addGap(0, 8, Short.MAX_VALUE)
-                                                                                                .addComponent(BoxBtn,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addComponent(BoxTitle,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addGroup(SupplierTopLayout.createParallelGroup(
+                                                                                javax.swing.GroupLayout.Alignment.LEADING)
                                                                                 .addComponent(BoxSearch,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE))
-                                                                .addContainerGap()));
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addComponent(BoxBtn,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                71,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addContainerGap(9, Short.MAX_VALUE)));
 
                 add(SupplierTop, java.awt.BorderLayout.PAGE_START);
 
@@ -255,14 +247,13 @@ public class Supplier extends javax.swing.JPanel {
                 TableSupplier.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 TableSupplier.setModel(new javax.swing.table.DefaultTableModel(
                                 new Object[][] {
-                                                { "test", "test", "test", "test", "test", "test" },
-                                                { null, null, null, null, null, null },
+                                                { "test", "test", "test", "test1", "test", "test" },
+                                                { "1", "1", "1", "1", "1", null },
                                                 { null, null, null, null, null, null },
                                                 { null, null, null, null, null, null }
                                 },
                                 new String[] {
-                                                "ID", "Tên nhà cung cấp", "Địa chỉ", "Điện thoại", "Email", "Ngày tạo",
-                                                "Cập nhật cuối"
+                                                "ID", "Tên nhà cung cấp", "Địa chỉ", "Điện thoại", "Email", "Ngày tạo"
                                 }));
                 TableSupplier.getTableHeader().setReorderingAllowed(false);
                 jScrollPane1.setViewportView(TableSupplier);
@@ -272,50 +263,55 @@ public class Supplier extends javax.swing.JPanel {
                 add(SupplierCenter, java.awt.BorderLayout.CENTER);
         }// </editor-fold>
 
-        private void BtnAddActionPerformed(java.awt.event.ActionEvent evt) {
+        private void FilterActionPerformed(java.awt.event.ActionEvent evt) {
+                // TODO add your handling code here:
+        }
+
+        private void BtnAddMouseClicked(java.awt.event.MouseEvent evt) {
                 new FormSupplier("Thêm nhà cung cấp").setVisible(true);
         }
 
-        private void BtnDetailActionPerformed(java.awt.event.ActionEvent evt) {
+        private void BtnDetailMouseClicked(java.awt.event.MouseEvent evt) {
                 int selectedRow = TableSupplier.getSelectedRow();
                 if (selectedRow != -1) {
-                        Object value1 = TableSupplier.getValueAt(selectedRow, 0);
-                        Object value2 = TableSupplier.getValueAt(selectedRow, 1);
-                        Object value3 = TableSupplier.getValueAt(selectedRow, 2);
-                        System.out.println(value1);
-                        System.out.println(value2);
-                        System.out.println(value3);
-
                         new FormSupplier("Chi tiết nhà cung cấp").setVisible(true);
+                } else {
+                        JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để xem chi tiết.");
                 }
         }
 
-        private void BtnDeleteActionPerformed(java.awt.event.ActionEvent evt) {
+        private void BtnRemoveMouseClicked(java.awt.event.MouseEvent evt) {
                 // TODO add your handling code here:
         }
 
-        private void BtnExportExcelActionPerformed(java.awt.event.ActionEvent evt) {
+        private void BtnImportExcelMouseClicked(java.awt.event.MouseEvent evt) {
                 // TODO add your handling code here:
         }
 
-        private void BtnImportExcelActionPerformed(java.awt.event.ActionEvent evt) {
+        private void BtnExportExcelMouseClicked(java.awt.event.MouseEvent evt) {
+                // TODO add your handling code here:
+        }
+
+        private void BtnRefreshMouseClicked(java.awt.event.MouseEvent evt) {
                 // TODO add your handling code here:
         }
 
         // Variables declaration - do not modify
         private javax.swing.JPanel BoxBtn;
         private javax.swing.JPanel BoxSearch;
-        private javax.swing.JButton BtnAdd;
-        private javax.swing.JButton BtnDelete;
-        private javax.swing.JButton BtnDetail;
-        private javax.swing.JButton BtnExportExcel;
-        private javax.swing.JButton BtnImportExcel;
+        private javax.swing.JPanel BoxTitle;
+        private javax.swing.JToggleButton BtnAdd;
+        private javax.swing.JToggleButton BtnDetail;
+        private javax.swing.JToggleButton BtnExportExcel;
+        private javax.swing.JToggleButton BtnImportExcel;
         private javax.swing.JButton BtnRefresh;
+        private javax.swing.JToggleButton BtnRemove;
         private javax.swing.JComboBox<String> Filter;
-        private javax.swing.JTextField SearchTextField;
+        private javax.swing.JTextField InputSearch;
         private javax.swing.JPanel SupplierCenter;
         private javax.swing.JPanel SupplierTop;
         private javax.swing.JTable TableSupplier;
+        private javax.swing.JLabel TitleLabel;
         private javax.swing.JScrollPane jScrollPane1;
         // End of variables declaration
 }
