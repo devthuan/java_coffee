@@ -15,6 +15,7 @@ public class ProductDTO {
     }
 
     public ProductDTO(int id,String product_name, String url_image, Float price, int is_active,String created_date, String category ){
+
         this.id = id;
         this.product_name = product_name;
         this.url_image = url_image;
@@ -24,6 +25,7 @@ public class ProductDTO {
         this.category = category;
     }
     public ProductDTO(String product_name, String url_image, Float price, String category ){
+
         this.product_name = product_name;
         this.url_image = url_image;
         this.price = price;
@@ -33,6 +35,7 @@ public class ProductDTO {
     public void setCategory(String category) {
         this.category = category;
     }
+
     public void setCreated_date(String created_date) {
         this.created_date = created_date;
     }
@@ -45,6 +48,7 @@ public class ProductDTO {
     public void setProduct_name(String product_name) {
         this.product_name = product_name;
     }
+
     public void setUrl_image(String url_image) {
         this.url_image = url_image;
     }
@@ -60,6 +64,7 @@ public class ProductDTO {
     public String getCategory() {
         return category;
     }
+
     public String getCreated_date() {
         return created_date;
     }
@@ -76,4 +81,5 @@ public class ProductDTO {
         return url_image;
     }
     
+
 }

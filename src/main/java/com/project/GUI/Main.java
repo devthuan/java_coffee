@@ -5,9 +5,15 @@
 package com.project.GUI;
 
 import java.awt.Cursor;
+
 import java.util.ArrayList;
 import java.awt.*;
 import java.awt.Color;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -21,8 +27,10 @@ public class Main extends javax.swing.JFrame {
 
         public Main() {
                 initComponents();
+
                 SwitchControl();
                 Right.add(new BuyProduct()).setVisible(true);
+
 
         }
 
@@ -516,7 +524,9 @@ public class Main extends javax.swing.JFrame {
         }
 
         private void OrderLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                // TODO add your handling code here:
+                SwitchControl();
+                OrderMenu orderMenu = new OrderMenu();
+                Right.add(orderMenu);
         }
 
         private void AccountLabelMouseClicked(java.awt.event.MouseEvent evt) {
@@ -539,6 +549,9 @@ public class Main extends javax.swing.JFrame {
         private void SupplierLabelMouseClicked(java.awt.event.MouseEvent evt) {
                 SwitchControl();
                 Right.add(new Supplier()).setVisible(true);
+
+             
+
         }
 
         private void StatisticalLabelMouseClicked(java.awt.event.MouseEvent evt) {
