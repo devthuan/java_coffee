@@ -1,4 +1,5 @@
 package com.project.GUI;
+
 import java.awt.Color;
 import java.sql.*;
 import java.util.ArrayList;
@@ -23,17 +24,15 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-
 public class EmployeeMenu extends javax.swing.JPanel {
     DefaultTableModel dtm;
     public UserService userservice;
+
     public EmployeeMenu() {
         initComponents();
         userservice = new UserService();
-        dtm = new DefaultTableModel()
-        {
-            public boolean isCellEditable(int row, int column)
-            {
+        dtm = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
 
                 return false;
             }
@@ -55,15 +54,15 @@ public class EmployeeMenu extends javax.swing.JPanel {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        for(User user : users)
-        {
-            dtm.addRow(new Object[] {user.getId(), user.getName(), user.getDate(), user.getAddress(), user.getPosition(), user.getPhone(), user.getSalary(), user.getDateCreate(), user.getAccountId()});
+        for (User user : users) {
+            dtm.addRow(new Object[] { user.getId(), user.getName(), user.getDate(), user.getAddress(),
+                    user.getPosition(), user.getPhone(), user.getSalary(), user.getDateCreate(), user.getAccountId() });
         }
-        
+
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
         addUser = new javax.swing.JButton();
@@ -82,7 +81,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(1085, 768));
 
         addUser.setFont(new java.awt.Font("Arial", 2, 16)); // NOI18N
-        addUser.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER\\Desktop\\test_javaswing\\src\\assets\\icon\\add.png")); // NOI18N
+        addUser.setIcon(new javax.swing.ImageIcon("./src/assets/icon/add.png")); // NOI18N
         addUser.setText("Thêm");
         addUser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         addUser.addActionListener(new java.awt.event.ActionListener() {
@@ -92,7 +91,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         });
 
         Edit.setFont(new java.awt.Font("Arial", 2, 16)); // NOI18N
-        Edit.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER\\Desktop\\test_javaswing\\src\\assets\\icon\\edit.png")); // NOI18N
+        Edit.setIcon(new javax.swing.ImageIcon("./src/assets/icon/edit.png")); // NOI18N
         Edit.setText("Sửa");
         Edit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Edit.addActionListener(new java.awt.event.ActionListener() {
@@ -102,7 +101,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         });
 
         deleteUser.setFont(new java.awt.Font("Arial", 2, 16)); // NOI18N
-        deleteUser.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER\\Desktop\\test_javaswing\\src\\assets\\icon\\delete.png")); // NOI18N
+        deleteUser.setIcon(new javax.swing.ImageIcon("./src/assets/icon/delete.png")); // NOI18N
         deleteUser.setText("Xóa");
         deleteUser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         deleteUser.addActionListener(new java.awt.event.ActionListener() {
@@ -124,20 +123,20 @@ public class EmployeeMenu extends javax.swing.JPanel {
         });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+                new Object[][] {
+                        { null, null, null, null },
+                        { null, null, null, null },
+                        { null, null, null, null },
+                        { null, null, null, null }
+                },
+                new String[] {
+                        "Title 1", "Title 2", "Title 3", "Title 4"
+                }));
         jScrollPane1.setViewportView(jTable1);
 
         jcbSearch.setFont(new java.awt.Font("Segoe UI", 2, 16)); // NOI18N
-        jcbSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tìm kiếm theo mã nhân viên", "Tìm kiếm theo tên nhân viên", "Tìm kiếm theo số điện thoại" }));
+        jcbSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tìm kiếm theo mã nhân viên",
+                "Tìm kiếm theo tên nhân viên", "Tìm kiếm theo số điện thoại" }));
         jcbSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbSearchActionPerformed(evt);
@@ -154,7 +153,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         });
 
         jButton1.setFont(new java.awt.Font("Arial", 2, 16)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER\\Desktop\\test_javaswing\\src\\assets\\icon\\loading.png")); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon("./src/assets/icon/loading.png")); // NOI18N
         jButton1.setText("Refresh");
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -177,80 +176,96 @@ public class EmployeeMenu extends javax.swing.JPanel {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(addUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(61, 61, 61)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jbExport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Edit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(46, 46, 46)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(deleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addGap(54, 54, 54)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jcbSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addComponent(jtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jbPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1085, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(addUser, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(61, 61, 61)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jbExport, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(Edit, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(46, 46, 46)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(deleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 119,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jButton1))
+                                .addGap(54, 54, 54)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jcbSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 240,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(40, 40, 40)
+                                                .addComponent(jtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 146,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jbPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 116,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1085,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap()));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jcbSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(addUser, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Edit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(deleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-                            .addComponent(jbExport, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(69, 69, 69))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(244, 244, 244))
-        );
-    }// </editor-fold>                        
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(33, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(jtSearch, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jcbSearch, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(addUser, javax.swing.GroupLayout.PREFERRED_SIZE, 48,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(Edit, javax.swing.GroupLayout.PREFERRED_SIZE, 48,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(deleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 48,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(30, 30, 30)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                49, Short.MAX_VALUE)
+                                                        .addComponent(jbExport, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jbPrint, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(69, 69, 69))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 48,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(244, 244, 244)));
+    }// </editor-fold>
 
-    private void addUserActionPerformed(java.awt.event.ActionEvent evt) {                                        
+    private void addUserActionPerformed(java.awt.event.ActionEvent evt) {
         new AddUser().setVisible(true);
-    }                                       
+    }
 
-    private void jtSearchActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        
-    }                                        
-    
-    private void deleteUserActionPerformed(java.awt.event.ActionEvent evt) {                                           
+    private void jtSearchActionPerformed(java.awt.event.ActionEvent evt) {
+
+    }
+
+    private void deleteUserActionPerformed(java.awt.event.ActionEvent evt) {
         int selectedRow = jTable1.getSelectedRow();
-        if(selectedRow == -1)
-        {
+        if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Please choose value which you want to delete?");
-        }
-        else 
-        {   
+        } else {
             int choice = JOptionPane.showConfirmDialog(this, "Do you really want to delete it?");
-            if(choice == JOptionPane.YES_OPTION)
-            {
+            if (choice == JOptionPane.YES_OPTION) {
                 int userId = Integer.parseInt(String.valueOf(jTable1.getValueAt(selectedRow, 0)));
                 try {
                     userservice.deleteUser(userId);
@@ -264,22 +279,20 @@ public class EmployeeMenu extends javax.swing.JPanel {
                 } catch (Exception ex) {
                     Logger.getLogger(EmployeeMenu.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                for(User user : users)
-                {
-                    dtm.addRow(new Object[] {user.getId(), user.getName(), user.getDate(), user.getAddress(), user.getPosition(), user.getPhone(), user.getSalary(), user.getDateCreate(), user.getAccountId()});
+                for (User user : users) {
+                    dtm.addRow(new Object[] { user.getId(), user.getName(), user.getDate(), user.getAddress(),
+                            user.getPosition(), user.getPhone(), user.getSalary(), user.getDateCreate(),
+                            user.getAccountId() });
                 }
-            }   
+            }
         }
-    }                                          
+    }
 
-    private void EditActionPerformed(java.awt.event.ActionEvent evt) {                                     
+    private void EditActionPerformed(java.awt.event.ActionEvent evt) {
         int selectedRow = jTable1.getSelectedRow();
-        if(selectedRow == -1)
-        {
+        if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn trường muốn update");
-        }
-        else 
-        {
+        } else {
             int userId = Integer.parseInt(String.valueOf(jTable1.getValueAt(selectedRow, 0)));
             try {
                 new EditUser(userId).setVisible(true);
@@ -287,9 +300,9 @@ public class EmployeeMenu extends javax.swing.JPanel {
                 ex.printStackTrace();
             }
         }
-    }                                    
+    }
 
-    private void SearchTextField(java.awt.event.KeyEvent evt) {                                 
+    private void SearchTextField(java.awt.event.KeyEvent evt) {
         String keyword = jtSearch.getText().trim();
         if (!keyword.isEmpty()) {
             DefaultTableModel dtm = new DefaultTableModel();
@@ -309,28 +322,25 @@ public class EmployeeMenu extends javax.swing.JPanel {
                     int id = Integer.parseInt(keyword);
                     users = userservice.searchAllUserById(id);
                 }
-                
-                else if(jcbSearch.getSelectedItem().equals("Tìm kiếm theo tên nhân viên")) {
-                    
+
+                else if (jcbSearch.getSelectedItem().equals("Tìm kiếm theo tên nhân viên")) {
+
                     users = userservice.searchAllUserByName(keyword);
-                }
-                else if (jcbSearch.getSelectedItem().equals("Tìm kiếm theo mã nhân viên")) {
+                } else if (jcbSearch.getSelectedItem().equals("Tìm kiếm theo mã nhân viên")) {
                     int id = Integer.parseInt(keyword);
                     users = userservice.searchAllUserById(id);
-                }
-                else if (jcbSearch.getSelectedItem().equals("Tìm kiếm theo số điện thoại")) {
+                } else if (jcbSearch.getSelectedItem().equals("Tìm kiếm theo số điện thoại")) {
                     users = userservice.searchAllUserByPhone(keyword);
                 }
-                for(User user : users) {
-                    dtm.addRow(new Object[] {user.getId(), user.getName(), user.getDate(), user.getAddress(),user.getPosition(),
-                        user.getPhone(), user.getSalary(), user.getDateCreate(), user.getAccountId()});
+                for (User user : users) {
+                    dtm.addRow(new Object[] { user.getId(), user.getName(), user.getDate(), user.getAddress(),
+                            user.getPosition(),
+                            user.getPhone(), user.getSalary(), user.getDateCreate(), user.getAccountId() });
                 }
             } catch (Exception ex) {
                 Logger.getLogger(EmployeeMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } 
-        else 
-        {
+        } else {
             try {
                 DefaultTableModel dtm = new DefaultTableModel();
                 jTable1.setModel(dtm);
@@ -344,17 +354,18 @@ public class EmployeeMenu extends javax.swing.JPanel {
                 dtm.addColumn("created_date");
                 dtm.addColumn("Id Account");
                 List<User> users = userservice.getAllUser();
-                for(User user : users) {
-                    dtm.addRow(new Object[] {user.getId(), user.getName(), user.getDate(), user.getAddress(),user.getPosition(),
-                        user.getPhone(), user.getSalary(), user.getDateCreate(), user.getAccountId()});
+                for (User user : users) {
+                    dtm.addRow(new Object[] { user.getId(), user.getName(), user.getDate(), user.getAddress(),
+                            user.getPosition(),
+                            user.getPhone(), user.getSalary(), user.getDateCreate(), user.getAccountId() });
                 }
             } catch (Exception ex) {
                 Logger.getLogger(EmployeeMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }                                
+    }
 
-    private void jcbSearchActionPerformed(java.awt.event.ActionEvent evt) {                                          
+    private void jcbSearchActionPerformed(java.awt.event.ActionEvent evt) {
         jtSearch.setText("");
         jtSearch.requestFocus();
         try {
@@ -369,19 +380,20 @@ public class EmployeeMenu extends javax.swing.JPanel {
             dtm.addColumn("salary");
             dtm.addColumn("created_date");
             List<User> users = userservice.getAllUser();
-            for(User user : users) {
-                dtm.addRow(new Object[] {user.getId(), user.getName(), user.getDate(), user.getAddress(),user.getPosition(),
-                    user.getPhone(), user.getSalary(), user.getDateCreate()});
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(EmployeeMenu.class.getName()).log(Level.SEVERE, null, ex);
+            for (User user : users) {
+                dtm.addRow(new Object[] { user.getId(), user.getName(), user.getDate(), user.getAddress(),
+                        user.getPosition(),
+                        user.getPhone(), user.getSalary(), user.getDateCreate() });
             }
-    }                                         
+        } catch (Exception ex) {
+            Logger.getLogger(EmployeeMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
-    private void jbExportActionPerformed(java.awt.event.ActionEvent evt) {                                         
-    }                                        
+    private void jbExportActionPerformed(java.awt.event.ActionEvent evt) {
+    }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         dtm.setRowCount(0);
         List<User> users = null;
         try {
@@ -389,19 +401,18 @@ public class EmployeeMenu extends javax.swing.JPanel {
         } catch (Exception ex) {
             Logger.getLogger(EmployeeMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
-        for(User user : users)
-        {
-            dtm.addRow(new Object[] {user.getId(), user.getName(), user.getDate(), user.getAddress(), user.getPosition(), user.getPhone(),
-            user.getSalary(), user.getDateCreate(), user.getAccountId()});
+        for (User user : users) {
+            dtm.addRow(new Object[] { user.getId(), user.getName(), user.getDate(), user.getAddress(),
+                    user.getPosition(), user.getPhone(),
+                    user.getSalary(), user.getDateCreate(), user.getAccountId() });
         }
-    }                                        
+    }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        
-    }                                        
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
 
+    }
 
-    // Variables declaration - do not modify                     
+    // Variables declaration - do not modify
     private javax.swing.JButton Edit;
     private javax.swing.JButton addUser;
     private javax.swing.JButton deleteUser;
@@ -413,5 +424,5 @@ public class EmployeeMenu extends javax.swing.JPanel {
     private javax.swing.JButton jbPrint;
     private javax.swing.JComboBox<String> jcbSearch;
     private javax.swing.JTextField jtSearch;
-    // End of variables declaration                   
+    // End of variables declaration
 }

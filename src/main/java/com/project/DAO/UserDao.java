@@ -12,7 +12,7 @@ public class UserDao {
     public List<User> getAllUser() throws Exception {
         List<User> users = new ArrayList<User>();
         Connection con = mysqlConnect.getConnection();
-        String sql = "SELECT * FROM nhanvien";
+        String sql = "SELECT * FROM NhanVien";
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
@@ -33,7 +33,7 @@ public class UserDao {
 
     public void addUser(User user) throws Exception {
         Connection con = mysqlConnect.getConnection();
-        String sql = "INSERT INTO nhanvien( ho_va_ten, ngay_sinh, dia_chi, chuc_vu, sdt, luong, TaiKhoan_id) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO NhanVien( ho_va_ten, ngay_sinh, dia_chi, chuc_vu, sdt, luong, TaiKhoan_id) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, user.getName());
         ps.setDate(2, new java.sql.Date(user.getDate().getTime()));
@@ -47,7 +47,7 @@ public class UserDao {
 
     public void deleteUser(int id) throws Exception {
         Connection con = mysqlConnect.getConnection();
-        String sql = "DELETE FROM nhanvien WHERE id = ?";
+        String sql = "DELETE FROM NhanVien WHERE id = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, id);
         ps.executeUpdate();
@@ -55,7 +55,7 @@ public class UserDao {
 
     public void updateUser(User user) throws Exception {
         Connection con = mysqlConnect.getConnection();
-        String sql = "UPDATE nhanvien  SET ho_va_ten = ?, ngay_sinh = ?, dia_chi = ?, chuc_vu = ?, sdt = ?, luong = ? WHERE id = ?";
+        String sql = "UPDATE NhanVien  SET ho_va_ten = ?, ngay_sinh = ?, dia_chi = ?, chuc_vu = ?, sdt = ?, luong = ? WHERE id = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, user.getName());
         ps.setDate(2, new java.sql.Date(user.getDate().getTime()));
@@ -69,7 +69,7 @@ public class UserDao {
 
     public User getIdUser(int id) throws Exception {
         Connection con = mysqlConnect.getConnection();
-        String sql = "SELECT * FROM nhanvien WHERE id = ?";
+        String sql = "SELECT * FROM NhanVien WHERE id = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
@@ -92,7 +92,7 @@ public class UserDao {
 
     public List<User> SearchAllUserByName(String name) throws Exception {
         Connection con = mysqlConnect.getConnection();
-        String sql = "SELECT * FROM nhanvien WHERE ho_va_ten LIKE '%" + name + "%'";
+        String sql = "SELECT * FROM NhanVien WHERE ho_va_ten LIKE '%" + name + "%'";
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         List<User> users = new ArrayList<User>();
@@ -116,7 +116,7 @@ public class UserDao {
     public List<User> SearchAllUserById(int id) throws Exception {
         List<User> users = new ArrayList<User>();
         Connection con = mysqlConnect.getConnection();
-        String sql = "SELECT * FROM nhanvien WHERE id = ?";
+        String sql = "SELECT * FROM NhanVien WHERE id = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
@@ -139,7 +139,7 @@ public class UserDao {
 
     public List<User> SearchAllUserByPhone(String phone) throws Exception {
         Connection con = mysqlConnect.getConnection();
-        String sql = "SELECT * FROM nhanvien WHERE sdt LIKE '%" + phone + "%'";
+        String sql = "SELECT * FROM NhanVien WHERE sdt LIKE '%" + phone + "%'";
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         List<User> users = new ArrayList<User>();
