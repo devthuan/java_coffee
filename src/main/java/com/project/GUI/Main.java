@@ -526,7 +526,8 @@ public class Main extends javax.swing.JFrame {
     }
 
     private void WarehouseLabelMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
+            SwitchControl();
+            Right.add(new Warehouses()).setVisible(true);
     }
 
     /**
