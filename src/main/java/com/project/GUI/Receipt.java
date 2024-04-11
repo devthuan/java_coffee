@@ -28,6 +28,7 @@ public class Receipt extends javax.swing.JPanel {
 
                 ReceiptTop = new javax.swing.JPanel();
                 BoxBtn = new javax.swing.JPanel();
+                BtnDetail1 = new javax.swing.JButton();
                 BtnDetail = new javax.swing.JButton();
                 BtnRemove = new javax.swing.JButton();
                 BtnExportExcel = new javax.swing.JButton();
@@ -64,10 +65,23 @@ public class Receipt extends javax.swing.JPanel {
                 setLayout(new java.awt.BorderLayout(0, 5));
 
                 ReceiptTop.setBackground(new java.awt.Color(255, 255, 255));
-                ReceiptTop.setPreferredSize(new java.awt.Dimension(608, 150));
+                ReceiptTop.setPreferredSize(new java.awt.Dimension(608, 170));
 
                 BoxBtn.setBackground(new java.awt.Color(255, 255, 255));
+                BoxBtn.setPreferredSize(new java.awt.Dimension(380, 45));
                 BoxBtn.setLayout(new java.awt.GridLayout(1, 4, 10, 0));
+
+                BtnDetail1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                BtnDetail1.setIcon(new javax.swing.ImageIcon("./src/assets/icon/plus.png")); // NOI18N
+                BtnDetail1.setText("Thêm");
+                BtnDetail1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+                BtnDetail1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+                BtnDetail1.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseClicked(java.awt.event.MouseEvent evt) {
+                                BtnDetail1MouseClicked(evt);
+                        }
+                });
+                BoxBtn.add(BtnDetail1);
 
                 BtnDetail.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 BtnDetail.setIcon(new javax.swing.ImageIcon("./src/assets/icon/info-rgb.png")); // NOI18N
@@ -110,9 +124,8 @@ public class Receipt extends javax.swing.JPanel {
                 BoxSearch.setBackground(new java.awt.Color(255, 255, 255));
 
                 Filter.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-                Filter.setModel(
-                                new javax.swing.DefaultComboBoxModel<>(
-                                                new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+                Filter.setModel(new javax.swing.DefaultComboBoxModel<>(
+                                new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
                 Filter.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
                 BtnRefresh.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -150,21 +163,20 @@ public class Receipt extends javax.swing.JPanel {
                                 BoxSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addGroup(BoxSearchLayout.createSequentialGroup()
                                                                 .addContainerGap()
-                                                                .addGroup(
-                                                                                BoxSearchLayout.createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                                                .addComponent(Filter,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                55,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addComponent(InputSearch,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                55,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addComponent(BtnRefresh,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                55,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addGroup(BoxSearchLayout.createParallelGroup(
+                                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                                .addComponent(Filter,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                55,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addComponent(InputSearch,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                55,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addComponent(BtnRefresh,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                55,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
                                                                 .addContainerGap(7, Short.MAX_VALUE)));
 
                 BoxTitle.setBackground(new java.awt.Color(255, 255, 255));
@@ -185,15 +197,14 @@ public class Receipt extends javax.swing.JPanel {
                 ReceiptTopLayout.setHorizontalGroup(
                                 ReceiptTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addGroup(ReceiptTopLayout.createSequentialGroup()
-                                                                .addGap(48, 48, 48)
+                                                                .addGap(50, 50, 50)
                                                                 .addComponent(BoxBtn,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                288,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addPreferredGap(
                                                                                 javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                                                                170,
-                                                                                Short.MAX_VALUE)
+                                                                                130, Short.MAX_VALUE)
                                                                 .addComponent(BoxSearch,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
@@ -211,10 +222,9 @@ public class Receipt extends javax.swing.JPanel {
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addPreferredGap(
                                                                                 javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addGroup(ReceiptTopLayout
-                                                                                .createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.LEADING,
-                                                                                                false)
+                                                                .addGroup(ReceiptTopLayout.createParallelGroup(
+                                                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                                                false)
                                                                                 .addComponent(BoxBtn,
                                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
@@ -260,9 +270,9 @@ public class Receipt extends javax.swing.JPanel {
                 BoxFilter.setRequestFocusEnabled(false);
 
                 ContentFilter.setBackground(new java.awt.Color(255, 255, 255));
-                ContentFilter.setMaximumSize(new java.awt.Dimension(500, 32767));
+                ContentFilter.setMaximumSize(new java.awt.Dimension(280, 32767));
                 ContentFilter.setMinimumSize(new java.awt.Dimension(200, 65));
-                ContentFilter.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 20, 15));
+                ContentFilter.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 20, 15));
 
                 ItemFilterStartDay.setBackground(new java.awt.Color(255, 255, 255));
                 ItemFilterStartDay.setPreferredSize(new java.awt.Dimension(150, 70));
@@ -357,13 +367,9 @@ public class Receipt extends javax.swing.JPanel {
                                                                 197, Short.MAX_VALUE));
                 BoxFilterLayout.setVerticalGroup(
                                 BoxFilterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BoxFilterLayout
-                                                                .createSequentialGroup()
-                                                                .addGap(0, 14, Short.MAX_VALUE)
-                                                                .addComponent(ContentFilter,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                599,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)));
+                                                .addComponent(ContentFilter, javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE, 613,
+                                                                Short.MAX_VALUE));
 
                 jSplitPane1.setLeftComponent(BoxFilter);
 
@@ -400,6 +406,10 @@ public class Receipt extends javax.swing.JPanel {
                 // TODO add your handling code here:
         }
 
+        private void BtnDetail1MouseClicked(java.awt.event.MouseEvent evt) {
+                // TODO add your handling code here:
+        }
+
         // Variables declaration - do not modify
         private javax.swing.JPanel BoxBtn;
         private javax.swing.JPanel BoxFilter;
@@ -407,6 +417,7 @@ public class Receipt extends javax.swing.JPanel {
         private javax.swing.JPanel BoxTable;
         private javax.swing.JPanel BoxTitle;
         private javax.swing.JButton BtnDetail;
+        private javax.swing.JButton BtnDetail1;
         private javax.swing.JButton BtnExportExcel;
         private javax.swing.JButton BtnFilter;
         private javax.swing.JButton BtnRefresh;
