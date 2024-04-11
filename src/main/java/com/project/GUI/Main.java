@@ -267,7 +267,7 @@ public class Main extends javax.swing.JFrame {
 
                 ReceiptLabel.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
                 ReceiptLabel.setIcon(new javax.swing.ImageIcon("./src/assets/icon/receipt.png")); // NOI18N
-                ReceiptLabel.setText("Phiếu nhập");
+                ReceiptLabel.setText("Nhập, xuất");
                 ReceiptLabel.setAutoscrolls(true);
                 ReceiptLabel.setIconTextGap(12);
                 ReceiptLabel.setMaximumSize(new java.awt.Dimension(124, 32));
@@ -533,7 +533,7 @@ public class Main extends javax.swing.JFrame {
 
         private void ReceiptLabelMouseClicked(java.awt.event.MouseEvent evt) {
                 SwitchControl();
-                Right.add(new Receipt()).setVisible(true);
+                Right.add(new ReceiptDeliveryBill()).setVisible(true);
         }
 
         private void SupplierLabelMouseClicked(java.awt.event.MouseEvent evt) {
