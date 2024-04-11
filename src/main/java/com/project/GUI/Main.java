@@ -16,7 +16,6 @@ import java.awt.event.MouseAdapter;
 
 // import org.apache.poi.ss.usermodel.Color;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud.Order;
 
 public class Main extends javax.swing.JFrame {
 
@@ -24,6 +23,7 @@ public class Main extends javax.swing.JFrame {
                 initComponents();
                 SwitchControl();
                 Right.add(new BuyProduct()).setVisible(true);
+
         }
 
         /**
