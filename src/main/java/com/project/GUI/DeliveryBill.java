@@ -4,6 +4,8 @@ package com.project.GUI;
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 
+import com.toedter.calendar.JDateChooser;
+
 /**
  *
  * @author thuan
@@ -44,10 +46,10 @@ public class DeliveryBill extends javax.swing.JPanel {
         ContentFilter = new javax.swing.JPanel();
         ItemFilterStartDay = new javax.swing.JPanel();
         TitleStartDay = new javax.swing.JLabel();
-        ValueStart = new javax.swing.JTextField();
+        ValueStart = new JDateChooser();
         ItemFilterEndDay = new javax.swing.JPanel();
         titleEndDay = new javax.swing.JLabel();
-        ValueEndDay = new javax.swing.JTextField();
+        ValueEndDay = new JDateChooser();
         ItemFilterTotalReceiptStart = new javax.swing.JPanel();
         TitleTotalStart = new javax.swing.JLabel();
         ValueTotalStart = new javax.swing.JTextField();
@@ -244,11 +246,11 @@ public class DeliveryBill extends javax.swing.JPanel {
         ValueStart.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         ValueStart.setMinimumSize(new java.awt.Dimension(64, 20));
         ValueStart.setPreferredSize(new java.awt.Dimension(64, 20));
-        ValueStart.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ValueStartActionPerformed(evt);
-            }
-        });
+        // ValueStart.addActionListener(new java.awt.event.ActionListener() {
+        //     public void actionPerformed(java.awt.event.ActionEvent evt) {
+        //         ValueStartActionPerformed(evt);
+        //     }
+        // });
         ItemFilterStartDay.add(ValueStart, java.awt.BorderLayout.CENTER);
 
         ContentFilter.add(ItemFilterStartDay);
@@ -417,8 +419,8 @@ public class DeliveryBill extends javax.swing.JPanel {
     private javax.swing.JLabel TitleStartDay;
     private javax.swing.JLabel TitleTotalEnd;
     private javax.swing.JLabel TitleTotalStart;
-    private javax.swing.JTextField ValueEndDay;
-    private javax.swing.JTextField ValueStart;
+    private JDateChooser ValueEndDay;
+    private JDateChooser ValueStart;
     private javax.swing.JTextField ValueTotalEnd;
     private javax.swing.JTextField ValueTotalStart;
     private javax.swing.JLabel jLabel1;
