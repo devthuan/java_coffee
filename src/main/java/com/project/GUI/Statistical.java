@@ -98,17 +98,25 @@ class PieChart {
 public class Statistical extends javax.swing.JPanel {
 
         /**
-         * Creates new form Statistical
+         * Creates new form Chart
          */
         public Statistical() {
                 initComponents();
-
                 BarChart barChart = new BarChart();
                 PieChart pieChart = new PieChart();
-                BoxChart.add(barChart.createChart("Doanh thu theo các tháng"));
-                BoxChartProduct.add(barChart.createChart("Số lượng sản phẩm đã bán theo sản phẩm"));
-                BoxChartTotalGredient.add(barChart.createChart("Số lượng nguyên liệu tồn kho"));
-                BoxChartTotalImportWarehouse.add(pieChart.createChart());
+                BoxChartOverView.add(barChart.createChart("Doanh thu và lợi nhuận 30 gần nhất"));
+                BoxChartProduct1.add(barChart.createChart("Số lượng bán ra theo sản phẩm"));
+                BoxChartProduct2.add(barChart.createChart("số lượng còn lại hiện tại"));
+                ChartIngredient1.add(barChart.createChart("Nguyên liệu nhập 30 gần nhất"));
+                ChartIngredient2.add(barChart.createChart("số lượng nguyên liệu còn lại"));
+                TotalOrderByChartDayOfWeek.add(barChart.createChart("Tổng số đơn hàng theo các ngày trong tuần"));
+                ChartRevnueByProduct.add(barChart.createChart("Doanh thu theo sản phẩm"));
+
+                // BoxChartProduct.add(barChart.createChart("Số lượng sản phẩm đã bán theo sản
+                // phẩm"));
+                // BoxChartTotalGredient.add(barChart.createChart("Số lượng nguyên liệu tồn
+                // kho"));
+                // BoxChartTotalImportWarehouse.add(pieChart.createChart());
         }
 
         /**
@@ -122,52 +130,74 @@ public class Statistical extends javax.swing.JPanel {
 
                 TabbedPaneStatistical = new javax.swing.JTabbedPane();
                 BoxOverview = new javax.swing.JPanel();
-                BoxRevenue = new javax.swing.JPanel();
-                IconRevenue = new javax.swing.JButton();
-                TitleRevenue = new javax.swing.JLabel();
-                TextRevenue = new javax.swing.JLabel();
-                BoxProduct = new javax.swing.JPanel();
-                IconProduct = new javax.swing.JButton();
-                TitleProduct = new javax.swing.JLabel();
-                TextProduct = new javax.swing.JLabel();
-                BoxBill = new javax.swing.JPanel();
-                IconBill = new javax.swing.JButton();
-                TitleBill = new javax.swing.JLabel();
-                TextBill = new javax.swing.JLabel();
-                BoxChart = new javax.swing.JPanel();
-                BoxStatistalProduct = new javax.swing.JPanel();
-                BoxRevenueProduct = new javax.swing.JPanel();
-                IconRevenue1 = new javax.swing.JButton();
-                TitleRevenue1 = new javax.swing.JLabel();
-                TextRevenue1 = new javax.swing.JLabel();
-                TextRevenue3 = new javax.swing.JLabel();
-                BoxBestSell = new javax.swing.JPanel();
-                IconProduct1 = new javax.swing.JButton();
-                TitleProduct1 = new javax.swing.JLabel();
-                TextProduct1 = new javax.swing.JLabel();
-                TextProduct3 = new javax.swing.JLabel();
-                BoxLeastSell = new javax.swing.JPanel();
-                IconBill1 = new javax.swing.JButton();
-                TitleBill1 = new javax.swing.JLabel();
-                TextBill1 = new javax.swing.JLabel();
-                TextBill3 = new javax.swing.JLabel();
-                BoxChartProduct = new javax.swing.JPanel();
-                BoxStatistalWarehouse = new javax.swing.JPanel();
-                BoxRevenueWarehouse = new javax.swing.JPanel();
-                IconWarehouse = new javax.swing.JButton();
-                TitleWarehouse = new javax.swing.JLabel();
-                TextWarehouse = new javax.swing.JLabel();
-                BoxTotalIngredient = new javax.swing.JPanel();
+                BoxItem = new javax.swing.JPanel();
+                ItemProfit = new javax.swing.JPanel();
+                ProfitIcon = new javax.swing.JButton();
+                jPanel5 = new javax.swing.JPanel();
+                jLabel1 = new javax.swing.JLabel();
+                ValueProfit = new javax.swing.JLabel();
+                ItemProduct = new javax.swing.JPanel();
+                ProductIcon = new javax.swing.JButton();
+                jPanel9 = new javax.swing.JPanel();
+                jLabel3 = new javax.swing.JLabel();
+                ValueProduct = new javax.swing.JLabel();
+                ItemOrder = new javax.swing.JPanel();
+                IconOrder = new javax.swing.JButton();
+                jPanel11 = new javax.swing.JPanel();
+                jLabel5 = new javax.swing.JLabel();
+                ValueOrder = new javax.swing.JLabel();
+                jPanel22 = new javax.swing.JPanel();
+                jButton7 = new javax.swing.JButton();
+                jPanel23 = new javax.swing.JPanel();
+                jLabel13 = new javax.swing.JLabel();
+                ValueSupplier = new javax.swing.JLabel();
+                jPanel24 = new javax.swing.JPanel();
+                IconEmployee = new javax.swing.JButton();
+                jPanel25 = new javax.swing.JPanel();
+                jLabel15 = new javax.swing.JLabel();
+                ValueEmployee = new javax.swing.JLabel();
+                jPanel26 = new javax.swing.JPanel();
                 IconIngredient = new javax.swing.JButton();
-                TitleTotalIngredient = new javax.swing.JLabel();
-                TextIngredient = new javax.swing.JLabel();
-                BoxLeastSell1 = new javax.swing.JPanel();
-                IconBill2 = new javax.swing.JButton();
-                TitleBill2 = new javax.swing.JLabel();
-                TextBill2 = new javax.swing.JLabel();
+                jPanel27 = new javax.swing.JPanel();
+                jLabel17 = new javax.swing.JLabel();
+                ValueIngredient = new javax.swing.JLabel();
+                BoxChartOverView = new javax.swing.JPanel();
+                BoxRevenue = new javax.swing.JPanel();
+                jPanel12 = new javax.swing.JPanel();
+                ItemRevenue = new javax.swing.JPanel();
+                IconRenvenue = new javax.swing.JButton();
+                jPanel16 = new javax.swing.JPanel();
+                jLabel9 = new javax.swing.JLabel();
+                ValueRevenue = new javax.swing.JLabel();
+                ItemTotalSellProduct = new javax.swing.JPanel();
+                IconSellProduct = new javax.swing.JButton();
+                jPanel18 = new javax.swing.JPanel();
+                jLabel11 = new javax.swing.JLabel();
+                ValueSellProduct = new javax.swing.JLabel();
+                jPanel19 = new javax.swing.JPanel();
+                TotalOrderByChartDayOfWeek = new javax.swing.JPanel();
+                ChartRevnueByProduct = new javax.swing.JPanel();
+                BoxProduct = new javax.swing.JPanel();
+                jPanel13 = new javax.swing.JPanel();
+                BoxBestSeller = new javax.swing.JPanel();
+                IconProduct = new javax.swing.JButton();
+                jPanel32 = new javax.swing.JPanel();
+                jLabel23 = new javax.swing.JLabel();
+                nameProduct = new javax.swing.JLabel();
+                PriceProduct = new javax.swing.JLabel();
+                BoxBestSeller1 = new javax.swing.JPanel();
+                IconBestSell = new javax.swing.JButton();
+                jPanel33 = new javax.swing.JPanel();
+                jLabel24 = new javax.swing.JLabel();
+                nameProductBestSell = new javax.swing.JLabel();
+                PriceProductBestSell = new javax.swing.JLabel();
+                jPanel38 = new javax.swing.JPanel();
                 BoxChartProduct1 = new javax.swing.JPanel();
-                BoxChartTotalGredient = new javax.swing.JPanel();
-                BoxChartTotalImportWarehouse = new javax.swing.JPanel();
+                BoxChartProduct2 = new javax.swing.JPanel();
+                BoxProduct1 = new javax.swing.JPanel();
+                jPanel35 = new javax.swing.JPanel();
+                ChartIngredient1 = new javax.swing.JPanel();
+                ChartIngredient2 = new javax.swing.JPanel();
 
                 setMinimumSize(new java.awt.Dimension(1085, 768));
                 setPreferredSize(new java.awt.Dimension(1085, 768));
@@ -177,930 +207,542 @@ public class Statistical extends javax.swing.JPanel {
                 TabbedPaneStatistical.setMinimumSize(new java.awt.Dimension(1085, 768));
                 TabbedPaneStatistical.setPreferredSize(new java.awt.Dimension(1085, 768));
 
-                BoxRevenue.setBackground(new java.awt.Color(255, 255, 255));
-                BoxRevenue.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                BoxRevenue.setPreferredSize(new java.awt.Dimension(300, 150));
+                BoxOverview.setLayout(new java.awt.BorderLayout());
 
-                IconRevenue.setIcon(new javax.swing.ImageIcon("./src/assets/icon/money-64.png")); // NOI18N
-                IconRevenue.setBorder(null);
+                BoxItem.setMinimumSize(new java.awt.Dimension(1083, 100));
+                BoxItem.setPreferredSize(new java.awt.Dimension(1400, 230));
+                BoxItem.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 40, 10));
 
-                TitleRevenue.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                TitleRevenue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                TitleRevenue.setText("Tổng doanh thu");
+                ItemProfit.setBackground(new java.awt.Color(255, 255, 255));
+                ItemProfit.setMinimumSize(new java.awt.Dimension(300, 100));
+                ItemProfit.setPreferredSize(new java.awt.Dimension(300, 100));
+                ItemProfit.setRequestFocusEnabled(false);
+                ItemProfit.setLayout(new java.awt.BorderLayout());
 
-                TextRevenue.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                TextRevenue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                TextRevenue.setText("10000000000");
-                TextRevenue.setToolTipText("");
+                ProfitIcon.setIcon(new javax.swing.ImageIcon("./src/assets/icon/money-64.png")); // NOI18N
+                ProfitIcon.setBorder(
+                                javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(0, 0, 0)));
+                ProfitIcon.setFocusPainted(false);
+                ProfitIcon.setFocusable(false);
+                ProfitIcon.setPreferredSize(new java.awt.Dimension(100, 22));
+                ProfitIcon.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                ProfitIconActionPerformed(evt);
+                        }
+                });
+                ItemProfit.add(ProfitIcon, java.awt.BorderLayout.LINE_END);
 
-                javax.swing.GroupLayout BoxRevenueLayout = new javax.swing.GroupLayout(BoxRevenue);
-                BoxRevenue.setLayout(BoxRevenueLayout);
-                BoxRevenueLayout.setHorizontalGroup(
-                                BoxRevenueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(BoxRevenueLayout.createSequentialGroup()
-                                                                .addContainerGap()
-                                                                .addGroup(BoxRevenueLayout
-                                                                                .createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addComponent(TitleRevenue,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE)
-                                                                                .addGroup(BoxRevenueLayout
-                                                                                                .createSequentialGroup()
-                                                                                                .addComponent(IconRevenue,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                90,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addPreferredGap(
-                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                                .addComponent(TextRevenue,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                192,
-                                                                                                                Short.MAX_VALUE)))
-                                                                .addContainerGap()));
-                BoxRevenueLayout.setVerticalGroup(
-                                BoxRevenueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BoxRevenueLayout
-                                                                .createSequentialGroup()
-                                                                .addGap(12, 12, 12)
-                                                                .addComponent(TitleRevenue,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                Short.MAX_VALUE)
-                                                                .addGap(18, 18, 18)
-                                                                .addGroup(BoxRevenueLayout
-                                                                                .createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.LEADING,
-                                                                                                false)
-                                                                                .addComponent(IconRevenue,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE)
-                                                                                .addComponent(TextRevenue,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE))
-                                                                .addGap(32, 32, 32)));
+                jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+                jPanel5.setLayout(new java.awt.BorderLayout());
 
-                BoxProduct.setBackground(new java.awt.Color(255, 255, 255));
-                BoxProduct.setPreferredSize(new java.awt.Dimension(300, 150));
+                jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+                jLabel1.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+                jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                jLabel1.setText("Tổng lợi nhuận");
+                jLabel1.setIconTextGap(20);
+                jLabel1.setPreferredSize(new java.awt.Dimension(37, 35));
+                jPanel5.add(jLabel1, java.awt.BorderLayout.PAGE_START);
 
-                IconProduct.setIcon(new javax.swing.ImageIcon("./src/assets/icon/dairy-products-64.png")); // NOI18N
-                IconProduct.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+                ValueProfit.setBackground(new java.awt.Color(255, 255, 255));
+                ValueProfit.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+                ValueProfit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                ValueProfit.setText("0 VNĐ");
+                ValueProfit.setFocusable(false);
+                ValueProfit.setIconTextGap(0);
+                jPanel5.add(ValueProfit, java.awt.BorderLayout.CENTER);
 
-                TitleProduct.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                TitleProduct.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                TitleProduct.setText("Tổng số sản phẩm");
+                ItemProfit.add(jPanel5, java.awt.BorderLayout.CENTER);
 
-                TextProduct.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                TextProduct.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                TextProduct.setText("10000000000");
-                TextProduct.setToolTipText("");
+                BoxItem.add(ItemProfit);
 
-                javax.swing.GroupLayout BoxProductLayout = new javax.swing.GroupLayout(BoxProduct);
-                BoxProduct.setLayout(BoxProductLayout);
-                BoxProductLayout.setHorizontalGroup(
-                                BoxProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BoxProductLayout
-                                                                .createSequentialGroup()
-                                                                .addContainerGap()
-                                                                .addGroup(BoxProductLayout
-                                                                                .createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.TRAILING)
-                                                                                .addComponent(TitleProduct,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE)
-                                                                                .addGroup(BoxProductLayout
-                                                                                                .createSequentialGroup()
-                                                                                                .addComponent(IconProduct,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                90,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addPreferredGap(
-                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                                .addComponent(TextProduct,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                192,
-                                                                                                                Short.MAX_VALUE)))
-                                                                .addContainerGap()));
-                BoxProductLayout.setVerticalGroup(
-                                BoxProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BoxProductLayout
-                                                                .createSequentialGroup()
-                                                                .addGap(12, 12, 12)
-                                                                .addComponent(TitleProduct,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                Short.MAX_VALUE)
-                                                                .addGap(18, 18, 18)
-                                                                .addGroup(BoxProductLayout
-                                                                                .createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.LEADING,
-                                                                                                false)
-                                                                                .addComponent(IconProduct,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE)
-                                                                                .addComponent(TextProduct,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE))
-                                                                .addGap(32, 32, 32)));
+                ItemProduct.setBackground(new java.awt.Color(255, 255, 255));
+                ItemProduct.setMinimumSize(new java.awt.Dimension(300, 100));
+                ItemProduct.setPreferredSize(new java.awt.Dimension(300, 100));
+                ItemProduct.setLayout(new java.awt.BorderLayout());
 
-                BoxBill.setBackground(new java.awt.Color(255, 255, 255));
-                BoxBill.setPreferredSize(new java.awt.Dimension(300, 150));
+                ProductIcon.setIcon(new javax.swing.ImageIcon("./src/assets/icon/products-64.png")); // NOI18N
+                ProductIcon.setBorder(
+                                javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(0, 0, 0)));
+                ProductIcon.setFocusPainted(false);
+                ProductIcon.setFocusable(false);
+                ProductIcon.setPreferredSize(new java.awt.Dimension(100, 22));
+                ItemProduct.add(ProductIcon, java.awt.BorderLayout.LINE_END);
 
-                IconBill.setIcon(new javax.swing.ImageIcon("./src/assets/icon/bill-64.png")); // NOI18N
-                IconBill.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+                jPanel9.setBackground(new java.awt.Color(255, 255, 255));
+                jPanel9.setLayout(new java.awt.BorderLayout());
 
-                TitleBill.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                TitleBill.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                TitleBill.setText("Tổng số đơn hàng");
+                jLabel3.setBackground(new java.awt.Color(255, 255, 255));
+                jLabel3.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+                jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                jLabel3.setText("Tổng sản phẩm");
+                jLabel3.setIconTextGap(20);
+                jLabel3.setPreferredSize(new java.awt.Dimension(37, 35));
+                jPanel9.add(jLabel3, java.awt.BorderLayout.PAGE_START);
 
-                TextBill.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                TextBill.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                TextBill.setText("12");
-                TextBill.setToolTipText("");
-                TextBill.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+                ValueProduct.setBackground(new java.awt.Color(255, 255, 255));
+                ValueProduct.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+                ValueProduct.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                ValueProduct.setText("0 VNĐ");
+                ValueProduct.setFocusable(false);
+                ValueProduct.setIconTextGap(0);
+                jPanel9.add(ValueProduct, java.awt.BorderLayout.CENTER);
 
-                javax.swing.GroupLayout BoxBillLayout = new javax.swing.GroupLayout(BoxBill);
-                BoxBill.setLayout(BoxBillLayout);
-                BoxBillLayout.setHorizontalGroup(
-                                BoxBillLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(BoxBillLayout.createSequentialGroup()
-                                                                .addContainerGap()
-                                                                .addGroup(BoxBillLayout.createParallelGroup(
-                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addComponent(TitleBill,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                288,
-                                                                                                Short.MAX_VALUE)
-                                                                                .addGroup(BoxBillLayout
-                                                                                                .createSequentialGroup()
-                                                                                                .addComponent(IconBill,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                90,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addPreferredGap(
-                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                                .addComponent(TextBill,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                Short.MAX_VALUE)))
-                                                                .addContainerGap()));
-                BoxBillLayout.setVerticalGroup(
-                                BoxBillLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BoxBillLayout
-                                                                .createSequentialGroup()
-                                                                .addGap(12, 12, 12)
-                                                                .addComponent(TitleBill,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                24,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(18, 18, 18)
-                                                                .addGroup(BoxBillLayout
-                                                                                .createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.LEADING,
-                                                                                                false)
-                                                                                .addComponent(IconBill,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE)
-                                                                                .addComponent(TextBill,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE))
-                                                                .addGap(32, 32, 32)));
+                ItemProduct.add(jPanel9, java.awt.BorderLayout.CENTER);
 
-                BoxChart.setBackground(new java.awt.Color(255, 255, 255));
-                BoxChart.setLayout(new javax.swing.BoxLayout(BoxChart, javax.swing.BoxLayout.LINE_AXIS));
+                BoxItem.add(ItemProduct);
 
-                javax.swing.GroupLayout BoxOverviewLayout = new javax.swing.GroupLayout(BoxOverview);
-                BoxOverview.setLayout(BoxOverviewLayout);
-                BoxOverviewLayout.setHorizontalGroup(
-                                BoxOverviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(BoxOverviewLayout.createSequentialGroup()
-                                                                .addContainerGap()
-                                                                .addGroup(BoxOverviewLayout
-                                                                                .createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addGroup(BoxOverviewLayout
-                                                                                                .createSequentialGroup()
-                                                                                                .addGap(0, 0, Short.MAX_VALUE)
-                                                                                                .addComponent(BoxRevenue,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addPreferredGap(
-                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                Short.MAX_VALUE)
-                                                                                                .addComponent(BoxProduct,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addPreferredGap(
-                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                Short.MAX_VALUE)
-                                                                                                .addComponent(BoxBill,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addGap(0, 0, Short.MAX_VALUE))
-                                                                                .addComponent(BoxChart,
-                                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE))
-                                                                .addContainerGap()));
-                BoxOverviewLayout.setVerticalGroup(
-                                BoxOverviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(BoxOverviewLayout.createSequentialGroup()
-                                                                .addGap(56, 56, 56)
-                                                                .addGroup(
-                                                                                BoxOverviewLayout.createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                                .addComponent(BoxBill,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addComponent(BoxProduct,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addComponent(BoxRevenue,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                .addGap(36, 36, 36)
-                                                                .addComponent(BoxChart,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                Short.MAX_VALUE)
-                                                                .addContainerGap()));
+                ItemOrder.setBackground(new java.awt.Color(255, 255, 255));
+                ItemOrder.setMinimumSize(new java.awt.Dimension(300, 100));
+                ItemOrder.setPreferredSize(new java.awt.Dimension(300, 100));
+                ItemOrder.setLayout(new java.awt.BorderLayout());
+
+                IconOrder.setIcon(new javax.swing.ImageIcon("./src/assets/icon/bill-64.png")); // NOI18N
+                IconOrder.setBorder(
+                                javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(0, 0, 0)));
+                IconOrder.setFocusPainted(false);
+                IconOrder.setFocusable(false);
+                IconOrder.setPreferredSize(new java.awt.Dimension(100, 22));
+                ItemOrder.add(IconOrder, java.awt.BorderLayout.LINE_END);
+
+                jPanel11.setBackground(new java.awt.Color(255, 255, 255));
+                jPanel11.setLayout(new java.awt.BorderLayout());
+
+                jLabel5.setBackground(new java.awt.Color(255, 255, 255));
+                jLabel5.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+                jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                jLabel5.setText("Tổng số đơn hàng");
+                jLabel5.setIconTextGap(20);
+                jLabel5.setPreferredSize(new java.awt.Dimension(37, 35));
+                jPanel11.add(jLabel5, java.awt.BorderLayout.PAGE_START);
+
+                ValueOrder.setBackground(new java.awt.Color(255, 255, 255));
+                ValueOrder.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+                ValueOrder.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                ValueOrder.setText("0 VNĐ");
+                ValueOrder.setFocusable(false);
+                ValueOrder.setIconTextGap(0);
+                jPanel11.add(ValueOrder, java.awt.BorderLayout.CENTER);
+
+                ItemOrder.add(jPanel11, java.awt.BorderLayout.CENTER);
+
+                BoxItem.add(ItemOrder);
+
+                jPanel22.setBackground(new java.awt.Color(255, 255, 255));
+                jPanel22.setMinimumSize(new java.awt.Dimension(300, 100));
+                jPanel22.setPreferredSize(new java.awt.Dimension(300, 100));
+                jPanel22.setLayout(new java.awt.BorderLayout());
+
+                jButton7.setIcon(new javax.swing.ImageIcon("./src/assets/icon/supplier-64.png")); // NOI18N
+                jButton7.setBorder(
+                                javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(0, 0, 0)));
+                jButton7.setFocusPainted(false);
+                jButton7.setFocusable(false);
+                jButton7.setPreferredSize(new java.awt.Dimension(100, 22));
+                jPanel22.add(jButton7, java.awt.BorderLayout.LINE_END);
+
+                jPanel23.setBackground(new java.awt.Color(255, 255, 255));
+                jPanel23.setLayout(new java.awt.BorderLayout());
+
+                jLabel13.setBackground(new java.awt.Color(255, 255, 255));
+                jLabel13.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+                jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                jLabel13.setText("Tổng số nhà cung cấp");
+                jLabel13.setIconTextGap(20);
+                jLabel13.setPreferredSize(new java.awt.Dimension(37, 35));
+                jPanel23.add(jLabel13, java.awt.BorderLayout.PAGE_START);
+
+                ValueSupplier.setBackground(new java.awt.Color(255, 255, 255));
+                ValueSupplier.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+                ValueSupplier.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                ValueSupplier.setText("0 VNĐ");
+                ValueSupplier.setFocusable(false);
+                ValueSupplier.setIconTextGap(0);
+                jPanel23.add(ValueSupplier, java.awt.BorderLayout.CENTER);
+
+                jPanel22.add(jPanel23, java.awt.BorderLayout.CENTER);
+
+                BoxItem.add(jPanel22);
+
+                jPanel24.setBackground(new java.awt.Color(255, 255, 255));
+                jPanel24.setMinimumSize(new java.awt.Dimension(300, 100));
+                jPanel24.setPreferredSize(new java.awt.Dimension(300, 100));
+                jPanel24.setLayout(new java.awt.BorderLayout());
+
+                IconEmployee.setIcon(new javax.swing.ImageIcon("./src/assets/icon/employee-64.png")); // NOI18N
+                IconEmployee.setBorder(
+                                javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(0, 0, 0)));
+                IconEmployee.setFocusPainted(false);
+                IconEmployee.setFocusable(false);
+                IconEmployee.setPreferredSize(new java.awt.Dimension(100, 22));
+                jPanel24.add(IconEmployee, java.awt.BorderLayout.LINE_END);
+
+                jPanel25.setBackground(new java.awt.Color(255, 255, 255));
+                jPanel25.setLayout(new java.awt.BorderLayout());
+
+                jLabel15.setBackground(new java.awt.Color(255, 255, 255));
+                jLabel15.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+                jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                jLabel15.setText("Tổng số nhân viên");
+                jLabel15.setIconTextGap(20);
+                jLabel15.setPreferredSize(new java.awt.Dimension(37, 35));
+                jPanel25.add(jLabel15, java.awt.BorderLayout.PAGE_START);
+
+                ValueEmployee.setBackground(new java.awt.Color(255, 255, 255));
+                ValueEmployee.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+                ValueEmployee.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                ValueEmployee.setText("0 VNĐ");
+                ValueEmployee.setFocusable(false);
+                ValueEmployee.setIconTextGap(0);
+                jPanel25.add(ValueEmployee, java.awt.BorderLayout.CENTER);
+
+                jPanel24.add(jPanel25, java.awt.BorderLayout.CENTER);
+
+                BoxItem.add(jPanel24);
+
+                jPanel26.setBackground(new java.awt.Color(255, 255, 255));
+                jPanel26.setMinimumSize(new java.awt.Dimension(300, 100));
+                jPanel26.setPreferredSize(new java.awt.Dimension(300, 100));
+                jPanel26.setLayout(new java.awt.BorderLayout());
+
+                IconIngredient.setIcon(new javax.swing.ImageIcon("./src/assets/icon/flour.png")); // NOI18N
+                IconIngredient.setBorder(
+                                javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(0, 0, 0)));
+                IconIngredient.setFocusPainted(false);
+                IconIngredient.setFocusable(false);
+                IconIngredient.setPreferredSize(new java.awt.Dimension(100, 22));
+                jPanel26.add(IconIngredient, java.awt.BorderLayout.LINE_END);
+
+                jPanel27.setBackground(new java.awt.Color(255, 255, 255));
+                jPanel27.setLayout(new java.awt.BorderLayout());
+
+                jLabel17.setBackground(new java.awt.Color(255, 255, 255));
+                jLabel17.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+                jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                jLabel17.setText("Tổng số loại nguyên liệu");
+                jLabel17.setIconTextGap(20);
+                jLabel17.setPreferredSize(new java.awt.Dimension(37, 35));
+                jPanel27.add(jLabel17, java.awt.BorderLayout.PAGE_START);
+
+                ValueIngredient.setBackground(new java.awt.Color(255, 255, 255));
+                ValueIngredient.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+                ValueIngredient.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                ValueIngredient.setText("0 VNĐ");
+                ValueIngredient.setFocusable(false);
+                ValueIngredient.setIconTextGap(0);
+                jPanel27.add(ValueIngredient, java.awt.BorderLayout.CENTER);
+
+                jPanel26.add(jPanel27, java.awt.BorderLayout.CENTER);
+
+                BoxItem.add(jPanel26);
+
+                BoxOverview.add(BoxItem, java.awt.BorderLayout.PAGE_START);
+
+                BoxChartOverView.setBackground(new java.awt.Color(255, 255, 255));
+                BoxChartOverView.setFocusable(false);
+                BoxChartOverView.setOpaque(false);
+                BoxChartOverView.setLayout(
+                                new javax.swing.BoxLayout(BoxChartOverView, javax.swing.BoxLayout.LINE_AXIS));
+                BoxOverview.add(BoxChartOverView, java.awt.BorderLayout.CENTER);
 
                 TabbedPaneStatistical.addTab("Tổng quan", BoxOverview);
 
-                BoxRevenueProduct.setBackground(new java.awt.Color(255, 255, 255));
-                BoxRevenueProduct.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                BoxRevenueProduct.setPreferredSize(new java.awt.Dimension(300, 150));
+                BoxRevenue.setLayout(new java.awt.BorderLayout());
 
-                IconRevenue1.setIcon(new javax.swing.ImageIcon("./src/assets/icon/revenue-64.png")); // NOI18N
-                IconRevenue1.setBorder(null);
+                jPanel12.setMinimumSize(new java.awt.Dimension(1083, 100));
+                jPanel12.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 40, 5));
 
-                TitleRevenue1.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                TitleRevenue1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                TitleRevenue1.setText("sản phẩm doanh thu cao nhất");
+                ItemRevenue.setBackground(new java.awt.Color(255, 255, 255));
+                ItemRevenue.setMinimumSize(new java.awt.Dimension(300, 100));
+                ItemRevenue.setPreferredSize(new java.awt.Dimension(300, 100));
+                ItemRevenue.setLayout(new java.awt.BorderLayout());
 
-                TextRevenue1.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                TextRevenue1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                TextRevenue1.setText("tên sản phẩm");
-                TextRevenue1.setToolTipText("");
+                IconRenvenue.setIcon(new javax.swing.ImageIcon("./src/assets/icon/money-total.png")); // NOI18N
+                IconRenvenue.setBorder(
+                                javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(0, 0, 0)));
+                IconRenvenue.setFocusPainted(false);
+                IconRenvenue.setFocusable(false);
+                IconRenvenue.setPreferredSize(new java.awt.Dimension(100, 22));
+                ItemRevenue.add(IconRenvenue, java.awt.BorderLayout.LINE_END);
 
-                TextRevenue3.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                TextRevenue3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                TextRevenue3.setText("giá");
-                TextRevenue3.setToolTipText("");
+                jPanel16.setBackground(new java.awt.Color(255, 255, 255));
+                jPanel16.setLayout(new java.awt.BorderLayout());
 
-                javax.swing.GroupLayout BoxRevenueProductLayout = new javax.swing.GroupLayout(BoxRevenueProduct);
-                BoxRevenueProduct.setLayout(BoxRevenueProductLayout);
-                BoxRevenueProductLayout.setHorizontalGroup(
-                                BoxRevenueProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(BoxRevenueProductLayout.createSequentialGroup()
-                                                                .addContainerGap()
-                                                                .addGroup(BoxRevenueProductLayout
-                                                                                .createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addComponent(TitleRevenue1,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE)
-                                                                                .addGroup(BoxRevenueProductLayout
-                                                                                                .createSequentialGroup()
-                                                                                                .addComponent(IconRevenue1,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                90,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addPreferredGap(
-                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                                .addGroup(BoxRevenueProductLayout
-                                                                                                                .createParallelGroup(
-                                                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                                                .addComponent(TextRevenue1,
-                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                                192,
-                                                                                                                                Short.MAX_VALUE)
-                                                                                                                .addComponent(TextRevenue3,
-                                                                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
-                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                                192,
-                                                                                                                                Short.MAX_VALUE))))
-                                                                .addContainerGap()));
-                BoxRevenueProductLayout.setVerticalGroup(
-                                BoxRevenueProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                                                                BoxRevenueProductLayout
-                                                                                .createSequentialGroup()
-                                                                                .addGap(12, 12, 12)
-                                                                                .addComponent(TitleRevenue1,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE)
-                                                                                .addGap(18, 18, 18)
-                                                                                .addGroup(BoxRevenueProductLayout
-                                                                                                .createParallelGroup(
-                                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                                .addComponent(IconRevenue1)
-                                                                                                .addGroup(BoxRevenueProductLayout
-                                                                                                                .createSequentialGroup()
-                                                                                                                .addComponent(TextRevenue1)
-                                                                                                                .addPreferredGap(
-                                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                                                                .addComponent(TextRevenue3)))
-                                                                                .addGap(32, 32, 32)));
+                jLabel9.setBackground(new java.awt.Color(255, 255, 255));
+                jLabel9.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+                jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                jLabel9.setText("Tổng doanh thu bán hàng");
+                jLabel9.setIconTextGap(20);
+                jLabel9.setPreferredSize(new java.awt.Dimension(37, 35));
+                jPanel16.add(jLabel9, java.awt.BorderLayout.PAGE_START);
 
-                BoxBestSell.setBackground(new java.awt.Color(255, 255, 255));
-                BoxBestSell.setPreferredSize(new java.awt.Dimension(300, 150));
+                ValueRevenue.setBackground(new java.awt.Color(255, 255, 255));
+                ValueRevenue.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+                ValueRevenue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                ValueRevenue.setText("0 VNĐ");
+                ValueRevenue.setFocusable(false);
+                ValueRevenue.setIconTextGap(0);
+                jPanel16.add(ValueRevenue, java.awt.BorderLayout.CENTER);
 
-                IconProduct1.setIcon(new javax.swing.ImageIcon("./src/assets/icon/best-product-64.png")); // NOI18N
-                IconProduct1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+                ItemRevenue.add(jPanel16, java.awt.BorderLayout.CENTER);
 
-                TitleProduct1.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                TitleProduct1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                TitleProduct1.setText("Sản phẩm bán chạy nhất");
+                jPanel12.add(ItemRevenue);
 
-                TextProduct1.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                TextProduct1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                TextProduct1.setText("tên sản phẩm");
-                TextProduct1.setToolTipText("");
+                ItemTotalSellProduct.setBackground(new java.awt.Color(255, 255, 255));
+                ItemTotalSellProduct.setMinimumSize(new java.awt.Dimension(300, 100));
+                ItemTotalSellProduct.setPreferredSize(new java.awt.Dimension(300, 100));
+                ItemTotalSellProduct.setLayout(new java.awt.BorderLayout());
 
-                TextProduct3.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                TextProduct3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                TextProduct3.setText("giá");
-                TextProduct3.setToolTipText("");
+                IconSellProduct.setIcon(new javax.swing.ImageIcon("./src/assets/icon/trade.png")); // NOI18N
+                IconSellProduct.setBorder(
+                                javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(0, 0, 0)));
+                IconSellProduct.setFocusPainted(false);
+                IconSellProduct.setFocusable(false);
+                IconSellProduct.setPreferredSize(new java.awt.Dimension(100, 22));
+                ItemTotalSellProduct.add(IconSellProduct, java.awt.BorderLayout.LINE_END);
 
-                javax.swing.GroupLayout BoxBestSellLayout = new javax.swing.GroupLayout(BoxBestSell);
-                BoxBestSell.setLayout(BoxBestSellLayout);
-                BoxBestSellLayout.setHorizontalGroup(
-                                BoxBestSellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BoxBestSellLayout
-                                                                .createSequentialGroup()
-                                                                .addContainerGap()
-                                                                .addGroup(BoxBestSellLayout
-                                                                                .createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.TRAILING)
-                                                                                .addComponent(TitleProduct1,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE)
-                                                                                .addGroup(BoxBestSellLayout
-                                                                                                .createSequentialGroup()
-                                                                                                .addComponent(IconProduct1,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                90,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addPreferredGap(
-                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                                .addGroup(BoxBestSellLayout
-                                                                                                                .createParallelGroup(
-                                                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                                                .addComponent(TextProduct1,
-                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                                192,
-                                                                                                                                Short.MAX_VALUE)
-                                                                                                                .addComponent(TextProduct3,
-                                                                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
-                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                                192,
-                                                                                                                                Short.MAX_VALUE))))
-                                                                .addContainerGap()));
-                BoxBestSellLayout.setVerticalGroup(
-                                BoxBestSellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BoxBestSellLayout
-                                                                .createSequentialGroup()
-                                                                .addGap(12, 12, 12)
-                                                                .addComponent(TitleProduct1,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                Short.MAX_VALUE)
-                                                                .addGap(18, 18, 18)
-                                                                .addGroup(BoxBestSellLayout
-                                                                                .createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addComponent(IconProduct1)
-                                                                                .addGroup(BoxBestSellLayout
-                                                                                                .createSequentialGroup()
-                                                                                                .addComponent(TextProduct1)
-                                                                                                .addPreferredGap(
-                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                                                .addComponent(TextProduct3)))
-                                                                .addGap(32, 32, 32)));
+                jPanel18.setBackground(new java.awt.Color(255, 255, 255));
+                jPanel18.setLayout(new java.awt.BorderLayout());
 
-                BoxLeastSell.setBackground(new java.awt.Color(255, 255, 255));
-                BoxLeastSell.setPreferredSize(new java.awt.Dimension(300, 150));
+                jLabel11.setBackground(new java.awt.Color(255, 255, 255));
+                jLabel11.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+                jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                jLabel11.setText("Tổng số sản phẩm bán ra");
+                jLabel11.setIconTextGap(20);
+                jLabel11.setPreferredSize(new java.awt.Dimension(37, 35));
+                jPanel18.add(jLabel11, java.awt.BorderLayout.PAGE_START);
 
-                IconBill1.setIcon(new javax.swing.ImageIcon("./src/assets/icon/disadvantage-64.png")); // NOI18N
-                IconBill1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+                ValueSellProduct.setBackground(new java.awt.Color(255, 255, 255));
+                ValueSellProduct.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+                ValueSellProduct.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                ValueSellProduct.setText("0 VNĐ");
+                ValueSellProduct.setFocusable(false);
+                ValueSellProduct.setIconTextGap(0);
+                jPanel18.add(ValueSellProduct, java.awt.BorderLayout.CENTER);
 
-                TitleBill1.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                TitleBill1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                TitleBill1.setText("Sản phẩm bán ít nhất");
+                ItemTotalSellProduct.add(jPanel18, java.awt.BorderLayout.CENTER);
 
-                TextBill1.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                TextBill1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                TextBill1.setText("tên sản phẩm");
-                TextBill1.setToolTipText("");
-                TextBill1.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+                jPanel12.add(ItemTotalSellProduct);
 
-                TextBill3.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                TextBill3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                TextBill3.setText("giá");
-                TextBill3.setToolTipText("");
-                TextBill3.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+                BoxRevenue.add(jPanel12, java.awt.BorderLayout.PAGE_START);
 
-                javax.swing.GroupLayout BoxLeastSellLayout = new javax.swing.GroupLayout(BoxLeastSell);
-                BoxLeastSell.setLayout(BoxLeastSellLayout);
-                BoxLeastSellLayout.setHorizontalGroup(
-                                BoxLeastSellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(BoxLeastSellLayout.createSequentialGroup()
-                                                                .addContainerGap()
-                                                                .addGroup(BoxLeastSellLayout
-                                                                                .createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addComponent(TitleBill1,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                288,
-                                                                                                Short.MAX_VALUE)
-                                                                                .addGroup(BoxLeastSellLayout
-                                                                                                .createSequentialGroup()
-                                                                                                .addComponent(IconBill1,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                90,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addPreferredGap(
-                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                                .addGroup(BoxLeastSellLayout
-                                                                                                                .createParallelGroup(
-                                                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                                                .addComponent(TextBill1,
-                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                                Short.MAX_VALUE)
-                                                                                                                .addComponent(TextBill3,
-                                                                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
-                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                                Short.MAX_VALUE))))
-                                                                .addContainerGap()));
-                BoxLeastSellLayout.setVerticalGroup(
-                                BoxLeastSellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BoxLeastSellLayout
-                                                                .createSequentialGroup()
-                                                                .addGap(12, 12, 12)
-                                                                .addComponent(TitleBill1,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                24,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(18, 18, 18)
-                                                                .addGroup(BoxLeastSellLayout
-                                                                                .createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addComponent(IconBill1)
-                                                                                .addGroup(BoxLeastSellLayout
-                                                                                                .createSequentialGroup()
-                                                                                                .addComponent(TextBill1)
-                                                                                                .addPreferredGap(
-                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                                                .addComponent(TextBill3)))
-                                                                .addContainerGap(30, Short.MAX_VALUE)));
+                jPanel19.setFocusable(false);
+                jPanel19.setOpaque(false);
+                jPanel19.setLayout(new java.awt.GridLayout(2, 0, 0, 10));
 
-                BoxChartProduct.setBackground(new java.awt.Color(255, 255, 255));
-                BoxChartProduct.setLayout(new javax.swing.BoxLayout(BoxChartProduct, javax.swing.BoxLayout.LINE_AXIS));
+                TotalOrderByChartDayOfWeek.setLayout(
+                                new javax.swing.BoxLayout(TotalOrderByChartDayOfWeek, javax.swing.BoxLayout.LINE_AXIS));
+                jPanel19.add(TotalOrderByChartDayOfWeek);
 
-                javax.swing.GroupLayout BoxStatistalProductLayout = new javax.swing.GroupLayout(BoxStatistalProduct);
-                BoxStatistalProduct.setLayout(BoxStatistalProductLayout);
-                BoxStatistalProductLayout.setHorizontalGroup(
-                                BoxStatistalProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(BoxStatistalProductLayout.createSequentialGroup()
-                                                                .addContainerGap()
-                                                                .addGroup(BoxStatistalProductLayout
-                                                                                .createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addGroup(BoxStatistalProductLayout
-                                                                                                .createSequentialGroup()
-                                                                                                .addGap(0, 0, Short.MAX_VALUE)
-                                                                                                .addComponent(BoxRevenueProduct,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addPreferredGap(
-                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                Short.MAX_VALUE)
-                                                                                                .addComponent(BoxBestSell,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addPreferredGap(
-                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                Short.MAX_VALUE)
-                                                                                                .addComponent(BoxLeastSell,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addGap(0, 0, Short.MAX_VALUE))
-                                                                                .addComponent(BoxChartProduct,
-                                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE))
-                                                                .addContainerGap()));
-                BoxStatistalProductLayout.setVerticalGroup(
-                                BoxStatistalProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(BoxStatistalProductLayout.createSequentialGroup()
-                                                                .addGap(56, 56, 56)
-                                                                .addGroup(BoxStatistalProductLayout
-                                                                                .createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addComponent(BoxLeastSell,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addComponent(BoxBestSell,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addComponent(BoxRevenueProduct,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                .addGap(36, 36, 36)
-                                                                .addComponent(BoxChartProduct,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                Short.MAX_VALUE)
-                                                                .addContainerGap()));
+                ChartRevnueByProduct.setLayout(
+                                new javax.swing.BoxLayout(ChartRevnueByProduct, javax.swing.BoxLayout.LINE_AXIS));
+                jPanel19.add(ChartRevnueByProduct);
 
-                TabbedPaneStatistical.addTab("Sản phẩm", BoxStatistalProduct);
+                BoxRevenue.add(jPanel19, java.awt.BorderLayout.CENTER);
 
-                BoxRevenueWarehouse.setBackground(new java.awt.Color(255, 255, 255));
-                BoxRevenueWarehouse.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                BoxRevenueWarehouse.setPreferredSize(new java.awt.Dimension(300, 150));
+                TabbedPaneStatistical.addTab("Doanh thu", BoxRevenue);
 
-                IconWarehouse.setIcon(new javax.swing.ImageIcon("./src/assets/icon/revenue-64.png")); // NOI18N
-                IconWarehouse.setBorder(null);
+                BoxProduct.setLayout(new java.awt.BorderLayout());
 
-                TitleWarehouse.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                TitleWarehouse.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                TitleWarehouse.setText("Giá trị tồn kho");
+                jPanel13.setMinimumSize(new java.awt.Dimension(1083, 100));
+                jPanel13.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 40, 5));
 
-                TextWarehouse.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                TextWarehouse.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                TextWarehouse.setText("tên sản phẩm");
-                TextWarehouse.setToolTipText("");
+                BoxBestSeller.setBackground(new java.awt.Color(255, 255, 255));
+                BoxBestSeller.setMinimumSize(new java.awt.Dimension(300, 100));
+                BoxBestSeller.setPreferredSize(new java.awt.Dimension(320, 100));
+                BoxBestSeller.setLayout(new java.awt.BorderLayout());
 
-                javax.swing.GroupLayout BoxRevenueWarehouseLayout = new javax.swing.GroupLayout(BoxRevenueWarehouse);
-                BoxRevenueWarehouse.setLayout(BoxRevenueWarehouseLayout);
-                BoxRevenueWarehouseLayout.setHorizontalGroup(
-                                BoxRevenueWarehouseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(BoxRevenueWarehouseLayout.createSequentialGroup()
-                                                                .addContainerGap()
-                                                                .addGroup(BoxRevenueWarehouseLayout
-                                                                                .createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addComponent(TitleWarehouse,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE)
-                                                                                .addGroup(BoxRevenueWarehouseLayout
-                                                                                                .createSequentialGroup()
-                                                                                                .addComponent(IconWarehouse,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                90,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addPreferredGap(
-                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                                .addComponent(TextWarehouse,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                192,
-                                                                                                                Short.MAX_VALUE)))
-                                                                .addContainerGap()));
-                BoxRevenueWarehouseLayout.setVerticalGroup(
-                                BoxRevenueWarehouseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                                                                BoxRevenueWarehouseLayout.createSequentialGroup()
-                                                                                .addGap(12, 12, 12)
-                                                                                .addComponent(TitleWarehouse,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE)
-                                                                                .addGap(18, 18, 18)
-                                                                                .addGroup(BoxRevenueWarehouseLayout
-                                                                                                .createParallelGroup(
-                                                                                                                javax.swing.GroupLayout.Alignment.LEADING,
-                                                                                                                false)
-                                                                                                .addComponent(IconWarehouse,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                Short.MAX_VALUE)
-                                                                                                .addComponent(TextWarehouse,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                Short.MAX_VALUE))
-                                                                                .addGap(32, 32, 32)));
+                IconProduct.setIcon(new javax.swing.ImageIcon("./src/assets/icon/best-product-64.png")); // NOI18N
+                IconProduct.setBorder(
+                                javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(0, 0, 0)));
+                IconProduct.setFocusPainted(false);
+                IconProduct.setFocusable(false);
+                IconProduct.setPreferredSize(new java.awt.Dimension(100, 22));
+                BoxBestSeller.add(IconProduct, java.awt.BorderLayout.LINE_END);
 
-                BoxTotalIngredient.setBackground(new java.awt.Color(255, 255, 255));
-                BoxTotalIngredient.setPreferredSize(new java.awt.Dimension(300, 150));
+                jPanel32.setBackground(new java.awt.Color(255, 255, 255));
+                jPanel32.setLayout(new java.awt.BorderLayout());
 
-                IconIngredient.setIcon(new javax.swing.ImageIcon("./src/assets/icon/best-product-64.png")); // NOI18N
-                IconIngredient.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+                jLabel23.setBackground(new java.awt.Color(255, 255, 255));
+                jLabel23.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+                jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                jLabel23.setText("Sản phẩm bán chạy nhất");
+                jLabel23.setIconTextGap(20);
+                jLabel23.setPreferredSize(new java.awt.Dimension(37, 35));
+                jPanel32.add(jLabel23, java.awt.BorderLayout.PAGE_START);
 
-                TitleTotalIngredient.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                TitleTotalIngredient.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                TitleTotalIngredient.setText("Tổng số nguyên liệu");
+                nameProduct.setBackground(new java.awt.Color(255, 255, 255));
+                nameProduct.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+                nameProduct.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                nameProduct.setText("0 VNĐ");
+                nameProduct.setFocusable(false);
+                nameProduct.setIconTextGap(0);
+                jPanel32.add(nameProduct, java.awt.BorderLayout.CENTER);
 
-                TextIngredient.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                TextIngredient.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                TextIngredient.setText("tên sản phẩm");
-                TextIngredient.setToolTipText("");
+                PriceProduct.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                PriceProduct.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                PriceProduct.setText("jLabel2");
+                PriceProduct.setPreferredSize(new java.awt.Dimension(46, 25));
+                jPanel32.add(PriceProduct, java.awt.BorderLayout.PAGE_END);
 
-                javax.swing.GroupLayout BoxTotalIngredientLayout = new javax.swing.GroupLayout(BoxTotalIngredient);
-                BoxTotalIngredient.setLayout(BoxTotalIngredientLayout);
-                BoxTotalIngredientLayout.setHorizontalGroup(
-                                BoxTotalIngredientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                                                                BoxTotalIngredientLayout
-                                                                                .createSequentialGroup()
-                                                                                .addContainerGap()
-                                                                                .addGroup(BoxTotalIngredientLayout
-                                                                                                .createParallelGroup(
-                                                                                                                javax.swing.GroupLayout.Alignment.TRAILING)
-                                                                                                .addComponent(TitleTotalIngredient,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                Short.MAX_VALUE)
-                                                                                                .addGroup(BoxTotalIngredientLayout
-                                                                                                                .createSequentialGroup()
-                                                                                                                .addComponent(IconIngredient,
-                                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                                90,
-                                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                                .addPreferredGap(
-                                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                                                .addComponent(TextIngredient,
-                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                                192,
-                                                                                                                                Short.MAX_VALUE)))
-                                                                                .addContainerGap()));
-                BoxTotalIngredientLayout.setVerticalGroup(
-                                BoxTotalIngredientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                                                                BoxTotalIngredientLayout.createSequentialGroup()
-                                                                                .addGap(12, 12, 12)
-                                                                                .addComponent(TitleTotalIngredient,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE)
-                                                                                .addGap(18, 18, 18)
-                                                                                .addGroup(BoxTotalIngredientLayout
-                                                                                                .createParallelGroup(
-                                                                                                                javax.swing.GroupLayout.Alignment.LEADING,
-                                                                                                                false)
-                                                                                                .addComponent(IconIngredient,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                Short.MAX_VALUE)
-                                                                                                .addComponent(TextIngredient,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                Short.MAX_VALUE))
-                                                                                .addGap(32, 32, 32)));
+                BoxBestSeller.add(jPanel32, java.awt.BorderLayout.CENTER);
 
-                BoxLeastSell1.setBackground(new java.awt.Color(255, 255, 255));
-                BoxLeastSell1.setPreferredSize(new java.awt.Dimension(300, 150));
+                jPanel13.add(BoxBestSeller);
 
-                IconBill2.setIcon(new javax.swing.ImageIcon("./src/assets/icon/disadvantage-64.png")); // NOI18N
-                IconBill2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+                BoxBestSeller1.setBackground(new java.awt.Color(255, 255, 255));
+                BoxBestSeller1.setMinimumSize(new java.awt.Dimension(300, 100));
+                BoxBestSeller1.setPreferredSize(new java.awt.Dimension(320, 100));
+                BoxBestSeller1.setLayout(new java.awt.BorderLayout());
 
-                TitleBill2.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                TitleBill2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                TitleBill2.setText("Tổng số giá trị nhập kho");
+                IconBestSell.setIcon(new javax.swing.ImageIcon("./src/assets/icon/products-64.png")); // NOI18N
+                IconBestSell.setBorder(
+                                javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(0, 0, 0)));
+                IconBestSell.setFocusPainted(false);
+                IconBestSell.setFocusable(false);
+                IconBestSell.setPreferredSize(new java.awt.Dimension(100, 22));
+                BoxBestSeller1.add(IconBestSell, java.awt.BorderLayout.LINE_END);
 
-                TextBill2.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-                TextBill2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                TextBill2.setText("tên sản phẩm");
-                TextBill2.setToolTipText("");
-                TextBill2.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+                jPanel33.setBackground(new java.awt.Color(255, 255, 255));
+                jPanel33.setLayout(new java.awt.BorderLayout());
 
-                javax.swing.GroupLayout BoxLeastSell1Layout = new javax.swing.GroupLayout(BoxLeastSell1);
-                BoxLeastSell1.setLayout(BoxLeastSell1Layout);
-                BoxLeastSell1Layout.setHorizontalGroup(
-                                BoxLeastSell1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(BoxLeastSell1Layout.createSequentialGroup()
-                                                                .addContainerGap()
-                                                                .addGroup(BoxLeastSell1Layout
-                                                                                .createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addComponent(TitleBill2,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                288,
-                                                                                                Short.MAX_VALUE)
-                                                                                .addGroup(BoxLeastSell1Layout
-                                                                                                .createSequentialGroup()
-                                                                                                .addComponent(IconBill2,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                90,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addPreferredGap(
-                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                                .addComponent(TextBill2,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                Short.MAX_VALUE)))
-                                                                .addContainerGap()));
-                BoxLeastSell1Layout.setVerticalGroup(
-                                BoxLeastSell1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                                                                BoxLeastSell1Layout.createSequentialGroup()
-                                                                                .addGap(12, 12, 12)
-                                                                                .addComponent(TitleBill2,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                24,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addGap(18, 18, 18)
-                                                                                .addGroup(BoxLeastSell1Layout
-                                                                                                .createParallelGroup(
-                                                                                                                javax.swing.GroupLayout.Alignment.LEADING,
-                                                                                                                false)
-                                                                                                .addComponent(IconBill2,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                Short.MAX_VALUE)
-                                                                                                .addComponent(TextBill2,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                Short.MAX_VALUE))
-                                                                                .addContainerGap(30, Short.MAX_VALUE)));
+                jLabel24.setBackground(new java.awt.Color(255, 255, 255));
+                jLabel24.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+                jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                jLabel24.setText("Sản phẩm doanh thu cao nhất");
+                jLabel24.setIconTextGap(20);
+                jLabel24.setPreferredSize(new java.awt.Dimension(37, 35));
+                jPanel33.add(jLabel24, java.awt.BorderLayout.PAGE_START);
 
-                BoxChartProduct1.setBackground(new java.awt.Color(255, 255, 255));
-                BoxChartProduct1.setLayout(new java.awt.GridLayout(1, 2, 5, 0));
+                nameProductBestSell.setBackground(new java.awt.Color(255, 255, 255));
+                nameProductBestSell.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+                nameProductBestSell.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                nameProductBestSell.setText("0 VNĐ");
+                nameProductBestSell.setFocusable(false);
+                nameProductBestSell.setIconTextGap(0);
+                jPanel33.add(nameProductBestSell, java.awt.BorderLayout.CENTER);
 
-                javax.swing.GroupLayout BoxChartTotalGredientLayout = new javax.swing.GroupLayout(
-                                BoxChartTotalGredient);
-                BoxChartTotalGredient.setLayout(new javax.swing.BoxLayout(
-                                BoxChartTotalGredient, javax.swing.BoxLayout.LINE_AXIS));
-                BoxChartTotalGredientLayout.setHorizontalGroup(
-                                BoxChartTotalGredientLayout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGap(0, 534, Short.MAX_VALUE));
-                BoxChartTotalGredientLayout.setVerticalGroup(
-                                BoxChartTotalGredientLayout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGap(0, 485, Short.MAX_VALUE));
+                PriceProductBestSell.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                PriceProductBestSell.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                PriceProductBestSell.setText("jLabel2");
+                PriceProductBestSell.setPreferredSize(new java.awt.Dimension(46, 25));
+                jPanel33.add(PriceProductBestSell, java.awt.BorderLayout.PAGE_END);
 
-                BoxChartProduct1.add(BoxChartTotalGredient);
+                BoxBestSeller1.add(jPanel33, java.awt.BorderLayout.CENTER);
 
-                javax.swing.GroupLayout BoxChartTotalImportWarehouseLayout = new javax.swing.GroupLayout(
-                                BoxChartTotalImportWarehouse);
-                BoxChartTotalImportWarehouse.setLayout(
-                                new javax.swing.BoxLayout(BoxChartTotalImportWarehouse,
-                                                javax.swing.BoxLayout.LINE_AXIS));
-                BoxChartTotalImportWarehouseLayout.setHorizontalGroup(
-                                BoxChartTotalImportWarehouseLayout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGap(0, 534, Short.MAX_VALUE));
-                BoxChartTotalImportWarehouseLayout.setVerticalGroup(
-                                BoxChartTotalImportWarehouseLayout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGap(0, 485, Short.MAX_VALUE));
+                jPanel13.add(BoxBestSeller1);
 
-                BoxChartProduct1.add(BoxChartTotalImportWarehouse);
+                BoxProduct.add(jPanel13, java.awt.BorderLayout.PAGE_START);
 
-                javax.swing.GroupLayout BoxStatistalWarehouseLayout = new javax.swing.GroupLayout(
-                                BoxStatistalWarehouse);
-                BoxStatistalWarehouse.setLayout(BoxStatistalWarehouseLayout);
-                BoxStatistalWarehouseLayout.setHorizontalGroup(
-                                BoxStatistalWarehouseLayout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(BoxStatistalWarehouseLayout.createSequentialGroup()
-                                                                .addContainerGap()
-                                                                .addGroup(BoxStatistalWarehouseLayout
-                                                                                .createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addGroup(BoxStatistalWarehouseLayout
-                                                                                                .createSequentialGroup()
-                                                                                                .addGap(0, 0, Short.MAX_VALUE)
-                                                                                                .addComponent(BoxRevenueWarehouse,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addPreferredGap(
-                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                Short.MAX_VALUE)
-                                                                                                .addComponent(BoxTotalIngredient,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addPreferredGap(
-                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                Short.MAX_VALUE)
-                                                                                                .addComponent(BoxLeastSell1,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addGap(0, 0, Short.MAX_VALUE))
-                                                                                .addComponent(BoxChartProduct1,
-                                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE))
-                                                                .addContainerGap()));
-                BoxStatistalWarehouseLayout.setVerticalGroup(
-                                BoxStatistalWarehouseLayout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(BoxStatistalWarehouseLayout.createSequentialGroup()
-                                                                .addGap(56, 56, 56)
-                                                                .addGroup(BoxStatistalWarehouseLayout
-                                                                                .createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addComponent(BoxLeastSell1,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addComponent(BoxTotalIngredient,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addComponent(BoxRevenueWarehouse,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                .addGap(36, 36, 36)
-                                                                .addComponent(BoxChartProduct1,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                Short.MAX_VALUE)
-                                                                .addContainerGap()));
+                jPanel38.setFocusable(false);
+                jPanel38.setOpaque(false);
+                jPanel38.setLayout(new java.awt.GridLayout(2, 0, 0, 10));
 
-                TabbedPaneStatistical.addTab("Kho nguyên liệu", BoxStatistalWarehouse);
+                BoxChartProduct1.setLayout(
+                                new javax.swing.BoxLayout(BoxChartProduct1, javax.swing.BoxLayout.LINE_AXIS));
+                jPanel38.add(BoxChartProduct1);
+
+                BoxChartProduct2.setLayout(
+                                new javax.swing.BoxLayout(BoxChartProduct2, javax.swing.BoxLayout.LINE_AXIS));
+                jPanel38.add(BoxChartProduct2);
+
+                BoxProduct.add(jPanel38, java.awt.BorderLayout.CENTER);
+
+                TabbedPaneStatistical.addTab("Sản phẩm", BoxProduct);
+
+                BoxProduct1.setLayout(new java.awt.BorderLayout());
+
+                jPanel35.setFocusable(false);
+                jPanel35.setOpaque(false);
+                jPanel35.setLayout(new java.awt.GridLayout(2, 0, 0, 10));
+
+                ChartIngredient1.setLayout(
+                                new javax.swing.BoxLayout(ChartIngredient1, javax.swing.BoxLayout.LINE_AXIS));
+                jPanel35.add(ChartIngredient1);
+
+                ChartIngredient2.setLayout(
+                                new javax.swing.BoxLayout(ChartIngredient2, javax.swing.BoxLayout.LINE_AXIS));
+                jPanel35.add(ChartIngredient2);
+
+                BoxProduct1.add(jPanel35, java.awt.BorderLayout.CENTER);
+
+                TabbedPaneStatistical.addTab(" Kho", BoxProduct1);
 
                 add(TabbedPaneStatistical);
         }// </editor-fold>
 
+        private void ProfitIconActionPerformed(java.awt.event.ActionEvent evt) {
+                // TODO add your handling code here:
+        }
+
         // Variables declaration - do not modify
-        private javax.swing.JPanel BoxBestSell;
-        private javax.swing.JPanel BoxBill;
-        private javax.swing.JPanel BoxChart;
-        private javax.swing.JPanel BoxChartProduct;
+        private javax.swing.JPanel BoxBestSeller;
+        private javax.swing.JPanel BoxBestSeller1;
+        private javax.swing.JPanel BoxChartOverView;
         private javax.swing.JPanel BoxChartProduct1;
-        private javax.swing.JPanel BoxChartTotalGredient;
-        private javax.swing.JPanel BoxChartTotalImportWarehouse;
-        private javax.swing.JPanel BoxLeastSell;
-        private javax.swing.JPanel BoxLeastSell1;
+        private javax.swing.JPanel BoxChartProduct2;
+        private javax.swing.JPanel BoxItem;
         private javax.swing.JPanel BoxOverview;
         private javax.swing.JPanel BoxProduct;
+        private javax.swing.JPanel BoxProduct1;
         private javax.swing.JPanel BoxRevenue;
-        private javax.swing.JPanel BoxRevenueProduct;
-        private javax.swing.JPanel BoxRevenueWarehouse;
-        private javax.swing.JPanel BoxStatistalProduct;
-        private javax.swing.JPanel BoxStatistalWarehouse;
-        private javax.swing.JPanel BoxTotalIngredient;
-        private javax.swing.JButton IconBill;
-        private javax.swing.JButton IconBill1;
-        private javax.swing.JButton IconBill2;
+        private javax.swing.JPanel ChartIngredient1;
+        private javax.swing.JPanel ChartIngredient2;
+        private javax.swing.JPanel ChartRevnueByProduct;
+        private javax.swing.JButton IconBestSell;
+        private javax.swing.JButton IconEmployee;
         private javax.swing.JButton IconIngredient;
+        private javax.swing.JButton IconOrder;
         private javax.swing.JButton IconProduct;
-        private javax.swing.JButton IconProduct1;
-        private javax.swing.JButton IconRevenue;
-        private javax.swing.JButton IconRevenue1;
-        private javax.swing.JButton IconWarehouse;
+        private javax.swing.JButton IconRenvenue;
+        private javax.swing.JButton IconSellProduct;
+        private javax.swing.JPanel ItemOrder;
+        private javax.swing.JPanel ItemProduct;
+        private javax.swing.JPanel ItemProfit;
+        private javax.swing.JPanel ItemRevenue;
+        private javax.swing.JPanel ItemTotalSellProduct;
+        private javax.swing.JLabel PriceProduct;
+        private javax.swing.JLabel PriceProductBestSell;
+        private javax.swing.JButton ProductIcon;
+        private javax.swing.JButton ProfitIcon;
         private javax.swing.JTabbedPane TabbedPaneStatistical;
-        private javax.swing.JLabel TextBill;
-        private javax.swing.JLabel TextBill1;
-        private javax.swing.JLabel TextBill2;
-        private javax.swing.JLabel TextBill3;
-        private javax.swing.JLabel TextIngredient;
-        private javax.swing.JLabel TextProduct;
-        private javax.swing.JLabel TextProduct1;
-        private javax.swing.JLabel TextProduct3;
-        private javax.swing.JLabel TextRevenue;
-        private javax.swing.JLabel TextRevenue1;
-        private javax.swing.JLabel TextRevenue3;
-        private javax.swing.JLabel TextWarehouse;
-        private javax.swing.JLabel TitleBill;
-        private javax.swing.JLabel TitleBill1;
-        private javax.swing.JLabel TitleBill2;
-        private javax.swing.JLabel TitleProduct;
-        private javax.swing.JLabel TitleProduct1;
-        private javax.swing.JLabel TitleRevenue;
-        private javax.swing.JLabel TitleRevenue1;
-        private javax.swing.JLabel TitleTotalIngredient;
-        private javax.swing.JLabel TitleWarehouse;
+        private javax.swing.JPanel TotalOrderByChartDayOfWeek;
+        private javax.swing.JLabel ValueEmployee;
+        private javax.swing.JLabel ValueIngredient;
+        private javax.swing.JLabel ValueOrder;
+        private javax.swing.JLabel ValueProduct;
+        private javax.swing.JLabel ValueProfit;
+        private javax.swing.JLabel ValueRevenue;
+        private javax.swing.JLabel ValueSellProduct;
+        private javax.swing.JLabel ValueSupplier;
+        private javax.swing.JButton jButton7;
+        private javax.swing.JLabel jLabel1;
+        private javax.swing.JLabel jLabel11;
+        private javax.swing.JLabel jLabel13;
+        private javax.swing.JLabel jLabel15;
+        private javax.swing.JLabel jLabel17;
+        private javax.swing.JLabel jLabel23;
+        private javax.swing.JLabel jLabel24;
+        private javax.swing.JLabel jLabel3;
+        private javax.swing.JLabel jLabel5;
+        private javax.swing.JLabel jLabel9;
+        private javax.swing.JPanel jPanel11;
+        private javax.swing.JPanel jPanel12;
+        private javax.swing.JPanel jPanel13;
+        private javax.swing.JPanel jPanel16;
+        private javax.swing.JPanel jPanel18;
+        private javax.swing.JPanel jPanel19;
+        private javax.swing.JPanel jPanel22;
+        private javax.swing.JPanel jPanel23;
+        private javax.swing.JPanel jPanel24;
+        private javax.swing.JPanel jPanel25;
+        private javax.swing.JPanel jPanel26;
+        private javax.swing.JPanel jPanel27;
+        private javax.swing.JPanel jPanel32;
+        private javax.swing.JPanel jPanel33;
+        private javax.swing.JPanel jPanel35;
+        private javax.swing.JPanel jPanel38;
+        private javax.swing.JPanel jPanel5;
+        private javax.swing.JPanel jPanel9;
+        private javax.swing.JLabel nameProduct;
+        private javax.swing.JLabel nameProductBestSell;
         // End of variables declaration
 }

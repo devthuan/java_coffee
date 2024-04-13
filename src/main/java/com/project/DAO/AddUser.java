@@ -38,6 +38,7 @@ public class AddUser extends javax.swing.JFrame {
         setLocationByPlatform(true);
         setPreferredSize(new java.awt.Dimension(710, 495));
         setResizable(false);
+        setLocationRelativeTo(null);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 18))); // NOI18N
         jPanel1.setPreferredSize(new java.awt.Dimension(640, 308));

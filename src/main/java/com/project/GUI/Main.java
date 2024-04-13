@@ -2,9 +2,15 @@
 package com.project.GUI;
 
 import java.awt.Cursor;
+
 import java.util.ArrayList;
 import java.awt.*;
 import java.awt.Color;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -13,14 +19,16 @@ import java.awt.event.MouseAdapter;
 
 // import org.apache.poi.ss.usermodel.Color;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud.Order;
 
 public class Main extends javax.swing.JFrame {
 
         public Main() {
                 initComponents();
+
                 SwitchControl();
                 Right.add(new BuyProduct()).setVisible(true);
+
+
         }
 
         /**
@@ -264,7 +272,7 @@ public class Main extends javax.swing.JFrame {
 
                 ReceiptLabel.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
                 ReceiptLabel.setIcon(new javax.swing.ImageIcon("./src/assets/icon/receipt.png")); // NOI18N
-                ReceiptLabel.setText("Phiếu nhập");
+                ReceiptLabel.setText("Nhập, xuất");
                 ReceiptLabel.setAutoscrolls(true);
                 ReceiptLabel.setIconTextGap(12);
                 ReceiptLabel.setMaximumSize(new java.awt.Dimension(124, 32));
@@ -512,7 +520,18 @@ public class Main extends javax.swing.JFrame {
                 Right.add(productMenu).setVisible(true);
         }
 
- 
+        private void OrderLabelMouseClicked(java.awt.event.MouseEvent evt) {
+                SwitchControl();
+                OrderMenu orderMenu = new OrderMenu();
+                Right.add(orderMenu);
+        }
+
+        private void AccountLabelMouseClicked(java.awt.event.MouseEvent evt) {
+                SwitchControl();
+                TaiKhoan orderMenu = new TaiKhoan();
+                Right.add(orderMenu);
+        }
+
         private void EmployeeLabelMouseClicked(java.awt.event.MouseEvent evt) {
                 SwitchControl();
                 EmployeeMenu employeeMenu = new EmployeeMenu();
@@ -521,12 +540,15 @@ public class Main extends javax.swing.JFrame {
 
         private void ReceiptLabelMouseClicked(java.awt.event.MouseEvent evt) {
                 SwitchControl();
-                Right.add(new Receipt()).setVisible(true);
+                Right.add(new ReceiptDeliveryBill()).setVisible(true);
         }
 
         private void SupplierLabelMouseClicked(java.awt.event.MouseEvent evt) {
                 SwitchControl();
                 Right.add(new Supplier()).setVisible(true);
+
+             
+
         }
 
         private void StatisticalLabelMouseClicked(java.awt.event.MouseEvent evt) {
