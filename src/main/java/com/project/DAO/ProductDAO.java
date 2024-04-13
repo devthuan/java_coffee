@@ -43,11 +43,38 @@ public class ProductDAO {
         return null;
     }
 
-    // public static void main(String[] args) {
-    // ArrayList<ProductDTO> list = get_all_product();
-    // for (ProductDTO productDTO : list) {
-    // System.out.println(productDTO.getProduct_name());
-    // }
-    // }
+    public static Boolean getAllProduct(){
+        try {
+            // tạo kết nối db
+            Connection connect = mysqlConnect.getConnection();
+            
+            // viết sql
+            String sql = "select * from SanPham";
+
+            // sử dụng câu lệnh sql
+            PreparedStatement pst = connect.prepareStatement(sql);
+
+            // nhận kết quả trả về
+
+            ResultSet result_query = pst.executeQuery();
+
+            while (result_query.next()) {
+                String ten_sp = result_query.getString("ten_SP");
+                String img = result_query.getString("url_anh");
+                float gia = result_query.getFloat("gia");
+                System.out.println(ten_sp);
+                System.out.println(img);
+                System.out.println(gia);
+            }
+            
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        getAllProduct();
+    }
 
 }
