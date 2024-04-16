@@ -307,7 +307,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         } else {
             int userId = Integer.parseInt(String.valueOf(jTable1.getValueAt(selectedRow, 0)));
             try {
-                new EditUser(userId).setVisible(true);
+                new EditUser1(userId).setVisible(true);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
