@@ -61,7 +61,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         jbPrint = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jcbbSelect = new javax.swing.JComboBox<>();
-        jtSearch = new javax.swing.JTextField();
+        jtfSearch = new javax.swing.JTextField();
         jbRefresh = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -83,6 +83,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         jbAdd.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jbAdd.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER\\Desktop\\java_coffee\\src\\assets\\icon\\plus (1).png")); // NOI18N
         jbAdd.setText("Thêm");
+        jbAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jbAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -94,6 +95,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         jbEdit.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jbEdit.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER\\Desktop\\java_coffee\\src\\assets\\icon\\edit_user.png")); // NOI18N
         jbEdit.setText("Sửa");
+        jbEdit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbEdit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbEdit.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jbEdit.addActionListener(new java.awt.event.ActionListener() {
@@ -105,6 +107,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         jbDelete.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jbDelete.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER\\Desktop\\java_coffee\\src\\assets\\icon\\delete_user.png")); // NOI18N
         jbDelete.setText("Xóa");
+        jbDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbDelete.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbDelete.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jbDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -116,6 +119,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         jbImport.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jbImport.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER\\Desktop\\java_coffee\\src\\assets\\icon\\import_user.png")); // NOI18N
         jbImport.setText("Nhập");
+        jbImport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbImport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbImport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jbImport.addActionListener(new java.awt.event.ActionListener() {
@@ -127,6 +131,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         jbExport.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jbExport.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER\\Desktop\\java_coffee\\src\\assets\\icon\\export_user.png")); // NOI18N
         jbExport.setText("Xuất");
+        jbExport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbExport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbExport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jbExport.addActionListener(new java.awt.event.ActionListener() {
@@ -138,6 +143,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         jbPrint.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jbPrint.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER\\Desktop\\java_coffee\\src\\assets\\icon\\pdf_user.png")); // NOI18N
         jbPrint.setText("In");
+        jbPrint.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbPrint.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbPrint.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jbPrint.addActionListener(new java.awt.event.ActionListener() {
@@ -187,7 +193,12 @@ public class EmployeeMenu extends javax.swing.JPanel {
 
         jcbbSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jtSearch.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jtfSearch.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jtfSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfSearchActionPerformed(evt);
+            }
+        });
 
         jbRefresh.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jbRefresh.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER\\Desktop\\java_coffee\\src\\assets\\icon\\refresh.png")); // NOI18N
@@ -208,7 +219,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
                 .addGap(14, 14, 14)
                 .addComponent(jcbbSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jbRefresh)
                 .addContainerGap(21, Short.MAX_VALUE))
@@ -219,7 +230,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jcbbSelect)
-                    .addComponent(jtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
+                    .addComponent(jtfSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -246,6 +257,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTable1.setRowHeight(40);
         jScrollPane1.setViewportView(jTable1);
 
@@ -255,7 +267,10 @@ public class EmployeeMenu extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1085, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,7 +284,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddActionPerformed
-        // TODO add your handling code here:
+        new AddUser().setVisible(true);
     }//GEN-LAST:event_jbAddActionPerformed
 
     private void jbEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditActionPerformed
@@ -331,6 +346,69 @@ public class EmployeeMenu extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jbRefreshActionPerformed
 
+    private void jtfSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfSearchActionPerformed
+        String keyword = jtfSearch.getText().trim();
+        if (!keyword.isEmpty()) {
+            DefaultTableModel dtm = new DefaultTableModel();
+            jTable1.setModel(dtm);
+            dtm.addColumn("id");
+            dtm.addColumn("full_name");
+            dtm.addColumn("date_of_birth");
+            dtm.addColumn("address");
+            dtm.addColumn("position");
+            dtm.addColumn("phone");
+            dtm.addColumn("salary");
+            dtm.addColumn("created_date");
+            dtm.addColumn("Id Account");
+            try {
+                List<User> users = null;
+                if (jcbbSelect.getSelectedItem().equals("Tìm kiếm theo mã nhân viên")) {
+                    int id = Integer.parseInt(keyword);
+                    users = userservice.searchAllUserById(id);
+                }
+
+                else if (jcbbSelect.getSelectedItem().equals("Tìm kiếm theo tên nhân viên")) {
+
+                    users = userservice.searchAllUserByName(keyword);
+                } else if (jcbbSelect.getSelectedItem().equals("Tìm kiếm theo mã nhân viên")) {
+                    int id = Integer.parseInt(keyword);
+                    users = userservice.searchAllUserById(id);
+                } else if (jcbbSelect.getSelectedItem().equals("Tìm kiếm theo số điện thoại")) {
+                    users = userservice.searchAllUserByPhone(keyword);
+                }
+                for (User user : users) {
+                    dtm.addRow(new Object[] { user.getId(), user.getName(), user.getDate(), user.getAddress(),
+                            user.getPosition(),
+                            user.getPhone(), user.getSalary(), user.getDateCreate(), user.getAccountId() });
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(EmployeeMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                DefaultTableModel dtm = new DefaultTableModel();
+                jTable1.setModel(dtm);
+                dtm.addColumn("id");
+                dtm.addColumn("full_name");
+                dtm.addColumn("date_of_birth");
+                dtm.addColumn("address");
+                dtm.addColumn("position");
+                dtm.addColumn("phone");
+                dtm.addColumn("salary");
+                dtm.addColumn("created_date");
+                dtm.addColumn("Id Account");
+                List<User> users = userservice.getAllUser();
+                for (User user : users) {
+                    dtm.addRow(new Object[] { user.getId(), user.getName(), user.getDate(), user.getAddress(),
+                            user.getPosition(),
+                            user.getPhone(), user.getSalary(), user.getDateCreate(), user.getAccountId() });
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(EmployeeMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jtfSearchActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel5;
@@ -347,6 +425,6 @@ public class EmployeeMenu extends javax.swing.JPanel {
     private javax.swing.JButton jbPrint;
     private javax.swing.JButton jbRefresh;
     private javax.swing.JComboBox<String> jcbbSelect;
-    private javax.swing.JTextField jtSearch;
+    private javax.swing.JTextField jtfSearch;
     // End of variables declaration//GEN-END:variables
 }
