@@ -198,6 +198,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         jPanel1.add(jPanel2, gridBagConstraints);
 
+        jcbbSelect.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jcbbSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jcbbSelect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -403,7 +404,18 @@ public class EmployeeMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jbPrintActionPerformed
 
     private void jbRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRefreshActionPerformed
-        // TODO add your handling code here:
+        dtm.setRowCount(0);
+        List<User> users = null;
+        try {
+            users = userservice.getAllUser();
+        } catch (Exception ex) {
+            Logger.getLogger(EmployeeMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (User user : users) {
+            dtm.addRow(new Object[] { user.getId(), user.getName(), user.getDate(), user.getAddress(),
+                    user.getPosition(), user.getPhone(),
+                    user.getSalary(), user.getDateCreate(), user.getAccountId() });
+        }
     }//GEN-LAST:event_jbRefreshActionPerformed
 
     private void jtfSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfSearchActionPerformed
