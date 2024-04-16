@@ -273,7 +273,17 @@ public class EmployeeMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jbAddActionPerformed
 
     private void jbEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditActionPerformed
-        // TODO add your handling code here:
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn trường muốn update");
+        } else {
+            int userId = Integer.parseInt(String.valueOf(jTable1.getValueAt(selectedRow, 0)));
+            try {
+                new EditUser(userId).setVisible(true);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     }//GEN-LAST:event_jbEditActionPerformed
 
     private void jbDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeleteActionPerformed
