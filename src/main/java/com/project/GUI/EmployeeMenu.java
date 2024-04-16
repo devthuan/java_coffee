@@ -5,6 +5,9 @@ import com.project.BUS.*;
 import com.project.DTO.*;
 import com.project.BUS.UserService;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class EmployeeMenu extends javax.swing.JPanel {
@@ -274,7 +277,32 @@ public class EmployeeMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jbEditActionPerformed
 
     private void jbDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeleteActionPerformed
-        // TODO add your handling code here:
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please choose value which you want to delete?");
+        } else {
+            int choice = JOptionPane.showConfirmDialog(this, "Do you really want to delete it?");
+            if (choice == JOptionPane.YES_OPTION) {
+                int userId = Integer.parseInt(String.valueOf(jTable1.getValueAt(selectedRow, 0)));
+                try {
+                    userservice.deleteUser(userId);
+                } catch (Exception ex) {
+                    Logger.getLogger(EmployeeMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                dtm.setRowCount(0);
+                List<User> users = null;
+                try {
+                    users = userservice.getAllUser();
+                } catch (Exception ex) {
+                    Logger.getLogger(EmployeeMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                for (User user : users) {
+                    dtm.addRow(new Object[] { user.getId(), user.getName(), user.getDate(), user.getAddress(),
+                            user.getPosition(), user.getPhone(), user.getSalary(), user.getDateCreate(),
+                            user.getAccountId() });
+                }
+            }
+        }
     }//GEN-LAST:event_jbDeleteActionPerformed
 
     private void jbImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbImportActionPerformed
