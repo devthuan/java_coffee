@@ -212,6 +212,11 @@ public class EmployeeMenu extends javax.swing.JPanel {
                 jtfSearchActionPerformed(evt);
             }
         });
+        jtfSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtfSearchKeyReleased(evt);
+            }
+        });
 
         jbRefresh.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jbRefresh.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER\\Desktop\\java_coffee\\src\\assets\\icon\\refresh.png")); // NOI18N
@@ -344,11 +349,11 @@ public class EmployeeMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jbDeleteActionPerformed
 
     private void jbImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbImportActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jbImportActionPerformed
 
     private void jbExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExportActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jbExportActionPerformed
 
     private void jbPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPrintActionPerformed
@@ -419,7 +424,36 @@ public class EmployeeMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jbRefreshActionPerformed
 
     private void jtfSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfSearchActionPerformed
-        String keyword = jtfSearch.getText().trim();
+       
+    }//GEN-LAST:event_jtfSearchActionPerformed
+
+    private void jcbbSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbbSelectActionPerformed
+        jtfSearch.setText("");
+        jtfSearch.requestFocus();
+        try {
+            DefaultTableModel dtm = new DefaultTableModel();
+            jTable1.setModel(dtm);
+            dtm.addColumn("id");
+            dtm.addColumn("full_name");
+            dtm.addColumn("date_of_birth");
+            dtm.addColumn("address");
+            dtm.addColumn("position");
+            dtm.addColumn("phone");
+            dtm.addColumn("salary");
+            dtm.addColumn("created_date");
+            List<User> users = userservice.getAllUser();
+            for (User user : users) {
+                dtm.addRow(new Object[] { user.getId(), user.getName(), user.getDate(), user.getAddress(),
+                        user.getPosition(),
+                        user.getPhone(), user.getSalary(), user.getDateCreate() });
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(EmployeeMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jcbbSelectActionPerformed
+
+    private void jtfSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfSearchKeyReleased
+         String keyword = jtfSearch.getText().trim();
         if (!keyword.isEmpty()) {
             DefaultTableModel dtm = new DefaultTableModel();
             jTable1.setModel(dtm);
@@ -434,20 +468,19 @@ public class EmployeeMenu extends javax.swing.JPanel {
             dtm.addColumn("Id Account");
             try {
                 List<User> users = null;
-                if (jcbbSelect.getSelectedItem().equals("Tìm kiếm theo mã nhân viên")) {
+                if (jcbbSelect.getSelectedItem().equals("Tìm kiếm theo mã")) {
+                    System.out.println(jcbbSelect.getSelectedIndex());
                     int id = Integer.parseInt(keyword);
                     users = userservice.searchAllUserById(id);
                 }
 
-                else if (jcbbSelect.getSelectedItem().equals("Tìm kiếm theo tên nhân viên")) {
+                else if (jcbbSelect.getSelectedItem().equals("Tìm kiếm theo tên")) {
 
                     users = userservice.searchAllUserByName(keyword);
-                } else if (jcbbSelect.getSelectedItem().equals("Tìm kiếm theo mã nhân viên")) {
+                } else if (jcbbSelect.getSelectedItem().equals("Tìm kiếm theo số điện thoại")) {
                     int id = Integer.parseInt(keyword);
                     users = userservice.searchAllUserById(id);
-                } else if (jcbbSelect.getSelectedItem().equals("Tìm kiếm theo số điện thoại")) {
-                    users = userservice.searchAllUserByPhone(keyword);
-                }
+                } 
                 for (User user : users) {
                     dtm.addRow(new Object[] { user.getId(), user.getName(), user.getDate(), user.getAddress(),
                             user.getPosition(),
@@ -479,32 +512,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
                 Logger.getLogger(EmployeeMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }//GEN-LAST:event_jtfSearchActionPerformed
-
-    private void jcbbSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbbSelectActionPerformed
-        jtfSearch.setText("");
-        jtfSearch.requestFocus();
-        try {
-            DefaultTableModel dtm = new DefaultTableModel();
-            jTable1.setModel(dtm);
-            dtm.addColumn("id");
-            dtm.addColumn("full_name");
-            dtm.addColumn("date_of_birth");
-            dtm.addColumn("address");
-            dtm.addColumn("position");
-            dtm.addColumn("phone");
-            dtm.addColumn("salary");
-            dtm.addColumn("created_date");
-            List<User> users = userservice.getAllUser();
-            for (User user : users) {
-                dtm.addRow(new Object[] { user.getId(), user.getName(), user.getDate(), user.getAddress(),
-                        user.getPosition(),
-                        user.getPhone(), user.getSalary(), user.getDateCreate() });
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(EmployeeMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jcbbSelectActionPerformed
+    }//GEN-LAST:event_jtfSearchKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

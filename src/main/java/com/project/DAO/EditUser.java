@@ -12,10 +12,9 @@ import java.util.logging.Logger;
 
 public class EditUser extends javax.swing.JFrame {
     UserService userService;
-    
+    User user;
     public EditUser(int userId) {
         initComponents();
-        User user;
         userService = new UserService();
         try {
             user = userService.getIdUser(userId);
@@ -108,6 +107,11 @@ public class EditUser extends javax.swing.JFrame {
         jLabel26.setText("Lương");
 
         jtfsalary.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jtfsalary.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfsalaryActionPerformed(evt);
+            }
+        });
 
         jLabel27.setFont(new java.awt.Font("Leelawadee UI Semilight", 0, 18)); // NOI18N
         jLabel27.setText("Ngày tạo");
@@ -251,8 +255,22 @@ public class EditUser extends javax.swing.JFrame {
     }//GEN-LAST:event_jcbbpositionActionPerformed
 
     private void jbEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditActionPerformed
-        // TODO add your handling code here:
+        user.setName(jtfname.getText());
+        user.setDate(jdcdate.getDate());
+        user.setAddress(jtfaddress.getText());
+        user.setPosition((String) jcbbposition.getSelectedItem());
+        user.setPhone(jtfphone.getText());
+        user.setSalary(Float.parseFloat(jtfsalary.getText()));
+        try {
+            userService.updateUser(user);
+        } catch (Exception ex) {
+            Logger.getLogger(EditUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jbEditActionPerformed
+
+    private void jtfsalaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfsalaryActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfsalaryActionPerformed
 
    
 
