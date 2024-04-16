@@ -1,9 +1,16 @@
 
 package com.project.GUI;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.project.DAO.*;
 import com.project.BUS.*;
 import com.project.DTO.*;
 import com.project.BUS.UserService;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -339,7 +346,55 @@ public class EmployeeMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jbExportActionPerformed
 
     private void jbPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPrintActionPerformed
-        
+        String path = "users.pdf";
+        UserService userService = new UserService();
+        List<User> users = null;
+
+        try {
+            Document document = new Document(PageSize.A3.rotate());
+            PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream(path));
+            document.open();
+
+            PdfPTable table = new PdfPTable(9);
+            table.setWidthPercentage(100);
+
+            float[] columnWidths = { 1f, 2f, 2f, 3f, 2f, 2f, 2f, 2f, 1f };
+            table.setWidths(columnWidths);
+            table.addCell("Id");
+            table.addCell("Name");
+            table.addCell("Date");
+            table.addCell("Address");
+            table.addCell("Position");
+            table.addCell("Phone");
+            table.addCell("Salary");
+            table.addCell("DateCreate");
+            table.addCell("Id Account");
+
+            try {
+                users = userService.getAllUser();
+                for (User user : users) {
+                    table.addCell(String.valueOf(user.getId()));
+                    table.addCell(user.getName());
+                    table.addCell(String.valueOf(user.getDate()));
+                    table.addCell(user.getAddress());
+                    table.addCell(user.getPosition());
+                    table.addCell(user.getPhone());
+                    table.addCell(String.valueOf(user.getSalary()));
+                    table.addCell(String.valueOf(user.getDateCreate()));
+                    table.addCell(String.valueOf(user.getAccountId()));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            document.add(table); // Thêm bảng vào tài liệu PDF
+
+            document.close();
+            System.out.println("Tạo tệp PDF thành công.");
+        } catch (DocumentException | FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Đã xảy ra lỗi khi tạo tệp PDF.");
+        }
     }//GEN-LAST:event_jbPrintActionPerformed
 
     private void jbRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRefreshActionPerformed
