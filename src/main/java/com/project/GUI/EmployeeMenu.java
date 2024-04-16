@@ -199,7 +199,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         jPanel1.add(jPanel2, gridBagConstraints);
 
         jcbbSelect.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jcbbSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbbSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tìm kiếm theo mã ", "Tìm kiếm theo tên", "Tìm kiếm theo số điện thoại", " " }));
         jcbbSelect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbbSelectActionPerformed(evt);
@@ -307,7 +307,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         } else {
             int userId = Integer.parseInt(String.valueOf(jTable1.getValueAt(selectedRow, 0)));
             try {
-                new EditUser1(userId).setVisible(true);
+                new EditUser(userId).setVisible(true);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
