@@ -339,7 +339,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jbExportActionPerformed
 
     private void jbPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPrintActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jbPrintActionPerformed
 
     private void jbRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRefreshActionPerformed
