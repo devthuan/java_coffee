@@ -199,6 +199,11 @@ public class EmployeeMenu extends javax.swing.JPanel {
         jPanel1.add(jPanel2, gridBagConstraints);
 
         jcbbSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbbSelect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbbSelectActionPerformed(evt);
+            }
+        });
 
         jtfSearch.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jtfSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -463,6 +468,31 @@ public class EmployeeMenu extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_jtfSearchActionPerformed
+
+    private void jcbbSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbbSelectActionPerformed
+        jtfSearch.setText("");
+        jtfSearch.requestFocus();
+        try {
+            DefaultTableModel dtm = new DefaultTableModel();
+            jTable1.setModel(dtm);
+            dtm.addColumn("id");
+            dtm.addColumn("full_name");
+            dtm.addColumn("date_of_birth");
+            dtm.addColumn("address");
+            dtm.addColumn("position");
+            dtm.addColumn("phone");
+            dtm.addColumn("salary");
+            dtm.addColumn("created_date");
+            List<User> users = userservice.getAllUser();
+            for (User user : users) {
+                dtm.addRow(new Object[] { user.getId(), user.getName(), user.getDate(), user.getAddress(),
+                        user.getPosition(),
+                        user.getPhone(), user.getSalary(), user.getDateCreate() });
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(EmployeeMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jcbbSelectActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
