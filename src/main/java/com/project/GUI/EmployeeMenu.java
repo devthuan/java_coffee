@@ -13,14 +13,20 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -374,7 +380,75 @@ public class EmployeeMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jbDeleteActionPerformed
 
     private void jbImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbImportActionPerformed
-        
+        File excelFile;
+        FileInputStream excelFIS = null;
+        BufferedInputStream excelBIS = null;
+        XSSFWorkbook excelJTableImport = null;
+        String defaultCurrentDirectoryPath = "C:/Code/books.xlsx";
+        JFileChooser excelFileChooser = new JFileChooser(defaultCurrentDirectoryPath);
+        FileNameExtensionFilter fnef = new FileNameExtensionFilter("EXCEL FILES", "xls", "xlsx", "xlsm");
+        excelFileChooser.setFileFilter(fnef);
+        excelFileChooser.setDialogTitle("Select Excel File");
+        int excelChooser = excelFileChooser.showOpenDialog(null);
+        dtm.setRowCount(0);
+        if (excelChooser == JFileChooser.APPROVE_OPTION) {
+            try {
+                excelFile = excelFileChooser.getSelectedFile();
+                excelFIS = new FileInputStream(excelFile);
+                excelBIS = new BufferedInputStream(excelFIS);
+                excelJTableImport = new XSSFWorkbook(excelBIS);
+                XSSFSheet excelSheet = excelJTableImport.getSheetAt(0);
+                for (int row = 1; row <= excelSheet.getLastRowNum(); row++) {
+                    XSSFRow excelRow = excelSheet.getRow(row);
+
+                    XSSFCell excelId = excelRow.getCell(0);
+                    int idValue = 0;
+                    if (excelId != null) {
+                        if (excelId.getCellTypeEnum() == CellType.NUMERIC) {
+                            idValue = (int) excelId.getNumericCellValue();
+                        } else if (excelId.getCellTypeEnum() == CellType.STRING) {
+                            String idString = excelId.getStringCellValue();
+                            try {
+                                idValue = Integer.parseInt(idString);
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    XSSFCell excelName = excelRow.getCell(1);
+                    XSSFCell excelDate = excelRow.getCell(2);
+                    XSSFCell excelAddress = excelRow.getCell(3);
+                    XSSFCell excelPosition = excelRow.getCell(4);
+                    XSSFCell excelPhone = excelRow.getCell(5);
+                    XSSFCell excelSalary = excelRow.getCell(6);
+
+                    XSSFCell excelDateCreate = excelRow.getCell(7);
+                    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+                    String formattedDate = sdf.format(excelDateCreate.getDateCellValue());
+
+                    XSSFCell excelIdAccount = excelRow.getCell(8);
+                    int idAccountValue = 0;
+                    if (excelIdAccount != null) {
+                        if (excelIdAccount.getCellTypeEnum() == CellType.NUMERIC) {
+                            idAccountValue = (int) excelIdAccount.getNumericCellValue();
+                        } else if (excelIdAccount.getCellTypeEnum() == CellType.STRING) {
+                            String idAccountString = excelIdAccount.getStringCellValue();
+                            try {
+                                idAccountValue = Integer.parseInt(idAccountString);
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    dtm.addRow(new Object[] { idValue, excelName, excelDate, excelAddress, excelPosition, excelPhone,
+                            excelSalary, formattedDate, idAccountValue });
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }//GEN-LAST:event_jbImportActionPerformed
 
     private void jbExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExportActionPerformed
