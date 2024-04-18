@@ -9,13 +9,23 @@ import com.project.DAO.*;
 import com.project.BUS.*;
 import com.project.DTO.*;
 import com.project.BUS.UserService;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 public class EmployeeMenu extends javax.swing.JPanel {
     UserService userservice;
@@ -39,6 +49,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         dtm.addColumn("salary");
         dtm.addColumn("created_date");
         dtm.addColumn("Account Id");
+        setColumnHeaderProperties(jTable1, 14, Color.BLACK, Font.BOLD);
         List<User> users = null;
         try {
             users = userservice.getAllUser();
@@ -50,6 +61,16 @@ public class EmployeeMenu extends javax.swing.JPanel {
             dtm.addRow(new Object[] { user.getId(), user.getName(), user.getDate(), user.getAddress(),
                     user.getPosition(), user.getPhone(), user.getSalary(), user.getDateCreate(), user.getAccountId() });
         }
+         centerAlignTableCells(jTable1);
+        centerAlignTableHeader(jTable1);
+
+        jTable1.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                double[] columnPercentages = {0.05, 0.1, 0.1, 0.15, 0.15, 0.1, 0.1, 0.15, 0.1}; // Phần trăm độ rộng cho từng cột
+                setColumnWidths(jTable1, columnPercentages);
+        }        
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -469,17 +490,14 @@ public class EmployeeMenu extends javax.swing.JPanel {
             try {
                 List<User> users = null;
                 if (jcbbSelect.getSelectedItem().equals("Tìm kiếm theo mã")) {
-                    System.out.println(jcbbSelect.getSelectedIndex());
                     int id = Integer.parseInt(keyword);
                     users = userservice.searchAllUserById(id);
                 }
 
                 else if (jcbbSelect.getSelectedItem().equals("Tìm kiếm theo tên")) {
-
                     users = userservice.searchAllUserByName(keyword);
                 } else if (jcbbSelect.getSelectedItem().equals("Tìm kiếm theo số điện thoại")) {
-                    int id = Integer.parseInt(keyword);
-                    users = userservice.searchAllUserById(id);
+                    users = userservice.searchAllUserByPhone(keyword);
                 } 
                 for (User user : users) {
                     dtm.addRow(new Object[] { user.getId(), user.getName(), user.getDate(), user.getAddress(),
@@ -513,7 +531,44 @@ public class EmployeeMenu extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_jtfSearchKeyReleased
+    private void centerAlignTableHeader(JTable table) {
+        JTableHeader header = table.getTableHeader();
+        TableCellRenderer defaultRenderer = header.getDefaultRenderer();
+        JLabel headerLabel = (JLabel) defaultRenderer;
+        headerLabel.setHorizontalAlignment(JLabel.CENTER);
+    }
+      private void centerAlignTableCells(JTable table) {
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+    }
+     private void setColumnHeaderProperties(JTable table, int fontSize, Color color, int fontStyle) {
+        JTableHeader header = table.getTableHeader();
+        Font headerFont = header.getFont();
+        header.setFont(new Font(headerFont.getName(), fontStyle, fontSize));
+        header.setForeground(color);
+        TableColumnModel columnModel = table.getColumnModel();
+        for (int columnIndex = 0; columnIndex < columnModel.getColumnCount(); columnIndex++) {
+            columnModel.getColumn(columnIndex).setHeaderRenderer(header.getDefaultRenderer());
+        }
+    }
+     private void setColumnWidths(JTable table, double[] percentages) {
+    if (table == null || percentages == null || table.getColumnModel().getColumnCount() != percentages.length) {
+        return; // Bảng hoặc mảng tỉ lệ không hợp lệ
+    }
+
+    TableColumnModel columnModel = table.getColumnModel();
+    int totalWidth = table.getWidth();
+    for (int i = 0; i < percentages.length; i++) {
+        int width = (int) (totalWidth * percentages[i]); // Tính toán độ rộng dựa trên tỉ lệ phần trăm
+        columnModel.getColumn(i).setPreferredWidth(width);
+    }
+     
+    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel5;

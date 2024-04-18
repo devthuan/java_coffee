@@ -4,17 +4,29 @@ import com.project.BUS.*;
 import com.project.DTO.*;
 import com.project.DTO.*;
 import com.project.BUS.UserService;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
+import javax.swing.table.TableColumnModel;
 
 public class EditUser extends javax.swing.JFrame {
     UserService userService;
     User user;
     public EditUser(int userId) {
         initComponents();
+        try {
+            displayPosition();
+        } catch (Exception ex) {
+            Logger.getLogger(EditUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
         userService = new UserService();
         try {
             user = userService.getIdUser(userId);
@@ -32,12 +44,20 @@ public class EditUser extends javax.swing.JFrame {
             String formattedDateTime = dateFormat.format(timestamp);
             jtfCreate.setText(formattedDateTime);
             jtfCreate.setEnabled(false);
-//            jtIdAccount.setText(String.valueOf(user.getAccountId()));
-//            jtIdAccount.setEnabled(false);
-//            userservice.updateUser(user);
+            Connection con = mysqlConnect.getConnection();
+            String sql = "SELECT * FROM TaiKhoan WHERE id = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, Integer.parseInt(jtfCode.getText()));
+            ResultSet rs = ps.executeQuery();
+            if(rs.next())
+            {   
+                
+                jcbbEmail.setSelectedItem(rs.getString("email"));
+            }
         } catch (Exception ex) {
             Logger.getLogger(EditUser1.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -62,6 +82,8 @@ public class EditUser extends javax.swing.JFrame {
         jLabel28 = new javax.swing.JLabel();
         jcbbposition = new javax.swing.JComboBox<>();
         jbEdit = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jcbbEmail = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -122,7 +144,6 @@ public class EditUser extends javax.swing.JFrame {
         jLabel28.setText("Chức vụ");
 
         jcbbposition.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jcbbposition.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Admin ", "Quản lí ", "Nhân viên" }));
         jcbbposition.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbbpositionActionPerformed(evt);
@@ -134,6 +155,16 @@ public class EditUser extends javax.swing.JFrame {
         jbEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbEditActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Leelawadee UI Semilight", 2, 18)); // NOI18N
+        jLabel1.setText("Email");
+
+        jcbbEmail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jcbbEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbbEmailActionPerformed(evt);
             }
         });
 
@@ -157,35 +188,36 @@ public class EditUser extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jdcdate, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                            .addComponent(jtfCode))
+                        .addGap(34, 34, 34)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel24))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jtfphone, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                            .addComponent(jtfname)))
+                    .addComponent(jtfaddress)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtfsalary, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jcbbposition, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(37, 37, 37)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jdcdate, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                                    .addComponent(jtfCode))
-                                .addGap(34, 34, 34)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel24))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jtfphone, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-                                    .addComponent(jtfname)))
-                            .addComponent(jtfaddress)
+                                .addComponent(jbEdit)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jtfsalary, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(37, 37, 37)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE))
+                                .addGap(36, 36, 36)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jbEdit)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(36, 36, 36)
-                                        .addComponent(jtfCreate, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)))))
-                        .addGap(35, 35, 35))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jcbbposition, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(jtfCreate, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                                    .addComponent(jcbbEmail, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                .addGap(35, 35, 35))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,9 +246,12 @@ public class EditUser extends javax.swing.JFrame {
                     .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                     .addComponent(jtfCreate))
                 .addGap(51, 51, 51)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(jcbbposition))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                        .addComponent(jcbbposition)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jcbbEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(jbEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
@@ -251,20 +286,51 @@ public class EditUser extends javax.swing.JFrame {
     }//GEN-LAST:event_jtfnameActionPerformed
 
     private void jcbbpositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbbpositionActionPerformed
-        // TODO add your handling code here:
+        try {
+            Connection con = mysqlConnect.getConnection();
+            String sql = "SELECT * FROM TaiKhoan INNER JOIN Quyen ON TaiKhoan.Quyen_id = Quyen.id WHERE ten_quyen = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, (String) jcbbposition.getSelectedItem());
+            ResultSet rs = ps.executeQuery();
+            jcbbEmail.removeAllItems();
+            jcbbEmail.addItem("");
+            while(rs.next())
+            {
+                jcbbEmail.addItem(rs.getString("email"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AddUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jcbbpositionActionPerformed
 
     private void jbEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditActionPerformed
-        user.setName(jtfname.getText());
-        user.setDate(jdcdate.getDate());
-        user.setAddress(jtfaddress.getText());
-        user.setPosition((String) jcbbposition.getSelectedItem());
-        user.setPhone(jtfphone.getText());
-        user.setSalary(Float.parseFloat(jtfsalary.getText()));
-        try {
-            userService.updateUser(user);
-        } catch (Exception ex) {
-            Logger.getLogger(EditUser.class.getName()).log(Level.SEVERE, null, ex);
+        try 
+        {
+            user.setName(jtfname.getText());
+            user.setDate(jdcdate.getDate());
+            user.setAddress(jtfaddress.getText());
+            user.setPosition((String) jcbbposition.getSelectedItem());
+            user.setPhone(jtfphone.getText());
+            user.setSalary(Float.parseFloat(jtfsalary.getText()));
+            Connection con = mysqlConnect.getConnection();
+            String sql = "SELECT * FROM TaiKhoan WHERE email = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, (String) jcbbEmail.getSelectedItem());
+            ResultSet rs = ps.executeQuery();
+            if(rs.next())
+            {
+                user.setAccountId(rs.getInt("id"));
+            }
+            try {
+                userService.updateUser(user);
+                new EditUser(Integer.parseInt(jtfCode.getText())).setVisible(false);
+            } catch (Exception ex) {
+                Logger.getLogger(EditUser.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
         }
     }//GEN-LAST:event_jbEditActionPerformed
 
@@ -272,9 +338,27 @@ public class EditUser extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfsalaryActionPerformed
 
+    private void jcbbEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbbEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbbEmailActionPerformed
+
+   private void displayPosition() throws Exception 
+    {
+        Connection con = mysqlConnect.getConnection();
+        String sql = "SELECT * FROM Quyen";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        jcbbposition.addItem("");
+        while(rs.next())
+        {
+            jcbbposition.addItem(rs.getString("ten_quyen"));
+        }
+    }
    
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
@@ -285,6 +369,7 @@ public class EditUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jbEdit;
+    private javax.swing.JComboBox<String> jcbbEmail;
     private javax.swing.JComboBox<String> jcbbposition;
     private com.toedter.calendar.JDateChooser jdcdate;
     private javax.swing.JTextField jtfCode;

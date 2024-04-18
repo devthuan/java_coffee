@@ -55,7 +55,7 @@ public class UserDao {
 
     public void updateUser(User user) throws Exception {
         Connection con = mysqlConnect.getConnection();
-        String sql = "UPDATE NhanVien  SET ho_va_ten = ?, ngay_sinh = ?, dia_chi = ?, chuc_vu = ?, sdt = ?, luong = ? WHERE id = ?";
+        String sql = "UPDATE NhanVien  SET ho_va_ten = ?, ngay_sinh = ?, dia_chi = ?, chuc_vu = ?, sdt = ?, luong = ?, TaiKhoan_id = ? WHERE id = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, user.getName());
         ps.setDate(2, new java.sql.Date(user.getDate().getTime()));
@@ -63,7 +63,8 @@ public class UserDao {
         ps.setString(4, user.getPosition());
         ps.setString(5, user.getPhone());
         ps.setDouble(6, user.getSalary());
-        ps.setInt(7, user.getId());
+        ps.setInt(7, user.getAccountId());
+        ps.setInt(8, user.getId());
         ps.executeUpdate();
     }
 

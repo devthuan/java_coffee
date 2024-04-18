@@ -3,6 +3,11 @@ package com.project.DAO;
 import com.project.BUS.*;
 import com.project.GUI.*;
 import com.project.DTO.*;
+import java.sql.Statement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 public class AddUser extends javax.swing.JFrame {
@@ -10,6 +15,16 @@ public class AddUser extends javax.swing.JFrame {
     public AddUser() {
         initComponents();
         userService = new UserService();
+//        try {
+//            displayAccount();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(AddUser.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        try {
+            displayPosition();
+        } catch (Exception ex) {
+            Logger.getLogger(AddUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -28,10 +43,10 @@ public class AddUser extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jtfSalary = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jtfPosition = new javax.swing.JComboBox<>();
+        jcbbPosition = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         jbAdd = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jcbbEmail = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -70,8 +85,13 @@ public class AddUser extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Leelawadee UI Semilight", 2, 18)); // NOI18N
         jLabel6.setText("Chức vụ");
 
-        jtfPosition.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jtfPosition.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Admin", "Quản lí ", "Nhân viên" }));
+        jcbbPosition.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jcbbPosition.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        jcbbPosition.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbbPositionActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Leelawadee UI Semilight", 2, 18)); // NOI18N
         jLabel7.setText("Email");
@@ -84,8 +104,12 @@ public class AddUser extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbbEmail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jcbbEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbbEmailActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -111,7 +135,7 @@ public class AddUser extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jtfPhone)
-                            .addComponent(jtfPosition, 0, 171, Short.MAX_VALUE))
+                            .addComponent(jcbbPosition, 0, 171, Short.MAX_VALUE))
                         .addGap(57, 57, 57)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -119,7 +143,7 @@ public class AddUser extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jtfSalary)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jcbbEmail, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(38, 38, 38))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -151,9 +175,9 @@ public class AddUser extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(jtfPosition, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(jcbbPosition, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                     .addComponent(jLabel7)
-                    .addComponent(jComboBox1))
+                    .addComponent(jcbbEmail))
                 .addGap(50, 50, 50)
                 .addComponent(jbAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(33, Short.MAX_VALUE))
@@ -182,16 +206,53 @@ public class AddUser extends javax.swing.JFrame {
     private void jtfNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfNameActionPerformed
-
+    private void displayAccount() throws SQLException
+    {
+        Connection con = mysqlConnect.getConnection();
+        String sql = "SELECT * FROM TaiKhoan";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        jcbbEmail.addItem("");
+        while(rs.next())
+        {
+            jcbbEmail.addItem(rs.getString("email"));
+        }
+    }
+    private void displayPosition() throws Exception 
+    {
+        Connection con = mysqlConnect.getConnection();
+        String sql = "SELECT * FROM Quyen";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        while(rs.next())
+        {
+            jcbbPosition.addItem(rs.getString("ten_quyen"));
+        }
+    }
     private void jbAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddActionPerformed
         User user = new User();
         user.setName(jtfName.getText());
         user.setDate(jdcDate.getDate());
         user.setAddress(jtfAddress.getText());
-        user.setPosition((String) jtfPosition.getSelectedItem());
+        user.setPosition((String) jcbbPosition.getSelectedItem());
         user.setPhone(jtfPhone.getText());
         user.setSalary(Float.parseFloat(jtfSalary.getText()));
-//        user.setAccountId(Integer.parseInt(jtAccount.getText()));
+        int idAccount = 0;
+        Connection con = mysqlConnect.getConnection();
+        String sql = "SELECT * FROM TaiKhoan WHERE email = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, (String) jcbbEmail.getSelectedItem());
+            ResultSet rs = ps.executeQuery();
+            if(rs.next())
+            {
+                idAccount = rs.getInt("id");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AddUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        user.setAccountId(idAccount);
         try {
             userService.addUser(user);
             new EmployeeMenu().setVisible(true);
@@ -201,6 +262,27 @@ public class AddUser extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jbAddActionPerformed
+
+    private void jcbbEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbbEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbbEmailActionPerformed
+
+    private void jcbbPositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbbPositionActionPerformed
+        try {
+            Connection con = mysqlConnect.getConnection();
+            String sql = "SELECT * FROM TaiKhoan INNER JOIN Quyen ON TaiKhoan.Quyen_id = Quyen.id WHERE ten_quyen = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, (String) jcbbPosition.getSelectedItem());
+            ResultSet rs = ps.executeQuery();
+            jcbbEmail.removeAllItems();
+            while(rs.next())
+            {
+                jcbbEmail.addItem(rs.getString("email"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AddUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jcbbPositionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -238,7 +320,6 @@ public class AddUser extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -248,11 +329,12 @@ public class AddUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jbAdd;
+    private javax.swing.JComboBox<String> jcbbEmail;
+    private javax.swing.JComboBox<String> jcbbPosition;
     private com.toedter.calendar.JDateChooser jdcDate;
     private javax.swing.JTextField jtfAddress;
     private javax.swing.JTextField jtfName;
     private javax.swing.JTextField jtfPhone;
-    private javax.swing.JComboBox<String> jtfPosition;
     private javax.swing.JTextField jtfSalary;
     // End of variables declaration//GEN-END:variables
 }
