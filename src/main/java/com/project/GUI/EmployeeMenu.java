@@ -52,7 +52,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         jTable1.setModel(dtm);
         dtm.addColumn("Id");
         dtm.addColumn("full_name");
-        dtm.addColumn("date_of_birth");
+        dtm.addColumn("Date");
         dtm.addColumn("address");
         dtm.addColumn("position");
         dtm.addColumn("phone");
@@ -339,7 +339,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
     private void jbEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditActionPerformed
         int selectedRow = jTable1.getSelectedRow();
         if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn trường muốn update");
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên muốn cập nhật");
         } else {
             int userId = Integer.parseInt(String.valueOf(jTable1.getValueAt(selectedRow, 0)));
             try {
@@ -353,9 +353,9 @@ public class EmployeeMenu extends javax.swing.JPanel {
     private void jbDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeleteActionPerformed
         int selectedRow = jTable1.getSelectedRow();
         if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Please choose value which you want to delete?");
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên muốn xóa");
         } else {
-            int choice = JOptionPane.showConfirmDialog(this, "Do you really want to delete it?");
+            int choice = JOptionPane.showConfirmDialog(this, "Bạn có thực sự muốn xóa nhân viên này ?");
             if (choice == JOptionPane.YES_OPTION) {
                 int userId = Integer.parseInt(String.valueOf(jTable1.getValueAt(selectedRow, 0)));
                 try {
@@ -456,55 +456,8 @@ public class EmployeeMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jbExportActionPerformed
 
     private void jbPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPrintActionPerformed
-        String path = "users.pdf";
-        UserService userService = new UserService();
-        List<User> users = null;
 
-        try {
-            Document document = new Document(PageSize.A3.rotate());
-            PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream(path));
-            document.open();
-
-            PdfPTable table = new PdfPTable(9);
-            table.setWidthPercentage(100);
-
-            float[] columnWidths = { 1f, 2f, 2f, 3f, 2f, 2f, 2f, 2f, 1f };
-            table.setWidths(columnWidths);
-            table.addCell("Id");
-            table.addCell("Name");
-            table.addCell("Date");
-            table.addCell("Address");
-            table.addCell("Position");
-            table.addCell("Phone");
-            table.addCell("Salary");
-            table.addCell("DateCreate");
-            table.addCell("Id Account");
-
-            try {
-                users = userService.getAllUser();
-                for (User user : users) {
-                    table.addCell(String.valueOf(user.getId()));
-                    table.addCell(user.getName());
-                    table.addCell(String.valueOf(user.getDate()));
-                    table.addCell(user.getAddress());
-                    table.addCell(user.getPosition());
-                    table.addCell(user.getPhone());
-                    table.addCell(String.valueOf(user.getSalary()));
-                    table.addCell(String.valueOf(user.getDateCreate()));
-                    table.addCell(String.valueOf(user.getAccountId()));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            document.add(table); // Thêm bảng vào tài liệu PDF
-
-            document.close();
-            System.out.println("Tạo tệp PDF thành công.");
-        } catch (DocumentException | FileNotFoundException e) {
-            e.printStackTrace();
-            System.out.println("Đã xảy ra lỗi khi tạo tệp PDF.");
-        }
+            new PrintUser().setVisible(true);
     }//GEN-LAST:event_jbPrintActionPerformed
 
     private void jbRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRefreshActionPerformed
