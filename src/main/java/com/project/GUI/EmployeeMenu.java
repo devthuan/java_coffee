@@ -452,7 +452,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jbImportActionPerformed
 
     private void jbExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExportActionPerformed
-        
+        new ExportUser().setVisible(true);
     }//GEN-LAST:event_jbExportActionPerformed
 
     private void jbPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPrintActionPerformed
