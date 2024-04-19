@@ -11,6 +11,7 @@ public class WareHouse {
     private int quantity;
     private int is_active;
     private Date create_date;
+    private Date update_date;
     public int getId()
     {
         return id;
@@ -63,6 +64,14 @@ public class WareHouse {
     public void setCreateDate(Date create_date)
     {
         this.create_date = create_date;
+    }
+    public void setUpdateDate(Date update_date)
+    {
+        this.update_date = update_date;
+    }
+    public Date getUpdateDate()
+    {
+        return update_date;
     }
 }
 

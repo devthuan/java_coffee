@@ -11,7 +11,7 @@ public class WareHouseDao {
     {
         Connection connect = mysqlConnect.getConnection();
         List<WareHouse> warehouses = new ArrayList<WareHouse>();
-        String sql = "SELECT * FROM nguyenlieu";
+        String sql = "SELECT * FROM NguyenLieu";
         PreparedStatement ps = connect.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         while(rs.next())
@@ -22,8 +22,8 @@ public class WareHouseDao {
             warehouse.setUnit(rs.getString("don_vi"));
             warehouse.setQuantity(rs.getInt("so_luong"));
             warehouse.setISAcctive(rs.getInt("is_active"));
-            warehouse.setCreateDate(rs.getDate("create_date"));
-//            warehouse.setIdSupplier(rs.getInt("id_nhacungcap"));
+            warehouse.setCreateDate(rs.getTimestamp("created_date"));
+            warehouse.setUpdateDate(rs.getDate("updatedAt"));
             warehouses.add(warehouse);
         }
         return warehouses;
