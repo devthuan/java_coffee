@@ -56,11 +56,11 @@ public class WareHouse {
     {
         this.is_active = is_active;
     }
-    private Date getCreateDate()
+    public Date getCreateDate()
     {
         return create_date;
     }
-    private void setCreateDate(Date create_date)
+    public void setCreateDate(Date create_date)
     {
         this.create_date = create_date;
     }

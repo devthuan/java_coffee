@@ -55,7 +55,7 @@ public class EditUser extends javax.swing.JFrame {
                 jcbbEmail.setSelectedItem(rs.getString("email"));
             }
         } catch (Exception ex) {
-            Logger.getLogger(EditUser1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditUser.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
