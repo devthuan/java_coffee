@@ -230,7 +230,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         jPanel1.add(jPanel2, gridBagConstraints);
 
         jcbbSelect.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jcbbSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tìm kiếm theo mã ", "Tìm kiếm theo tên", "Tìm kiếm theo số điện thoại", " " }));
+        jcbbSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tìm kiếm theo mã", "Tìm kiếm theo tên", "Tìm kiếm theo số điện thoại", " " }));
         jcbbSelect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbbSelectActionPerformed(evt);

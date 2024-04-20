@@ -15,11 +15,6 @@ public class AddUser extends javax.swing.JFrame {
     public AddUser() {
         initComponents();
         userService = new UserService();
-//        try {
-//            displayAccount();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(AddUser.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         try {
             displayPosition();
         } catch (Exception ex) {
@@ -50,6 +45,7 @@ public class AddUser extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin nhân viên", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Leelawadee UI Semilight", 2, 18)); // NOI18N
@@ -206,18 +202,7 @@ public class AddUser extends javax.swing.JFrame {
     private void jtfNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfNameActionPerformed
-    private void displayAccount() throws SQLException
-    {
-        Connection con = mysqlConnect.getConnection();
-        String sql = "SELECT * FROM TaiKhoan";
-        Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery(sql);
-        jcbbEmail.addItem("");
-        while(rs.next())
-        {
-            jcbbEmail.addItem(rs.getString("email"));
-        }
-    }
+
     private void displayPosition() throws Exception 
     {
         Connection con = mysqlConnect.getConnection();
@@ -258,7 +243,7 @@ public class AddUser extends javax.swing.JFrame {
             new EmployeeMenu().setVisible(true);
             this.dispose();
         } catch (Exception ex) {
-            Logger.getLogger(AddUser1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddUser.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_jbAddActionPerformed

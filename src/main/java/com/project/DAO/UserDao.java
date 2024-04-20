@@ -159,5 +159,29 @@ public class UserDao {
             users.add(user);
         }
         return users;
+    } 
+    
+    public User getNameUser(String name) throws Exception {
+        Connection con = mysqlConnect.getConnection();
+        String sql = "SELECT * FROM NhanVien WHERE ho_va_ten = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, name);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            User user = new User();
+            user.setId(rs.getInt("id"));
+            user.setName(rs.getString("ho_va_ten"));
+            user.setDate(rs.getDate("ngay_sinh"));
+            user.setAddress(rs.getString("dia_chi"));
+            user.setPosition(rs.getString("chuc_vu"));
+            user.setPhone(rs.getString("sdt"));
+            user.setSalary(rs.getFloat("luong"));
+            user.setDateCreate(rs.getTimestamp("createdAt"));
+            user.setAccountId(rs.getInt("TaiKhoan_id"));
+
+            return user;
+        }
+        return null;
     }
+    
 }

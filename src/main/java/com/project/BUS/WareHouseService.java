@@ -17,4 +17,24 @@ public class WareHouseService {
     {
         warehousedao.AddWareHouse(warehouse);
     }
+    public void updateWareHouse(WareHouse warehouse) throws Exception
+    {
+        warehousedao.UpdateWareHouse(warehouse);
+    }
+    public WareHouse getNameWareHouse(String name) throws Exception 
+    {
+        return warehousedao.getNameWareHouse(name);
+    }
+    public void deleteWareHouse(int id) throws Exception
+    {
+        warehousedao.deleteWareHouse(id);
+    }
+    public List<WareHouse> searchAllWareHouseById(int id) throws Exception
+    {
+        return warehousedao.searchAllWareHouseById(id);
+    }
+    public List<WareHouse> searchAllWareHouseByName(String name) throws Exception
+    {
+        return warehousedao.searchAllWareHouseByName(name);
+    }
 }

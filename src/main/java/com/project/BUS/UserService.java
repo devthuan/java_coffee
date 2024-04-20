@@ -29,6 +29,10 @@ public class UserService {
     {
         return userdao.getIdUser(id);
     }
+    public User getNameUser(String name) throws Exception
+    {
+        return userdao.getNameUser(name);
+    }
     public List<User> searchAllUserByName(String name) throws Exception
     {
         return userdao.SearchAllUserByName(name);

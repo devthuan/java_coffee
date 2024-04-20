@@ -29,7 +29,7 @@ public class Main extends javax.swing.JFrame {
                 initComponents();
 
                 SwitchControl();
-                Right.add(new BuyProduct()).setVisible(true);
+//                Right.add(new BuyProduct()).setVisible(true);
 
 
         }
@@ -513,26 +513,19 @@ public class Main extends javax.swing.JFrame {
         }
 
         private void HomeLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                SwitchControl();
-                Right.add(new BuyProduct()).setVisible(true);
+              
         }
 
         private void ProductLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                SwitchControl();
-                ProductMenu productMenu = new ProductMenu();
-                Right.add(productMenu).setVisible(true);
+               
         }
 
         private void OrderLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                SwitchControl();
-                OrderMenu orderMenu = new OrderMenu();
-                Right.add(orderMenu);
+               
         }
 
         private void AccountLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                SwitchControl();
-                TaiKhoan orderMenu = new TaiKhoan();
-                Right.add(orderMenu);
+              
         }
 
         private void EmployeeLabelMouseClicked(java.awt.event.MouseEvent evt) {
@@ -542,21 +535,15 @@ public class Main extends javax.swing.JFrame {
         }
 
         private void ReceiptLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                SwitchControl();
-                Right.add(new ReceiptDeliveryBill()).setVisible(true);
+               
         }
 
         private void SupplierLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                SwitchControl();
-                Right.add(new Supplier()).setVisible(true);
-
-             
-
+               
         }
 
         private void StatisticalLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                SwitchControl();
-                Right.add(new Statistical()).setVisible(true);
+               
         }
 
         private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {
@@ -565,7 +552,7 @@ public class Main extends javax.swing.JFrame {
 
         private void WarehouseLabelMouseClicked(java.awt.event.MouseEvent evt) {
                 SwitchControl();
-            Right.add(new Warehouses()).setVisible(true);
+            Right.add(new WareHouseMenu()).setVisible(true);
         }
 
         /**

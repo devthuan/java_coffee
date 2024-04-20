@@ -2,13 +2,17 @@
 package com.project.GUI;
 import com.project.DTO.*;
 import com.project.BUS.WareHouseService;
+import com.project.DAO.*;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class Warehouses extends javax.swing.JPanel {
+public class WareHouseMenu extends javax.swing.JPanel {
     WareHouseService wareHouseService;
     DefaultTableModel dtm;
-    public Warehouses() {
+    public WareHouseMenu() {
         initComponents();
         wareHouseService = new WareHouseService();
         dtm = new DefaultTableModel()
@@ -25,7 +29,7 @@ public class Warehouses extends javax.swing.JPanel {
         dtm.addColumn("Unit");
         dtm.addColumn("Quantity");
         dtm.addColumn("Is Active");
-        dtm.addColumn("Create Date");
+        dtm.addColumn("Date Create");
         dtm.addColumn("Date Update");
         List<WareHouse> warehouses = null;
         try 
@@ -163,7 +167,7 @@ public class Warehouses extends javax.swing.JPanel {
 
         Filter.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         Filter.setModel(
-                new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+                new javax.swing.DefaultComboBoxModel<>(new String[] {"Tìm kiếm theo mã", "Tìm kiếm theo tên"}));
         Filter.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         Filter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -186,10 +190,15 @@ public class Warehouses extends javax.swing.JPanel {
         });
 
         InputSearch.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        InputSearch.setText("Tìm kiếm....");
+//        InputSearch.setText("Tìm kiếm....");
         InputSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 InputSearchActionPerformed(evt);
+            }
+        });
+        InputSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtfSearchKeyReleased(evt);
             }
         });
 
@@ -283,7 +292,7 @@ public class Warehouses extends javax.swing.JPanel {
     }// </editor-fold>
 
     private void BtnImportMouseClicked(java.awt.event.MouseEvent evt) {
-        
+        new AddWareHouse().setVisible(true);
     }
 
     private void BtnRefreshMouseClicked(java.awt.event.MouseEvent evt) {
@@ -291,7 +300,7 @@ public class Warehouses extends javax.swing.JPanel {
     }
 
     private void BtnExportMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
+        new Outbound().setVisible(true);
     }
 
     private void BtnDetailMouseClicked(java.awt.event.MouseEvent evt) {
@@ -299,7 +308,7 @@ public class Warehouses extends javax.swing.JPanel {
     }
 
     private void BtnCreateMouseClicked(java.awt.event.MouseEvent evt) {
-        
+        new CreateWareHouse().setVisible(true);
     }
 
     private void InputSearchActionPerformed(java.awt.event.ActionEvent evt) {
@@ -307,15 +316,50 @@ public class Warehouses extends javax.swing.JPanel {
     }
 
     private void BtnRefreshActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        dtm.setRowCount(0);
+        List<WareHouse> warehouses = null;
+        try {
+            warehouses = wareHouseService.getAllWareHouse();
+        } catch (Exception ex) {
+            Logger.getLogger(EmployeeMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (WareHouse warehouse : warehouses) {
+            dtm.addRow(new Object[] { warehouse.getId(), warehouse.getName(), warehouse.getUnit(), warehouse.getQuantity(),
+                    warehouse.getIsActive(),  warehouse.getCreateDate(), warehouse.getUpdateDate()});
+        }
     }
 
     private void BtnDeleteMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
+        int selectedRow = TableReceipt.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn nguyên liệu muốn xóa");
+        } else {
+            int choice = JOptionPane.showConfirmDialog(this, "Bạn có thực sự muốn xóa nguyên liệu này ?");
+            if (choice == JOptionPane.YES_OPTION) {
+                int idWareHouse = Integer.parseInt(String.valueOf(TableReceipt.getValueAt(selectedRow, 0)));
+                try {
+                    wareHouseService.deleteWareHouse(idWareHouse);
+                } catch (Exception ex) {
+                    Logger.getLogger(WareHouseMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                dtm.setRowCount(0);
+                List<WareHouse> warehouses = null;
+                try {
+                    warehouses = wareHouseService.getAllWareHouse();
+                } catch (Exception ex) {
+                    Logger.getLogger(WareHouseMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                for (WareHouse warehouse : warehouses) {
+                    dtm.addRow(new Object[] { warehouse.getId(), warehouse.getName(), warehouse.getUnit(), warehouse.getQuantity(),
+                            warehouse.getIsActive(), warehouse.getCreateDate(),
+                            warehouse.getUpdateDate()});
+                }
+            }
+        }
     }
 
     private void BtnExportExcelMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
+        new ExportWareHouse().setVisible(true);
     }
 
     private void BtnCreateActionPerformed(java.awt.event.ActionEvent evt) {
@@ -323,7 +367,82 @@ public class Warehouses extends javax.swing.JPanel {
     }
 
     private void FilterActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        InputSearch.setText("");
+        InputSearch.requestFocus();
+        try {
+            DefaultTableModel dtm = new DefaultTableModel();
+            TableReceipt.setModel(dtm);
+            dtm.addColumn("id");
+            dtm.addColumn("Name");
+            dtm.addColumn("Unit");
+            dtm.addColumn("Quantity");
+            dtm.addColumn("Is Active");
+            dtm.addColumn("Date Create");
+            dtm.addColumn("Date Update");
+            List<WareHouse> warehouses = wareHouseService.getAllWareHouse();
+            for(WareHouse warehouse : warehouses)
+            {
+                dtm.addRow(new Object[] {warehouse.getId(), warehouse.getName(), warehouse.getUnit(), warehouse.getQuantity(),
+                    warehouse.getIsActive(), warehouse.getCreateDate(), warehouse.getUpdateDate()});
+
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(EmployeeMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private void jtfSearchKeyReleased(java.awt.event.KeyEvent evt) {   
+        String keyword = InputSearch.getText().trim();
+        if (!keyword.isEmpty()) {
+            DefaultTableModel dtm = new DefaultTableModel();
+            TableReceipt.setModel(dtm);
+            dtm.addColumn("id");
+            dtm.addColumn("Name");
+            dtm.addColumn("Unit");
+            dtm.addColumn("Quantity");
+            dtm.addColumn("Is Active");
+            dtm.addColumn("Date Create");
+            dtm.addColumn("Date Update");
+            try {
+                List<WareHouse> warehouses = null;
+                if (Filter.getSelectedItem().equals("Tìm kiếm theo mã")) {
+                    int id = Integer.parseInt(keyword);
+                    warehouses = wareHouseService.searchAllWareHouseById(id);
+                }
+
+                else if (Filter.getSelectedItem().equals("Tìm kiếm theo tên")) {
+                    warehouses = wareHouseService.searchAllWareHouseByName(keyword);
+                }
+                for(WareHouse warehouse : warehouses)
+                {
+                    dtm.addRow(new Object[] {warehouse.getId(), warehouse.getName(), warehouse.getUnit(), warehouse.getQuantity(),
+                        warehouse.getIsActive(), warehouse.getCreateDate(), warehouse.getUpdateDate()});
+
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(EmployeeMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                DefaultTableModel dtm = new DefaultTableModel();
+                TableReceipt.setModel(dtm);
+                dtm.addColumn("id");
+                dtm.addColumn("Name");
+                dtm.addColumn("Unit");
+                dtm.addColumn("Quantity");
+                dtm.addColumn("Is Active");
+                dtm.addColumn("Date Create");
+                dtm.addColumn("Date Update");
+                List<WareHouse> warehouses= wareHouseService.getAllWareHouse();
+                for(WareHouse warehouse : warehouses)
+                {
+                    dtm.addRow(new Object[] {warehouse.getId(), warehouse.getName(), warehouse.getUnit(), warehouse.getQuantity(),
+                        warehouse.getIsActive(), warehouse.getCreateDate(), warehouse.getUpdateDate()});
+
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(WareHouse.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     // Variables declaration - do not modify

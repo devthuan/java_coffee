@@ -1,7 +1,7 @@
 
 package com.project.DAO;
 import com.project.BUS.*;
-import com.project.GUI.*;
+
 import com.project.DTO.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,30 +17,24 @@ import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.BuiltinFormats;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.CreationHelper;
-import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-public class ExportUser extends javax.swing.JFrame {
+public class ExportWareHouse extends javax.swing.JFrame {
     public static final int COLUMN_INDEX_ID = 0;
     public static final int COLUMN_INDEX_NAME = 1;
-    public static final int COLUMN_INDEX_DATE = 2;
-    public static final int COLUMN_INDEX_ADDRESS = 3;
-    public static final int COLUMN_INDEX_POSITION = 4;
-    public static final int COLUMN_INDEX_PHONE = 5;
-    public static final int COLUMN_INDEX_SALARY = 6;
-    public static final int COLUMN_INDEX_DATECREATE = 7;
-    public static final int COLUMN_INDEX_IDACCOUNT = 8;
+    public static final int COLUMN_INDEX_UNIT = 2;
+    public static final int COLUMN_INDEX_QUANTITY = 3;
+    public static final int COLUMN_INDEX_DATECREATE = 4;
+    public static final int COLUMN_INDEX_DATEUPDATE = 5;
     private static CellStyle cellStyleFormatNumber = null;
-    UserService userService;
-    public ExportUser() {
+   WareHouseService wareHouseService;
+    public ExportWareHouse() {
         initComponents();
     }
 
@@ -67,39 +61,41 @@ public class ExportUser extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jcfExport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jcfExport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 6, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jcfExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcfExportActionPerformed
-         userService = new UserService();
-         List<User> users = null;
+         wareHouseService = new WareHouseService();
+         List<WareHouse> warehouses = null;
         try {
-            users = userService.getAllUser();
+            warehouses = wareHouseService.getAllWareHouse();
         } catch (Exception ex) {
-            Logger.getLogger(ExportUser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExportWareHouse.class.getName()).log(Level.SEVERE, null, ex);
         }
         String excelFilePath = jcfExport.getSelectedFile().getPath() + ".xlsx";
 
         try {
-            writeExcel(users, excelFilePath);
+            writeExcel(warehouses, excelFilePath);
             JOptionPane.showMessageDialog(this, "Lưu vào excel thành công");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_jcfExportActionPerformed
     
-    public static void writeExcel(List<User> users, String excelFilePath) throws IOException {
-        Workbook workbook = getWorkUser(excelFilePath);
-        Sheet sheet = workbook.createSheet("Users");
+    public static void writeExcel(List<WareHouse> wareHouses, String excelFilePath) throws IOException {
+        Workbook workbook = getWorkWareHouse(excelFilePath);
+        Sheet sheet = workbook.createSheet("WareHouses");
         int rowIndex = 0;
         writeHeader(sheet, rowIndex);
         rowIndex++;
-        for (User user : users) {
+        for (WareHouse warehouse : wareHouses) {
             Row row = sheet.createRow(rowIndex);
-            writeUser(user, row);
+            writeWareHouse(warehouse, row);
             rowIndex++;
         }
         int numberOfColumn = sheet.getRow(0).getPhysicalNumberOfCells();
@@ -110,7 +106,7 @@ public class ExportUser extends javax.swing.JFrame {
  
  
     // Create workbook
-    private static Workbook getWorkUser(String excelFilePath) throws IOException {
+    private static Workbook getWorkWareHouse(String excelFilePath) throws IOException {
         Workbook workbook = null;
  
         if (excelFilePath.endsWith("xlsx")) {
@@ -140,78 +136,52 @@ public class ExportUser extends javax.swing.JFrame {
         cell.setCellStyle(cellStyle);
         cell.setCellValue("Name");
  
-        cell = row.createCell(COLUMN_INDEX_DATE);
+        cell = row.createCell(COLUMN_INDEX_UNIT);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Date");
+        cell.setCellValue("Unit");
  
-        cell = row.createCell(COLUMN_INDEX_ADDRESS);
+        cell = row.createCell(COLUMN_INDEX_QUANTITY);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Address");
+        cell.setCellValue("Quantity");
  
-        cell = row.createCell(COLUMN_INDEX_POSITION);
-        cell.setCellStyle(cellStyle);
-        cell.setCellValue("Position");
-        
-        cell = row.createCell(COLUMN_INDEX_PHONE);
-        cell.setCellStyle(cellStyle);
-        cell.setCellValue("Phone");
-        
-        cell = row.createCell(COLUMN_INDEX_SALARY);
-        cell.setCellStyle(cellStyle);
-        cell.setCellValue("Salary");
-        
         cell = row.createCell(COLUMN_INDEX_DATECREATE);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("DateCreate");
+        cell.setCellValue("Date Create");
         
-        cell = row.createCell(COLUMN_INDEX_IDACCOUNT);
-        cell.setCellStyle(cellStyle);
-        cell.setCellValue("Id Account");
     }
  
     // Write data
-    private static void writeUser(User user, Row row) {
+    private static void writeWareHouse(WareHouse warehouse, Row row) {
         short format = (short)BuiltinFormats.getBuiltinFormat("#,##0");
         Workbook workbook = row.getSheet().getWorkbook();
         cellStyleFormatNumber = workbook.createCellStyle();
         cellStyleFormatNumber.setDataFormat(format);         
         Cell cell = row.createCell(COLUMN_INDEX_ID);
-        cell.setCellValue(user.getId());
+        cell.setCellValue(warehouse.getId());
  
         cell = row.createCell(COLUMN_INDEX_NAME);
-        cell.setCellValue(user.getName());
+        cell.setCellValue(warehouse.getName());
         
-        CellStyle dateStyle = workbook.createCellStyle();
-        CreationHelper createHelper = workbook.getCreationHelper();
-        dateStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd/MM/yyyy"));
-        
-        Cell dateCell = row.createCell(COLUMN_INDEX_DATE);
-        dateCell.setCellValue(user.getDate());
-        dateCell.setCellStyle(dateStyle);
+       
 
-        cell = row.createCell(COLUMN_INDEX_ADDRESS);
-        cell.setCellValue(user.getAddress());
-        cell.setCellStyle(cellStyleFormatNumber);
+        cell = row.createCell(COLUMN_INDEX_UNIT);
+        cell.setCellValue(warehouse.getUnit());
+//        cell.setCellStyle(cellStyleFormatNumber);
  
-        cell = row.createCell(COLUMN_INDEX_POSITION);
-        cell.setCellValue(user.getPosition());
+        cell = row.createCell(COLUMN_INDEX_QUANTITY);
+        cell.setCellValue(warehouse.getQuantity());
         
-cell = row.createCell(COLUMN_INDEX_PHONE);
-        cell.setCellValue(user.getPhone());
-        
-        cell = row.createCell(COLUMN_INDEX_SALARY);
-        cell.setCellValue(user.getSalary());
+
         
         CellStyle timestampStyle = workbook.createCellStyle();
+        CreationHelper createHelper = workbook.getCreationHelper();
         timestampStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd/MM/yyyy HH:mm:ss"));
 
         // Thiết lập CellStyle cho ô chứa thời gian
         Cell timestampCell = row.createCell(COLUMN_INDEX_DATECREATE);
-        timestampCell.setCellValue(user.getDateCreate());
+        timestampCell.setCellValue(warehouse.getCreateDate());
         timestampCell.setCellStyle(timestampStyle);
         
-        cell = row.createCell(COLUMN_INDEX_IDACCOUNT);
-        cell.setCellValue(user.getAccountId());
     }
  
     // Create CellStyle for header
@@ -246,7 +216,6 @@ cell = row.createCell(COLUMN_INDEX_PHONE);
             workbook.write(os);
         }
     }
- 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser jcfExport;
