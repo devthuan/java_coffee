@@ -1,0 +1,608 @@
+package com.project.DAO;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+
+import java.sql.*;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.*;
+
+import com.project.DTO.ProductDTO;
+import com.project.DTO.StatisticalDTO;
+import com.project.DTO.StatisticalProductDTO;
+
+public class StatisticalDAO {
+
+    public static ArrayList<StatisticalDTO> getProfitRevenueExpense(String startDate, String endDate) {
+        ArrayList<StatisticalDTO> data = new ArrayList<>();
+        try {
+            Connection conn = mysqlConnect.getConnection();
+
+            String sql = "SELECT " +
+                    "SUM(doanh_thu) AS tong_doanh_thu, " +
+                    "SUM(chi_phi_nhap_hang) AS tong_chi_phi_nhap_hang, " +
+                    "SUM(doanh_thu) - SUM(chi_phi_nhap_hang) AS loi_nhuan, " +
+                    "ngay " +
+                    "FROM ( " +
+                    "SELECT " +
+                    "SUM(SP.gia * CTHD.so_luong) AS doanh_thu, " +
+                    "0 AS chi_phi_nhap_hang, " +
+                    "DATE_FORMAT(HoaDon.createdAt, '%Y-%m-%d') AS ngay " +
+                    "FROM " +
+                    "HoaDon " +
+                    "JOIN " +
+                    "ChiTietHoaDon CTHD ON HoaDon.id = CTHD.HoaDon_id " +
+                    "JOIN " +
+                    "SanPham SP ON CTHD.SanPham_id = SP.id " +
+                    "WHERE " +
+                    "HoaDon.createdAt BETWEEN ? AND ? " + // Thêm điều kiện ngày tháng ở đây
+                    "GROUP BY " +
+                    "ngay " +
+
+                    "UNION ALL " +
+
+                    "SELECT " +
+                    "0 AS doanh_thu, " +
+                    "SUM(CTPN.don_gia * CTPN.so_luong) AS chi_phi_nhap_hang, " +
+                    "DATE_FORMAT(PhieuNhap.createdAt, '%Y-%m-%d') AS ngay " +
+                    "FROM " +
+                    "PhieuNhap " +
+                    "JOIN " +
+                    "ChiTietPhieuNhap CTPN ON PhieuNhap.id = CTPN.PhieuNhap_id " +
+                    "WHERE " +
+                    "PhieuNhap.createdAt BETWEEN ? AND ? " + // Thêm điều kiện ngày tháng ở đây
+                    "GROUP BY " +
+                    "ngay " +
+                    ") AS loi_nhuan_ngay " +
+                    "GROUP BY " +
+                    "ngay;";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, startDate);
+            pst.setString(2, endDate);
+            pst.setString(3, startDate);
+            pst.setString(4, endDate);
+            ResultSet result_query = pst.executeQuery();
+            while (result_query.next()) {
+                float revenue = result_query.getFloat("tong_doanh_thu");
+                float expense = result_query.getFloat("tong_chi_phi_nhap_hang");
+                float profit = result_query.getFloat("loi_nhuan");
+                Date day = result_query.getDate("ngay");
+
+                LocalDate dayAtFormated = day.toLocalDate();
+
+                data.add(new StatisticalDTO(revenue, expense, profit, dayAtFormated));
+            }
+            return data;
+        } catch (Exception e) {
+
+            return null;
+            // TODO: handle exception
+        }
+
+    }
+
+    public static ArrayList<StatisticalDTO> getProfitRevenueExpenseFor30Day() {
+        ArrayList<StatisticalDTO> data = new ArrayList<>();
+        try {
+            Connection conn = mysqlConnect.getConnection();
+
+            String sql = "SELECT " +
+                    "SUM(doanh_thu) AS tong_doanh_thu, " +
+                    "SUM(chi_phi_nhap_hang) AS tong_chi_phi_nhap_hang, " +
+                    "SUM(doanh_thu) - SUM(chi_phi_nhap_hang) AS loi_nhuan, " +
+                    "ngay " +
+                    "FROM ( " +
+                    "SELECT " +
+                    "SUM(SP.gia * CTHD.so_luong) AS doanh_thu, " +
+                    "0 AS chi_phi_nhap_hang, " +
+                    "DATE(HoaDon.createdAt) AS ngay " +
+                    "FROM " +
+                    "HoaDon " +
+                    "JOIN " +
+                    "ChiTietHoaDon CTHD ON HoaDon.id = CTHD.HoaDon_id " +
+                    "JOIN " +
+                    "SanPham SP ON CTHD.SanPham_id = SP.id " +
+                    "WHERE " +
+                    "HoaDon.createdAt >= DATE_SUB(CURDATE(), INTERVAL 29 DAY) " +
+                    "GROUP BY " +
+                    "DATE(HoaDon.createdAt) " +
+
+                    "UNION ALL " +
+
+                    "SELECT " +
+                    "0 AS doanh_thu, " +
+                    "SUM(CTPN.don_gia * CTPN.so_luong) AS chi_phi_nhap_hang, " +
+                    "DATE(PhieuNhap.createdAt) AS ngay " +
+                    "FROM " +
+                    "PhieuNhap " +
+                    "JOIN " +
+                    "ChiTietPhieuNhap CTPN ON PhieuNhap.id = CTPN.PhieuNhap_id " +
+                    "WHERE " +
+                    "PhieuNhap.createdAt >= DATE_SUB(CURDATE(), INTERVAL 29 DAY) " +
+                    "GROUP BY " +
+                    "DATE(PhieuNhap.createdAt) " +
+                    ") AS loi_nhuan_ngay " +
+                    "GROUP BY " +
+                    "ngay";
+            PreparedStatement pst = conn.prepareStatement(sql);
+
+            ResultSet result_query = pst.executeQuery();
+            while (result_query.next()) {
+                float revenue = result_query.getFloat("tong_doanh_thu");
+                float expense = result_query.getFloat("tong_chi_phi_nhap_hang");
+                float profit = result_query.getFloat("loi_nhuan");
+                Date day = result_query.getDate("ngay");
+
+                LocalDate dayAtFormated = day.toLocalDate();
+
+                data.add(new StatisticalDTO(revenue, expense, profit, dayAtFormated));
+            }
+            return data;
+        } catch (Exception e) {
+
+            return null;
+            // TODO: handle exception
+        }
+
+    }
+
+    public static ArrayList<StatisticalDTO> getProfitRevenueExpenseByMonth() {
+        ArrayList<StatisticalDTO> data = new ArrayList<>();
+        try {
+            Connection conn = mysqlConnect.getConnection();
+
+            String sql = "SELECT " +
+                    "SUM(doanh_thu) AS tong_doanh_thu, " +
+                    "SUM(chi_phi_nhap_hang) AS tong_chi_phi_nhap_hang, " +
+                    "SUM(doanh_thu) - SUM(chi_phi_nhap_hang) AS loi_nhuan, " +
+                    "DATE_FORMAT(ngay, '%Y-%m') AS thang " +
+                    "FROM ( " +
+                    "SELECT " +
+                    "SUM(SP.gia * CTHD.so_luong) AS doanh_thu, " +
+                    "0 AS chi_phi_nhap_hang, " +
+                    "DATE_FORMAT(HoaDon.createdAt, '%Y-%m-%d') AS ngay " +
+                    "FROM " +
+                    "HoaDon " +
+                    "JOIN " +
+                    "ChiTietHoaDon CTHD ON HoaDon.id = CTHD.HoaDon_id " +
+                    "JOIN " +
+                    "SanPham SP ON CTHD.SanPham_id = SP.id " +
+                    "GROUP BY " +
+                    "DATE_FORMAT(HoaDon.createdAt, '%Y-%m') " +
+
+                    "UNION ALL " +
+
+                    "SELECT " +
+                    "0 AS doanh_thu, " +
+                    "SUM(CTPN.don_gia * CTPN.so_luong) AS chi_phi_nhap_hang, " +
+                    "DATE_FORMAT(PhieuNhap.createdAt, '%Y-%m-%d') AS ngay " +
+                    "FROM " +
+                    "PhieuNhap " +
+                    "JOIN " +
+                    "ChiTietPhieuNhap CTPN ON PhieuNhap.id = CTPN.PhieuNhap_id " +
+                    "GROUP BY " +
+                    "DATE_FORMAT(PhieuNhap.createdAt, '%Y-%m') " +
+                    ") AS loi_nhuan_ngay " +
+                    "GROUP BY " +
+                    "DATE_FORMAT(ngay, '%Y-%m')";
+
+            PreparedStatement pst = conn.prepareStatement(sql);
+
+            ResultSet result_query = pst.executeQuery();
+            while (result_query.next()) {
+                float revenue = result_query.getFloat("tong_doanh_thu");
+                float expense = result_query.getFloat("tong_chi_phi_nhap_hang");
+                float profit = result_query.getFloat("loi_nhuan");
+                String day = result_query.getString("thang");
+
+                data.add(new StatisticalDTO(revenue, expense, profit, day));
+            }
+            return data;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+            // TODO: handle exception
+        }
+
+    }
+
+    public static float getTotalProfit() {
+        float total_profit = 0;
+        try {
+            Connection conn = mysqlConnect.getConnection();
+
+            String sql = "SELECT \r\n" + //
+                    "    SUM(doanh_thu) AS tong_doanh_thu,\r\n" + //
+                    "    SUM(chi_phi_nhap_hang) AS tong_chi_phi_nhap_hang,\r\n" + //
+                    "    SUM(doanh_thu) - SUM(chi_phi_nhap_hang) AS loi_nhuan\r\n" + //
+                    "    \r\n" + //
+                    "FROM (\r\n" + //
+                    "    SELECT \r\n" + //
+                    "        SUM(SP.gia * CTHD.so_luong) AS doanh_thu,\r\n" + //
+                    "        0 AS chi_phi_nhap_hang,\r\n" + //
+                    "        DATE_FORMAT(HoaDon.createdAt, '%Y-%m-%d') AS ngay\r\n" + //
+                    "    FROM \r\n" + //
+                    "        HoaDon\r\n" + //
+                    "    JOIN \r\n" + //
+                    "        ChiTietHoaDon CTHD ON HoaDon.id = CTHD.HoaDon_id\r\n" + //
+                    "    JOIN \r\n" + //
+                    "        SanPham SP ON CTHD.SanPham_id = SP.id\r\n" + //
+                    "     WHERE \r\n" + //
+                    "        HoaDon.createdAt BETWEEN '2024-04-13' AND '2024-04-16'  -- Thêm điều kiện ngày tháng ở đây\r\n"
+                    + //
+                    "    GROUP BY \r\n" + //
+                    "        ngay\r\n" + //
+                    "    \r\n" + //
+                    "    UNION ALL\r\n" + //
+                    "    \r\n" + //
+                    "    SELECT \r\n" + //
+                    "        0 AS doanh_thu,\r\n" + //
+                    "        SUM(CTPN.don_gia * CTPN.so_luong) AS chi_phi_nhap_hang,\r\n" + //
+                    "        DATE_FORMAT(PhieuNhap.createdAt, '%Y-%m-%d') AS ngay\r\n" + //
+                    "    FROM \r\n" + //
+                    "        PhieuNhap\r\n" + //
+                    "    JOIN \r\n" + //
+                    "        ChiTietPhieuNhap CTPN ON PhieuNhap.id = CTPN.PhieuNhap_id\r\n" + //
+                    "    WHERE \r\n" + //
+                    "        PhieuNhap.createdAt BETWEEN '2024-04-13' AND '2024-04-16'  -- Thêm điều kiện ngày tháng ở đây\r\n"
+                    + //
+                    "    GROUP BY \r\n" + //
+                    "        ngay\r\n" + //
+                    ") AS loi_nhuan_ngay\r\n" + //
+                    "\r\n" + //
+                    "";
+            PreparedStatement pst = conn.prepareStatement(sql);
+
+            ResultSet result_query = pst.executeQuery();
+            while (result_query.next()) {
+                // float revenue = result_query.getFloat("tong_doanh_thu");
+                // float expense = result_query.getFloat("tong_chi_phi_nhap_hang");
+                float profit = result_query.getFloat("loi_nhuan");
+
+                total_profit = profit;
+            }
+            return total_profit;
+        } catch (Exception e) {
+
+            return 0;
+            // TODO: handle exception
+        }
+
+    }
+
+    public static int getTotalProduct() {
+        int total_product = 0;
+        try {
+            Connection conn = mysqlConnect.getConnection();
+
+            String sql = "SELECT \r\n" + //
+                    "COUNT(SanPham.id) AS total_product\r\n" + //
+                    "FROM SanPham\r\n" + //
+                    "";
+            PreparedStatement pst = conn.prepareStatement(sql);
+
+            ResultSet result_query = pst.executeQuery();
+            while (result_query.next()) {
+                total_product = result_query.getInt("total_product");
+
+            }
+            return total_product;
+        } catch (Exception e) {
+            return 0;
+            // TODO: handle exception
+        }
+
+    }
+
+    public static int getTotalOrder() {
+        int total_order = 0;
+        try {
+            Connection conn = mysqlConnect.getConnection();
+
+            String sql = "SELECT \r\n" + //
+                    "COUNT(HoaDon.id) AS total_order\r\n" + //
+                    "FROM HoaDon\r\n" + //
+                    "";
+            PreparedStatement pst = conn.prepareStatement(sql);
+
+            ResultSet result_query = pst.executeQuery();
+            while (result_query.next()) {
+                total_order = result_query.getInt("total_order");
+
+            }
+            return total_order;
+        } catch (Exception e) {
+            return 0;
+            // TODO: handle exception
+        }
+
+    }
+
+    public static int getTotalSupplier() {
+        int total_supplier = 0;
+        try {
+            Connection conn = mysqlConnect.getConnection();
+
+            String sql = "SELECT \r\n" + //
+                    "COUNT(NhaCungCap.id) AS total_supplier\r\n" + //
+                    "FROM NhaCungCap\r\n" + //
+                    "";
+            PreparedStatement pst = conn.prepareStatement(sql);
+
+            ResultSet result_query = pst.executeQuery();
+            while (result_query.next()) {
+                total_supplier = result_query.getInt("total_supplier");
+
+            }
+            return total_supplier;
+        } catch (Exception e) {
+            return 0;
+            // TODO: handle exception
+        }
+
+    }
+
+    public static int getTotalEmployee() {
+        int total_employee = 0;
+        try {
+            Connection conn = mysqlConnect.getConnection();
+
+            String sql = "SELECT \r\n" + //
+                    "COUNT(NhanVien.id) AS total_employee\r\n" + //
+                    "FROM NhanVien\r\n" + //
+                    "";
+            PreparedStatement pst = conn.prepareStatement(sql);
+
+            ResultSet result_query = pst.executeQuery();
+            while (result_query.next()) {
+                total_employee = result_query.getInt("total_employee");
+
+            }
+            return total_employee;
+        } catch (Exception e) {
+            return 0;
+            // TODO: handle exception
+        }
+
+    }
+
+    public static int getTotalIngredient() {
+        int total_ingredient = 0;
+        try {
+            Connection conn = mysqlConnect.getConnection();
+
+            String sql = "SELECT \r\n" + //
+                    "COUNT(NguyenLieu.id) AS total_ingredient\r\n" + //
+                    "FROM NguyenLieu\r\n" + //
+                    "";
+            PreparedStatement pst = conn.prepareStatement(sql);
+
+            ResultSet result_query = pst.executeQuery();
+            while (result_query.next()) {
+                total_ingredient = result_query.getInt("total_ingredient");
+
+            }
+            return total_ingredient;
+        } catch (Exception e) {
+            return 0;
+            // TODO: handle exception
+        }
+
+    }
+
+    // statistical product
+    public static StatisticalProductDTO getBestSellerProduct() {
+        StatisticalProductDTO product = null;
+        try {
+            Connection conn = mysqlConnect.getConnection();
+            String sql = "SELECT " +
+                    "    SanPham.ten_SP, " +
+                    "    SanPham.url_anh, " +
+                    "    SanPham.gia, " +
+                    "    SUM(cthd.so_luong) AS total_sold " +
+                    "FROM HoaDon " +
+                    "JOIN ChiTietHoaDon cthd ON HoaDon.id = cthd.HoaDon_id " +
+                    "JOIN SanPham ON cthd.SanPham_id = SanPham.id " +
+                    "GROUP BY SanPham.ten_SP, SanPham.url_anh, SanPham.gia " +
+                    "ORDER BY total_sold DESC " +
+                    "LIMIT 1;";
+            PreparedStatement pst = conn.prepareStatement(sql);
+
+            ResultSet result_query = pst.executeQuery();
+
+            while (result_query.next()) {
+                String name_product = result_query.getString("ten_SP");
+                String url_img = result_query.getString("url_anh");
+                float price = result_query.getFloat("gia");
+                int total_sold = result_query.getInt("total_sold");
+                product = new StatisticalProductDTO(name_product, url_img, price, total_sold);
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+        return product;
+    }
+
+    public static StatisticalProductDTO getBestRevenueProduct() {
+        StatisticalProductDTO product = null;
+        try {
+            Connection conn = mysqlConnect.getConnection();
+            String sql = "SELECT " +
+                    "SanPham.ten_SP, " +
+                    "SanPham.url_anh, " +
+                    "SanPham.gia, " +
+                    "SUM(cthd.so_luong * SanPham.gia) AS doanh_thu " +
+                    "FROM " +
+                    "HoaDon " +
+                    "JOIN ChiTietHoaDon cthd ON HoaDon.id = cthd.HoaDon_id " +
+                    "JOIN SanPham ON cthd.SanPham_id = SanPham.id " +
+                    "GROUP BY " +
+                    "SanPham.ten_SP, " +
+                    "SanPham.url_anh, " +
+                    "SanPham.gia " +
+                    "ORDER BY " +
+                    "doanh_thu DESC " +
+                    "LIMIT 1;";
+
+            PreparedStatement pst = conn.prepareStatement(sql);
+
+            ResultSet result_query = pst.executeQuery();
+
+            while (result_query.next()) {
+                String name_product = result_query.getString("ten_SP");
+                String url_img = result_query.getString("url_anh");
+                float price = result_query.getFloat("gia");
+                int total_sold = result_query.getInt("doanh_thu");
+                product = new StatisticalProductDTO(name_product, url_img, price, total_sold);
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+        return product;
+    }
+
+    public static ArrayList<StatisticalProductDTO> getTotalSoldByProduct() {
+        ArrayList<StatisticalProductDTO> list_product = new ArrayList<>();
+        try {
+            Connection conn = mysqlConnect.getConnection();
+            String sql = "SELECT " +
+                    "SanPham.id, " +
+                    "SanPham.ten_SP, " +
+                    "SanPham.url_anh, " +
+                    "SanPham.gia, " +
+                    "SUM(cthd.so_luong) AS total_sold " +
+                    "FROM " +
+                    "HoaDon " +
+                    "JOIN ChiTietHoaDon cthd ON HoaDon.id = cthd.HoaDon_id " +
+                    "JOIN SanPham ON cthd.SanPham_id = SanPham.id " +
+                    "GROUP BY " +
+                    "SanPham.id";
+
+            PreparedStatement pst = conn.prepareStatement(sql);
+
+            ResultSet result_query = pst.executeQuery();
+
+            while (result_query.next()) {
+                String name_product = result_query.getString("ten_SP");
+                String url_img = result_query.getString("url_anh");
+                float price = result_query.getFloat("gia");
+                int total_sold = result_query.getInt("total_sold");
+                list_product.add(new StatisticalProductDTO(name_product, url_img, price, total_sold));
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+        return list_product;
+    }
+
+    public static ArrayList<StatisticalProductDTO> getTotalSoldByProductChooseDate(String startDate, String endDate) {
+        ArrayList<StatisticalProductDTO> list_product = new ArrayList<>();
+        try {
+            Connection conn = mysqlConnect.getConnection();
+            String sql = "SELECT " +
+                    "SanPham.id, " +
+                    "SanPham.ten_SP, " +
+                    "SanPham.url_anh, " +
+                    "SanPham.gia, " +
+                    "SUM(cthd.so_luong) AS total_sold, " +
+                    "HoaDon.createdAt " +
+                    "FROM " +
+                    "HoaDon " +
+                    "JOIN ChiTietHoaDon cthd ON HoaDon.id = cthd.HoaDon_id " +
+                    "JOIN SanPham ON cthd.SanPham_id = SanPham.id " +
+                    "WHERE " +
+                    "HoaDon.createdAt BETWEEN ? AND ? " +
+                    "GROUP BY " +
+                    "SanPham.id";
+
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, startDate);
+            pst.setString(2, endDate);
+
+            ResultSet result_query = pst.executeQuery();
+
+            while (result_query.next()) {
+                String name_product = result_query.getString("ten_SP");
+                String url_img = result_query.getString("url_anh");
+                float price = result_query.getFloat("gia");
+                int total_sold = result_query.getInt("total_sold");
+                list_product.add(new StatisticalProductDTO(name_product, url_img, price, total_sold));
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+        return list_product;
+    }
+
+    public static ArrayList<StatisticalProductDTO> getQuantityByProduct() {
+        ArrayList<StatisticalProductDTO> list_product = new ArrayList<>();
+        try {
+            Connection conn = mysqlConnect.getConnection();
+            String sql = "SELECT id,ten_SP,so_luong FROM SanPham WHERE is_active = 1";
+
+            PreparedStatement pst = conn.prepareStatement(sql);
+            
+            ResultSet result_query = pst.executeQuery();
+
+            while (result_query.next()) {
+                String name_product = result_query.getString("ten_SP");
+                int quantity = result_query.getInt("so_luong");
+                list_product.add(new StatisticalProductDTO(name_product, quantity));
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+        return list_product;
+    }
+
+    // public static void main(String[] args) {
+    // ArrayList<StatisticalDTO> data = getProfitRevenueExpense();
+    // ArrayList<StatisticalDTO> data_revenue = new ArrayList<>();
+    // ArrayList<StatisticalDTO> data_expense = new ArrayList<>();
+    // ArrayList<StatisticalDTO> data_profit = new ArrayList<>();
+
+    // for (StatisticalDTO statisticalDTO : data) {
+    // data_revenue.add(new StatisticalDTO(statisticalDTO.getRevenue(),
+    // statisticalDTO.getDate()));
+    // data_expense.add(new StatisticalDTO(statisticalDTO.getExpense(),
+    // statisticalDTO.getDate()));
+    // data_profit.add(new StatisticalDTO(statisticalDTO.getProfit(),
+    // statisticalDTO.getDate()));
+    // }
+
+    // for (StatisticalDTO revenue : data_revenue) {
+    // System.out.println(revenue.getValues());
+    // System.out.println(revenue.getDate());
+    // }
+    // System.out.println("---------------");
+    // for (StatisticalDTO profit : data_profit) {
+    // System.out.println(profit.getValues());
+    // System.out.println(profit.getDate());
+    // }
+    // System.out.println("---------------");
+    // for (StatisticalDTO profit : data_expense) {
+    // System.out.println(profit.getValues());
+    // System.out.println(profit.getDate());
+    // }
+    // }
+    public static void main(String[] args) {
+        ArrayList<StatisticalDTO> data = getProfitRevenueExpenseByMonth();
+
+        for (StatisticalDTO statisticalDTO : data) {
+            System.out.println(statisticalDTO.getRevenue());
+            System.out.println(statisticalDTO.getExpense());
+            System.out.println(statisticalDTO.getProfit());
+        }
+
+    }
+}

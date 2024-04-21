@@ -1,100 +1,27 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ */
 package com.project.GUI;
 
-import java.awt.Color;
+import java.awt.Image;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 
-import javax.swing.JFrame;
+import javax.swing.ImageIcon;
 
-import org.jfree.chart.*;
-import javax.swing.JFrame;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.CategoryLabelPositions;
-import org.jfree.chart.labels.ItemLabelAnchor;
-import org.jfree.chart.labels.ItemLabelPosition;
-import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.renderer.category.BarRenderer;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.ui.TextAnchor;
+import com.project.BUS.StatisticalBUS;
+import com.project.Common.Common;
+import com.project.DTO.StatisticalDTO;
+import com.project.DTO.StatisticalProductDTO;
+import com.toedter.calendar.JDateChooser;
 
-class BarChart {
-
-        public static ChartPanel createChart(String TitleChart) {
-                JFreeChart barChart = ChartFactory.createBarChart(
-                                TitleChart,
-                                "Năm", "VNĐ",
-                                createDataset(), PlotOrientation.VERTICAL, false, false, false);
-                // Lấy Renderer của biểu đồ để thiết lập nhãn giá trị
-                BarRenderer renderer = (BarRenderer) barChart.getCategoryPlot().getRenderer();
-                renderer.setBaseItemLabelsVisible(true); // Cho phép hiển thị nhãn giá trị
-                renderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator()); // Sử dụng định dạng mặc
-                                                                                              // định
-
-                // Tạo một vị trí mới để hiển thị nhãn
-                ItemLabelPosition position = new ItemLabelPosition(
-                                ItemLabelAnchor.OUTSIDE12,
-                                TextAnchor.TOP_CENTER,
-                                TextAnchor.TOP_CENTER,
-                                Math.PI * 2);
-
-                // Thiết lập vị trí cho nhãn giá trị
-                renderer.setBasePositiveItemLabelPosition(position);
-
-                ChartPanel chartPanel = new ChartPanel(barChart);
-                return chartPanel;
-        }
-
-        public static CategoryDataset createDataset() {
-                final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-                dataset.addValue(68000000, "VNĐ", "1990");
-                dataset.addValue(80000000, "VNĐ", "2000");
-                dataset.addValue(88000000, "VNĐ", "2010");
-                dataset.addValue(95000000, "VNĐ", "2020");
-                dataset.addValue(95000000, "VNĐ", "2021");
-                dataset.addValue(95000000, "VNĐ", "2022");
-                dataset.addValue(95000000, "VNĐ", "2023");
-                dataset.addValue(95000000, "VNĐ", "2024");
-                return dataset;
-        }
-
-}
-
-class PieChart {
-
-        public ChartPanel createChart() {
-                // Create the chart
-                JFreeChart chart = ChartFactory.createPieChart(
-                                "Fruit Distribution", // chart title
-                                createDataset(), // data
-                                true, // include legend
-                                true,
-                                false);
-
-                // Customize the appearance
-                chart.setBackgroundPaint(Color.WHITE);
-
-                // Create a panel to display the chart
-                ChartPanel chartPanel = new ChartPanel(chart);
-                // chartPanel.setPreferredSize(new Dimension(400, 300));
-
-                return chartPanel;
-
-        }
-
-        public DefaultPieDataset createDataset() {
-                DefaultPieDataset dataset = new DefaultPieDataset();
-                dataset.setValue("Apples", 50);
-                dataset.setValue("Oranges", 30);
-                dataset.setValue("Bananas", 20);
-
-                return dataset;
-        }
-}
-
+/**
+ *
+ * @author thuan
+ */
 public class Statistical extends javax.swing.JPanel {
 
         /**
@@ -102,21 +29,61 @@ public class Statistical extends javax.swing.JPanel {
          */
         public Statistical() {
                 initComponents();
-                BarChart barChart = new BarChart();
-                PieChart pieChart = new PieChart();
-                BoxChartOverView.add(barChart.createChart("Doanh thu và lợi nhuận 30 gần nhất"));
-                BoxChartProduct1.add(barChart.createChart("Số lượng bán ra theo sản phẩm"));
-                BoxChartProduct2.add(barChart.createChart("số lượng còn lại hiện tại"));
-                ChartIngredient1.add(barChart.createChart("Nguyên liệu nhập 30 gần nhất"));
-                ChartIngredient2.add(barChart.createChart("số lượng nguyên liệu còn lại"));
-                TotalOrderByChartDayOfWeek.add(barChart.createChart("Tổng số đơn hàng theo các ngày trong tuần"));
-                ChartRevnueByProduct.add(barChart.createChart("Doanh thu theo sản phẩm"));
 
-                // BoxChartProduct.add(barChart.createChart("Số lượng sản phẩm đã bán theo sản
-                // phẩm"));
-                // BoxChartTotalGredient.add(barChart.createChart("Số lượng nguyên liệu tồn
-                // kho"));
-                // BoxChartTotalImportWarehouse.add(pieChart.createChart());
+                HashMap<String, ArrayList<StatisticalDTO>> chartData = StatisticalBUS.getDataChartOverView();
+
+                ArrayList<StatisticalProductDTO> dataTotalSold = StatisticalBUS.getDataBarChart1Product();
+                ArrayList<StatisticalProductDTO> dataQuantityByProduct = StatisticalBUS.getDataBarChart2Product();
+
+                BoxChart.add(LineChart.createLineChart(chartData, "Lợi nhuận 30 ngày"));
+
+                ItemChartProduct1.add(BarChart.createChart("Số lượng đã bán ra theo sản phẩm", dataTotalSold));
+                BoxChartProduct2.add(BarChart.createChart("Số lượng còn lại theo sản phẩm", dataQuantityByProduct));
+
+                BoxChooseDate.setVisible(false);
+                BoxChooseDate3.setVisible(false);
+
+                HashMap<String, Integer> data = StatisticalBUS.getDateForItemOverView();
+
+                float totalProfit = data.get("totalProfit");
+                int totalProduct = data.get("totalProduct");
+                int totalOrder = data.get("totalOrder");
+                int totalSupplier = data.get("totalSupplier");
+                int totalEmployee = data.get("totalEmployee");
+                int totalIngredient = data.get("totalIngredient");
+
+                ValueEmployee.setText(String.valueOf(totalEmployee));
+                ValueIngredient.setText(String.valueOf(totalIngredient));
+                ValueOrder.setText(String.valueOf(totalOrder));
+                ValueProduct.setText(String.valueOf(totalProduct));
+                ValueProfit.setText(String.valueOf(totalProfit));
+                ValueSupplier.setText(String.valueOf(totalSupplier));
+
+                HashMap<String, StatisticalProductDTO> dataForProduct = StatisticalBUS.getDataForItemProduct();
+                StatisticalProductDTO bestSeller = dataForProduct.get("bestSeller");
+                StatisticalProductDTO bestRevenue = dataForProduct.get("bestRevenue");
+
+                // Lấy kích thước mới của hình ảnh (kích thước của JButton)
+                int width = 80;
+                int height = 90;
+
+                // Lấy hình ảnh từ ImageIcon hiện tại
+                ImageIcon icon2 = new javax.swing.ImageIcon(bestSeller.getImage());
+                // Giảm kích thước của hình ảnh
+                Image image2 = icon2.getImage().getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+
+                nameProduct.setText(bestSeller.getName());
+                PriceProduct.setText(String.valueOf(bestSeller.getPrice()));
+                IconProduct.setIcon(new javax.swing.ImageIcon(image2));
+                
+                ImageIcon icon = new javax.swing.ImageIcon(bestRevenue.getImage());
+                // Giảm kích thước của hình ảnh
+                Image image = icon.getImage().getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+
+                nameProductBestSell.setText(bestRevenue.getName());
+                PriceProductBestSell.setText(String.valueOf(bestRevenue.getPrice()));
+                IconBestSell.setIcon(new javax.swing.ImageIcon(image));
+
         }
 
         /**
@@ -162,7 +129,16 @@ public class Statistical extends javax.swing.JPanel {
                 jLabel17 = new javax.swing.JLabel();
                 ValueIngredient = new javax.swing.JLabel();
                 BoxChartOverView = new javax.swing.JPanel();
-                BoxRevenue = new javax.swing.JPanel();
+                BoxOption = new javax.swing.JPanel();
+                OptionChartOverView = new javax.swing.JComboBox<>();
+                BoxChooseDate = new javax.swing.JPanel();
+                labelStartDate = new javax.swing.JLabel();
+                InputStartDay = new JDateChooser();
+                labelEndDate = new javax.swing.JLabel();
+                InputEndDay = new JDateChooser();
+                BtnSearchOverView = new javax.swing.JButton();
+                BoxChart = new javax.swing.JPanel();
+                // BoxRevenue = new javax.swing.JPanel();
                 jPanel12 = new javax.swing.JPanel();
                 ItemRevenue = new javax.swing.JPanel();
                 IconRenvenue = new javax.swing.JButton();
@@ -175,8 +151,20 @@ public class Statistical extends javax.swing.JPanel {
                 jLabel11 = new javax.swing.JLabel();
                 ValueSellProduct = new javax.swing.JLabel();
                 jPanel19 = new javax.swing.JPanel();
-                TotalOrderByChartDayOfWeek = new javax.swing.JPanel();
                 ChartRevnueByProduct = new javax.swing.JPanel();
+                BoxOptionRevenue = new javax.swing.JPanel();
+                OptionRevenue1 = new javax.swing.JComboBox<>();
+                BoxChooseDate2 = new javax.swing.JPanel();
+                labelStartDate2 = new javax.swing.JLabel();
+                InputStartDay2 = new JDateChooser();
+                labelEndDate2 = new javax.swing.JLabel();
+                InputEndDay2 = new JDateChooser();
+                BtnSearchRevenue = new javax.swing.JButton();
+                BoxChartRevenue = new javax.swing.JPanel();
+                ChartRevnueByProduct1 = new javax.swing.JPanel();
+                BoxOptionRevenue1 = new javax.swing.JPanel();
+                OptionRevenue2 = new javax.swing.JComboBox<>();
+                BoxChartRevenue1 = new javax.swing.JPanel();
                 BoxProduct = new javax.swing.JPanel();
                 jPanel13 = new javax.swing.JPanel();
                 BoxBestSeller = new javax.swing.JPanel();
@@ -193,10 +181,28 @@ public class Statistical extends javax.swing.JPanel {
                 PriceProductBestSell = new javax.swing.JLabel();
                 jPanel38 = new javax.swing.JPanel();
                 BoxChartProduct1 = new javax.swing.JPanel();
+                jPanel1 = new javax.swing.JPanel();
+                OptionProduct = new javax.swing.JComboBox<>();
+                BoxChooseDate3 = new javax.swing.JPanel();
+                labelStartDate3 = new javax.swing.JLabel();
+                InputStartDay3 = new JDateChooser();
+                labelEndDate3 = new javax.swing.JLabel();
+                InputEndDay3 = new JDateChooser();
+                BtnSearchProduct = new javax.swing.JButton();
+                ItemChartProduct1 = new javax.swing.JPanel();
                 BoxChartProduct2 = new javax.swing.JPanel();
                 BoxProduct1 = new javax.swing.JPanel();
                 jPanel35 = new javax.swing.JPanel();
                 ChartIngredient1 = new javax.swing.JPanel();
+                jPanel2 = new javax.swing.JPanel();
+                OptionWarehouses = new javax.swing.JComboBox<>();
+                BoxChooseDate1 = new javax.swing.JPanel();
+                labelStartDate1 = new javax.swing.JLabel();
+                InputStartDay1 = new JDateChooser();
+                labelEndDate1 = new javax.swing.JLabel();
+                InputEndDay1 = new JDateChooser();
+                BtnSearchWarehouses = new javax.swing.JButton();
+                jPanel3 = new javax.swing.JPanel();
                 ChartIngredient2 = new javax.swing.JPanel();
 
                 setMinimumSize(new java.awt.Dimension(1085, 768));
@@ -440,13 +446,65 @@ public class Statistical extends javax.swing.JPanel {
                 BoxChartOverView.setBackground(new java.awt.Color(255, 255, 255));
                 BoxChartOverView.setFocusable(false);
                 BoxChartOverView.setOpaque(false);
-                BoxChartOverView.setLayout(
-                                new javax.swing.BoxLayout(BoxChartOverView, javax.swing.BoxLayout.LINE_AXIS));
+                BoxChartOverView.setLayout(new java.awt.BorderLayout());
+
+                BoxOption.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 40, 5));
+
+                OptionChartOverView.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+                OptionChartOverView.setModel(new javax.swing.DefaultComboBoxModel<>(
+                                new String[] { "Doanh thu theo 30 gần nhất", "Doanh thu theo tháng",
+                                                "Tuỳ chọn ngày" }));
+                OptionChartOverView.setMinimumSize(new java.awt.Dimension(230, 22));
+                OptionChartOverView.setName(""); // NOI18N
+                OptionChartOverView.setPreferredSize(new java.awt.Dimension(230, 35));
+                OptionChartOverView.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                OptionChartOverViewActionPerformed(evt);
+                        }
+                });
+                BoxOption.add(OptionChartOverView);
+
+                BoxChooseDate.setPreferredSize(new java.awt.Dimension(600, 35));
+                BoxChooseDate.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 0));
+
+                labelStartDate.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                labelStartDate.setText("Từ ngày: ");
+                BoxChooseDate.add(labelStartDate);
+
+                InputStartDay.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                InputStartDay.setPreferredSize(new java.awt.Dimension(150, 35));
+                BoxChooseDate.add(InputStartDay);
+
+                labelEndDate.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                labelEndDate.setText("Đến ngày:");
+                BoxChooseDate.add(labelEndDate);
+
+                InputEndDay.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                InputEndDay.setPreferredSize(new java.awt.Dimension(150, 35));
+                BoxChooseDate.add(InputEndDay);
+
+                BtnSearchOverView.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                BtnSearchOverView.setText("Tìm kiếm");
+                BtnSearchOverView.setPreferredSize(new java.awt.Dimension(120, 35));
+                BtnSearchOverView.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                BtnSearchOverViewActionPerformed(evt);
+                        }
+                });
+                BoxChooseDate.add(BtnSearchOverView);
+
+                BoxOption.add(BoxChooseDate);
+
+                BoxChartOverView.add(BoxOption, java.awt.BorderLayout.PAGE_START);
+
+                BoxChart.setLayout(new javax.swing.BoxLayout(BoxChart, javax.swing.BoxLayout.LINE_AXIS));
+                BoxChartOverView.add(BoxChart, java.awt.BorderLayout.CENTER);
+
                 BoxOverview.add(BoxChartOverView, java.awt.BorderLayout.CENTER);
 
                 TabbedPaneStatistical.addTab("Tổng quan", BoxOverview);
 
-                BoxRevenue.setLayout(new java.awt.BorderLayout());
+                // BoxRevenue.setLayout(new java.awt.BorderLayout());
 
                 jPanel12.setMinimumSize(new java.awt.Dimension(1083, 100));
                 jPanel12.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 40, 5));
@@ -523,23 +581,92 @@ public class Statistical extends javax.swing.JPanel {
 
                 jPanel12.add(ItemTotalSellProduct);
 
-                BoxRevenue.add(jPanel12, java.awt.BorderLayout.PAGE_START);
+                // BoxRevenue.add(jPanel12, java.awt.BorderLayout.PAGE_START);
 
                 jPanel19.setFocusable(false);
                 jPanel19.setOpaque(false);
                 jPanel19.setLayout(new java.awt.GridLayout(2, 0, 0, 10));
 
-                TotalOrderByChartDayOfWeek.setLayout(
-                                new javax.swing.BoxLayout(TotalOrderByChartDayOfWeek, javax.swing.BoxLayout.LINE_AXIS));
-                jPanel19.add(TotalOrderByChartDayOfWeek);
+                ChartRevnueByProduct.setLayout(new java.awt.BorderLayout());
 
-                ChartRevnueByProduct.setLayout(
-                                new javax.swing.BoxLayout(ChartRevnueByProduct, javax.swing.BoxLayout.LINE_AXIS));
+                BoxOptionRevenue.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 25, 5));
+
+                OptionRevenue1.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+                OptionRevenue1.setModel(new javax.swing.DefaultComboBoxModel<>(
+                                new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+                OptionRevenue1.setMinimumSize(new java.awt.Dimension(150, 35));
+                OptionRevenue1.setName(""); // NOI18N
+                OptionRevenue1.setPreferredSize(new java.awt.Dimension(150, 35));
+                OptionRevenue1.setRequestFocusEnabled(false);
+                OptionRevenue1.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                OptionRevenue1ActionPerformed(evt);
+                        }
+                });
+                BoxOptionRevenue.add(OptionRevenue1);
+
+                BoxChooseDate2.setPreferredSize(new java.awt.Dimension(600, 35));
+                BoxChooseDate2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 0));
+
+                labelStartDate2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                labelStartDate2.setText("Từ ngày: ");
+                BoxChooseDate2.add(labelStartDate2);
+
+                InputStartDay2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                InputStartDay2.setPreferredSize(new java.awt.Dimension(150, 35));
+                BoxChooseDate2.add(InputStartDay2);
+
+                labelEndDate2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                labelEndDate2.setText("Đến ngày:");
+                BoxChooseDate2.add(labelEndDate2);
+
+                InputEndDay2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                InputEndDay2.setPreferredSize(new java.awt.Dimension(150, 35));
+                BoxChooseDate2.add(InputEndDay2);
+
+                BtnSearchRevenue.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                BtnSearchRevenue.setText("Tìm kiếm");
+                BtnSearchRevenue.setPreferredSize(new java.awt.Dimension(86, 35));
+                BoxChooseDate2.add(BtnSearchRevenue);
+
+                BoxOptionRevenue.add(BoxChooseDate2);
+
+                ChartRevnueByProduct.add(BoxOptionRevenue, java.awt.BorderLayout.PAGE_START);
+
+                BoxChartRevenue.setLayout(new javax.swing.BoxLayout(BoxChartRevenue, javax.swing.BoxLayout.LINE_AXIS));
+                ChartRevnueByProduct.add(BoxChartRevenue, java.awt.BorderLayout.CENTER);
+
                 jPanel19.add(ChartRevnueByProduct);
 
-                BoxRevenue.add(jPanel19, java.awt.BorderLayout.CENTER);
+                ChartRevnueByProduct1.setLayout(new java.awt.BorderLayout());
 
-                TabbedPaneStatistical.addTab("Doanh thu", BoxRevenue);
+                BoxOptionRevenue1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+                OptionRevenue2.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+                OptionRevenue2.setModel(new javax.swing.DefaultComboBoxModel<>(
+                                new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+                OptionRevenue2.setMinimumSize(new java.awt.Dimension(150, 35));
+                OptionRevenue2.setName(""); // NOI18N
+                OptionRevenue2.setPreferredSize(new java.awt.Dimension(150, 35));
+                OptionRevenue2.setRequestFocusEnabled(false);
+                OptionRevenue2.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                OptionRevenue2ActionPerformed(evt);
+                        }
+                });
+                BoxOptionRevenue1.add(OptionRevenue2);
+
+                ChartRevnueByProduct1.add(BoxOptionRevenue1, java.awt.BorderLayout.PAGE_START);
+
+                BoxChartRevenue1.setLayout(
+                                new javax.swing.BoxLayout(BoxChartRevenue1, javax.swing.BoxLayout.LINE_AXIS));
+                ChartRevnueByProduct1.add(BoxChartRevenue1, java.awt.BorderLayout.CENTER);
+
+                jPanel19.add(ChartRevnueByProduct1);
+
+                // BoxRevenue.add(jPanel19, java.awt.BorderLayout.CENTER);
+
+                // TabbedPaneStatistical.addTab("Doanh thu", BoxRevenue);
 
                 BoxProduct.setLayout(new java.awt.BorderLayout());
 
@@ -636,12 +763,61 @@ public class Statistical extends javax.swing.JPanel {
                 jPanel38.setOpaque(false);
                 jPanel38.setLayout(new java.awt.GridLayout(2, 0, 0, 10));
 
-                BoxChartProduct1.setLayout(
-                                new javax.swing.BoxLayout(BoxChartProduct1, javax.swing.BoxLayout.LINE_AXIS));
+                BoxChartProduct1.setLayout(new java.awt.BorderLayout());
+
+                jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 25, 5));
+
+                OptionProduct.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+                OptionProduct.setModel(new javax.swing.DefaultComboBoxModel<>(
+                                new String[] { "Tất cả thời gian", "Tuỳ chọn ngày" }));
+                OptionProduct.setPreferredSize(new java.awt.Dimension(150, 35));
+                OptionProduct.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                OptionProductActionPerformed(evt);
+                        }
+                });
+                jPanel1.add(OptionProduct);
+
+                BoxChooseDate3.setPreferredSize(new java.awt.Dimension(700, 35));
+                BoxChooseDate3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 0));
+
+                labelStartDate3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                labelStartDate3.setText("Từ ngày: ");
+                BoxChooseDate3.add(labelStartDate3);
+
+                InputStartDay3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                InputStartDay3.setPreferredSize(new java.awt.Dimension(150, 35));
+                BoxChooseDate3.add(InputStartDay3);
+
+                labelEndDate3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                labelEndDate3.setText("Đến ngày:");
+                BoxChooseDate3.add(labelEndDate3);
+
+                InputEndDay3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                InputEndDay3.setPreferredSize(new java.awt.Dimension(150, 35));
+                BoxChooseDate3.add(InputEndDay3);
+
+                BtnSearchProduct.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                BtnSearchProduct.setText("Tìm kiếm");
+                BtnSearchProduct.setPreferredSize(new java.awt.Dimension(146, 35));
+                BtnSearchProduct.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                BtnSearchProductActionPerformed(evt);
+                        }
+                });
+                BoxChooseDate3.add(BtnSearchProduct);
+
+                jPanel1.add(BoxChooseDate3);
+
+                BoxChartProduct1.add(jPanel1, java.awt.BorderLayout.PAGE_START);
+                BoxChartProduct1.add(ItemChartProduct1, java.awt.BorderLayout.CENTER);
+
                 jPanel38.add(BoxChartProduct1);
 
                 BoxChartProduct2.setLayout(
                                 new javax.swing.BoxLayout(BoxChartProduct2, javax.swing.BoxLayout.LINE_AXIS));
+                ItemChartProduct1.setLayout(
+                                new javax.swing.BoxLayout(ItemChartProduct1, javax.swing.BoxLayout.LINE_AXIS));
                 jPanel38.add(BoxChartProduct2);
 
                 BoxProduct.add(jPanel38, java.awt.BorderLayout.CENTER);
@@ -654,8 +830,55 @@ public class Statistical extends javax.swing.JPanel {
                 jPanel35.setOpaque(false);
                 jPanel35.setLayout(new java.awt.GridLayout(2, 0, 0, 10));
 
-                ChartIngredient1.setLayout(
-                                new javax.swing.BoxLayout(ChartIngredient1, javax.swing.BoxLayout.LINE_AXIS));
+                ChartIngredient1.setLayout(new java.awt.BorderLayout());
+
+                jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 35, 5));
+
+                OptionWarehouses.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+                OptionWarehouses.setModel(new javax.swing.DefaultComboBoxModel<>(
+                                new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+                OptionWarehouses.setPreferredSize(new java.awt.Dimension(150, 35));
+                OptionWarehouses.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                OptionWarehousesActionPerformed(evt);
+                        }
+                });
+                jPanel2.add(OptionWarehouses);
+
+                BoxChooseDate1.setPreferredSize(new java.awt.Dimension(600, 35));
+                BoxChooseDate1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 0));
+
+                labelStartDate1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                labelStartDate1.setText("Từ ngày: ");
+                BoxChooseDate1.add(labelStartDate1);
+
+                InputStartDay1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                InputStartDay1.setPreferredSize(new java.awt.Dimension(150, 35));
+                BoxChooseDate1.add(InputStartDay1);
+
+                labelEndDate1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                labelEndDate1.setText("Đến ngày:");
+                BoxChooseDate1.add(labelEndDate1);
+
+                InputEndDay1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                InputEndDay1.setPreferredSize(new java.awt.Dimension(150, 35));
+                BoxChooseDate1.add(InputEndDay1);
+
+                BtnSearchWarehouses.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                BtnSearchWarehouses.setText("Tìm kiếm");
+                BtnSearchWarehouses.setPreferredSize(new java.awt.Dimension(86, 35));
+                BtnSearchWarehouses.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                BtnSearchWarehousesActionPerformed(evt);
+                        }
+                });
+                BoxChooseDate1.add(BtnSearchWarehouses);
+
+                jPanel2.add(BoxChooseDate1);
+
+                ChartIngredient1.add(jPanel2, java.awt.BorderLayout.PAGE_START);
+                ChartIngredient1.add(jPanel3, java.awt.BorderLayout.CENTER);
+
                 jPanel35.add(ChartIngredient1);
 
                 ChartIngredient2.setLayout(
@@ -670,23 +893,140 @@ public class Statistical extends javax.swing.JPanel {
         }// </editor-fold>
 
         private void ProfitIconActionPerformed(java.awt.event.ActionEvent evt) {
+
+        }
+
+        private void OptionChartOverViewActionPerformed(java.awt.event.ActionEvent evt) {
+                int selectedBox = OptionChartOverView.getSelectedIndex();
+                if (selectedBox == 0) {
+                        BoxChooseDate.setVisible(false);
+                        HashMap<String, ArrayList<StatisticalDTO>> chartData = StatisticalBUS
+                                        .getDataChartOverView();
+                        BoxChart.removeAll();
+                        BoxChart.add(LineChart.createLineChart(chartData, "Lợi nhuận 30 gần nhất"));
+
+                        // Cập nhật lại giao diện
+                        BoxChart.revalidate();
+                        BoxChart.repaint();
+
+                } else if (selectedBox == 1) {
+                        BoxChooseDate.setVisible(false);
+                        HashMap<String, ArrayList<StatisticalDTO>> chartData = StatisticalBUS
+                                        .getDataChartOverViewByMonth();
+                        BoxChart.removeAll();
+                        BoxChart.add(LineChart.createLineChart(chartData, "Lợi nhuận theo từng tháng"));
+
+                        // Cập nhật lại giao diện
+                        BoxChart.revalidate();
+                        BoxChart.repaint();
+
+                } else if (selectedBox == 2) {
+                        BoxChooseDate.setVisible(true);
+
+                }
+
+        }
+
+        private void BtnSearchOverViewActionPerformed(java.awt.event.ActionEvent evt) {
+                Date startDate = InputStartDay.getDate();
+                Date endDate = InputEndDay.getDate();
+
+                String formatedStartDate = Common.formateDate(startDate);
+                String formatedEndDate = Common.formateDate(endDate);
+
+                HashMap<String, ArrayList<StatisticalDTO>> chartData = StatisticalBUS
+                                .getDataChartOverViewChooseTime(formatedStartDate, formatedEndDate);
+                BoxChart.removeAll();
+                BoxChart.add(LineChart.createLineChart(chartData, "Lợi nhuận theo ngày"));
+
+                // Cập nhật lại giao diện
+                BoxChart.revalidate();
+                BoxChart.repaint();
+        }
+
+        private void OptionRevenue1ActionPerformed(java.awt.event.ActionEvent evt) {
+                // TODO add your handling code here:
+        }
+
+        private void OptionRevenue2ActionPerformed(java.awt.event.ActionEvent evt) {
+                // TODO add your handling code here:
+        }
+
+        private void OptionProductActionPerformed(java.awt.event.ActionEvent evt) {
+                int selectedBox = OptionProduct.getSelectedIndex();
+                if (selectedBox == 0) {
+
+                        BoxChooseDate3.setVisible(false);
+
+                        ArrayList<StatisticalProductDTO> dataTotalSold = StatisticalBUS.getDataBarChart1Product();
+                        ItemChartProduct1.removeAll();
+                        ItemChartProduct1.add(BarChart.createChart("Số lượng đã bán ra theo sản phẩm", dataTotalSold));
+                        // Cập nhật lại giao diện
+                        ItemChartProduct1.revalidate();
+                        ItemChartProduct1.repaint();
+
+                } else if (selectedBox == 1) {
+
+                        BoxChooseDate3.setVisible(true);
+
+                }
+        }
+
+        private void BtnSearchProductActionPerformed(java.awt.event.ActionEvent evt) {
+                Date startDate = InputStartDay3.getDate();
+                Date endDate = InputEndDay3.getDate();
+
+                String formatedStartDate = Common.formateDate(startDate);
+                String formatedEndDate = Common.formateDate(endDate);
+
+                ArrayList<StatisticalProductDTO> dataTotalSold = StatisticalBUS
+                                .getDataBarChart1ProductChooseDate(formatedStartDate, formatedEndDate);
+                ItemChartProduct1.removeAll();
+                ItemChartProduct1.add(
+                                BarChart.createChart("Số lượng đã bán ra theo sản phẩm theo thời gian", dataTotalSold));
+
+                // Cập nhật lại giao diện
+                ItemChartProduct1.revalidate();
+                ItemChartProduct1.repaint();
+        }
+
+        private void OptionWarehousesActionPerformed(java.awt.event.ActionEvent evt) {
+                // TODO add your handling code here:
+        }
+
+        private void BtnSearchWarehousesActionPerformed(java.awt.event.ActionEvent evt) {
                 // TODO add your handling code here:
         }
 
         // Variables declaration - do not modify
         private javax.swing.JPanel BoxBestSeller;
         private javax.swing.JPanel BoxBestSeller1;
+        private javax.swing.JPanel BoxChart;
         private javax.swing.JPanel BoxChartOverView;
         private javax.swing.JPanel BoxChartProduct1;
         private javax.swing.JPanel BoxChartProduct2;
+        private javax.swing.JPanel BoxChartRevenue;
+        private javax.swing.JPanel BoxChartRevenue1;
+        private javax.swing.JPanel BoxChooseDate;
+        private javax.swing.JPanel BoxChooseDate1;
+        private javax.swing.JPanel BoxChooseDate2;
+        private javax.swing.JPanel BoxChooseDate3;
         private javax.swing.JPanel BoxItem;
+        private javax.swing.JPanel BoxOption;
+        private javax.swing.JPanel BoxOptionRevenue;
+        private javax.swing.JPanel BoxOptionRevenue1;
         private javax.swing.JPanel BoxOverview;
         private javax.swing.JPanel BoxProduct;
         private javax.swing.JPanel BoxProduct1;
-        private javax.swing.JPanel BoxRevenue;
+        // private javax.swing.JPanel BoxRevenue;
+        private javax.swing.JButton BtnSearchOverView;
+        private javax.swing.JButton BtnSearchProduct;
+        private javax.swing.JButton BtnSearchRevenue;
+        private javax.swing.JButton BtnSearchWarehouses;
         private javax.swing.JPanel ChartIngredient1;
         private javax.swing.JPanel ChartIngredient2;
         private javax.swing.JPanel ChartRevnueByProduct;
+        private javax.swing.JPanel ChartRevnueByProduct1;
         private javax.swing.JButton IconBestSell;
         private javax.swing.JButton IconEmployee;
         private javax.swing.JButton IconIngredient;
@@ -694,17 +1034,30 @@ public class Statistical extends javax.swing.JPanel {
         private javax.swing.JButton IconProduct;
         private javax.swing.JButton IconRenvenue;
         private javax.swing.JButton IconSellProduct;
+        private JDateChooser InputEndDay;
+        private JDateChooser InputEndDay1;
+        private JDateChooser InputEndDay2;
+        private JDateChooser InputEndDay3;
+        private JDateChooser InputStartDay;
+        private JDateChooser InputStartDay1;
+        private JDateChooser InputStartDay2;
+        private JDateChooser InputStartDay3;
+        private javax.swing.JPanel ItemChartProduct1;
         private javax.swing.JPanel ItemOrder;
         private javax.swing.JPanel ItemProduct;
         private javax.swing.JPanel ItemProfit;
         private javax.swing.JPanel ItemRevenue;
         private javax.swing.JPanel ItemTotalSellProduct;
+        private javax.swing.JComboBox<String> OptionChartOverView;
+        private javax.swing.JComboBox<String> OptionProduct;
+        private javax.swing.JComboBox<String> OptionRevenue1;
+        private javax.swing.JComboBox<String> OptionRevenue2;
+        private javax.swing.JComboBox<String> OptionWarehouses;
         private javax.swing.JLabel PriceProduct;
         private javax.swing.JLabel PriceProductBestSell;
         private javax.swing.JButton ProductIcon;
         private javax.swing.JButton ProfitIcon;
         private javax.swing.JTabbedPane TabbedPaneStatistical;
-        private javax.swing.JPanel TotalOrderByChartDayOfWeek;
         private javax.swing.JLabel ValueEmployee;
         private javax.swing.JLabel ValueIngredient;
         private javax.swing.JLabel ValueOrder;
@@ -724,24 +1077,35 @@ public class Statistical extends javax.swing.JPanel {
         private javax.swing.JLabel jLabel3;
         private javax.swing.JLabel jLabel5;
         private javax.swing.JLabel jLabel9;
+        private javax.swing.JPanel jPanel1;
         private javax.swing.JPanel jPanel11;
         private javax.swing.JPanel jPanel12;
         private javax.swing.JPanel jPanel13;
         private javax.swing.JPanel jPanel16;
         private javax.swing.JPanel jPanel18;
         private javax.swing.JPanel jPanel19;
+        private javax.swing.JPanel jPanel2;
         private javax.swing.JPanel jPanel22;
         private javax.swing.JPanel jPanel23;
         private javax.swing.JPanel jPanel24;
         private javax.swing.JPanel jPanel25;
         private javax.swing.JPanel jPanel26;
         private javax.swing.JPanel jPanel27;
+        private javax.swing.JPanel jPanel3;
         private javax.swing.JPanel jPanel32;
         private javax.swing.JPanel jPanel33;
         private javax.swing.JPanel jPanel35;
         private javax.swing.JPanel jPanel38;
         private javax.swing.JPanel jPanel5;
         private javax.swing.JPanel jPanel9;
+        private javax.swing.JLabel labelEndDate;
+        private javax.swing.JLabel labelEndDate1;
+        private javax.swing.JLabel labelEndDate2;
+        private javax.swing.JLabel labelEndDate3;
+        private javax.swing.JLabel labelStartDate;
+        private javax.swing.JLabel labelStartDate1;
+        private javax.swing.JLabel labelStartDate2;
+        private javax.swing.JLabel labelStartDate3;
         private javax.swing.JLabel nameProduct;
         private javax.swing.JLabel nameProductBestSell;
         // End of variables declaration

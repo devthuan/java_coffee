@@ -1,79 +1,66 @@
 package com.project.DTO;
 
+
 public class ProductDTO {
     private int id;
-    private String product_name;
-    private String url_image;
-    private Float price;
-    private int is_active;
-    private String created_date;
-    private String category;
+    private String nameProduct;
+    private String imageProduct;
+    private float price;
+    private int quantity;
+    private int totalSold;
 
-    public ProductDTO(String name, Float price){
-        this.product_name = name;
-        this.price= price;
-    }
-
-    public ProductDTO(int id,String product_name, String url_image, Float price, int is_active,String created_date, String category ){
-        this.id = id;
-        this.product_name = product_name;
-        this.url_image = url_image;
+    public ProductDTO(String nameProduct, String imageProduct, float price, int totalSold) {
+        this.nameProduct = nameProduct;
+        this.imageProduct = imageProduct;
         this.price = price;
-        this.is_active = is_active;
-        this.created_date = created_date;
-        this.category = category;
-    }
-    public ProductDTO(String product_name, String url_image, Float price, String category ){
-        this.product_name = product_name;
-        this.url_image = url_image;
-        this.price = price;
-        this.category = category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-    public void setCreated_date(String created_date) {
-        this.created_date = created_date;
-    }
-    public void setIs_active(int is_active) {
-        this.is_active = is_active;
-    }
-    public void setPrice(Float price) {
-        this.price = price;
-    }
-    public void setProduct_name(String product_name) {
-        this.product_name = product_name;
-    }
-    public void setUrl_image(String url_image) {
-        this.url_image = url_image;
+        this.totalSold = totalSold;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
+    public void setNameProduct(String nameProduct) {
+        this.nameProduct = nameProduct;
+    }
+
+    public void setImageProduct(String imageProduct) {
+        this.imageProduct = imageProduct;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setTotalSold(int totalSold) {
+        this.totalSold = totalSold;
+    }
+
     public int getId() {
         return id;
     }
 
-    public String getCategory() {
-        return category;
+    public String getNameProduct() {
+        return nameProduct;
     }
-    public String getCreated_date() {
-        return created_date;
+
+    public String getImageProduct() {
+        return imageProduct;
     }
-    public int getIs_active() {
-        return is_active;
-    }
-    public Float getPrice() {
+
+    public float getPrice() {
         return price;
     }
-    public String getProduct_name() {
-        return product_name;
+
+    public int getQuantity() {
+        return quantity;
     }
-    public String getUrl_image() {
-        return url_image;
+
+    public int getTotalSold() {
+        return totalSold;
     }
-    
 }
