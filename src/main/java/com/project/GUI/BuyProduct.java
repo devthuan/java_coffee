@@ -82,6 +82,7 @@ public class BuyProduct extends JPanel implements AddProductListener {
                                                 // Reset
                                                 pnCarts.PanelBottom.cbPaymentMethod.setSelectedIndex(0);
                                                 tpProducts.reloadProductList();
+                                                tpProducts.setListener(this);
                                                 pnCarts.removeAllCartItem();
                                                 setTextTotal();
 
@@ -114,7 +115,7 @@ public class BuyProduct extends JPanel implements AddProductListener {
         }
 
         private void setTextTotal() {
-                pnCarts.PanelBottom.Total.setText(Formatter.getFormatedPrice(getTotalPrice()));
+                pnCarts.PanelBottom.Total.setText(Formatter.getFormattedPrice(getTotalPrice()));
         }
 
         @Override
@@ -344,7 +345,7 @@ class ProductCard extends JPanel {
                 Price.setForeground(new java.awt.Color(255, 51, 51));
                 Price.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-                Price.setText(Formatter.getFormatedPrice(product.getPrice()));
+                Price.setText(Formatter.getFormattedPrice(product.getPrice()));
                 Price.setToolTipText("");
                 Price.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
                 Price.setMaximumSize(new java.awt.Dimension(220, 30));
@@ -468,6 +469,7 @@ class PanelBottom extends javax.swing.JPanel {
                 setPaymentMethodModel();
                 cbPaymentMethod.setMaximumSize(new java.awt.Dimension(32767, 35));
                 cbPaymentMethod.setMinimumSize(new java.awt.Dimension(100, 35));
+                cbPaymentMethod.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
                 BoxPaymentMethods.add(cbPaymentMethod);
 
                 add(BoxPaymentMethods);
@@ -616,7 +618,7 @@ class CartItem extends JPanel {
 
                 Price.setFont(new java.awt.Font("Arial", 0, 14));
                 Price.setForeground(java.awt.Color.red);
-                Price.setText(Formatter.getFormatedPrice(product.getPrice()).replace("VNĐ", ""));
+                Price.setText(Formatter.getFormattedPrice(product.getPrice()).replace("VNĐ", ""));
                 Price.setMaximumSize(new java.awt.Dimension(32767, 35));
                 Price.setMinimumSize(new java.awt.Dimension(60, 35));
                 Price.setPreferredSize(new java.awt.Dimension(60, 35));
