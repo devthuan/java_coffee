@@ -963,9 +963,9 @@ public class Main extends javax.swing.JFrame {
         // ------------------------------
 
         private void HomeLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                // SwitchControl();
-                // HomeMenu homeMenu = new HomeMenu();
-                // Right.add(homeMenu);
+                SwitchControl();
+                BuyProduct buyProduct = new BuyProduct();
+                Right.add(buyProduct);
         }
 
         public void ProductLabelMouseClicked(java.awt.event.MouseEvent evt) {
@@ -1016,7 +1016,7 @@ public class Main extends javax.swing.JFrame {
                 try {
                         for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
                                         .getInstalledLookAndFeels()) {
-                                if ("Nimbus".equals(info.getName())) {
+                                if ("Windows".equals(info.getName())) {
                                         javax.swing.UIManager.setLookAndFeel(info.getClassName());
                                         break;
                                 }
