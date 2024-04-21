@@ -19,11 +19,12 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.ui.TextAnchor;
 
+import com.project.DTO.StatisticalDTO;
 import com.project.DTO.StatisticalProductDTO;
 
 class BarChart {
 
-    public static ChartPanel createChart(String TitleChart, ArrayList<StatisticalProductDTO> data) {
+    public static ChartPanel createChart(String TitleChart, ArrayList<?> data) {
         JFreeChart barChart = ChartFactory.createBarChart(
                 TitleChart,
                 "Năm", "VNĐ",
@@ -48,16 +49,21 @@ class BarChart {
         return chartPanel;
     }
 
-    public static CategoryDataset createDataset(ArrayList<StatisticalProductDTO> data) {
+    public static CategoryDataset createDataset(ArrayList<?> data) {
         final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        for (StatisticalProductDTO statisticalProductDTO : data) {
-            dataset.addValue(
-                    statisticalProductDTO.getDataStatistical() == 0.0 ? statisticalProductDTO.getQuantity()
-                            : statisticalProductDTO.getDataStatistical(),
-                    "VNĐ", statisticalProductDTO.getName());
+        for (Object object : data) {
+            if (object instanceof StatisticalProductDTO) {
+                StatisticalProductDTO product = (StatisticalProductDTO) object;
+                dataset.addValue(product.getDataStatistical() == 0.0
+                        ? product.getQuantity()
+                        : product.getDataStatistical(), "VNĐ", product.getName());
+            } else if (object instanceof StatisticalDTO) {
+                StatisticalDTO statistic = (StatisticalDTO) object;
+                dataset.addValue(statistic.getValues(), "VNĐ",
+                        statistic.getDate());
 
+            }
         }
-
         return dataset;
     }
 

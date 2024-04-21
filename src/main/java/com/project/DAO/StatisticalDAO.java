@@ -396,6 +396,7 @@ public class StatisticalDAO {
     }
 
     // statistical product
+
     public static StatisticalProductDTO getBestSellerProduct() {
         StatisticalProductDTO product = null;
         try {
@@ -550,7 +551,7 @@ public class StatisticalDAO {
             String sql = "SELECT id,ten_SP,so_luong FROM SanPham WHERE is_active = 1";
 
             PreparedStatement pst = conn.prepareStatement(sql);
-            
+
             ResultSet result_query = pst.executeQuery();
 
             while (result_query.next()) {
@@ -565,43 +566,105 @@ public class StatisticalDAO {
         return list_product;
     }
 
-    // public static void main(String[] args) {
-    // ArrayList<StatisticalDTO> data = getProfitRevenueExpense();
-    // ArrayList<StatisticalDTO> data_revenue = new ArrayList<>();
-    // ArrayList<StatisticalDTO> data_expense = new ArrayList<>();
-    // ArrayList<StatisticalDTO> data_profit = new ArrayList<>();
+    // warehouses
+    public static ArrayList<StatisticalDTO> expenseImportWarehousesBy30day() {
+        ArrayList<StatisticalDTO> list_data = new ArrayList<>();
+        try {
+            Connection conn = mysqlConnect.getConnection();
+            String sql = "SELECT " +
+                    "SUM(ctph.so_luong * ctph.don_gia) AS tong_nhap, " +
+                    "DATE_FORMAT(PhieuNhap.createdAt, '%Y-%m-%d') AS Ngay " +
+                    "FROM " +
+                    "PhieuNhap " +
+                    "JOIN " +
+                    "ChiTietPhieuNhap ctph ON PhieuNhap.id = ctph.PhieuNhap_id " +
+                    "WHERE " +
+                    "PhieuNhap.createdAt >= DATE_SUB(CURDATE(), INTERVAL 15 DAY) " +
+                    "GROUP BY " +
+                    "Ngay";
 
-    // for (StatisticalDTO statisticalDTO : data) {
-    // data_revenue.add(new StatisticalDTO(statisticalDTO.getRevenue(),
-    // statisticalDTO.getDate()));
-    // data_expense.add(new StatisticalDTO(statisticalDTO.getExpense(),
-    // statisticalDTO.getDate()));
-    // data_profit.add(new StatisticalDTO(statisticalDTO.getProfit(),
-    // statisticalDTO.getDate()));
-    // }
+            PreparedStatement pst = conn.prepareStatement(sql);
+            ResultSet result_query = pst.executeQuery();
+            while (result_query.next()) {
+                float values = result_query.getFloat("tong_nhap");
+                Date date = result_query.getDate("Ngay");
+                LocalDate formatedDate = date.toLocalDate();
+                list_data.add(new StatisticalDTO(values, formatedDate));
+            }
 
-    // for (StatisticalDTO revenue : data_revenue) {
-    // System.out.println(revenue.getValues());
-    // System.out.println(revenue.getDate());
-    // }
-    // System.out.println("---------------");
-    // for (StatisticalDTO profit : data_profit) {
-    // System.out.println(profit.getValues());
-    // System.out.println(profit.getDate());
-    // }
-    // System.out.println("---------------");
-    // for (StatisticalDTO profit : data_expense) {
-    // System.out.println(profit.getValues());
-    // System.out.println(profit.getDate());
-    // }
-    // }
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            return null;
+        }
+        return list_data;
+    }
+
+    public static ArrayList<StatisticalDTO> expenseImportWarehousesChooseDay(String startTime, String endTime) {
+        ArrayList<StatisticalDTO> list_data = new ArrayList<>();
+        try {
+            Connection conn = mysqlConnect.getConnection();
+            String sql = "SELECT " +
+                    "SUM(ctph.so_luong * ctph.don_gia) AS tong_nhap, " +
+                    "DATE(PhieuNhap.createdAt) AS Ngay " +
+                    "FROM " +
+                    "PhieuNhap " +
+                    "JOIN " +
+                    "ChiTietPhieuNhap ctph ON PhieuNhap.id = ctph.PhieuNhap_id " +
+                    "WHERE " +
+                    "PhieuNhap.createdAt BETWEEN ? AND ? " +
+                    "GROUP BY " +
+                    "Ngay";
+
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, startTime);
+            pst.setString(2, endTime);
+            ResultSet result_query = pst.executeQuery();
+            while (result_query.next()) {
+                float values = result_query.getFloat("tong_nhap");
+                Date date = result_query.getDate("Ngay");
+                LocalDate formatedDate = date.toLocalDate();
+                list_data.add(new StatisticalDTO(values, formatedDate));
+            }
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            return null;
+        }
+        return list_data;
+    }
+
+    public static ArrayList<StatisticalDTO> StatisticalIngredient() {
+        ArrayList<StatisticalDTO> list_data = new ArrayList<>();
+        try {
+            Connection conn = mysqlConnect.getConnection();
+            String sql = "SELECT ten_NL, so_luong FROM NguyenLieu WHERE is_active = 1 ";
+
+            PreparedStatement pst = conn.prepareStatement(sql);
+
+            ResultSet result_query = pst.executeQuery();
+            while (result_query.next()) {
+                String values = result_query.getString("ten_NL");
+                float quantity = result_query.getFloat("so_luong");
+
+                list_data.add(new StatisticalDTO(values, quantity));
+            }
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            return null;
+        }
+        return list_data;
+    }
+
     public static void main(String[] args) {
-        ArrayList<StatisticalDTO> data = getProfitRevenueExpenseByMonth();
+        ArrayList<StatisticalDTO> data = expenseImportWarehousesBy30day();
 
         for (StatisticalDTO statisticalDTO : data) {
-            System.out.println(statisticalDTO.getRevenue());
-            System.out.println(statisticalDTO.getExpense());
-            System.out.println(statisticalDTO.getProfit());
+            System.out.println(statisticalDTO.getValues());
+            System.out.println(statisticalDTO.getDate());
         }
 
     }

@@ -5,8 +5,8 @@
 package com.project.GUI;
 
 import java.awt.Image;
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -30,36 +30,47 @@ public class Statistical extends javax.swing.JPanel {
         public Statistical() {
                 initComponents();
 
+                // lấy từ data từ lớp BUS
                 HashMap<String, ArrayList<StatisticalDTO>> chartData = StatisticalBUS.getDataChartOverView();
-
                 ArrayList<StatisticalProductDTO> dataTotalSold = StatisticalBUS.getDataBarChart1Product();
                 ArrayList<StatisticalProductDTO> dataQuantityByProduct = StatisticalBUS.getDataBarChart2Product();
+                ArrayList<StatisticalDTO> dataExpenseWarehouse = StatisticalBUS.getDataChartWarehouses();
+                ArrayList<StatisticalDTO> dataStatisticalIngradient = StatisticalBUS.getDataChartStatisticalIngredient();
+                HashMap<String, Integer> data_for_item = StatisticalBUS.getDateForItemOverView();
+                HashMap<String, StatisticalProductDTO> dataForProduct = StatisticalBUS.getDataForItemProduct();
 
+                // đổ data ra chart
                 BoxChart.add(LineChart.createLineChart(chartData, "Lợi nhuận 30 ngày"));
-
                 ItemChartProduct1.add(BarChart.createChart("Số lượng đã bán ra theo sản phẩm", dataTotalSold));
                 BoxChartProduct2.add(BarChart.createChart("Số lượng còn lại theo sản phẩm", dataQuantityByProduct));
+                jPanel3.add(BarChart.createChart("Giá trị nhập hàng theo 15 ngày gần nhất", dataExpenseWarehouse));
+                ChartIngredient2.add(PieChart.createChart("Số lượng nguyên liệu tồn kho",
+                                dataStatisticalIngradient));
 
+                // ẩn box chọn ngày
                 BoxChooseDate.setVisible(false);
                 BoxChooseDate3.setVisible(false);
+                BoxChooseDate1.setVisible(false);
 
-                HashMap<String, Integer> data = StatisticalBUS.getDateForItemOverView();
+              
+                // 
+                BigDecimal totalProfit = new BigDecimal(data_for_item.get("totalProfit"));
+                // float totalProfit = data_for_item.get("totalProfit");
+              
+                int totalProduct = data_for_item.get("totalProduct");
+                int totalOrder = data_for_item.get("totalOrder");
+                int totalSupplier = data_for_item.get("totalSupplier");
+                int totalEmployee = data_for_item.get("totalEmployee");
+                int totalIngredient = data_for_item.get("totalIngredient");
 
-                float totalProfit = data.get("totalProfit");
-                int totalProduct = data.get("totalProduct");
-                int totalOrder = data.get("totalOrder");
-                int totalSupplier = data.get("totalSupplier");
-                int totalEmployee = data.get("totalEmployee");
-                int totalIngredient = data.get("totalIngredient");
-
+                // add data vào vào item
                 ValueEmployee.setText(String.valueOf(totalEmployee));
                 ValueIngredient.setText(String.valueOf(totalIngredient));
                 ValueOrder.setText(String.valueOf(totalOrder));
                 ValueProduct.setText(String.valueOf(totalProduct));
-                ValueProfit.setText(String.valueOf(totalProfit));
+                ValueProfit.setText(String.valueOf(Common.formatBigNumber(totalProfit))+ " VNĐ");
                 ValueSupplier.setText(String.valueOf(totalSupplier));
-
-                HashMap<String, StatisticalProductDTO> dataForProduct = StatisticalBUS.getDataForItemProduct();
+                
                 StatisticalProductDTO bestSeller = dataForProduct.get("bestSeller");
                 StatisticalProductDTO bestRevenue = dataForProduct.get("bestRevenue");
 
@@ -75,7 +86,7 @@ public class Statistical extends javax.swing.JPanel {
                 nameProduct.setText(bestSeller.getName());
                 PriceProduct.setText(String.valueOf(bestSeller.getPrice()));
                 IconProduct.setIcon(new javax.swing.ImageIcon(image2));
-                
+
                 ImageIcon icon = new javax.swing.ImageIcon(bestRevenue.getImage());
                 // Giảm kích thước của hình ảnh
                 Image image = icon.getImage().getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
@@ -593,7 +604,7 @@ public class Statistical extends javax.swing.JPanel {
 
                 OptionRevenue1.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
                 OptionRevenue1.setModel(new javax.swing.DefaultComboBoxModel<>(
-                                new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+                                new String[] { "15 ngày gần nhất", "tuỳ chọn thời gian" }));
                 OptionRevenue1.setMinimumSize(new java.awt.Dimension(150, 35));
                 OptionRevenue1.setName(""); // NOI18N
                 OptionRevenue1.setPreferredSize(new java.awt.Dimension(150, 35));
@@ -836,7 +847,7 @@ public class Statistical extends javax.swing.JPanel {
 
                 OptionWarehouses.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
                 OptionWarehouses.setModel(new javax.swing.DefaultComboBoxModel<>(
-                                new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+                                new String[] { "15 ngày gần nhất", "tuỳ chọn thời gian" }));
                 OptionWarehouses.setPreferredSize(new java.awt.Dimension(150, 35));
                 OptionWarehouses.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -866,7 +877,7 @@ public class Statistical extends javax.swing.JPanel {
 
                 BtnSearchWarehouses.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 BtnSearchWarehouses.setText("Tìm kiếm");
-                BtnSearchWarehouses.setPreferredSize(new java.awt.Dimension(86, 35));
+                BtnSearchWarehouses.setPreferredSize(new java.awt.Dimension(126, 35));
                 BtnSearchWarehouses.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 BtnSearchWarehousesActionPerformed(evt);
@@ -884,6 +895,9 @@ public class Statistical extends javax.swing.JPanel {
                 ChartIngredient2.setLayout(
                                 new javax.swing.BoxLayout(ChartIngredient2, javax.swing.BoxLayout.LINE_AXIS));
                 jPanel35.add(ChartIngredient2);
+
+                jPanel3.setLayout(
+                                new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
 
                 BoxProduct1.add(jPanel35, java.awt.BorderLayout.CENTER);
 
@@ -991,11 +1005,43 @@ public class Statistical extends javax.swing.JPanel {
         }
 
         private void OptionWarehousesActionPerformed(java.awt.event.ActionEvent evt) {
-                // TODO add your handling code here:
+                int selectedBox = OptionWarehouses.getSelectedIndex();
+                if (selectedBox == 0) {
+
+                        BoxChooseDate1.setVisible(false);
+
+                        ArrayList<StatisticalDTO> dataExpenseWarehouse = StatisticalBUS.getDataChartWarehouses();
+
+                        jPanel3.removeAll();
+                        jPanel3.add(BarChart.createChart("Giá trị nhập hàng theo 15 ngày gần nhất",
+                                        dataExpenseWarehouse));
+                        // Cập nhật lại giao diện
+                        jPanel3.revalidate();
+                        jPanel3.repaint();
+
+                } else if (selectedBox == 1) {
+
+                        BoxChooseDate1.setVisible(true);
+
+                }
         }
 
         private void BtnSearchWarehousesActionPerformed(java.awt.event.ActionEvent evt) {
-                // TODO add your handling code here:
+                Date startDate = InputStartDay1.getDate();
+                Date endDate = InputEndDay1.getDate();
+
+                String formatedStartDate = Common.formateDate(startDate);
+                String formatedEndDate = Common.formateDate(endDate);
+
+                ArrayList<StatisticalDTO> dataExpenseImportWarehouse = StatisticalBUS
+                                .getDataChartWarehousesChooseDate(formatedStartDate, formatedEndDate);
+                jPanel3.removeAll();
+                jPanel3.add(
+                                BarChart.createChart("Giá trị nhập hàng theo thời gian", dataExpenseImportWarehouse));
+
+                // Cập nhật lại giao diện
+                jPanel3.revalidate();
+                jPanel3.repaint();
         }
 
         // Variables declaration - do not modify

@@ -34,6 +34,10 @@ public class StatisticalDTO {
         this.values = values;
         this.date = date;
     }
+    public StatisticalDTO(String label, float values) {
+        this.label = label;
+        this.values = values;
+    }
 
     public StatisticalDTO(float values, String monthYear) {
         this.values = values;

@@ -8,6 +8,7 @@ import com.project.DTO.StatisticalDTO;
 import com.project.DTO.StatisticalProductDTO;
 
 public class StatisticalBUS {
+
     public static HashMap<String, ArrayList<StatisticalDTO>> getDataChartOverView() {
         ArrayList<StatisticalDTO> data = StatisticalDAO.getProfitRevenueExpenseFor30Day();
         ArrayList<StatisticalDTO> data_revenue = new ArrayList<>();
@@ -122,21 +123,23 @@ public class StatisticalBUS {
         return dataTotalSold;
     }
 
+    public static ArrayList<StatisticalDTO> getDataChartWarehouses() {
+        return StatisticalDAO.expenseImportWarehousesBy30day();
+    }
+    public static ArrayList<StatisticalDTO> getDataChartWarehousesChooseDate(String startTime, String endTime) {
+        return StatisticalDAO.expenseImportWarehousesChooseDay(startTime,endTime);
+    }
+    
+    public static ArrayList<StatisticalDTO> getDataChartStatisticalIngredient() {
+        return StatisticalDAO.StatisticalIngredient();
+    }
+
+
     public static void main(String[] args) {
-        HashMap<String, ArrayList<StatisticalDTO>>  dataTotalSold = getDataChartOverViewByMonth();
-
-        ArrayList<StatisticalDTO> a = dataTotalSold.get("revenue");
-        ArrayList<StatisticalDTO> b = dataTotalSold.get("expense");
-        ArrayList<StatisticalDTO> c = dataTotalSold.get("profit");
-
-        for (StatisticalDTO statisticalDTO : a) {
-            System.out.println(statisticalDTO.getValues());
-        }
-        for (StatisticalDTO statisticalDTn : b) {
-            System.out.println(statisticalDTn.getValues());
-        }
-        for (StatisticalDTO statisticalDTv : c) {
-            System.out.println(statisticalDTv.getValues());
-        }
+       ArrayList<StatisticalDTO> list = getDataChartWarehouses();
+    for (StatisticalDTO statisticalDTO : list) {
+        System.out.println(statisticalDTO.getDate());
+        System.out.println(statisticalDTO.getValues());
+    }
     }
 }

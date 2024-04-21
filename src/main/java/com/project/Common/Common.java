@@ -1,5 +1,7 @@
 package com.project.Common;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -31,5 +33,18 @@ public class Common {
                 int startYear = calendarStart.get(Calendar.YEAR);
 
                 return startYear + "-" + startMonth + "-" + startDay;
+    }
+
+    public static String formatBigNumber(BigDecimal number) {
+        DecimalFormat df = new DecimalFormat("#");
+        return df.format(number);
+    }
+
+    public static String formatMoney(double amount) {
+        // Create a DecimalFormat object with the desired pattern
+        DecimalFormat df = new DecimalFormat("#,##0.00");
+
+        // Format the amount using the DecimalFormat object
+        return df.format(amount);
     }
 }
