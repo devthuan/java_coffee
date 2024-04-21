@@ -79,10 +79,12 @@ public class BuyProduct extends JPanel implements AddProductListener {
                                                                         product.getQuantity() - quantity);
                                                 }
 
+                                                // Reset
+                                                pnCarts.PanelBottom.cbPaymentMethod.setSelectedIndex(0);
                                                 tpProducts.reloadProductList();
                                                 pnCarts.removeAllCartItem();
-                                                this.revalidate();
-                                                this.repaint();
+                                                setTextTotal();
+
                                                 JOptionPane.showMessageDialog(this, "Đặt hàng thành công",
                                                                 "Thông báo",
                                                                 JOptionPane.INFORMATION_MESSAGE);
@@ -107,6 +109,7 @@ public class BuyProduct extends JPanel implements AddProductListener {
                         CartItem cartItem = pnCarts.cartItems.get(p);
                         total += p.getPrice() * (int) cartItem.SpinnerQuantity.getValue();
                 }
+
                 return total;
         }
 
