@@ -1,12 +1,26 @@
 package com.project.Common;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Common {
 
@@ -59,4 +73,30 @@ public class Common {
         // Format the amount using the DecimalFormat object
         return df.format(amount);
     }
+
+    public static Boolean ValidateInputString(String inputString) {
+        if (inputString.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ dữ liệu");
+            return false;
+        }
+        return true;
+    }
+
+    public static Boolean ValidateInputInt(int integer) {
+        if (integer <= 0) {
+            JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ.");
+            return false;
+        }
+        return true;
+    }
+
+    public static Boolean ValidateInputDouble(double value) {
+        if (value < 0) {
+            JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ.");
+            return false;
+        }
+        return true;
+    }
+
+   
 }

@@ -44,6 +44,17 @@
             <version>3.0.2</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.itextpdf/itext-core -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itext-core</artifactId>
+            <version>8.0.1</version>
+            <type>pom</type>
+        </dependency>
+
+
+
+
         <!-- bcrypt => dùng để hash password -->
         <dependency>
             <groupId>org.mindrot</groupId>

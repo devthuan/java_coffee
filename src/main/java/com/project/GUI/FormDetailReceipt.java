@@ -4,10 +4,35 @@
  */
 package com.project.GUI;
 
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.StyleConstants.FontConstants;
+
+import com.itextpdf.*;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.action.PdfAction;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.TextAlignment;
+// import com.itextpdf.kernel.font.StandardFonts;
+import com.itextpdf.layout.properties.UnitValue;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import com.project.BUS.EnterCouponBUS;
 import com.project.Common.Common;
@@ -19,6 +44,7 @@ import com.project.DTO.EnterCouponDTO;
  * @author thuan
  */
 public class FormDetailReceipt extends javax.swing.JFrame {
+    private ArrayList<DetailEnterCouponDTO> detail_enterCoupon;
 
     /**
      * Creates new form FormSupplier
@@ -26,7 +52,7 @@ public class FormDetailReceipt extends javax.swing.JFrame {
     public FormDetailReceipt(EnterCouponDTO data) {
         initComponents();
 
-        ArrayList<DetailEnterCouponDTO> detail_enterCoupon = EnterCouponBUS.getDetailEnterCoupon(data.getId());
+        detail_enterCoupon = EnterCouponBUS.getDetailEnterCoupon(data.getId());
 
         valueId.setText(String.valueOf(data.getId()));
         ValueDate.setText(String.valueOf(Common.formatedDateTime(data.getCreatedAt())));
@@ -401,7 +427,8 @@ public class FormDetailReceipt extends javax.swing.JFrame {
     }
 
     private void BtnPrintActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        exportToPDF();
+        
     }
 
     private void BtnCloseMouseClicked(java.awt.event.MouseEvent evt) {
@@ -410,6 +437,109 @@ public class FormDetailReceipt extends javax.swing.JFrame {
 
     private void BtnCloseActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+    }
+
+    private void exportToPDF() {
+        JFileChooser fileChooser = new JFileChooser();
+
+        fileChooser.setDialogTitle("Chọn nơi lưu tệp PDF");
+
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+
+            try {
+
+                PdfWriter writer = new PdfWriter(fileToSave + ".pdf");
+                PdfDocument pdf = new PdfDocument(writer);
+                Document document = new Document(pdf);
+
+                addComponentsToDocument(document);
+
+                document.close();
+
+                JOptionPane.showMessageDialog(null, "Xuất file PDF thành công.");
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void addComponentsToDocument(Document document) {
+        try {
+            // Tạo font
+            PdfFont font = PdfFontFactory.createFont();
+
+            // Đoạn văn bản "Phieu nhap hang"
+            Paragraph title = new Paragraph("Phieu nhap hang");
+            title.setFont(font).setFontSize(18).setTextAlignment(TextAlignment.CENTER);
+            document.add(title);
+
+            // Đoạn văn bản "Ma phieu nhap: ..."
+            Paragraph id = new Paragraph("Ma phieu nhap:                 " + valueId.getText());
+            id.setFont(font).setFontSize(12).setTextAlignment(TextAlignment.LEFT);
+            document.add(id);
+
+            // Đoạn văn bản "Ngay tao: ..."
+            Paragraph createdAt = new Paragraph("Ngay tao:               " + ValueDate.getText());
+            createdAt.setFont(font).setFontSize(12).setTextAlignment(TextAlignment.LEFT);
+            document.add(createdAt);
+
+            // Đoạn văn bản "Nhan vien nhap hang: ..."
+            Paragraph nameEnterCoupon = new Paragraph("Nhan vien nhap hang: " + ValueCasher.getText());
+            nameEnterCoupon.setFont(font).setFontSize(12).setTextAlignment(TextAlignment.LEFT);
+            document.add(nameEnterCoupon);
+
+            // Đoạn văn bản "Nha cung cap: ..."
+            Paragraph nameSupplier = new Paragraph("Nha cung cap:            " + ValuePaymentMethod.getText());
+            nameSupplier.setFont(font).setFontSize(12).setTextAlignment(TextAlignment.LEFT);
+            document.add(nameSupplier);
+
+            createTablePDF(document);
+
+            // Đoạn văn bản "Tong gia tri: ..."
+            Paragraph totalValues = new Paragraph("Tong gia tri:         " + ValueTotal.getText());
+            totalValues.setFont(font).setFontSize(12).setTextAlignment(TextAlignment.LEFT);
+            document.add(totalValues);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createTablePDF(Document document) {
+        try {
+            // Tạo bảng
+            Table table = new Table(UnitValue.createPercentArray(new float[] { 1, 1, 1 })); // Số cột và tỷ lệ chiều
+                                                                                            // rộng của mỗi cột
+
+            // Tiêu đề của các cột
+            table.addCell(createCell("Nguyen Lieu", TextAlignment.CENTER));
+            table.addCell(createCell("So Luong", TextAlignment.CENTER));
+            table.addCell(createCell("Don gia", TextAlignment.CENTER));
+
+            // Dữ liệu của các ô trong bảng
+            // Ví dụ:
+
+            for (DetailEnterCouponDTO detailEnterCouponDTO : detail_enterCoupon) {
+                table.addCell(createCell(detailEnterCouponDTO.getNameIngredient(), TextAlignment.CENTER));
+                table.addCell(createCell(String.valueOf(detailEnterCouponDTO.getQuantity()), TextAlignment.CENTER));
+                table.addCell(createCell(String.valueOf(detailEnterCouponDTO.getTotalPrice()), TextAlignment.CENTER));
+
+            }
+
+            // Thêm bảng vào tài liệu
+            document.add(table);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static Cell createCell(String text, TextAlignment alignment) {
+        Cell cell = new Cell();
+        cell.add(new Paragraph(text)).setTextAlignment(alignment);
+        return cell;
     }
 
     /**

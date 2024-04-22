@@ -4,13 +4,29 @@
  */
 package com.project.GUI;
 
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import com.project.BUS.EnterCouponBUS;
+import com.project.BUS.SupplierBUS;
 import com.project.Common.Common;
 import com.project.DTO.EnterCouponDTO;
 import com.project.DTO.SupplierDTO;
@@ -23,6 +39,7 @@ import com.toedter.calendar.JDayChooser;
  * @author thuan
  */
 public class Receipt extends javax.swing.JPanel {
+        private int option_search = 0;
 
         /**
          * Creates new form Supplier
@@ -163,9 +180,14 @@ public class Receipt extends javax.swing.JPanel {
 
                 Filter.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 Filter.setModel(new javax.swing.DefaultComboBoxModel<>(
-                                new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+                                new String[] { "Tên phiếu nhập", "Tên nhà cung cấp", "Tên nhân viên" }));
                 Filter.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+                Filter.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                FilterActionPerformed(evt);
+                        }
 
+                });
                 BtnRefresh.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 BtnRefresh.setIcon(new javax.swing.ImageIcon("./src/assets/icon/refresh.png")); // NOI18N
                 BtnRefresh.setText("Làm mới");
@@ -176,7 +198,24 @@ public class Receipt extends javax.swing.JPanel {
                 });
 
                 InputSearch.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-                InputSearch.setText("Tìm kiếm....");
+                // InputSearch.setText(");
+                InputSearch.getDocument().addDocumentListener(new DocumentListener() {
+                        @Override
+                        public void insertUpdate(DocumentEvent e) {
+                                handleChangeInputSearch();
+                        }
+
+                        @Override
+                        public void removeUpdate(DocumentEvent e) {
+                                handleChangeInputSearch();
+                        }
+
+                        @Override
+                        public void changedUpdate(DocumentEvent e) {
+                                handleChangeInputSearch();
+                        }
+
+                });
 
                 javax.swing.GroupLayout BoxSearchLayout = new javax.swing.GroupLayout(BoxSearch);
                 BoxSearch.setLayout(BoxSearchLayout);
@@ -416,6 +455,11 @@ public class Receipt extends javax.swing.JPanel {
                 add(ReceiptCenter, java.awt.BorderLayout.CENTER);
         }// </editor-fold>
 
+        private void FilterActionPerformed(ActionEvent evt) {
+                int option = Filter.getSelectedIndex();
+                option_search = option;
+        }
+
         private void ValueTotalEndActionPerformed(java.awt.event.ActionEvent evt) {
                 // TODO add your handling code here:
         }
@@ -444,7 +488,23 @@ public class Receipt extends javax.swing.JPanel {
         }
 
         private void BtnRefreshMouseClicked(java.awt.event.MouseEvent evt) {
-                // TODO add your handling code here:
+
+                DefaultTableModel model = (DefaultTableModel) TableReceipt.getModel();
+                model.setRowCount(0); // Xóa tất cả các hàng
+
+                ArrayList<EnterCouponDTO> list_enterCoupon = EnterCouponBUS.getAllEnterCouponsBUS();
+                for (EnterCouponDTO enterCoupon : list_enterCoupon) {
+                        Object[] rowData = {
+                                        enterCoupon.getId(),
+                                        enterCoupon.getNameEnterCoupon(),
+                                        enterCoupon.getNameEmployee(),
+                                        enterCoupon.getNameSupplier(),
+                                        Common.formatBigNumber(enterCoupon
+                                                        .getTotalValues()),
+                                        Common.formatedDateTime(enterCoupon.getCreatedAt())
+                        };
+                        model.addRow(rowData);
+                }
         }
 
         private void BtnFilterMouseClicked(java.awt.event.MouseEvent evt) {
@@ -452,19 +512,136 @@ public class Receipt extends javax.swing.JPanel {
         }
 
         private void BtnRemoveMouseClicked(java.awt.event.MouseEvent evt) {
-                // TODO add your handling code here:
+                int selectedRow = TableReceipt.getSelectedRow();
+                if (selectedRow != -1) {
+                        try {
+                                int id = (int) TableReceipt.getValueAt(selectedRow, 0);
+                                // Hiển thị hộp thoại xác nhận
+                                int option = JOptionPane.showConfirmDialog(null,
+                                                "Bạn có chắc chắn muốn xoá nhà cung cấp này?", "Xác nhận xoá",
+                                                JOptionPane.YES_NO_OPTION);
+                                if (option == JOptionPane.YES_OPTION) {
+                                        boolean check_remove = EnterCouponBUS.removeEnterCouponBUS(id);
+                                        if (check_remove) {
+                                                JOptionPane.showMessageDialog(null,
+                                                                "Nhà cung cấp đã được xoá thành công.");
+                                                // Nếu xoá thành công, cập nhật lại JTable hoặc các thành phần khác cần
+                                                // thiết
+                                        } else {
+                                                JOptionPane.showMessageDialog(null, "Không thể xoá nhà cung cấp này.");
+                                        }
+                                }
+                        } catch (NumberFormatException e) {
+                                JOptionPane.showMessageDialog(null, "Lỗi: ID không hợp lệ.");
+                        }
+                } else {
+                        JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để xem chi tiết.");
+                }
         }
 
         private void BtnExportExcelMouseClicked(java.awt.event.MouseEvent evt) {
-                // TODO add your handling code here:
+                exportToExcel();
         }
 
         private void ValueStartActionPerformed(java.awt.event.ActionEvent evt) {
                 // TODO add your handling code here:
         }
 
+        private void handleChangeInputSearch() {
+                DefaultTableModel model = (DefaultTableModel) TableReceipt.getModel();
+                model.setRowCount(0); // Xóa tất cả các hàng
+
+                String search_enterCoupon = InputSearch.getText();
+                ArrayList<EnterCouponDTO> list_enterCoupon = null;
+                if (option_search == 0) {
+                        list_enterCoupon = EnterCouponBUS.searchEnterCouponsByNameBUS(search_enterCoupon);
+
+                } else if (option_search == 1) {
+                        list_enterCoupon = EnterCouponBUS.searchEnterCouponsBySupplierBUS(search_enterCoupon);
+                } else if (option_search == 2) {
+                        list_enterCoupon = EnterCouponBUS.searchEnterCouponsByEmployeeBUS(search_enterCoupon);
+                }
+
+                for (EnterCouponDTO enterCoupon : list_enterCoupon) {
+                        Object[] rowData = {
+                                        enterCoupon.getId(),
+                                        enterCoupon.getNameEnterCoupon(),
+                                        enterCoupon.getNameEmployee(),
+                                        enterCoupon.getNameSupplier(),
+                                        Common.formatBigNumber(enterCoupon
+                                                        .getTotalValues()),
+                                        Common.formatedDateTime(enterCoupon.getCreatedAt())
+                        };
+                        model.addRow(rowData);
+                }
+        }
+
         private void BtnDetail1MouseClicked(java.awt.event.MouseEvent evt) {
                 new FormCreateEnterCoupon().setVisible(true);
+        }
+
+        private void exportToExcel() {
+                JFileChooser fileChooser = new JFileChooser(); // Tạo một JFileChooser
+
+                // Thiết lập hộp thoại để chọn tệp và đặt tiêu đề
+                fileChooser.setDialogTitle("Chọn nơi lưu tệp Excel");
+
+                int userSelection = fileChooser.showSaveDialog(this); // Hiển thị hộp thoại và chờ người dùng chọn nơi
+                                                                      // lưu
+
+                // Kiểm tra xem người dùng đã chọn "Save" hay chưa
+                if (userSelection == JFileChooser.APPROVE_OPTION) {
+                        try {
+                                File fileToSave = fileChooser.getSelectedFile(); // Lấy đường dẫn được chọn bởi người
+                                                                                 // dùng
+
+                                // Ghi dữ liệu vào tệp Excel
+                                try (Workbook workbook = new XSSFWorkbook()) {
+                                        Sheet sheet = workbook.createSheet("Sheet1");
+
+                                        // Lấy mô hình của JTable
+                                        DefaultTableModel model = (DefaultTableModel) TableReceipt.getModel();
+                                        // Viết tiêu đề cột
+                                        Row headerRow = sheet.createRow(0);
+                                        for (int col = 0; col < model.getColumnCount(); col++) {
+                                                headerRow.createCell(col).setCellValue(model.getColumnName(col));
+                                        }
+
+                                        // Viết dữ liệu từ JTable vào tệp Excel
+                                        for (int row = 0; row < model.getRowCount(); row++) {
+                                                Row excelRow = sheet.createRow(row + 1); // Bắt đầu từ hàng thứ 2 (hàng
+                                                                                         // đầu tiên là tiêu đề)
+                                                for (int col = 0; col < model.getColumnCount(); col++) {
+                                                        Object cellValue = model.getValueAt(row, col);
+                                                        if (cellValue != null) {
+                                                                Cell excelCell = excelRow.createCell(col);
+                                                                if (cellValue instanceof String) {
+                                                                        excelCell.setCellValue((String) cellValue);
+                                                                } else if (cellValue instanceof Integer) {
+                                                                        excelCell.setCellValue((Integer) cellValue);
+                                                                } else if (cellValue instanceof LocalDate) {
+                                                                        System.out.println(cellValue);
+                                                                        String stringValue = ((LocalDate) cellValue)
+                                                                                        .format(DateTimeFormatter
+                                                                                                        .ofPattern("yyyy-MM-dd"));
+                                                                        excelCell.setCellValue(stringValue);
+                                                                } // Và có thể thêm các kiểu dữ liệu khác tùy theo nhu
+                                                                  // cầu
+                                                        }
+                                                }
+                                        }
+
+                                        // Ghi vào tệp Excel
+                                        try (FileOutputStream outputStream = new FileOutputStream(
+                                                        fileToSave + ".xlsx")) {
+                                                workbook.write(outputStream);
+                                        }
+                                        JOptionPane.showMessageDialog(null, "Xuất file excel thành công.");
+                                }
+                        } catch (IOException e) {
+                                e.printStackTrace();
+                        }
+                }
         }
 
         // Variables declaration - do not modify

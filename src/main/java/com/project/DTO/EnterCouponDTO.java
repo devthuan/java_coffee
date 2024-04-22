@@ -6,7 +6,9 @@ public class EnterCouponDTO {
     private int id;
     private String nameEnterCoupon;
     private String nameEmployee;
+    private int employee_id;
     private String nameSupplier;
+    private int supplier_id;
     private float totalValues;
     private LocalDateTime createdAt;
 
@@ -24,9 +26,24 @@ public class EnterCouponDTO {
         this.totalValues = totalValues;
         this.createdAt = createdAt;
     }
+    
+    public EnterCouponDTO(String nameEnterCoupon, int employee_id, int supplier_id){
+       this.nameEnterCoupon = nameEnterCoupon;
+       this.employee_id = employee_id;
+       this.supplier_id = supplier_id;
+    }
+
+    
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setEmployee_id(int employee_id) {
+        this.employee_id = employee_id;
+    }
+    public void setSupplier_id(int supplier_id) {
+        this.supplier_id = supplier_id;
     }
 
     public void setNameEnterCoupon(String nameEnterCoupon) {
@@ -53,6 +70,12 @@ public class EnterCouponDTO {
         return id;
     }
 
+    public int getEmployee_id() {
+        return employee_id;
+    }
+    public int getSupplier_id() {
+        return supplier_id;
+    }
     public String getNameEmployee() {
         return nameEmployee;
     }

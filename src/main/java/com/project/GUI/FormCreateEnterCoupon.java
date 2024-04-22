@@ -11,10 +11,23 @@ import java.util.Map;
 
 import javax.swing.*;
 
+import com.project.BUS.EnterCouponBUS;
 import com.project.BUS.SupplierBUS;
+import com.project.Common.Common;
+import com.project.DAO.EmployeeDAO;
+import com.project.DAO.WarehouseDAO;
+import com.project.DTO.DetailEnterCouponDTO;
+import com.project.DTO.EmployeeDTO;
+import com.project.DTO.EnterCouponDTO;
 import com.project.DTO.SupplierDTO;
+import com.project.DTO.WareHouseDTO;
 
 import java.awt.Component;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -22,17 +35,34 @@ import java.awt.Component;
  */
 public class FormCreateEnterCoupon extends javax.swing.JFrame {
     public int countBoxInput = 1;
-    public ArrayList<SupplierDTO> list_supplier;
+    public ArrayList<WareHouseDTO> list_ingredient;
     private Map<String, SupplierDTO> supplierMap;
+    private Map<String, EmployeeDTO> employeeMap;
+    private Map<String, WareHouseDTO> ingredientMap;
 
     /**
      * Creates new form FormSupplier
      */
     public FormCreateEnterCoupon() {
+        list_ingredient = WarehouseDAO.get_all_ingredients();
+        ingredientMap = new HashMap<>();
+
+        for (WareHouseDTO wareHouseDTO : list_ingredient) {
+
+            ingredientMap.put(wareHouseDTO.getName(), wareHouseDTO);
+        }
+
         initComponents();
 
         supplierMap = new HashMap<>();
-        list_supplier = SupplierBUS.get_all_supplier();
+        employeeMap = new HashMap<>();
+        ArrayList<SupplierDTO> list_supplier = SupplierBUS.get_all_supplier();
+        ArrayList<EmployeeDTO> employees = EmployeeDAO.get_all_employee();
+
+        for (EmployeeDTO employeeDTO : employees) {
+            jComboBox3.addItem(employeeDTO.getName());
+            employeeMap.put(employeeDTO.getName(), employeeDTO);
+        }
 
         for (SupplierDTO supplierDTO : list_supplier) {
 
@@ -155,8 +185,9 @@ public class FormCreateEnterCoupon extends javax.swing.JFrame {
         BoxName2.add(NameSupplier2, java.awt.BorderLayout.LINE_START);
 
         jComboBox3.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        jComboBox3.setModel(
-                new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        // jComboBox3.setModel(
+        // new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2",
+        // "Item 3", "Item 4" }));
         BoxName2.add(jComboBox3, java.awt.BorderLayout.CENTER);
 
         jPanel5.add(BoxName2);
@@ -321,7 +352,11 @@ public class FormCreateEnterCoupon extends javax.swing.JFrame {
         for (int i = 0; i < countBoxInput; i++) {
             JPanel BoxInputCopy = new JPanel();
             JComboBox InputNameIngredientCopy = new JComboBox();
+            for (WareHouseDTO wareHouseDTO : list_ingredient) {
 
+                InputNameIngredientCopy.addItem(wareHouseDTO.getName());
+
+            }
             JTextField InputQuantityCopy = new JTextField();
             JTextField InputPriceCopy = new JTextField();
 
@@ -331,8 +366,9 @@ public class FormCreateEnterCoupon extends javax.swing.JFrame {
             BoxInputCopy.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
 
             InputNameIngredientCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-            InputNameIngredientCopy.setModel(
-                    new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+            // InputNameIngredientCopy.setModel(
+            // new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2",
+            // "Item 3", "Item 4" }));
             BoxInputCopy.add(InputNameIngredientCopy);
 
             InputQuantityCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -385,95 +421,146 @@ public class FormCreateEnterCoupon extends javax.swing.JFrame {
     private void BtnAddActionPerformed(java.awt.event.ActionEvent evt) {
 
         String valueSupplier = (String) jComboBox2.getSelectedItem();
-
+        String valueEmployee = (String) jComboBox3.getSelectedItem();
+        String valueNameEnterCoupon = inputName.getText();
+        boolean checkValidate = Common.ValidateInputString(valueNameEnterCoupon);
+        if (!checkValidate) {
+            return;
+        }
         SupplierDTO supplier = supplierMap.get(valueSupplier);
-        System.out.println(supplier.getId());
+        EmployeeDTO employee = employeeMap.get(valueEmployee);
+
+        EnterCouponDTO newEnterCoupon = new EnterCouponDTO(valueNameEnterCoupon, employee.getAccount_id(),
+                supplier.getId());
+        ArrayList<DetailEnterCouponDTO> list_new_detail_coupon = new ArrayList<DetailEnterCouponDTO>();
         // List<String[]> allData = new ArrayList<>();
 
-        // // Duyệt qua tất cả các thành phần trong jPanel7
-        // for (Component component : j Panel7.getComponents()) {
-        //     if (component instanceof JPanel) {
-        //         JPanel panel = (JPanel) component;
-        //         String[] data = new String[3]; // 3 là số lượng dữ liệu trong mỗi dòng, tương
-        //         // ứng với JComboBox và hai
-        //         // JTextField
-        //         int index = 0;
+        // Duyệt qua tất cả các thành phần trong jPanel7
+        for (Component component : jPanel7.getComponents()) {
+            if (component instanceof JPanel) {
+                JPanel panel = (JPanel) component;
 
-        //         // Duyệt qua tất cả các thành phần con của mỗi JPanel
-        //         for (Component subComponent : panel.getComponents()) {
-        //             if (subComponent instanceof JComboBox) {
-        //                 JComboBox comboBox = (JComboBox) subComponent;
-        //                 data[index++] = comboBox.getSelectedItem().toString();
-        //             } else if (subComponent instanceof JTextField) {
-        //                 JTextField textField = (JTextField) subComponent;
-        //                 data[index++] = textField.getText();
-        //             }
-        //         }
+                // ứng với JComboBox và hai
+                // JTextField
+                int index = 0;
 
-        //         // Thêm dữ liệu của hàng này vào danh sách chứa tất cả dữ liệu
-        //         allData.add(data);
-        //     }
-        // }
+                // Khai báo các biến để lưu trữ dữ liệu từ các thành phần con của mỗi JPanel
+                String name = "";
+                int quantity = 0;
+                double price = 0;
 
-        // for (String[] rowData : allData) {
-        //     for (String data : rowData) {
-        //         System.out.print(data + "\t");
-        //     }
-        //     System.out.println(); // Xuống dòng sau khi in ra dữ liệu của mỗi hàng
-        // }
+                // Duyệt qua tất cả các thành phần con của mỗi JPanel
+                for (Component subComponent : panel.getComponents()) {
+                    if (subComponent instanceof JComboBox) {
 
+                        JComboBox comboBox = (JComboBox) subComponent;
+                        name = comboBox.getSelectedItem().toString();
+
+                    } else if (subComponent instanceof JTextField) {
+
+                        JTextField textField = (JTextField) subComponent;
+
+                        if (index == 0) { // Nếu là JTextField đầu tiên, lưu vào quantity
+                            try {
+
+                                quantity = Integer.parseInt(textField.getText());
+
+                                if (!Common.ValidateInputInt(quantity)) {
+                                    return;
+                                }
+                            } catch (NumberFormatException e) {
+                                JOptionPane.showMessageDialog(null, "Vui lòng nhập số nguyên");
+                                return;
+                            }
+                        } else if (index == 1) { // Nếu là JTextField thứ hai, lưu vào price
+                            try {
+
+                                price = Double.parseDouble(textField.getText());
+                                if (!Common.ValidateInputDouble(price)) {
+                                    return;
+                                }
+
+                            } catch (NumberFormatException e) {
+
+                                JOptionPane.showMessageDialog(null, "Vui lòng nhập vào là một số");
+                                return;
+                            }
+                        }
+                        index++;
+                    }
+                }
+                WareHouseDTO wareHouseDTO = ingredientMap.get(name);
+
+                if (wareHouseDTO != null) {
+                    DetailEnterCouponDTO detail = new DetailEnterCouponDTO(wareHouseDTO.getId(), quantity, price);
+                    list_new_detail_coupon.add(detail);
+                }
+
+            }
+        }
+
+        Boolean check = EnterCouponBUS.createdEnterCoupon(newEnterCoupon, list_new_detail_coupon);
+        if (check) {
+            JOptionPane.showMessageDialog(null, "Tạo phiếu nhập thành công.");
+            this.setVisible(false);
+        }
     }
 
     private void BtnCloseActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        this.setVisible(false);
+
     }
+
+
+   
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
-        // (optional) ">
-        /*
-         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
-         * look and feel.
-         * For details see
-         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormCreateEnterCoupon.class.getName()).log(
-                    java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormCreateEnterCoupon.class.getName()).log(
-                    java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormCreateEnterCoupon.class.getName()).log(
-                    java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormCreateEnterCoupon.class.getName()).log(
-                    java.util.logging.Level.SEVERE,
-                    null, ex);
-        }
-        // </editor-fold>
-        // </editor-fold>
+    /* Set the Nimbus look and feel */
+    // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
+    // (optional) ">
+    /*
+    * If Nimbus (introduced in Java SE 6) is not available, stay with the default
+    * look and feel.
+    * For details see
+    * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+    */
+    try {
+    for (javax.swing.UIManager.LookAndFeelInfo info :
+    javax.swing.UIManager.getInstalledLookAndFeels()) {
+    if ("Nimbus".equals(info.getName())) {
+    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+    break;
+    }
+    }
+    } catch (ClassNotFoundException ex) {
+    java.util.logging.Logger.getLogger(FormCreateEnterCoupon.class.getName()).log(
+    java.util.logging.Level.SEVERE,
+    null, ex);
+    } catch (InstantiationException ex) {
+    java.util.logging.Logger.getLogger(FormCreateEnterCoupon.class.getName()).log(
+    java.util.logging.Level.SEVERE,
+    null, ex);
+    } catch (IllegalAccessException ex) {
+    java.util.logging.Logger.getLogger(FormCreateEnterCoupon.class.getName()).log(
+    java.util.logging.Level.SEVERE,
+    null, ex);
+    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+    java.util.logging.Logger.getLogger(FormCreateEnterCoupon.class.getName()).log(
+    java.util.logging.Level.SEVERE,
+    null, ex);
+    }
+    // </editor-fold>
+    // </editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormCreateEnterCoupon().setVisible(true);
-            }
-        });
+    /* Create and display the form */
+    java.awt.EventQueue.invokeLater(new Runnable() {
+    public void run() {
+    new FormCreateEnterCoupon().setVisible(true);
+    }
+    });
     }
 
     // Variables declaration - do not modify

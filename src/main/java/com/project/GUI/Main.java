@@ -503,9 +503,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     private void EmployeeLabelMouseClicked(java.awt.event.MouseEvent evt) {
-            SwitchControl();
-            EmployeeMenu employeeMenu = new EmployeeMenu();
-            Right.add(employeeMenu);
+          
     }
 
     private void ReceiptLabelMouseClicked(java.awt.event.MouseEvent evt) {
