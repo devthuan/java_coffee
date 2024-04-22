@@ -3,7 +3,10 @@ package com.project.DAO;
 import java.sql.*;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
+
+import javax.swing.JOptionPane;
 
 import com.project.DTO.SupplierDTO;
 
@@ -30,6 +33,10 @@ public class SupplierDAO {
             }
 
         } catch (SQLException e) {
+             if (e.getErrorCode() == 1062) { // Mã lỗi 1062 là mã lỗi của MySQL cho lỗi duy nhất
+                JOptionPane.showMessageDialog(null,"Tên nhà cung cấp đã tồn tại");
+                return false;
+            }
             e.printStackTrace();
         }
 
@@ -58,10 +65,10 @@ public class SupplierDAO {
                 String phone = result_query.getString("dien_thoai");
                 String email = result_query.getString("email");
                 Boolean is_active = result_query.getBoolean("is_active");
-                Date createdAt = result_query.getDate("createdAt");
-                Date updatedAt = result_query.getDate("updatedAt");
-                LocalDate createdAtFormated = createdAt.toLocalDate();
-                LocalDate updatedAtFormated = updatedAt != null ? updatedAt.toLocalDate() : null;
+                Timestamp createdAt = result_query.getTimestamp("createdAt");
+                Timestamp updatedAt = result_query.getTimestamp("updatedAt");
+                LocalDateTime createdAtFormated = createdAt.toLocalDateTime();
+                LocalDateTime updatedAtFormated = updatedAt != null ? updatedAt.toLocalDateTime() : null;
 
                 list_supplier.add(new SupplierDTO(id, name_supplier, address, phone, email, is_active,
                         createdAtFormated, updatedAtFormated));
@@ -151,10 +158,10 @@ public class SupplierDAO {
                 String phone = result_query.getString("dien_thoai");
                 String email = result_query.getString("email");
                 Boolean is_active = result_query.getBoolean("is_active");
-                Date createdAt = result_query.getDate("createdAt");
-                Date updatedAt = result_query.getDate("updatedAt");
-                LocalDate createdAtFormated = createdAt.toLocalDate();
-                LocalDate updatedAtFormated = updatedAt != null ? updatedAt.toLocalDate() : null;
+                Timestamp createdAt = result_query.getTimestamp("createdAt");
+                Timestamp updatedAt = result_query.getTimestamp("updatedAt");
+                LocalDateTime createdAtFormated = createdAt.toLocalDateTime();
+                LocalDateTime updatedAtFormated = updatedAt != null ? updatedAt.toLocalDateTime() : null;
 
                 list_supplier.add(new SupplierDTO(id, name_supplier, address, phone, email, is_active,
                         createdAtFormated, updatedAtFormated));
@@ -189,10 +196,10 @@ public class SupplierDAO {
                 String phone = result_query.getString("dien_thoai");
                 String email = result_query.getString("email");
                 Boolean is_active = result_query.getBoolean("is_active");
-                Date createdAt = result_query.getDate("createdAt");
-                Date updatedAt = result_query.getDate("updatedAt");
-                LocalDate createdAtFormated = createdAt.toLocalDate();
-                LocalDate updatedAtFormated = updatedAt != null ? updatedAt.toLocalDate() : null;
+                Timestamp createdAt = result_query.getTimestamp("createdAt");
+                Timestamp updatedAt = result_query.getTimestamp("updatedAt");
+                LocalDateTime createdAtFormated = createdAt.toLocalDateTime();
+                LocalDateTime updatedAtFormated = updatedAt != null ? updatedAt.toLocalDateTime() : null;
 
                 list_supplier.add(new SupplierDTO(id, name_supplier, address, phone, email, is_active,
                         createdAtFormated, updatedAtFormated));

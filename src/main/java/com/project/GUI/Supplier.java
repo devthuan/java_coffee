@@ -30,6 +30,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import com.project.BUS.SupplierBUS;
+import com.project.Common.Common;
 import com.project.Common.SupplierCommon;
 import com.project.DTO.SupplierDTO;
 
@@ -64,8 +65,8 @@ public class Supplier extends javax.swing.JPanel {
                                         supplier.getAddress(),
                                         supplier.getPhone(),
                                         supplier.getEmail(),
-                                        supplier.getCreatedAt(),
-                                        supplier.getupdatedAt()
+                                        Common.formatedDateTime(supplier.getCreatedAt()),
+                                        Common.formatedDateTime(supplier.getupdatedAt())
                         };
                         model.addRow(rowData);
                 }
@@ -568,7 +569,9 @@ public class Supplier extends javax.swing.JPanel {
                                                                         excelCell.setCellValue((Integer) cellValue);
                                                                 } else if (cellValue instanceof LocalDate) {
                                                                         System.out.println(cellValue);
-                                                                        String stringValue = ((LocalDate) cellValue).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                                                                        String stringValue = ((LocalDate) cellValue)
+                                                                                        .format(DateTimeFormatter
+                                                                                                        .ofPattern("yyyy-MM-dd"));
                                                                         excelCell.setCellValue(stringValue);
                                                                 } // Và có thể thêm các kiểu dữ liệu khác tùy theo nhu
                                                                   // cầu

@@ -16,7 +16,6 @@ import java.awt.event.MouseAdapter;
 
 // import org.apache.poi.ss.usermodel.Color;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud.Order;
 
 public class Main extends javax.swing.JFrame {
 
@@ -398,6 +397,7 @@ public class Main extends javax.swing.JFrame {
                     panel.setBackground(Color.WHITE);
                     // label.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
 
+
                 }
             }
 
@@ -503,7 +503,9 @@ public class Main extends javax.swing.JFrame {
     }
 
     private void EmployeeLabelMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
+            SwitchControl();
+            EmployeeMenu employeeMenu = new EmployeeMenu();
+            Right.add(employeeMenu);
     }
 
     private void ReceiptLabelMouseClicked(java.awt.event.MouseEvent evt) {

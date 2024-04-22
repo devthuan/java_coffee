@@ -4,6 +4,16 @@
  */
 package com.project.GUI;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+import com.project.BUS.EnterCouponBUS;
+import com.project.Common.Common;
+import com.project.DTO.EnterCouponDTO;
+import com.project.DTO.SupplierDTO;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JDayChooser;
@@ -19,6 +29,30 @@ public class Receipt extends javax.swing.JPanel {
          */
         public Receipt() {
                 initComponents();
+
+                ArrayList<EnterCouponDTO> list_enterCoupon = EnterCouponBUS.getAllEnterCouponsBUS();
+
+                DefaultTableModel model = new DefaultTableModel();
+                model.addColumn("ID");
+                model.addColumn("Tên phiếu nhập");
+                model.addColumn("Nhân viên");
+                model.addColumn("Nhà cung cấp");
+                model.addColumn("Tổng hoá đơn");
+                model.addColumn("Ngày tạo");
+
+                for (EnterCouponDTO enterCoupon : list_enterCoupon) {
+                        Object[] rowData = {
+                                        enterCoupon.getId(),
+                                        enterCoupon.getNameEnterCoupon(),
+                                        enterCoupon.getNameEmployee(),
+                                        enterCoupon.getNameSupplier(),
+                                        Common.formatBigNumber(enterCoupon
+                                                        .getTotalValues()),
+                                        Common.formatedDateTime(enterCoupon.getCreatedAt())
+                        };
+                        model.addRow(rowData);
+                }
+                TableReceipt.setModel(model);
         }
 
         /**
@@ -292,9 +326,9 @@ public class Receipt extends javax.swing.JPanel {
                 ValueStart.setMinimumSize(new java.awt.Dimension(64, 20));
                 ValueStart.setPreferredSize(new java.awt.Dimension(64, 20));
                 // ValueStart.addActionListener(new java.awt.event.ActionListener() {
-                //         public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //                 ValueStartActionPerformed(evt);
-                //         }
+                // public void actionPerformed(java.awt.event.ActionEvent evt) {
+                // ValueStartActionPerformed(evt);
+                // }
                 // });
                 ItemFilterStartDay.add(ValueStart, java.awt.BorderLayout.CENTER);
 
@@ -387,7 +421,26 @@ public class Receipt extends javax.swing.JPanel {
         }
 
         private void BtnDetailMouseClicked(java.awt.event.MouseEvent evt) {
-                // TODO add your handling code here:
+                int selectedRow = TableReceipt.getSelectedRow();
+                if (selectedRow != -1) {
+                        try {
+                                int id = (int) TableReceipt.getValueAt(selectedRow, 0);
+                                String nameEnterCoupon = (String) TableReceipt.getValueAt(selectedRow, 1);
+                                String nameEmployee = (String) TableReceipt.getValueAt(selectedRow, 2);
+                                String nameSupplier = (String) TableReceipt.getValueAt(selectedRow, 3);
+                                String total = (String) TableReceipt.getValueAt(selectedRow, 4);
+                                String createdAt = (String) TableReceipt.getValueAt(selectedRow, 5);
+                                LocalDateTime createAtformat = Common.convertStringtoLocalDateTime(createdAt);
+                                EnterCouponDTO data = new EnterCouponDTO(id, nameEnterCoupon, nameEmployee,
+                                                nameSupplier, Float.parseFloat(total),
+                                                createAtformat);
+                                new FormDetailReceipt(data).setVisible(true);
+                        } catch (NumberFormatException e) {
+                                JOptionPane.showMessageDialog(null, "Lỗi: ID không hợp lệ.");
+                        }
+                } else {
+                        JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để xem chi tiết.");
+                }
         }
 
         private void BtnRefreshMouseClicked(java.awt.event.MouseEvent evt) {
@@ -411,7 +464,7 @@ public class Receipt extends javax.swing.JPanel {
         }
 
         private void BtnDetail1MouseClicked(java.awt.event.MouseEvent evt) {
-                // TODO add your handling code here:
+                new FormCreateEnterCoupon().setVisible(true);
         }
 
         // Variables declaration - do not modify

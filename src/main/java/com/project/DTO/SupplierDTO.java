@@ -1,6 +1,7 @@
 package com.project.DTO;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalDateTime;
 
 public class SupplierDTO {
     int id;
@@ -9,8 +10,8 @@ public class SupplierDTO {
     private String phone;
     private String email;
     private Boolean is_active;
-    private LocalDate createdAt;
-    private LocalDate updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public SupplierDTO(){
 
@@ -24,8 +25,8 @@ public class SupplierDTO {
             String phone,
             String email,
             Boolean is_active,
-            LocalDate createdAt,
-            LocalDate updatedAt
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt
         ) {
         this.id = id;
         this.name_supplier = name_supplier;
@@ -79,11 +80,11 @@ public class SupplierDTO {
         this.is_active = is_active;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public void setupdatedAt(LocalDate updatedAt) {
+    public void setupdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
@@ -111,11 +112,11 @@ public class SupplierDTO {
         return is_active;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public LocalDate getupdatedAt() {
+    public LocalDateTime getupdatedAt() {
         return updatedAt;
     }
 

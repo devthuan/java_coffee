@@ -54,7 +54,7 @@ public class Statistical extends javax.swing.JPanel {
 
               
                 // 
-                BigDecimal totalProfit = new BigDecimal(data_for_item.get("totalProfit"));
+                // BigDecimal totalProfit = new BigDecimal();
                 // float totalProfit = data_for_item.get("totalProfit");
               
                 int totalProduct = data_for_item.get("totalProduct");
@@ -68,7 +68,7 @@ public class Statistical extends javax.swing.JPanel {
                 ValueIngredient.setText(String.valueOf(totalIngredient));
                 ValueOrder.setText(String.valueOf(totalOrder));
                 ValueProduct.setText(String.valueOf(totalProduct));
-                ValueProfit.setText(String.valueOf(Common.formatBigNumber(totalProfit))+ " VNĐ");
+                ValueProfit.setText(String.valueOf(Common.formatBigNumber(data_for_item.get("totalProfit")))+ " VNĐ");
                 ValueSupplier.setText(String.valueOf(totalSupplier));
                 
                 StatisticalProductDTO bestSeller = dataForProduct.get("bestSeller");

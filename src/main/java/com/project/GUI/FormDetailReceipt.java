@@ -4,6 +4,16 @@
  */
 package com.project.GUI;
 
+import java.util.ArrayList;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import com.project.BUS.EnterCouponBUS;
+import com.project.Common.Common;
+import com.project.DTO.DetailEnterCouponDTO;
+import com.project.DTO.EnterCouponDTO;
+
 /**
  *
  * @author thuan
@@ -13,8 +23,54 @@ public class FormDetailReceipt extends javax.swing.JFrame {
     /**
      * Creates new form FormSupplier
      */
-    public FormDetailReceipt() {
+    public FormDetailReceipt(EnterCouponDTO data) {
         initComponents();
+
+        ArrayList<DetailEnterCouponDTO> detail_enterCoupon = EnterCouponBUS.getDetailEnterCoupon(data.getId());
+
+        valueId.setText(String.valueOf(data.getId()));
+        ValueDate.setText(String.valueOf(Common.formatedDateTime(data.getCreatedAt())));
+        ValueCasher.setText(String.valueOf(data.getNameSupplier()));
+        ValuePaymentMethod.setText(String.valueOf(data.getNameEmployee()));
+        ValueTotal.setText(String.valueOf(Common.formatBigNumber(data.getTotalValues()) + " VNĐ"));
+
+        for (DetailEnterCouponDTO detailEnterCouponDTO : detail_enterCoupon) {
+            JLabel ValueNameCopy = new JLabel();
+            JLabel ValuePriceCopy = new JLabel();
+            JLabel ValueQuantityCopy = new JLabel();
+            JLabel ValueSumMoneyCopy = new JLabel();
+            JPanel BoxProductItemCopy = new JPanel();
+
+            BoxProductItemCopy.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1,
+                    0, new java.awt.Color(0, 0, 0)));
+            BoxProductItemCopy.setMaximumSize(new java.awt.Dimension(519, 40));
+            BoxProductItemCopy.setMinimumSize(new java.awt.Dimension(519, 40));
+            BoxProductItemCopy.setPreferredSize(new java.awt.Dimension(519, 40));
+            BoxProductItemCopy.setLayout(new java.awt.GridLayout(1, 4));
+
+            ValueNameCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+            ValueNameCopy.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+            ValueNameCopy.setText(String.valueOf(detailEnterCouponDTO.getNameIngredient()));
+            BoxProductItemCopy.add(ValueNameCopy);
+
+            ValuePriceCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+            ValuePriceCopy.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+            ValuePriceCopy.setText(String.valueOf(detailEnterCouponDTO.getPrice()));
+            BoxProductItemCopy.add(ValuePriceCopy);
+
+            ValueQuantityCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+            ValueQuantityCopy.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+            ValueQuantityCopy.setText(String.valueOf(detailEnterCouponDTO.getQuantity()));
+            BoxProductItemCopy.add(ValueQuantityCopy);
+
+            ValueSumMoneyCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+            ValueSumMoneyCopy.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+            ValueSumMoneyCopy.setText(String.valueOf(Common.formatBigNumber(detailEnterCouponDTO.getTotalPrice())));
+            BoxProductItemCopy.add(ValueSumMoneyCopy);
+
+            jPanel1.add(BoxProductItemCopy);
+        }
+
     }
 
     /**
@@ -215,145 +271,34 @@ public class FormDetailReceipt extends javax.swing.JFrame {
 
         jPanel1.add(BoxTitleProduct);
 
-        BoxProductItem.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        BoxProductItem.setMaximumSize(new java.awt.Dimension(519, 40));
-        BoxProductItem.setMinimumSize(new java.awt.Dimension(519, 40));
-        BoxProductItem.setPreferredSize(new java.awt.Dimension(519, 40));
-        BoxProductItem.setLayout(new java.awt.GridLayout(1, 4));
+        // BoxProductItem.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1,
+        // 0, new java.awt.Color(0, 0, 0)));
+        // BoxProductItem.setMaximumSize(new java.awt.Dimension(519, 40));
+        // BoxProductItem.setMinimumSize(new java.awt.Dimension(519, 40));
+        // BoxProductItem.setPreferredSize(new java.awt.Dimension(519, 40));
+        // BoxProductItem.setLayout(new java.awt.GridLayout(1, 4));
 
-        ValueName.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ValueName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ValueName.setText("test");
-        BoxProductItem.add(ValueName);
+        // ValueName.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        // ValueName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        // ValueName.setText("test");
+        // BoxProductItem.add(ValueName);
 
-        ValuePrice.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ValuePrice.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ValuePrice.setText("0");
-        BoxProductItem.add(ValuePrice);
+        // ValuePrice.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        // ValuePrice.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        // ValuePrice.setText("0");
+        // BoxProductItem.add(ValuePrice);
 
-        ValueQuantity.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ValueQuantity.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ValueQuantity.setText("0");
-        BoxProductItem.add(ValueQuantity);
+        // ValueQuantity.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        // ValueQuantity.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        // ValueQuantity.setText("0");
+        // BoxProductItem.add(ValueQuantity);
 
-        ValueSumMoney.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ValueSumMoney.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ValueSumMoney.setText("0");
-        BoxProductItem.add(ValueSumMoney);
+        // ValueSumMoney.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        // ValueSumMoney.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        // ValueSumMoney.setText("0");
+        // BoxProductItem.add(ValueSumMoney);
 
-        jPanel1.add(BoxProductItem);
-
-        BoxProductItem1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        BoxProductItem1.setMaximumSize(new java.awt.Dimension(519, 40));
-        BoxProductItem1.setMinimumSize(new java.awt.Dimension(519, 40));
-        BoxProductItem1.setPreferredSize(new java.awt.Dimension(519, 40));
-        BoxProductItem1.setLayout(new java.awt.GridLayout(1, 4));
-
-        ValueName1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ValueName1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ValueName1.setText("test");
-        BoxProductItem1.add(ValueName1);
-
-        ValuePrice1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ValuePrice1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ValuePrice1.setText("0");
-        BoxProductItem1.add(ValuePrice1);
-
-        ValueQuantity1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ValueQuantity1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ValueQuantity1.setText("0");
-        BoxProductItem1.add(ValueQuantity1);
-
-        ValueSumMoney1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ValueSumMoney1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ValueSumMoney1.setText("0");
-        BoxProductItem1.add(ValueSumMoney1);
-
-        jPanel1.add(BoxProductItem1);
-
-        BoxProductItem2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        BoxProductItem2.setMaximumSize(new java.awt.Dimension(519, 40));
-        BoxProductItem2.setMinimumSize(new java.awt.Dimension(519, 40));
-        BoxProductItem2.setPreferredSize(new java.awt.Dimension(519, 40));
-        BoxProductItem2.setLayout(new java.awt.GridLayout(1, 4));
-
-        ValueName2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ValueName2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ValueName2.setText("test");
-        BoxProductItem2.add(ValueName2);
-
-        ValuePrice2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ValuePrice2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ValuePrice2.setText("0");
-        BoxProductItem2.add(ValuePrice2);
-
-        ValueQuantity2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ValueQuantity2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ValueQuantity2.setText("0");
-        BoxProductItem2.add(ValueQuantity2);
-
-        ValueSumMoney2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ValueSumMoney2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ValueSumMoney2.setText("0");
-        BoxProductItem2.add(ValueSumMoney2);
-
-        jPanel1.add(BoxProductItem2);
-
-        BoxProductItem3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        BoxProductItem3.setMaximumSize(new java.awt.Dimension(519, 40));
-        BoxProductItem3.setMinimumSize(new java.awt.Dimension(519, 40));
-        BoxProductItem3.setPreferredSize(new java.awt.Dimension(519, 40));
-        BoxProductItem3.setLayout(new java.awt.GridLayout(1, 4));
-
-        ValueName3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ValueName3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ValueName3.setText("test");
-        BoxProductItem3.add(ValueName3);
-
-        ValuePrice3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ValuePrice3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ValuePrice3.setText("0");
-        BoxProductItem3.add(ValuePrice3);
-
-        ValueQuantity3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ValueQuantity3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ValueQuantity3.setText("0");
-        BoxProductItem3.add(ValueQuantity3);
-
-        ValueSumMoney3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ValueSumMoney3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ValueSumMoney3.setText("0");
-        BoxProductItem3.add(ValueSumMoney3);
-
-        jPanel1.add(BoxProductItem3);
-
-        BoxProductItem4.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        BoxProductItem4.setMaximumSize(new java.awt.Dimension(519, 40));
-        BoxProductItem4.setMinimumSize(new java.awt.Dimension(519, 40));
-        BoxProductItem4.setPreferredSize(new java.awt.Dimension(519, 40));
-        BoxProductItem4.setLayout(new java.awt.GridLayout(1, 4));
-
-        ValueName4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ValueName4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ValueName4.setText("test");
-        BoxProductItem4.add(ValueName4);
-
-        ValuePrice4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ValuePrice4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ValuePrice4.setText("0");
-        BoxProductItem4.add(ValuePrice4);
-
-        ValueQuantity4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ValueQuantity4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ValueQuantity4.setText("0");
-        BoxProductItem4.add(ValueQuantity4);
-
-        ValueSumMoney4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ValueSumMoney4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ValueSumMoney4.setText("0");
-        BoxProductItem4.add(ValueSumMoney4);
-
-        jPanel1.add(BoxProductItem4);
+        // jPanel1.add(BoxProductItem);
 
         jScrollPane1.setViewportView(jPanel1);
 
@@ -506,11 +451,11 @@ public class FormDetailReceipt extends javax.swing.JFrame {
         // </editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormDetailReceipt().setVisible(true);
-            }
-        });
+        // java.awt.EventQueue.invokeLater(new Runnable() {
+        // public void run() {
+        // new FormDetailReceipt().setVisible(true);
+        // }
+        // });
     }
 
     // Variables declaration - do not modify
