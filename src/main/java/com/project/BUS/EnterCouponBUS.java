@@ -7,15 +7,15 @@ import javax.swing.JOptionPane;
 import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 
 import com.mysql.cj.jdbc.result.UpdatableResultSet;
-import com.project.DAO.ReceiptDAO;
+import com.project.DAO.EnterCouponDAO;
 import com.project.DTO.DetailEnterCouponDTO;
 import com.project.DTO.EnterCouponDTO;
 
-public class ReceiptBUS {
+public class EnterCouponBUS {
 
     public static Boolean createdEnterCoupon(EnterCouponDTO enterCoupon, ArrayList<DetailEnterCouponDTO> new_detail) {
 
-        Boolean check = ReceiptDAO.createEnterCoupon(enterCoupon, new_detail);
+        Boolean check = EnterCouponDAO.createEnterCoupon(enterCoupon, new_detail);
 
         if (check) {
             return true;
@@ -27,7 +27,7 @@ public class ReceiptBUS {
     }
 
     public static ArrayList<EnterCouponDTO> getAllEnterCouponsBUS() {
-        ArrayList<EnterCouponDTO> allEnterCoupons = ReceiptDAO.getAllEnterCoupon();
+        ArrayList<EnterCouponDTO> allEnterCoupons = EnterCouponDAO.getAllEnterCoupon();
         if (allEnterCoupons == null) {
             JOptionPane.showMessageDialog(null, "Có lỗi xảy ra!");
             return null;
@@ -36,7 +36,7 @@ public class ReceiptBUS {
     }
 
     public static ArrayList<EnterCouponDTO> searchEnterCouponsByNameBUS(String keyword) {
-        ArrayList<EnterCouponDTO> allEnterCoupons = ReceiptDAO.SearchEnterCouponByName(keyword);
+        ArrayList<EnterCouponDTO> allEnterCoupons = EnterCouponDAO.SearchEnterCouponByName(keyword);
         if (allEnterCoupons == null) {
             JOptionPane.showMessageDialog(null, "Có lỗi xảy ra!");
             return null;
@@ -45,7 +45,7 @@ public class ReceiptBUS {
     }
 
     public static ArrayList<EnterCouponDTO> searchEnterCouponsBySupplierBUS(String keyword) {
-        ArrayList<EnterCouponDTO> allEnterCoupons = ReceiptDAO.SearchEnterCouponBySupplier(keyword);
+        ArrayList<EnterCouponDTO> allEnterCoupons = EnterCouponDAO.SearchEnterCouponBySupplier(keyword);
         if (allEnterCoupons == null) {
             JOptionPane.showMessageDialog(null, "Có lỗi xảy ra!");
             return null;
@@ -54,7 +54,7 @@ public class ReceiptBUS {
     }
 
     public static ArrayList<EnterCouponDTO> searchEnterCouponsByEmployeeBUS(String keyword) {
-        ArrayList<EnterCouponDTO> allEnterCoupons = ReceiptDAO.SearchEnterCouponByEmployee(keyword);
+        ArrayList<EnterCouponDTO> allEnterCoupons = EnterCouponDAO.SearchEnterCouponByEmployee(keyword);
         if (allEnterCoupons == null) {
             JOptionPane.showMessageDialog(null, "Có lỗi xảy ra!");
             return null;
@@ -68,18 +68,18 @@ public class ReceiptBUS {
         ArrayList<EnterCouponDTO> allEnterCoupons = null;
         if ((startTime != null || endTime != null) && (startTotalReceipt == -1 || endTotalReceipt == -1)) {
            
-            allEnterCoupons = ReceiptDAO.searchEnterCouponByDay(startTime, endTime);
+            allEnterCoupons = EnterCouponDAO.searchEnterCouponByDay(startTime, endTime);
 
         }
         if ((startTime == null || endTime == null) && (startTotalReceipt != -1 || endTotalReceipt != -1)) {
            
-            allEnterCoupons = ReceiptDAO.searchEnterCouponByTotalReceipt(startTotalReceipt, endTotalReceipt);
+            allEnterCoupons = EnterCouponDAO.searchEnterCouponByTotalReceipt(startTotalReceipt, endTotalReceipt);
 
         }
 
         if ((startTime != null || endTime != null) && (startTotalReceipt != -1 || endTotalReceipt != -1)) {
             
-            allEnterCoupons = ReceiptDAO.searchEnterCouponByTotalReceiptAndDate(startTime, endTime, startTotalReceipt, endTotalReceipt);
+            allEnterCoupons = EnterCouponDAO.searchEnterCouponByTotalReceiptAndDate(startTime, endTime, startTotalReceipt, endTotalReceipt);
         }
 
        
@@ -91,11 +91,11 @@ public class ReceiptBUS {
     }
 
     public static ArrayList<DetailEnterCouponDTO> getDetailEnterCoupon(int id) {
-        return ReceiptDAO.getDetailEnterCoupon(id);
+        return EnterCouponDAO.getDetailEnterCoupon(id);
     }
 
     public static Boolean removeEnterCouponBUS(int id) {
-        return ReceiptDAO.removeEnterCoupon(id);
+        return EnterCouponDAO.removeEnterCoupon(id);
     }
 
     public static void main(String[] args) {

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import com.project.DTO.DetailEnterCouponDTO;
 import com.project.DTO.EnterCouponDTO;
 
-public class ReceiptDAO {
+public class EnterCouponDAO {
 
     public static Boolean createEnterCoupon(EnterCouponDTO enterCoupon, ArrayList<DetailEnterCouponDTO> new_detail) {
         Connection conn = null;

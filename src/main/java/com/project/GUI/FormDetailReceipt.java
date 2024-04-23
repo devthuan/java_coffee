@@ -34,7 +34,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.project.BUS.ReceiptBUS;
+import com.project.BUS.EnterCouponBUS;
 import com.project.Common.Common;
 import com.project.DTO.DetailEnterCouponDTO;
 import com.project.DTO.EnterCouponDTO;
@@ -52,7 +52,7 @@ public class FormDetailReceipt extends javax.swing.JFrame {
     public FormDetailReceipt(EnterCouponDTO data) {
         initComponents();
 
-        detail_enterCoupon = ReceiptBUS.getDetailEnterCoupon(data.getId());
+        detail_enterCoupon = EnterCouponBUS.getDetailEnterCoupon(data.getId());
 
         valueId.setText(String.valueOf(data.getId()));
         ValueDate.setText(String.valueOf(Common.formatedDateTime(data.getCreatedAt())));

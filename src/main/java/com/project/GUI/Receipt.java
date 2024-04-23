@@ -26,7 +26,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.project.BUS.ReceiptBUS;
+import com.project.BUS.EnterCouponBUS;
 import com.project.BUS.SupplierBUS;
 import com.project.Common.Common;
 import com.project.DTO.EnterCouponDTO;
@@ -48,7 +48,7 @@ public class Receipt extends javax.swing.JPanel {
         public Receipt() {
                 initComponents();
 
-                ArrayList<EnterCouponDTO> list_enterCoupon = ReceiptBUS.getAllEnterCouponsBUS();
+                ArrayList<EnterCouponDTO> list_enterCoupon = EnterCouponBUS.getAllEnterCouponsBUS();
 
                 DefaultTableModel model = new DefaultTableModel();
                 model.addColumn("ID");
@@ -498,7 +498,7 @@ public class Receipt extends javax.swing.JPanel {
                 ValueTotalStart.setText("");
                 ValueTotalEnd.setText("");
                 
-                ArrayList<EnterCouponDTO> list_enterCoupon = ReceiptBUS.getAllEnterCouponsBUS();
+                ArrayList<EnterCouponDTO> list_enterCoupon = EnterCouponBUS.getAllEnterCouponsBUS();
                 for (EnterCouponDTO enterCoupon : list_enterCoupon) {
                         Object[] rowData = {
                                         enterCoupon.getId(),
@@ -567,7 +567,7 @@ public class Receipt extends javax.swing.JPanel {
                 DefaultTableModel model = (DefaultTableModel) TableReceipt.getModel();
                 model.setRowCount(0); // Xóa tất cả các hàng
 
-                ArrayList<EnterCouponDTO> list_enterCoupon = ReceiptBUS.searchReceiptAdvanced(formatedStartDate,
+                ArrayList<EnterCouponDTO> list_enterCoupon = EnterCouponBUS.searchReceiptAdvanced(formatedStartDate,
                                 formatedEndDate, startTotal, endTotal);
                 if (list_enterCoupon == null) {
                         JOptionPane.showMessageDialog(null, "Có lỗi xảy ra!");
@@ -598,7 +598,7 @@ public class Receipt extends javax.swing.JPanel {
                                                 "Bạn có chắc chắn muốn xoá nhà cung cấp này?", "Xác nhận xoá",
                                                 JOptionPane.YES_NO_OPTION);
                                 if (option == JOptionPane.YES_OPTION) {
-                                        boolean check_remove = ReceiptBUS.removeEnterCouponBUS(id);
+                                        boolean check_remove = EnterCouponBUS.removeEnterCouponBUS(id);
                                         if (check_remove) {
                                                 JOptionPane.showMessageDialog(null,
                                                                 "Nhà cung cấp đã được xoá thành công.");
@@ -631,12 +631,12 @@ public class Receipt extends javax.swing.JPanel {
                 String search_enterCoupon = InputSearch.getText();
                 ArrayList<EnterCouponDTO> list_enterCoupon = null;
                 if (option_search == 0) {
-                        list_enterCoupon = ReceiptBUS.searchEnterCouponsByNameBUS(search_enterCoupon);
+                        list_enterCoupon = EnterCouponBUS.searchEnterCouponsByNameBUS(search_enterCoupon);
 
                 } else if (option_search == 1) {
-                        list_enterCoupon = ReceiptBUS.searchEnterCouponsBySupplierBUS(search_enterCoupon);
+                        list_enterCoupon = EnterCouponBUS.searchEnterCouponsBySupplierBUS(search_enterCoupon);
                 } else if (option_search == 2) {
-                        list_enterCoupon = ReceiptBUS.searchEnterCouponsByEmployeeBUS(search_enterCoupon);
+                        list_enterCoupon = EnterCouponBUS.searchEnterCouponsByEmployeeBUS(search_enterCoupon);
                 }
 
                 for (EnterCouponDTO enterCoupon : list_enterCoupon) {
