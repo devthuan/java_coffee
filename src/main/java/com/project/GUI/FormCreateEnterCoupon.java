@@ -11,7 +11,7 @@ import java.util.Map;
 
 import javax.swing.*;
 
-import com.project.BUS.EnterCouponBUS;
+import com.project.BUS.ReceiptBUS;
 import com.project.BUS.SupplierBUS;
 import com.project.Common.Common;
 import com.project.DAO.EmployeeDAO;
@@ -23,11 +23,7 @@ import com.project.DTO.SupplierDTO;
 import com.project.DTO.WareHouseDTO;
 
 import java.awt.Component;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
 
 /**
  *
@@ -499,7 +495,7 @@ public class FormCreateEnterCoupon extends javax.swing.JFrame {
             }
         }
 
-        Boolean check = EnterCouponBUS.createdEnterCoupon(newEnterCoupon, list_new_detail_coupon);
+        Boolean check = ReceiptBUS.createdEnterCoupon(newEnterCoupon, list_new_detail_coupon);
         if (check) {
             JOptionPane.showMessageDialog(null, "Tạo phiếu nhập thành công.");
             this.setVisible(false);

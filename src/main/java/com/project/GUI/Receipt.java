@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -25,7 +26,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.project.BUS.EnterCouponBUS;
+import com.project.BUS.ReceiptBUS;
 import com.project.BUS.SupplierBUS;
 import com.project.Common.Common;
 import com.project.DTO.EnterCouponDTO;
@@ -47,7 +48,7 @@ public class Receipt extends javax.swing.JPanel {
         public Receipt() {
                 initComponents();
 
-                ArrayList<EnterCouponDTO> list_enterCoupon = EnterCouponBUS.getAllEnterCouponsBUS();
+                ArrayList<EnterCouponDTO> list_enterCoupon = ReceiptBUS.getAllEnterCouponsBUS();
 
                 DefaultTableModel model = new DefaultTableModel();
                 model.addColumn("ID");
@@ -491,8 +492,13 @@ public class Receipt extends javax.swing.JPanel {
 
                 DefaultTableModel model = (DefaultTableModel) TableReceipt.getModel();
                 model.setRowCount(0); // Xóa tất cả các hàng
-
-                ArrayList<EnterCouponDTO> list_enterCoupon = EnterCouponBUS.getAllEnterCouponsBUS();
+                InputSearch.setText("");
+                ValueStart.setDate(null);
+                ValueEndDay.setDate(null);
+                ValueTotalStart.setText("");
+                ValueTotalEnd.setText("");
+                
+                ArrayList<EnterCouponDTO> list_enterCoupon = ReceiptBUS.getAllEnterCouponsBUS();
                 for (EnterCouponDTO enterCoupon : list_enterCoupon) {
                         Object[] rowData = {
                                         enterCoupon.getId(),
@@ -508,7 +514,78 @@ public class Receipt extends javax.swing.JPanel {
         }
 
         private void BtnFilterMouseClicked(java.awt.event.MouseEvent evt) {
-                // TODO add your handling code here:
+                Date startDate = ValueStart.getDate();
+                Date endDate = ValueEndDay.getDate();
+                String startTotalText = ValueTotalStart.getText();
+                String endTotalText = ValueTotalEnd.getText();
+
+                int startTotal = -1;
+                int endTotal = -1;
+                String formatedStartDate = null;
+                String formatedEndDate = null;
+                if (startDate == null && endDate == null && startTotalText.isEmpty() && endTotalText.isEmpty()) {
+                        return;
+                }
+
+                if (startDate != null || endDate != null) {
+                        if (startDate == null || endDate == null) {
+                                JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ giá trị ngày");
+                                return;
+                        }
+                        if (startDate.compareTo(endDate) > 0) {
+                                JOptionPane.showMessageDialog(null, "Ngày bắt đầu phải nhỏ hơn ngày kết thúc");
+                                return;
+                        }
+
+                        formatedStartDate = Common.formateDate(startDate);
+                        formatedEndDate = Common.formateDate(endDate);
+
+                }
+                if (!startTotalText.isEmpty() || !endTotalText.isEmpty()) {
+                        if (startTotalText.isEmpty() || endTotalText.isEmpty()) {
+                                JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ giá trị tổng hoá đơn");
+                                return;
+                        }
+                        try {
+                                startTotal = Integer.parseInt(ValueTotalStart.getText());
+                                endTotal = Integer.parseInt(ValueTotalEnd.getText());
+
+                                if (startTotal > endTotal) {
+                                        JOptionPane.showMessageDialog(null,
+                                                        "Tổng tiền bắt đầu phải nhỏ hơn tổng tiền kết thúc.");
+                                        return;
+                                }
+
+                        } catch (Exception e) {
+
+                                JOptionPane.showMessageDialog(null, "Nhập dữ liệu là số");
+                                return;
+                        }
+
+                }
+
+                DefaultTableModel model = (DefaultTableModel) TableReceipt.getModel();
+                model.setRowCount(0); // Xóa tất cả các hàng
+
+                ArrayList<EnterCouponDTO> list_enterCoupon = ReceiptBUS.searchReceiptAdvanced(formatedStartDate,
+                                formatedEndDate, startTotal, endTotal);
+                if (list_enterCoupon == null) {
+                        JOptionPane.showMessageDialog(null, "Có lỗi xảy ra!");
+                        return;
+                }
+                for (EnterCouponDTO enterCoupon : list_enterCoupon) {
+                        Object[] rowData = {
+                                        enterCoupon.getId(),
+                                        enterCoupon.getNameEnterCoupon(),
+                                        enterCoupon.getNameEmployee(),
+                                        enterCoupon.getNameSupplier(),
+                                        Common.formatBigNumber(enterCoupon
+                                                        .getTotalValues()),
+                                        Common.formatedDateTime(enterCoupon.getCreatedAt())
+                        };
+                        model.addRow(rowData);
+                }
+
         }
 
         private void BtnRemoveMouseClicked(java.awt.event.MouseEvent evt) {
@@ -521,7 +598,7 @@ public class Receipt extends javax.swing.JPanel {
                                                 "Bạn có chắc chắn muốn xoá nhà cung cấp này?", "Xác nhận xoá",
                                                 JOptionPane.YES_NO_OPTION);
                                 if (option == JOptionPane.YES_OPTION) {
-                                        boolean check_remove = EnterCouponBUS.removeEnterCouponBUS(id);
+                                        boolean check_remove = ReceiptBUS.removeEnterCouponBUS(id);
                                         if (check_remove) {
                                                 JOptionPane.showMessageDialog(null,
                                                                 "Nhà cung cấp đã được xoá thành công.");
@@ -554,12 +631,12 @@ public class Receipt extends javax.swing.JPanel {
                 String search_enterCoupon = InputSearch.getText();
                 ArrayList<EnterCouponDTO> list_enterCoupon = null;
                 if (option_search == 0) {
-                        list_enterCoupon = EnterCouponBUS.searchEnterCouponsByNameBUS(search_enterCoupon);
+                        list_enterCoupon = ReceiptBUS.searchEnterCouponsByNameBUS(search_enterCoupon);
 
                 } else if (option_search == 1) {
-                        list_enterCoupon = EnterCouponBUS.searchEnterCouponsBySupplierBUS(search_enterCoupon);
+                        list_enterCoupon = ReceiptBUS.searchEnterCouponsBySupplierBUS(search_enterCoupon);
                 } else if (option_search == 2) {
-                        list_enterCoupon = EnterCouponBUS.searchEnterCouponsByEmployeeBUS(search_enterCoupon);
+                        list_enterCoupon = ReceiptBUS.searchEnterCouponsByEmployeeBUS(search_enterCoupon);
                 }
 
                 for (EnterCouponDTO enterCoupon : list_enterCoupon) {
