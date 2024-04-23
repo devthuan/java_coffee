@@ -115,7 +115,7 @@ public class BuyProduct extends JPanel implements AddProductListener {
         }
 
         private void setTextTotal() {
-                pnCarts.PanelBottom.Total.setText(Formatter.getFormattedPrice(getTotalPrice()));
+                pnCarts.PanelBottom.Total.setText(Formatter.getFormatedPrice(getTotalPrice()));
         }
 
         @Override
@@ -345,7 +345,7 @@ class ProductCard extends JPanel {
                 Price.setForeground(new java.awt.Color(255, 51, 51));
                 Price.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-                Price.setText(Formatter.getFormattedPrice(product.getPrice()));
+                Price.setText(Formatter.getFormatedPrice(product.getPrice()));
                 Price.setToolTipText("");
                 Price.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
                 Price.setMaximumSize(new java.awt.Dimension(220, 30));
@@ -618,7 +618,7 @@ class CartItem extends JPanel {
 
                 Price.setFont(new java.awt.Font("Arial", 0, 14));
                 Price.setForeground(java.awt.Color.red);
-                Price.setText(Formatter.getFormattedPrice(product.getPrice()).replace("VNĐ", ""));
+                Price.setText(Formatter.getFormatedPrice(product.getPrice()).replace("VNĐ", ""));
                 Price.setMaximumSize(new java.awt.Dimension(32767, 35));
                 Price.setMinimumSize(new java.awt.Dimension(60, 35));
                 Price.setPreferredSize(new java.awt.Dimension(60, 35));

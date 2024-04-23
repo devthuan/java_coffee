@@ -24,6 +24,12 @@ public class ProductDTO {
         this.category_id = category_id;
     }
 
+    public ProductDTO(String product_name, Float price) {
+        this.product_name = product_name;
+        this.price = price;
+
+    }
+
     public int getId() {
         return id;
     }
