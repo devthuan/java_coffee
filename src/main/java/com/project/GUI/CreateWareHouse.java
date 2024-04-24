@@ -1,7 +1,8 @@
 
-package com.project.DAO;
+package com.project.GUI;
 import com.project.BUS.*;
 import com.project.DTO.*;
+import com.project.DAO.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 public class CreateWareHouse extends javax.swing.JFrame {
@@ -28,7 +29,7 @@ public class CreateWareHouse extends javax.swing.JFrame {
         setBackground(new java.awt.Color(153, 153, 255));
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 255));
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin nguyên liệu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 2, 28))); // NOI18N
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tạo mới nguyên liệu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 2, 28))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Microsoft Sans Serif", 2, 18)); // NOI18N
         jLabel1.setText("Tên nguyên liệu");
@@ -47,6 +48,7 @@ public class CreateWareHouse extends javax.swing.JFrame {
         jLabel5.setText("Số lượng");
 
         jtfQuantity.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jtfQuantity.setText("0");
         jtfQuantity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfQuantityActionPerformed(evt);

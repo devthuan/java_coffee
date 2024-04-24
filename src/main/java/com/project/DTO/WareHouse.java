@@ -2,6 +2,7 @@
 
 package com.project.DTO;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class WareHouse {
@@ -10,8 +11,8 @@ public class WareHouse {
     private String unit;
     private int quantity;
     private int is_active;
-    private Date create_date;
-    private Date update_date;
+    private Timestamp create_date;
+    private Timestamp update_date;
     public int getId()
     {
         return id;
@@ -57,19 +58,19 @@ public class WareHouse {
     {
         this.is_active = is_active;
     }
-    public Date getCreateDate()
+    public Timestamp getCreateDate()
     {
         return create_date;
     }
-    public void setCreateDate(Date create_date)
+    public void setCreateDate(Timestamp create_date)
     {
         this.create_date = create_date;
     }
-    public void setUpdateDate(Date update_date)
+    public void setUpdateDate(Timestamp update_date)
     {
         this.update_date = update_date;
     }
-    public Date getUpdateDate()
+    public Timestamp getUpdateDate()
     {
         return update_date;
     }

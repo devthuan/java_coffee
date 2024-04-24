@@ -37,4 +37,12 @@ public class WareHouseService {
     {
         return warehousedao.searchAllWareHouseByName(name);
     }
+    public WareHouse getIdWareHouse(int id) throws Exception 
+    {
+        return warehousedao.getIdWareHouse(id);
+    }
+    public void updateNameWareHouse(WareHouse warehouse) throws Exception 
+    {
+        warehousedao.updateNameWareHouse(warehouse);
+    }
 }

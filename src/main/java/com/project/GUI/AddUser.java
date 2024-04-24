@@ -1,7 +1,7 @@
 
-package com.project.DAO;
+package com.project.GUI;
 import com.project.BUS.*;
-import com.project.GUI.*;
+import com.project.DAO.*;
 import com.project.DTO.*;
 import java.sql.Statement;
 import java.sql.Connection;
@@ -294,6 +294,9 @@ public class AddUser extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(AddUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

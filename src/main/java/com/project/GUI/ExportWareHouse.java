@@ -1,5 +1,5 @@
 
-package com.project.DAO;
+package com.project.GUI;
 import com.project.BUS.*;
 
 import com.project.DTO.*;

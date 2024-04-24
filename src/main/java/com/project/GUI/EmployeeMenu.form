@@ -53,7 +53,7 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\ACER\Desktop\java_coffee\src\assets\icon\employee.png"/>
+          <Image iconType="2" name="C:\Users\ACER\Desktop\java_coffee\src\main\java\com\project\GUI\employee.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n l&#xed; nh&#xe2;n vi&#xea;n"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -116,7 +116,7 @@
                   <Font name="Segoe UI" size="14" style="0"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\ACER\Desktop\java_coffee\src\assets\icon\plus (1).png"/>
+                  <Image iconType="2" name="C:\Users\ACER\Desktop\java_coffee\src\main\java\com\project\GUI\plus (1).png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -135,7 +135,7 @@
                   <Font name="Segoe UI" size="14" style="0"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\ACER\Desktop\java_coffee\src\assets\icon\edit_user.png"/>
+                  <Image iconType="2" name="C:\Users\ACER\Desktop\java_coffee\src\main\java\com\project\GUI\edit_user.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="S&#x1eed;a"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -154,7 +154,7 @@
                   <Font name="Segoe UI" size="14" style="0"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\ACER\Desktop\java_coffee\src\assets\icon\delete_user.png"/>
+                  <Image iconType="2" name="C:\Users\ACER\Desktop\java_coffee\src\main\java\com\project\GUI\delete_user.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -173,7 +173,7 @@
                   <Font name="Segoe UI" size="14" style="0"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\ACER\Desktop\java_coffee\src\assets\icon\import_user.png"/>
+                  <Image iconType="2" name="C:\Users\ACER\Desktop\java_coffee\src\main\java\com\project\GUI\import_user.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Nh&#x1ead;p"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -192,7 +192,7 @@
                   <Font name="Segoe UI" size="14" style="0"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\ACER\Desktop\java_coffee\src\assets\icon\export_user.png"/>
+                  <Image iconType="2" name="C:\Users\ACER\Desktop\java_coffee\src\main\java\com\project\GUI\export_user.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Xu&#x1ea5;t"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -211,7 +211,7 @@
                   <Font name="Segoe UI" size="14" style="0"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\ACER\Desktop\java_coffee\src\assets\icon\pdf_user.png"/>
+                  <Image iconType="2" name="C:\Users\ACER\Desktop\java_coffee\src\main\java\com\project\GUI\pdf_user.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="In"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -303,7 +303,7 @@
                   <Font name="Segoe UI" size="14" style="0"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\ACER\Desktop\java_coffee\src\assets\icon\refresh.png"/>
+                  <Image iconType="2" name="C:\Users\ACER\Desktop\java_coffee\src\main\java\com\project\GUI\refresh.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Load"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>

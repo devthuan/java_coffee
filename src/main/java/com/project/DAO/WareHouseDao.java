@@ -25,7 +25,7 @@ public class WareHouseDao {
             warehouse.setQuantity(rs.getInt("so_luong"));
             warehouse.setISAcctive(rs.getInt("is_active"));
             warehouse.setCreateDate(rs.getTimestamp("created_date"));
-            warehouse.setUpdateDate(rs.getDate("updatedAt"));
+            warehouse.setUpdateDate(rs.getTimestamp("updatedAt"));
             warehouses.add(warehouse);
         }
         return warehouses;
@@ -43,7 +43,7 @@ public class WareHouseDao {
     public void UpdateWareHouse(WareHouse warehouse) throws Exception
     {
         Connection connection = mysqlConnect.getConnection();
-        String sql = "UPDATE NguyenLieu SET so_luong = ? WHERE ten_NL = ?";
+        String sql = "UPDATE NguyenLieu SET so_luong = ?, updatedAt = NOW() WHERE ten_NL = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setInt(1, warehouse.getQuantity());
         ps.setString(2, warehouse.getName());
@@ -117,5 +117,35 @@ public class WareHouseDao {
             warehouses.add(warehouse);
         }
         return warehouses;
+    }
+    public WareHouse getIdWareHouse(int id) throws Exception
+    { 
+        Connection connection = mysqlConnect.getConnection();
+        String sql = "SELECT * FROM NguyenLieu WHERE id = ? AND is_active = 1";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next())
+        {
+            WareHouse warehouse = new WareHouse();
+            warehouse.setId(rs.getInt("id"));
+            warehouse.setName(rs.getString("ten_NL"));
+            warehouse.setUnit(rs.getString("don_vi"));
+            warehouse.setQuantity(rs.getInt("so_luong"));
+            warehouse.setISAcctive(rs.getInt("is_active"));
+            warehouse.setCreateDate(rs.getTimestamp("created_date"));
+            warehouse.setUpdateDate(rs.getTimestamp("updatedAt"));
+            return warehouse;
+        }
+        return null;
+    }
+    public void updateNameWareHouse(WareHouse warehouse) throws Exception 
+    {
+        Connection connection = mysqlConnect.getConnection();
+        String sql = "UPDATE NguyenLieu SET ten_NL = ?, updatedAt = NOW() WHERE id = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1, warehouse.getName());
+        ps.setInt(2, warehouse.getId());
+        ps.executeUpdate();
     }
 }

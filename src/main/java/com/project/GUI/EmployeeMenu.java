@@ -50,15 +50,15 @@ public class EmployeeMenu extends javax.swing.JPanel {
             }
         };
         jTable1.setModel(dtm);
-        dtm.addColumn("Id");
-        dtm.addColumn("full_name");
-        dtm.addColumn("Date");
-        dtm.addColumn("address");
-        dtm.addColumn("position");
-        dtm.addColumn("phone");
-        dtm.addColumn("salary");
-        dtm.addColumn("created_date");
-        dtm.addColumn("Account Id");
+        dtm.addColumn("Mã");
+        dtm.addColumn("Họ và tên");
+        dtm.addColumn("Ngày sinh");
+        dtm.addColumn("Địa chỉ");
+        dtm.addColumn("Chức vụ");
+        dtm.addColumn("Số điện thoại");
+        dtm.addColumn("Lương");
+        dtm.addColumn("Ngày tạo");
+        dtm.addColumn("Mã tài khoản");
         setColumnHeaderProperties(jTable1, 14, Color.BLACK, Font.BOLD);
         List<User> users = null;
         try {
@@ -109,7 +109,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 2, 24)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER\\Desktop\\java_coffee\\src\\assets\\icon\\employee.png")); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon("")); // NOI18N
         jLabel5.setText("Quản lí nhân viên");
         jLabel5.setToolTipText("");
         jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -119,7 +119,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jbAdd.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jbAdd.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER\\Desktop\\java_coffee\\src\\assets\\icon\\plus (1).png")); // NOI18N
+        jbAdd.setIcon(new javax.swing.ImageIcon("./src/assets/icon/plus (1).png")); // NOI18N
         jbAdd.setText("Thêm");
         jbAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -131,7 +131,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         });
 
         jbEdit.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jbEdit.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER\\Desktop\\java_coffee\\src\\assets\\icon\\edit_user.png")); // NOI18N
+        jbEdit.setIcon(new javax.swing.ImageIcon("./src/assets/icon/edit_user.png")); // NOI18N
         jbEdit.setText("Sửa");
         jbEdit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbEdit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -143,7 +143,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         });
 
         jbDelete.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jbDelete.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER\\Desktop\\java_coffee\\src\\assets\\icon\\delete_user.png")); // NOI18N
+        jbDelete.setIcon(new javax.swing.ImageIcon("./src/assets/icon/delete_user.png")); // NOI18N
         jbDelete.setText("Xóa");
         jbDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbDelete.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -155,7 +155,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         });
 
         jbImport.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jbImport.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER\\Desktop\\java_coffee\\src\\assets\\icon\\import_user.png")); // NOI18N
+        jbImport.setIcon(new javax.swing.ImageIcon("./src/assets/icon/import_user.png")); // NOI18N
         jbImport.setText("Nhập");
         jbImport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbImport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -167,7 +167,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         });
 
         jbExport.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jbExport.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER\\Desktop\\java_coffee\\src\\assets\\icon\\export_user.png")); // NOI18N
+        jbExport.setIcon(new javax.swing.ImageIcon("./src/assets/icon/export_user.png")); // NOI18N
         jbExport.setText("Xuất");
         jbExport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbExport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -179,7 +179,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         });
 
         jbPrint.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jbPrint.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER\\Desktop\\java_coffee\\src\\assets\\icon\\pdf_user.png")); // NOI18N
+        jbPrint.setIcon(new javax.swing.ImageIcon("./src/assets/icon/pdf_user.png")); // NOI18N
         jbPrint.setText("In");
         jbPrint.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbPrint.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -250,7 +250,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         });
 
         jbRefresh.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jbRefresh.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER\\Desktop\\java_coffee\\src\\assets\\icon\\refresh.png")); // NOI18N
+        jbRefresh.setIcon(new javax.swing.ImageIcon("./src/assets/icon/refresh.png")); // NOI18N
         jbRefresh.setText("Load");
         jbRefresh.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbRefresh.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -485,14 +485,15 @@ public class EmployeeMenu extends javax.swing.JPanel {
         try {
             DefaultTableModel dtm = new DefaultTableModel();
             jTable1.setModel(dtm);
-            dtm.addColumn("id");
-            dtm.addColumn("full_name");
-            dtm.addColumn("date_of_birth");
-            dtm.addColumn("address");
-            dtm.addColumn("position");
-            dtm.addColumn("phone");
-            dtm.addColumn("salary");
-            dtm.addColumn("created_date");
+            dtm.addColumn("Mã");
+            dtm.addColumn("Họ và tên");
+            dtm.addColumn("Ngày sinh");
+            dtm.addColumn("Địa chỉ");
+            dtm.addColumn("Chức vụ");
+            dtm.addColumn("Số điện thoại");
+            dtm.addColumn("Lương");
+            dtm.addColumn("Ngày tạo");
+            dtm.addColumn("Mã tài khoản");
             List<User> users = userservice.getAllUser();
             for (User user : users) {
                 dtm.addRow(new Object[] { user.getId(), user.getName(), user.getDate(), user.getAddress(),
@@ -509,15 +510,15 @@ public class EmployeeMenu extends javax.swing.JPanel {
         if (!keyword.isEmpty()) {
             DefaultTableModel dtm = new DefaultTableModel();
             jTable1.setModel(dtm);
-            dtm.addColumn("id");
-            dtm.addColumn("full_name");
-            dtm.addColumn("date_of_birth");
-            dtm.addColumn("address");
-            dtm.addColumn("position");
-            dtm.addColumn("phone");
-            dtm.addColumn("salary");
-            dtm.addColumn("created_date");
-            dtm.addColumn("Id Account");
+            dtm.addColumn("Mã");
+            dtm.addColumn("Họ và tên");
+            dtm.addColumn("Ngày sinh");
+            dtm.addColumn("Địa chỉ");
+            dtm.addColumn("Chức vụ");
+            dtm.addColumn("Số điện thoại");
+            dtm.addColumn("Lương");
+            dtm.addColumn("Ngày tạo");
+            dtm.addColumn("Mã tài khoản");
             try {
                 List<User> users = null;
                 if (jcbbSelect.getSelectedItem().equals("Tìm kiếm theo mã")) {
@@ -542,15 +543,15 @@ public class EmployeeMenu extends javax.swing.JPanel {
             try {
                 DefaultTableModel dtm = new DefaultTableModel();
                 jTable1.setModel(dtm);
-                dtm.addColumn("id");
-                dtm.addColumn("full_name");
-                dtm.addColumn("date_of_birth");
-                dtm.addColumn("address");
-                dtm.addColumn("position");
-                dtm.addColumn("phone");
-                dtm.addColumn("salary");
-                dtm.addColumn("created_date");
-                dtm.addColumn("Id Account");
+                dtm.addColumn("Mã");
+                dtm.addColumn("Họ và tên");
+                dtm.addColumn("Ngày sinh");
+                dtm.addColumn("Địa chỉ");
+                dtm.addColumn("Chức vụ");
+                dtm.addColumn("Số điện thoại");
+                dtm.addColumn("Lương");
+                dtm.addColumn("Ngày tạo");
+                dtm.addColumn("Mã tài khoản");
                 List<User> users = userservice.getAllUser();
                 for (User user : users) {
                     dtm.addRow(new Object[] { user.getId(), user.getName(), user.getDate(), user.getAddress(),

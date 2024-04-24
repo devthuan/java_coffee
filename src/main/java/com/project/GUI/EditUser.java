@@ -1,7 +1,7 @@
 
-package com.project.DAO;
+package com.project.GUI;
 import com.project.BUS.*;
-import com.project.DTO.*;
+import com.project.DAO.*;
 import com.project.DTO.*;
 import com.project.BUS.UserService;
 import java.sql.Connection;
@@ -299,7 +299,7 @@ public class EditUser extends javax.swing.JFrame {
                 jcbbEmail.addItem(rs.getString("email"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(AddUser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditUser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jcbbpositionActionPerformed
 

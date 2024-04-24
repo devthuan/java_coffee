@@ -1,7 +1,6 @@
 
-package com.project.DAO;
+package com.project.GUI;
 import com.project.BUS.*;
-import com.project.GUI.*;
 import com.project.DTO.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -134,39 +133,39 @@ public class ExportUser extends javax.swing.JFrame {
         // Create cells
         Cell cell = row.createCell(COLUMN_INDEX_ID);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Id");
+        cell.setCellValue("Mã");
  
         cell = row.createCell(COLUMN_INDEX_NAME);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Name");
+        cell.setCellValue("Họ và tên");
  
         cell = row.createCell(COLUMN_INDEX_DATE);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Date");
+        cell.setCellValue("Ngày sinh");
  
         cell = row.createCell(COLUMN_INDEX_ADDRESS);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Address");
+        cell.setCellValue("Địa chỉ");
  
         cell = row.createCell(COLUMN_INDEX_POSITION);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Position");
+        cell.setCellValue("Chức vụ");
         
         cell = row.createCell(COLUMN_INDEX_PHONE);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Phone");
+        cell.setCellValue("Số điện thoại");
         
         cell = row.createCell(COLUMN_INDEX_SALARY);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Salary");
+        cell.setCellValue("Lương");
         
         cell = row.createCell(COLUMN_INDEX_DATECREATE);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("DateCreate");
+        cell.setCellValue("Ngày tạo");
         
         cell = row.createCell(COLUMN_INDEX_IDACCOUNT);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Id Account");
+        cell.setCellValue("Mã tài khoản");
     }
  
     // Write data

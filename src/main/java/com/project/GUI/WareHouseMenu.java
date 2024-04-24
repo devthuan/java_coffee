@@ -24,13 +24,12 @@ public class WareHouseMenu extends javax.swing.JPanel {
             }
         };
         TableReceipt.setModel(dtm);
-        dtm.addColumn("Id");
-        dtm.addColumn("Name");
-        dtm.addColumn("Unit");
-        dtm.addColumn("Quantity");
-        dtm.addColumn("Is Active");
-        dtm.addColumn("Date Create");
-        dtm.addColumn("Date Update");
+        dtm.addColumn("Mã");
+        dtm.addColumn("Tên nguyên liệu");
+        dtm.addColumn("Đơn vị");
+        dtm.addColumn("Số lượng");
+        dtm.addColumn("Ngày tạo");
+        dtm.addColumn("Cập nhật gần nhất");
         List<WareHouse> warehouses = null;
         try 
         {
@@ -43,7 +42,7 @@ public class WareHouseMenu extends javax.swing.JPanel {
         for(WareHouse warehouse : warehouses)
         {
             dtm.addRow(new Object[] {warehouse.getId(), warehouse.getName(), warehouse.getUnit(), warehouse.getQuantity(),
-                warehouse.getIsActive(), warehouse.getCreateDate(), warehouse.getUpdateDate()});
+                 warehouse.getCreateDate(), warehouse.getUpdateDate()});
  
         }
     }
@@ -304,7 +303,17 @@ public class WareHouseMenu extends javax.swing.JPanel {
     }
 
     private void BtnDetailMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
+        int selectedRow = TableReceipt.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn nguyên liệu muốn cập nhật");
+        } else {
+            int idWareHouse = Integer.parseInt(String.valueOf(TableReceipt.getValueAt(selectedRow, 0)));
+            try {
+                new DetailWareHouse(idWareHouse).setVisible(true);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     private void BtnCreateMouseClicked(java.awt.event.MouseEvent evt) {
@@ -325,7 +334,7 @@ public class WareHouseMenu extends javax.swing.JPanel {
         }
         for (WareHouse warehouse : warehouses) {
             dtm.addRow(new Object[] { warehouse.getId(), warehouse.getName(), warehouse.getUnit(), warehouse.getQuantity(),
-                    warehouse.getIsActive(),  warehouse.getCreateDate(), warehouse.getUpdateDate()});
+                     warehouse.getCreateDate(), warehouse.getUpdateDate()});
         }
     }
 
@@ -351,7 +360,7 @@ public class WareHouseMenu extends javax.swing.JPanel {
                 }
                 for (WareHouse warehouse : warehouses) {
                     dtm.addRow(new Object[] { warehouse.getId(), warehouse.getName(), warehouse.getUnit(), warehouse.getQuantity(),
-                            warehouse.getIsActive(), warehouse.getCreateDate(),
+                            warehouse.getCreateDate(),
                             warehouse.getUpdateDate()});
                 }
             }
@@ -372,18 +381,17 @@ public class WareHouseMenu extends javax.swing.JPanel {
         try {
             DefaultTableModel dtm = new DefaultTableModel();
             TableReceipt.setModel(dtm);
-            dtm.addColumn("id");
-            dtm.addColumn("Name");
-            dtm.addColumn("Unit");
-            dtm.addColumn("Quantity");
-            dtm.addColumn("Is Active");
-            dtm.addColumn("Date Create");
-            dtm.addColumn("Date Update");
+            dtm.addColumn("Mã");
+            dtm.addColumn("Tên nguyên liệu");
+            dtm.addColumn("Đơn vị");
+            dtm.addColumn("Số lượng");
+            dtm.addColumn("Ngày tạo");
+            dtm.addColumn("Ngày cập nhật");
             List<WareHouse> warehouses = wareHouseService.getAllWareHouse();
             for(WareHouse warehouse : warehouses)
             {
                 dtm.addRow(new Object[] {warehouse.getId(), warehouse.getName(), warehouse.getUnit(), warehouse.getQuantity(),
-                    warehouse.getIsActive(), warehouse.getCreateDate(), warehouse.getUpdateDate()});
+                   warehouse.getCreateDate(), warehouse.getUpdateDate()});
 
             }
         } catch (Exception ex) {
@@ -395,13 +403,12 @@ public class WareHouseMenu extends javax.swing.JPanel {
         if (!keyword.isEmpty()) {
             DefaultTableModel dtm = new DefaultTableModel();
             TableReceipt.setModel(dtm);
-            dtm.addColumn("id");
-            dtm.addColumn("Name");
-            dtm.addColumn("Unit");
-            dtm.addColumn("Quantity");
-            dtm.addColumn("Is Active");
-            dtm.addColumn("Date Create");
-            dtm.addColumn("Date Update");
+            dtm.addColumn("Mã");
+            dtm.addColumn("Tên nguyên liệu");
+            dtm.addColumn("Đơn vị");
+            dtm.addColumn("Số lượng");
+            dtm.addColumn("Ngày tạo");
+            dtm.addColumn("Ngày cập nhật");
             try {
                 List<WareHouse> warehouses = null;
                 if (Filter.getSelectedItem().equals("Tìm kiếm theo mã")) {
@@ -415,7 +422,7 @@ public class WareHouseMenu extends javax.swing.JPanel {
                 for(WareHouse warehouse : warehouses)
                 {
                     dtm.addRow(new Object[] {warehouse.getId(), warehouse.getName(), warehouse.getUnit(), warehouse.getQuantity(),
-                        warehouse.getIsActive(), warehouse.getCreateDate(), warehouse.getUpdateDate()});
+                        warehouse.getCreateDate(), warehouse.getUpdateDate()});
 
                 }
             } catch (Exception ex) {
@@ -425,18 +432,17 @@ public class WareHouseMenu extends javax.swing.JPanel {
             try {
                 DefaultTableModel dtm = new DefaultTableModel();
                 TableReceipt.setModel(dtm);
-                dtm.addColumn("id");
-                dtm.addColumn("Name");
-                dtm.addColumn("Unit");
-                dtm.addColumn("Quantity");
-                dtm.addColumn("Is Active");
-                dtm.addColumn("Date Create");
-                dtm.addColumn("Date Update");
+                dtm.addColumn("Mã");
+                dtm.addColumn("Tên nguyên liệu");
+                dtm.addColumn("Đơn vị");
+                dtm.addColumn("Số lượng");
+                dtm.addColumn("Ngày tạo");
+                dtm.addColumn("Ngày cập nhật");
                 List<WareHouse> warehouses= wareHouseService.getAllWareHouse();
                 for(WareHouse warehouse : warehouses)
                 {
                     dtm.addRow(new Object[] {warehouse.getId(), warehouse.getName(), warehouse.getUnit(), warehouse.getQuantity(),
-                        warehouse.getIsActive(), warehouse.getCreateDate(), warehouse.getUpdateDate()});
+                       warehouse.getCreateDate(), warehouse.getUpdateDate()});
 
                 }
             } catch (Exception ex) {

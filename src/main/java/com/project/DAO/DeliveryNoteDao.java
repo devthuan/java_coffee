@@ -14,7 +14,7 @@ public class DeliveryNoteDao {
     public void addDeliveryNote(DeliveryNote deliveryNote) 
     {
         Connection connection = mysqlConnect.getConnection();
-        String sql = "INSERT INTO PhieuXuat(ten_phieu_xuat, TaiKhoan_id) VALUES(?, ?)";
+        String sql = "INSERT INTO PhieuXuat(ten_phieu_xuat, TaiKhoan_id, updatedAt) VALUES(?, ?, NOW())";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, deliveryNote.getName());

@@ -1,13 +1,18 @@
 
-package com.project.DAO;
+package com.project.GUI;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.project.BUS.*;
 import com.project.DTO.*;
 import com.project.GUI.*;
+import java.awt.Font;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.List;
@@ -61,24 +66,26 @@ public class PrintUser extends javax.swing.JFrame {
                 Document document = new Document(PageSize.A3.rotate());
                 PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream(path));
                 document.open();
+                com.itextpdf.text.Font font = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 12);
 
                 PdfPTable table = new PdfPTable(9);
                 table.setWidthPercentage(100);
-                float[] columnWidths = { 1f, 2f, 2f, 3f, 2f, 2f, 2f, 2f, 1f };
+                        table.addCell(new PdfPCell(new Phrase("Text", font)));
+                float[] columnWidths = { 2f, 2f, 2f, 3f, 2f, 2f, 2f, 2f, 2f };
                 table.setWidths(columnWidths);
-                table.addCell("Id");
-                table.addCell("Name");
-                table.addCell("Date");
-                table.addCell("Address");
-                table.addCell("Position");
-                table.addCell("Phone");
-                table.addCell("Salary");
-                table.addCell("DateCreate");
-                table.addCell("Id Account");
+                table.addCell("Mã nhân viên");
+                table.addCell("Họ và tên");
+                table.addCell("Ngày sinh");
+                table.addCell("Địa chỉ");
+                table.addCell("Chức vụ");
+                table.addCell("Số điện thoại");
+                table.addCell("Lương");
+                table.addCell("Ngày tạo");
+                table.addCell("Mã tài khoản");
 
                 List<User> users = userService.getAllUser();
                 for (User user : users) {
-                    table.addCell(String.valueOf(user.getId()));
+                     table.addCell(String.valueOf(user.getId()));
                     table.addCell(user.getName());
                     table.addCell(String.valueOf(user.getDate()));
                     table.addCell(user.getAddress());

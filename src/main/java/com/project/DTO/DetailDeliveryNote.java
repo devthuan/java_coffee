@@ -23,7 +23,7 @@ public class DetailDeliveryNote {
     {
         return idDeliveryNote;
     }
-    public void setIdReceipt(int idDeliveryNote)
+    public void setIdDeliveryNote(int idDeliveryNote)
     {
         this.idDeliveryNote = idDeliveryNote;
     }

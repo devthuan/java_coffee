@@ -8,7 +8,7 @@ public class DetailReceiptDao {
     public void addDetailReceipt(DetailReceipt detailReceipt) throws SQLException
     {
         Connection connection = mysqlConnect.getConnection();
-        String sql = "INSERT INTO ChiTietPhieuNhap(PhieuNhap_id, NguyenLieu_id, so_luong, don_vi, don_gia) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO ChiTietPhieuNhap(PhieuNhap_id, NguyenLieu_id, so_luong, don_vi, don_gia, updatedAt) VALUES (?, ?, ?, ?, ?, NOW())";
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setInt(1, detailReceipt.getIdReceipt());
         ps.setInt(2, detailReceipt.getIdIngredient());
