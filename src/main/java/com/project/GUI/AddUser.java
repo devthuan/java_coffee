@@ -1,6 +1,5 @@
 
-package com.project.DAO;
-import com.project.GUI.*;
+package com.project.GUI;
 import com.project.DTO.*;
 import com.project.BUS.*;
 import java.util.logging.Level;
