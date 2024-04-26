@@ -32,4 +32,25 @@ public class PaymentMethodDAO {
         }
         return rs;
     }
+
+    public PaymentMethodDTO getByID(int paymentmethod_id) {
+        PaymentMethodDTO rs = null;
+        try {
+            Connection conn = mysqlConnect.getConnection();
+            String sql = "Select * from PTThanhToan Where id = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, paymentmethod_id);
+            ResultSet result = pst.executeQuery();
+
+            while (result.next()) {
+                int id = result.getInt("id");
+                String payment_name = result.getString("ten_PT");
+                rs = new PaymentMethodDTO(id, payment_name);
+            }
+            mysqlConnect.closeConnection(conn);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return rs;
+    }
 }

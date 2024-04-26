@@ -7,6 +7,11 @@ public class PaymentMethodDTO {
     private int is_active;
     private String created_date;
 
+    public PaymentMethodDTO(int id, String payment_name) {
+        this.id = id;
+        this.payment_name = payment_name;
+    }
+
     public PaymentMethodDTO(int id, String payment_name, String description, int is_active, String created_date) {
         this.id = id;
         this.payment_name = payment_name;

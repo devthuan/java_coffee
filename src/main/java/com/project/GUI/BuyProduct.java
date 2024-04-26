@@ -30,6 +30,9 @@ import com.project.Util.Formatter;
  * @author LuanLe
  */
 public class BuyProduct extends JPanel implements AddProductListener {
+        private ProductBUS productBUS = new ProductBUS();
+        private OrderDAO orderDAO = new OrderDAO();
+
         public BuyProduct() {
                 initComponents();
         }
@@ -40,7 +43,7 @@ public class BuyProduct extends JPanel implements AddProductListener {
                 pnCarts = new PanelCarts();
 
                 jSplitPane.setBackground(new java.awt.Color(255, 255, 255));
-                jSplitPane.setResizeWeight(0.8);
+                jSplitPane.setResizeWeight(1);
                 jSplitPane.setLeftComponent(tpProducts);
                 jSplitPane.setRightComponent(pnCarts);
                 add(jSplitPane);
@@ -59,7 +62,7 @@ public class BuyProduct extends JPanel implements AddProductListener {
                                         int paymentMethod_id = pnCarts.PanelBottom.getSelectedPaymentMethodID();
                                         int account_id = 1;
 
-                                        OrderDTO orderDTO = new OrderDTO("successful", paymentMethod_id, account_id);
+                                        OrderDTO orderDTO = new OrderDTO("pending", paymentMethod_id, account_id);
                                         ArrayList<OrderDetailDTO> orderDetails = new ArrayList<>();
                                         for (ProductDTO product : pnCarts.cartItems.keySet()) {
                                                 CartItem cartItem = pnCarts.cartItems.get(product);
@@ -68,10 +71,7 @@ public class BuyProduct extends JPanel implements AddProductListener {
                                                 orderDetails.add(new OrderDetailDTO(quantity, product.getId()));
                                         }
 
-                                        OrderDAO orderDAO = new OrderDAO();
-
                                         if (orderDAO.addOrder(orderDTO, orderDetails)) {
-                                                ProductBUS productBUS = new ProductBUS();
                                                 for (ProductDTO product : pnCarts.cartItems.keySet()) {
                                                         CartItem cartItem = pnCarts.cartItems.get(product);
                                                         int quantity = (int) cartItem.SpinnerQuantity.getValue();
@@ -115,7 +115,7 @@ public class BuyProduct extends JPanel implements AddProductListener {
         }
 
         private void setTextTotal() {
-                pnCarts.PanelBottom.Total.setText(Formatter.getFormatedPrice(getTotalPrice()));
+                pnCarts.PanelBottom.Total.setText(Formatter.getFormatedPrice(getTotalPrice()) + " VNĐ");
         }
 
         @Override
@@ -145,6 +145,7 @@ public class BuyProduct extends JPanel implements AddProductListener {
 }
 
 class TabbedPaneProducts extends javax.swing.JTabbedPane {
+        private ProductBUS productBUS = new ProductBUS();
 
         public TabbedPaneProducts() {
                 initComponents();
@@ -160,7 +161,7 @@ class TabbedPaneProducts extends javax.swing.JTabbedPane {
 
         public void loadProductList() {
                 ArrayList<CategoryDTO> categoryDTOs = new CategoryBUS().getAll();
-                ProductBUS productBUS = new ProductBUS();
+
                 for (CategoryDTO categoryDTO : categoryDTOs) {
                         ScrollPaneProductList productList = new ScrollPaneProductList(
                                         productBUS.getProductByCategory(categoryDTO.getId()));
@@ -195,14 +196,14 @@ class PanelCarts extends JPanel {
         private void initComponents() {
                 setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
                 setMinimumSize(new Dimension(380, 768));
-                setMaximumSize(new Dimension(32767, 32767));
+                setMaximumSize(new Dimension(380, 32767));
                 setPreferredSize(new Dimension(380, 768));
 
                 ScrollPaneCart = new javax.swing.JScrollPane();
                 CartList = new javax.swing.JPanel();
                 PanelBottom = new PanelBottom();
 
-                CartList.setMaximumSize(new java.awt.Dimension(32767, 120));
+                CartList.setMaximumSize(new java.awt.Dimension(380, 120));
                 CartList.setLayout(new javax.swing.BoxLayout(CartList, javax.swing.BoxLayout.Y_AXIS));
 
                 ScrollPaneCart.setViewportView(CartList);
@@ -259,9 +260,9 @@ class ScrollPaneProductList extends javax.swing.JScrollPane {
                 JPanel ProducList = new JPanel();
                 ProducList.setBackground(new java.awt.Color(255, 255, 255));
                 ProducList.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 10));
-                ProducList.setMaximumSize(new Dimension(750, 32767));
-                ProducList.setMinimumSize(new Dimension(750, 768));
-                ProducList.setPreferredSize(new Dimension(750, 768));
+                ProducList.setMaximumSize(new Dimension(380, 32767));
+                ProducList.setMinimumSize(new Dimension(380, 768));
+                ProducList.setPreferredSize(new Dimension(380, 768));
 
                 for (ProductDTO product : products) {
                         ProductCard ProductCard = new ProductCard(product);
@@ -299,9 +300,9 @@ class ProductCard extends JPanel {
         private void initComponents(ProductDTO product) {
                 this.product = product;
 
-                setMinimumSize(new Dimension(235, 420));
+                setMinimumSize(new Dimension(200, 310));
                 setMaximumSize(new Dimension(32767, 32767));
-                setPreferredSize(new Dimension(235, 420));
+                setPreferredSize(new Dimension(200, 310));
 
                 ProductCard8 = new javax.swing.JPanel();
                 btnImage = new javax.swing.JButton();
@@ -318,26 +319,25 @@ class ProductCard extends JPanel {
 
                 ProductCard8.setBackground(new java.awt.Color(255, 255, 255));
                 ProductCard8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-                ProductCard8.setMinimumSize(new java.awt.Dimension(235, 420));
-                ProductCard8.setPreferredSize(new java.awt.Dimension(235, 420));
+                ProductCard8.setMinimumSize(new java.awt.Dimension(200, 310));
+                ProductCard8.setPreferredSize(new java.awt.Dimension(200, 310));
 
                 btnImage.setIcon(new javax.swing.ImageIcon(
                                 product.getUrl_image()));
-                btnImage.setMaximumSize(new java.awt.Dimension(220, 240));
-                btnImage.setMinimumSize(new java.awt.Dimension(220, 240));
-                btnImage.setPreferredSize(new java.awt.Dimension(220, 240));
+                btnImage.setMaximumSize(new java.awt.Dimension(185, 185));
+                btnImage.setPreferredSize(new java.awt.Dimension(165, 165));
                 ProductCard8.add(btnImage);
 
                 Name.setBackground(new java.awt.Color(255, 255, 255));
-                Name.setFont(new java.awt.Font("Arial", 1, 20));
+                Name.setFont(new java.awt.Font("Arial", 1, 18));
                 Name.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                 Name.setText(product.getProduct_name());
                 Name.setToolTipText("");
                 Name.setFocusable(false);
                 Name.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-                Name.setMaximumSize(new java.awt.Dimension(220, 60));
-                Name.setMinimumSize(new java.awt.Dimension(220, 40));
-                Name.setPreferredSize(new java.awt.Dimension(220, 40));
+                Name.setMaximumSize(new java.awt.Dimension(185, 20));
+                Name.setMinimumSize(new java.awt.Dimension(185, 20));
+                Name.setPreferredSize(new java.awt.Dimension(185, 20));
                 ProductCard8.add(Name);
 
                 Price.setBackground(new java.awt.Color(255, 255, 255));
@@ -345,42 +345,47 @@ class ProductCard extends JPanel {
                 Price.setForeground(new java.awt.Color(255, 51, 51));
                 Price.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-                Price.setText(Formatter.getFormatedPrice(product.getPrice()));
+                Price.setText(Formatter.getFormatedPrice(product.getPrice()) + " VNĐ");
                 Price.setToolTipText("");
                 Price.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-                Price.setMaximumSize(new java.awt.Dimension(220, 30));
-                Price.setMinimumSize(new java.awt.Dimension(220, 30));
-                Price.setPreferredSize(new java.awt.Dimension(220, 30));
+                Price.setMaximumSize(new java.awt.Dimension(185, 20));
+                Price.setMinimumSize(new java.awt.Dimension(185, 20));
+                Price.setPreferredSize(new java.awt.Dimension(185, 20));
                 ProductCard8.add(Price);
 
                 jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-                jPanel1.setMinimumSize(new java.awt.Dimension(220, 30));
-                jPanel1.setPreferredSize(new java.awt.Dimension(220, 30));
+                jPanel1.setMaximumSize(new java.awt.Dimension(185, 25));
+                jPanel1.setMinimumSize(new java.awt.Dimension(185, 25));
+                jPanel1.setPreferredSize(new java.awt.Dimension(185, 25));
+                jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 0, 0));
 
                 lblQuantity.setBackground(new java.awt.Color(255, 255, 255));
                 lblQuantity.setFont(new java.awt.Font("Arial", 0, 18));
                 lblQuantity.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                 lblQuantity.setText("Số lượng:");
                 lblQuantity.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+                lblQuantity.setMaximumSize(new java.awt.Dimension(90, 25));
+                lblQuantity.setMinimumSize(new java.awt.Dimension(90, 25));
                 jPanel1.add(lblQuantity);
 
                 Remaining.setBackground(new java.awt.Color(255, 255, 255));
-                Remaining.setFont(new java.awt.Font("Arial", 1, 18));
+                Remaining.setFont(new java.awt.Font("Arial", 1, 17));
                 Remaining.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                 Remaining.setText(String.valueOf(product.getQuantity()));
                 Remaining.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-                Remaining.setMaximumSize(new java.awt.Dimension(80, 220));
-                Remaining.setMinimumSize(new java.awt.Dimension(80, 220));
+                Remaining.setMaximumSize(new java.awt.Dimension(90, 25));
+                Remaining.setMinimumSize(new java.awt.Dimension(90, 25));
                 jPanel1.add(Remaining);
 
                 ProductCard8.add(jPanel1);
 
-                btnAdd.setBackground(new java.awt.Color(255, 153, 102));
                 btnAdd.setFont(new java.awt.Font("Arial", 1, 20));
+                btnAdd.setBackground(new java.awt.Color(255, 153, 102));
                 btnAdd.setForeground(new java.awt.Color(255, 255, 255));
+                btnAdd.setBorderPainted(false);
                 btnAdd.setText("Chọn");
                 btnAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                btnAdd.setMaximumSize(new java.awt.Dimension(220, 50));
+                btnAdd.setMaximumSize(new java.awt.Dimension(220, 40));
                 btnAdd.setMinimumSize(new java.awt.Dimension(150, 40));
                 btnAdd.setPreferredSize(new java.awt.Dimension(150, 40));
                 ProductCard8.add(btnAdd);
@@ -601,27 +606,27 @@ class CartItem extends JPanel {
                 Bottom.setLayout(new java.awt.BorderLayout());
 
                 BoxDonGia.setBackground(new java.awt.Color(255, 255, 255));
-                BoxDonGia.setMaximumSize(new java.awt.Dimension(32767, 35));
-                BoxDonGia.setMinimumSize(new java.awt.Dimension(150, 35));
-                BoxDonGia.setPreferredSize(new java.awt.Dimension(150, 35));
+                BoxDonGia.setMaximumSize(new java.awt.Dimension(32767, 25));
+                BoxDonGia.setMinimumSize(new java.awt.Dimension(150, 25));
+                BoxDonGia.setPreferredSize(new java.awt.Dimension(150, 25));
                 BoxDonGia.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING));
 
                 lblDonGia.setFont(new java.awt.Font("Arial", 0, 16));
                 lblDonGia.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
                 lblDonGia.setText("Đơn giá:");
                 lblDonGia.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-                lblDonGia.setMaximumSize(new java.awt.Dimension(70, 35));
-                lblDonGia.setMinimumSize(new java.awt.Dimension(70, 35));
+                lblDonGia.setMaximumSize(new java.awt.Dimension(70, 20));
+                lblDonGia.setMinimumSize(new java.awt.Dimension(70, 20));
                 lblDonGia.setName("");
-                lblDonGia.setPreferredSize(new java.awt.Dimension(70, 35));
+                lblDonGia.setPreferredSize(new java.awt.Dimension(70, 20));
                 BoxDonGia.add(lblDonGia);
 
                 Price.setFont(new java.awt.Font("Arial", 0, 14));
                 Price.setForeground(java.awt.Color.red);
-                Price.setText(Formatter.getFormatedPrice(product.getPrice()).replace("VNĐ", ""));
-                Price.setMaximumSize(new java.awt.Dimension(32767, 35));
-                Price.setMinimumSize(new java.awt.Dimension(60, 35));
-                Price.setPreferredSize(new java.awt.Dimension(60, 35));
+                Price.setText(Formatter.getFormatedPrice(product.getPrice()));
+                Price.setMaximumSize(new java.awt.Dimension(32767, 20));
+                Price.setMinimumSize(new java.awt.Dimension(60, 20));
+                Price.setPreferredSize(new java.awt.Dimension(60, 20));
                 BoxDonGia.add(Price);
 
                 Bottom.add(BoxDonGia, java.awt.BorderLayout.WEST);

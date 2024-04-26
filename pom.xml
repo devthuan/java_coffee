@@ -45,11 +45,12 @@
             <version>3.4.1</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
+        <!-- https://mvnrepository.com/artifact/com.itextpdf/itext-core -->
         <dependency>
             <groupId>com.itextpdf</groupId>
-            <artifactId>itextpdf</artifactId>
-            <version>5.5.13.3</version>
+            <artifactId>itext-core</artifactId>
+            <version>8.0.1</version>
+            <type>pom</type>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox -->

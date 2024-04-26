@@ -8,7 +8,7 @@ import com.project.DTO.ProductDTO;
 public class ProductBUS {
     private ProductDAO productDAO;
 
-    public ProductBUS(){
+    public ProductBUS() {
         this.productDAO = new ProductDAO();
     }
 
@@ -20,6 +20,16 @@ public class ProductBUS {
             // TODO: handle exception
         }
         return products;
+    }
+
+    public ProductDTO getProductByID(int id) {
+        ProductDTO product = null;
+        try {
+            product = productDAO.getProductByID(id);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        return product;
     }
 
     public ArrayList<ProductDTO> getProductByCategory(int category) {
