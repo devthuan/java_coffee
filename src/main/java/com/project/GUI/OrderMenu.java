@@ -4,12 +4,11 @@
  */
 package com.project.GUI;
 
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -24,9 +23,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
@@ -55,7 +51,6 @@ public class OrderMenu extends javax.swing.JPanel {
 
         public OrderMenu() {
                 initComponents();
-                setTextFieldOrderID();
                 loadData();
         }
 
@@ -228,25 +223,22 @@ public class OrderMenu extends javax.swing.JPanel {
                 cbSearch.setMaximumSize(new java.awt.Dimension(60, 30));
                 cbSearch.setMinimumSize(new java.awt.Dimension(60, 30));
                 cbSearch.setPreferredSize(new java.awt.Dimension(60, 50));
+                cbSearch.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                txtInputSearch.requestFocus();
+                        }
+
+                });
 
                 txtInputSearch.setFont(new java.awt.Font("Arial", 0, 14));
-                txtInputSearch.setText("Nhập nội dung tìm kiếm...");
                 txtInputSearch.setMaximumSize(new java.awt.Dimension(100, 30));
                 txtInputSearch.setMinimumSize(new java.awt.Dimension(100, 30));
                 txtInputSearch.setPreferredSize(new java.awt.Dimension(100, 50));
-                txtInputSearch.getDocument().addDocumentListener(new DocumentListener() {
+                Formatter.setPlaceHolder(txtInputSearch, "Nhập nội dung tìm kiếm");
+                txtInputSearch.addKeyListener(new KeyAdapter() {
                         @Override
-                        public void insertUpdate(DocumentEvent e) {
-                                handleChangeInputSearch();
-                        }
-
-                        @Override
-                        public void removeUpdate(DocumentEvent e) {
-                                handleChangeInputSearch();
-                        }
-
-                        @Override
-                        public void changedUpdate(DocumentEvent e) {
+                        public void keyReleased(KeyEvent e) {
                                 handleChangeInputSearch();
                         }
 
@@ -823,7 +815,7 @@ public class OrderMenu extends javax.swing.JPanel {
                 }
         }
 
-        private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnFilterActionPerformed
+        private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {
                 Date startDate = dcStartDate.getDate();
                 Date endDate = dcEndDate.getDate();
                 String startTotalText = txtInputMinPrice.getText();
@@ -874,11 +866,7 @@ public class OrderMenu extends javax.swing.JPanel {
                                 return;
                         }
                 }
-                System.out.println(String.format(
-                                "status: %s, pmID: %d, tsStart: %s, tsEnd: %s, minTotal: %f, maxTotal: %f",
-                                cbStatus.getSelectedItem().toString(),
-                                cbPaymentMethods.getSelectedIndex(), tsStartDate, tsEndDate,
-                                minTotal, maxTotal));
+
                 orders = orderBUS.getAllWithTotal(cbStatus.getSelectedItem().toString(),
                                 cbPaymentMethods.getSelectedIndex(), tsStartDate, tsEndDate,
                                 minTotal, maxTotal);
@@ -917,34 +905,40 @@ public class OrderMenu extends javax.swing.JPanel {
         }
 
         private void handleChangeInputSearch() {
-                DefaultTableModel dtm = (DefaultTableModel) tbTableOrder.getModel();
-                dtm.setRowCount(0);
+                if (!txtInputSearch.getText().isEmpty()) {
+                        DefaultTableModel dtm = (DefaultTableModel) tbTableOrder.getModel();
+                        dtm.setRowCount(0);
 
-                int cbIndex = cbSearch.getSelectedIndex();
-                switch (cbIndex) {
-                        case 0:
-                                orders = orderBUS.getAllWithTotalByOrderID(Integer.parseInt(txtInputSearch.getText()));
-                                break;
-                        case 1:
-                                orders = orderBUS
-                                                .getAllWithTotalByAccountID(Integer.parseInt(txtInputSearch.getText()));
-                                break;
+                        int cbIndex = cbSearch.getSelectedIndex();
+                        switch (cbIndex) {
+                                case 0:
+                                        orders = orderBUS.getAllWithTotalByOrderID(
+                                                        Integer.parseInt(txtInputSearch.getText()));
+                                        break;
+                                case 1:
+                                        orders = orderBUS
+                                                        .getAllWithTotalByAccountID(
+                                                                        Integer.parseInt(txtInputSearch.getText()));
+                                        break;
+                        }
+
+                        for (OrderDTO o : orders.keySet()) {
+                                Float total = orders.get(o);
+
+                                dtm.addRow(new Object[] {
+                                                o.getId(),
+                                                o.getAcount_id(),
+                                                Formatter.getFormatedPrice(total),
+                                                paymentMethods.get(o.getPaymentMethod_id() - 1).getPayment_name(),
+                                                Common.formatedDateTime(o.getCreatedAt()),
+                                                o.getOrder_status()
+                                });
+                        }
+
+                        Formatter.centerAlignTableCells(tbTableOrder);
+                } else {
+                        loadData();
                 }
-
-                for (OrderDTO o : orders.keySet()) {
-                        Float total = orders.get(o);
-
-                        dtm.addRow(new Object[] {
-                                        o.getId(),
-                                        o.getAcount_id(),
-                                        Formatter.getFormatedPrice(total),
-                                        paymentMethods.get(o.getPaymentMethod_id() - 1).getPayment_name(),
-                                        Common.formatedDateTime(o.getCreatedAt()),
-                                        o.getOrder_status()
-                        });
-                }
-
-                Formatter.centerAlignTableCells(tbTableOrder);
         }
 
         private void btnExportExcelActionPerformed(java.awt.event.ActionEvent evt) {
@@ -966,42 +960,6 @@ public class OrderMenu extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để xem chi tiết", "Thông báo",
                                         JOptionPane.INFORMATION_MESSAGE);
                 }
-        }
-
-        private void setTextFieldOrderID() {
-                addPlaceholderStyle(txtInputSearch);
-
-                txtInputSearch.addFocusListener(new FocusListener() {
-                        @Override
-                        public void focusGained(FocusEvent e) {
-                                if (txtInputSearch.getText().equals("Nhập nội dung tìm kiếm...")) {
-                                        txtInputSearch.setText("");
-                                        removePlaceholderStyle(txtInputSearch);
-                                }
-                        }
-
-                        @Override
-                        public void focusLost(FocusEvent e) {
-                                if (txtInputSearch.getText().isEmpty()) {
-                                        txtInputSearch.setText("Nhập nội dung tìm kiếm...");
-                                        addPlaceholderStyle(txtInputSearch);
-                                }
-                        }
-                });
-        }
-
-        private static void addPlaceholderStyle(JTextField txtField) {
-                Font font = txtField.getFont();
-                // font = font.deriveFont(Font.ITALIC);
-                txtField.setFont(font);
-                txtField.setForeground(Color.GRAY);
-        }
-
-        private static void removePlaceholderStyle(JTextField txtField) {
-                Font font = txtField.getFont();
-                font = font.deriveFont(Font.PLAIN);
-                txtField.setFont(font);
-                txtField.setForeground(Color.BLACK);
         }
 
         private javax.swing.JPanel GroupButton;
