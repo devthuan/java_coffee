@@ -1,13 +1,14 @@
 package com.project.Util;
 
-import java.awt.Component;
-import java.awt.Font;
 import java.text.NumberFormat;
 import java.util.Locale;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
+
+import com.formdev.flatlaf.FlatClientProperties;
 
 public class Formatter {
     public static String getFormatedPrice(Float price) {
@@ -22,6 +23,11 @@ public class Formatter {
         for (int i = 0; i < table.getColumnCount(); i++) {
             table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
+    }
+
+    public static void setPlaceHolder(JTextField txt, String placeHolderText) {
+        txt.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, placeHolderText);
+        txt.putClientProperty(FlatClientProperties.TEXT_FIELD_SHOW_CLEAR_BUTTON, true);
     }
 
 }
