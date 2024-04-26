@@ -4,23 +4,37 @@
  */
 package com.project.GUI;
 
+import java.awt.event.KeyEvent;
+import java.util.regex.Pattern;
+
+import javax.swing.JOptionPane;
+
+import com.project.BUS.SupplierBUS;
+import com.project.Common.SupplierCommon;
+import com.project.DTO.SupplierDTO;
+
 /**
  *
  * @author thuan
  */
 public class FormSupplier extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FormSupplier
-     */
-    public FormSupplier(String titleForm) {
+    private int id_supplier = -1;
+
+    public FormSupplier(String titleForm, SupplierDTO data_supplier) {
 
         initComponents();
         jLabel1.setText(titleForm);
-    }
+        BtnAdd.setText("Thêm");
 
-    public FormSupplier(String titleForm, String data) {
-        initComponents();
+        if (data_supplier.getId() != 0) {
+            BtnAdd.setText("Cập nhật");
+            InputAddress.setText(data_supplier.getAddress());
+            InputEmail.setText(data_supplier.getEmail());
+            InputName.setText(data_supplier.getName_supplier());
+            InputPhone.setText(data_supplier.getPhone());
+            id_supplier = data_supplier.getId();
+        }
     }
 
     /**
@@ -183,6 +197,7 @@ public class FormSupplier extends javax.swing.JFrame {
                 BtnAddMouseClicked(evt);
             }
         });
+
         BoxBtn.add(BtnAdd);
 
         getContentPane().add(BoxBtn, java.awt.BorderLayout.PAGE_END);
@@ -192,7 +207,58 @@ public class FormSupplier extends javax.swing.JFrame {
 
     // event clicked
     private void BtnAddMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
+        String name_supplier = InputName.getText();
+        String address = InputAddress.getText();
+        String phone = InputPhone.getText();
+        String email = InputEmail.getText();
+
+        Boolean checkValidate = SupplierCommon.validateCreateSupplier(name_supplier, address, phone,
+                email);
+
+        if (checkValidate == true) {
+
+            SupplierDTO new_supplier = new SupplierDTO(name_supplier, address, phone, email);
+
+            if (id_supplier == -1) {
+                try {
+                    boolean isSupplierAdded = SupplierBUS.createdSupplier(new_supplier);
+                    if (isSupplierAdded) {
+                        JOptionPane.showMessageDialog(null, "Tạo nhà cung cấp thành công.");
+                        // JOptionPane.showMessageDialog(null, "Tạo nhà cung cấp thành công.");
+                        this.setVisible(false);
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Lỗi khi tạo nhà cung cấp. Vui lòng thử lại.", "Lỗi",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace(); // For debugging purposes (remove for production)
+                    JOptionPane.showMessageDialog(null, "Có lỗi xảy ra. Vui lòng thử lại sau.", "Lỗi",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+
+            } else {
+                try {
+                    SupplierDTO update_supplier = new SupplierDTO(id_supplier, name_supplier, address, phone, email);
+                    System.out.println(update_supplier.getId());
+                    boolean isSupplierAdded = SupplierBUS.updateSupplier(update_supplier);
+                    if (isSupplierAdded) {
+                        JOptionPane.showMessageDialog(null, "cập nhật nhà cung cấp thành công.");
+                        // JOptionPane.showMessageDialog(null, "Tạo nhà cung cấp thành công.");
+                        this.setVisible(false);
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Lỗi khi cập nhật nhà cung cấp. Vui lòng thử lại.", "Lỗi",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace(); // For debugging purposes (remove for production)
+                    JOptionPane.showMessageDialog(null, "Có lỗi xảy ra. Vui lòng thử lại sau.", "Lỗi",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+
     }
 
     private void BtnCloseMouseClicked(java.awt.event.MouseEvent evt) {

@@ -1,13 +1,18 @@
 package com.project.DTO;
 
+
 public class ProductDTO {
     private int id;
     private String product_name;
     private String url_image;
-    private Float price;
+    private float price;
+    private int quantity;
+    private int totalSold;
     private int is_active;
     private String created_date;
     private String category;
+
+
 
     public ProductDTO(String name, Float price){
         this.product_name = name;
@@ -52,34 +57,65 @@ public class ProductDTO {
     public void setUrl_image(String url_image) {
         this.url_image = url_image;
     }
+    public ProductDTO(String product_name, String url_image, float price, int totalSold) {
+        this.product_name = product_name;
+        this.url_image = url_image;
+        this.price = price;
+        this.totalSold = totalSold;
+
+    }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setproduct_name(String product_name) {
+        this.product_name = product_name;
+    }
+
+    public void seturl_image(String url_image) {
+        this.url_image = url_image;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setTotalSold(int totalSold) {
+        this.totalSold = totalSold;
     }
 
     public int getId() {
         return id;
     }
 
-    public String getCategory() {
-        return category;
+    public String getproduct_name() {
+        return product_name;
     }
+
 
     public String getCreated_date() {
         return created_date;
     }
-    public int getIs_active() {
-        return is_active;
+    public String geturl_image() {
+        return url_image;
+
     }
-    public Float getPrice() {
+
+    public float getPrice() {
         return price;
     }
-    public String getProduct_name() {
-        return product_name;
+
+    public int getQuantity() {
+        return quantity;
     }
-    public String getUrl_image() {
-        return url_image;
+
+    public int getTotalSold() {
+        return totalSold;
     }
-    
 
 }

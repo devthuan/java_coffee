@@ -252,7 +252,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
     }// </editor-fold>
 
     private void addUserActionPerformed(java.awt.event.ActionEvent evt) {
-        new AddUser().setVisible(true);
+        // new AddUser().setVisible(true);
     }
 
     private void jtSearchActionPerformed(java.awt.event.ActionEvent evt) {
@@ -295,7 +295,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         } else {
             int userId = Integer.parseInt(String.valueOf(jTable1.getValueAt(selectedRow, 0)));
             try {
-                new EditUser(userId).setVisible(true);
+                // new EditUser(userId).setVisible(true);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

@@ -13,7 +13,6 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -22,7 +21,6 @@ import java.awt.event.MouseAdapter;
 
 // import org.apache.poi.ss.usermodel.Color;
 
-
 public class Main extends javax.swing.JFrame {
 
         public Main() {
@@ -30,7 +28,6 @@ public class Main extends javax.swing.JFrame {
 
                 SwitchControl();
                 Right.add(new BuyProduct()).setVisible(true);
-
 
         }
 
@@ -550,8 +547,6 @@ public class Main extends javax.swing.JFrame {
                 SwitchControl();
                 Right.add(new Supplier()).setVisible(true);
 
-             
-
         }
 
         private void StatisticalLabelMouseClicked(java.awt.event.MouseEvent evt) {
@@ -565,7 +560,7 @@ public class Main extends javax.swing.JFrame {
 
         private void WarehouseLabelMouseClicked(java.awt.event.MouseEvent evt) {
                 SwitchControl();
-            Right.add(new Warehouses()).setVisible(true);
+                Right.add(new Warehouses()).setVisible(true);
         }
 
         /**
@@ -601,6 +596,7 @@ public class Main extends javax.swing.JFrame {
                 } catch (javax.swing.UnsupportedLookAndFeelException ex) {
                         java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE,
                                         null, ex);
+
                 }
                 // </editor-fold>
                 // </editor-fold>
@@ -617,6 +613,7 @@ public class Main extends javax.swing.JFrame {
                                 new Main().setVisible(true);
                         }
                 });
+
         }
 
         // Variables declaration - do not modify

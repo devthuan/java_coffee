@@ -16,6 +16,7 @@
     </properties>
 
     <dependencies>
+    
         <!-- Mysql connector -->
         <dependency>
             <groupId>mysql</groupId>
@@ -37,12 +38,22 @@
             <version>5.2.5</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox -->
+
+
+        <!-- https://mvnrepository.com/artifact/com.itextpdf/itext-core -->
         <dependency>
-            <groupId>org.apache.pdfbox</groupId>
-            <artifactId>pdfbox</artifactId>
-            <version>3.0.2</version>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itext-core</artifactId>
+            <version>8.0.1</version>
+            <type>pom</type>
         </dependency>
+        
+       
+      
+
+
+
+
 
         <!-- bcrypt => dùng để hash password -->
         <dependency>
@@ -50,6 +61,7 @@
             <artifactId>jbcrypt</artifactId>
             <version>0.4</version>
         </dependency>
+
 
         <dependency>
             <groupId>com.toedter</groupId>
