@@ -223,7 +223,10 @@ class PanelCarts extends JPanel {
                         CartList.repaint();
                 } else {
                         CartItem cartItem = cartItems.get(product);
-                        cartItem.SpinnerQuantity.setValue((int) cartItem.SpinnerQuantity.getValue() + 1);
+                        int currentQuty = (int) cartItem.SpinnerQuantity.getValue();
+                        if (currentQuty < product.getQuantity()) {
+                                cartItem.SpinnerQuantity.setValue(currentQuty + 1);
+                        }
                 }
         }
 
