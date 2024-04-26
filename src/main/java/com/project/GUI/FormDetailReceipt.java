@@ -8,9 +8,12 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.StyleConstants.FontConstants;
 
 import com.itextpdf.*;
+import com.itextpdf.io.font.PdfEncodings;
 import com.itextpdf.io.font.constants.StandardFonts;
+// import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.font.PdfFontFactory.EmbeddingStrategy;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.action.PdfAction;
@@ -428,7 +431,7 @@ public class FormDetailReceipt extends javax.swing.JFrame {
 
     private void BtnPrintActionPerformed(java.awt.event.ActionEvent evt) {
         exportToPDF();
-        
+
     }
 
     private void BtnCloseMouseClicked(java.awt.event.MouseEvent evt) {
@@ -451,9 +454,14 @@ public class FormDetailReceipt extends javax.swing.JFrame {
 
             try {
 
+                String fontPath = "src\\assets\\VietFontsWeb1_ttf\\vuTimes.ttf"; // Đường dẫn đến font Noto Sans Regular
                 PdfWriter writer = new PdfWriter(fileToSave + ".pdf");
                 PdfDocument pdf = new PdfDocument(writer);
                 Document document = new Document(pdf);
+                // Tải font từ file truetype
+                PdfFont font = PdfFontFactory.createFont(fontPath, PdfEncodings.IDENTITY_H,
+                        EmbeddingStrategy.FORCE_EMBEDDED, true);
+                document.setFont(font);
 
                 addComponentsToDocument(document);
 
@@ -470,38 +478,38 @@ public class FormDetailReceipt extends javax.swing.JFrame {
     private void addComponentsToDocument(Document document) {
         try {
             // Tạo font
-            PdfFont font = PdfFontFactory.createFont();
 
             // Đoạn văn bản "Phieu nhap hang"
-            Paragraph title = new Paragraph("Phieu nhap hang");
-            title.setFont(font).setFontSize(18).setTextAlignment(TextAlignment.CENTER);
+            Paragraph title = new Paragraph("Phiếu nhập hàng");
+            title.setFontSize(18).setTextAlignment(TextAlignment.CENTER);
             document.add(title);
 
             // Đoạn văn bản "Ma phieu nhap: ..."
-            Paragraph id = new Paragraph("Ma phieu nhap:                 " + valueId.getText());
-            id.setFont(font).setFontSize(12).setTextAlignment(TextAlignment.LEFT);
+            Paragraph id = new Paragraph("Mã phiếu nhập:                 " + valueId.getText());
+            id.setFontSize(12).setTextAlignment(TextAlignment.LEFT);
             document.add(id);
 
             // Đoạn văn bản "Ngay tao: ..."
-            Paragraph createdAt = new Paragraph("Ngay tao:               " + ValueDate.getText());
-            createdAt.setFont(font).setFontSize(12).setTextAlignment(TextAlignment.LEFT);
+            Paragraph createdAt = new Paragraph("Ngày tạo:               " + ValueDate.getText());
+            createdAt.setFontSize(12).setTextAlignment(TextAlignment.LEFT);
             document.add(createdAt);
 
             // Đoạn văn bản "Nhan vien nhap hang: ..."
-            Paragraph nameEnterCoupon = new Paragraph("Nhan vien nhap hang: " + ValueCasher.getText());
-            nameEnterCoupon.setFont(font).setFontSize(12).setTextAlignment(TextAlignment.LEFT);
+            Paragraph nameEnterCoupon = new Paragraph("Nhân viên nhập hàng: " + ValueCasher.getText());
+            nameEnterCoupon.setFontSize(12).setTextAlignment(TextAlignment.LEFT);
             document.add(nameEnterCoupon);
 
             // Đoạn văn bản "Nha cung cap: ..."
-            Paragraph nameSupplier = new Paragraph("Nha cung cap:            " + ValuePaymentMethod.getText());
-            nameSupplier.setFont(font).setFontSize(12).setTextAlignment(TextAlignment.LEFT);
+            Paragraph nameSupplier = new Paragraph("Nhà cung cấp:            " + ValuePaymentMethod.getText());
+            nameSupplier.setFontSize(12).setTextAlignment(TextAlignment.LEFT);
+
             document.add(nameSupplier);
 
             createTablePDF(document);
 
             // Đoạn văn bản "Tong gia tri: ..."
-            Paragraph totalValues = new Paragraph("Tong gia tri:         " + ValueTotal.getText());
-            totalValues.setFont(font).setFontSize(12).setTextAlignment(TextAlignment.LEFT);
+            Paragraph totalValues = new Paragraph("Tổng giá trị:         " + ValueTotal.getText());
+            totalValues.setFontSize(12).setTextAlignment(TextAlignment.LEFT);
             document.add(totalValues);
         } catch (Exception e) {
             e.printStackTrace();
@@ -515,9 +523,9 @@ public class FormDetailReceipt extends javax.swing.JFrame {
                                                                                             // rộng của mỗi cột
 
             // Tiêu đề của các cột
-            table.addCell(createCell("Nguyen Lieu", TextAlignment.CENTER));
-            table.addCell(createCell("So Luong", TextAlignment.CENTER));
-            table.addCell(createCell("Don gia", TextAlignment.CENTER));
+            table.addCell(createCell("Nguyên liệu", TextAlignment.CENTER));
+            table.addCell(createCell("Số lượng", TextAlignment.CENTER));
+            table.addCell(createCell("Đơn giá", TextAlignment.CENTER));
 
             // Dữ liệu của các ô trong bảng
             // Ví dụ:
