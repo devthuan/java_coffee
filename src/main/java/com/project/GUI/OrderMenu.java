@@ -713,7 +713,7 @@ public class OrderMenu extends javax.swing.JPanel {
                                 setColumnWidths(tbTableOrder, columnPercentages);
                         }
                 });
-
+                Formatter.setBoldHeaderTable(tbTableOrder);
         }
 
         private static void setColumnWidths(JTable table, double[] percentages) {

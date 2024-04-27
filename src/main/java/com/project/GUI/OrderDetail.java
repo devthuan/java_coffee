@@ -75,6 +75,7 @@ public class OrderDetail extends javax.swing.JFrame {
 
         TableOrderDetail.setModel(dtm);
         Formatter.centerAlignTableCells(TableOrderDetail);
+        Formatter.setBoldHeaderTable(TableOrderDetail);
     }
 
     private void initComponents() {

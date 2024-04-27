@@ -376,7 +376,7 @@ class ProductCard extends JPanel {
                 jPanel1.add(lblQuantity);
 
                 Remaining.setBackground(new java.awt.Color(255, 255, 255));
-                Remaining.setFont(new java.awt.Font("Arial", 1, 17));
+                Remaining.setFont(new java.awt.Font("Arial", 1, 18));
                 Remaining.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                 Remaining.setText(String.valueOf(product.getQuantity()));
                 Remaining.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -655,11 +655,6 @@ class CartItem extends JPanel {
                 btnRemove.setMaximumSize(new java.awt.Dimension(85, 30));
                 btnRemove.setMinimumSize(new java.awt.Dimension(85, 30));
                 btnRemove.setPreferredSize(new java.awt.Dimension(85, 30));
-                btnRemove.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                btnRemoveActionPerformed(evt);
-                        }
-                });
 
                 javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(BottomRight);
                 BottomRight.setLayout(jPanel14Layout);
@@ -693,10 +688,6 @@ class CartItem extends JPanel {
                 Bottom.add(BottomRight, java.awt.BorderLayout.EAST);
                 Top.add(Bottom);
                 add(Top);
-        }
-
-        private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {
-                // TODO add your handling code here:
         }
 
         public javax.swing.JLabel Name;

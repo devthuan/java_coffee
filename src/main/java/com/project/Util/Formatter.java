@@ -1,5 +1,7 @@
 package com.project.Util;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -7,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
@@ -23,6 +26,13 @@ public class Formatter {
         for (int i = 0; i < table.getColumnCount(); i++) {
             table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
+    }
+
+    public static void setBoldHeaderTable(JTable table) {
+        JTableHeader header = table.getTableHeader();
+        header.setBackground(new Color(244, 244, 244));
+        header.setForeground(Color.BLACK);
+        header.setFont(new Font("Arial", Font.BOLD, 14));
     }
 
     public static void setPlaceHolder(JTextField txt, String placeHolderText) {
