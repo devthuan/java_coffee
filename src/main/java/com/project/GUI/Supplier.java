@@ -4,6 +4,7 @@
  */
 package com.project.GUI;
 
+import java.awt.event.ComponentAdapter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -315,16 +316,9 @@ public class Supplier extends javax.swing.JPanel {
                 SupplierCenter.setLayout(new javax.swing.BoxLayout(SupplierCenter, javax.swing.BoxLayout.LINE_AXIS));
 
                 TableSupplier.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-                // TableSupplier.setModel(new javax.swing.table.DefaultTableModel(
-                // new Object[][] {
-                // { "test", "test", "test", "test1", "test", "test" },
-                // { "1", "1", "1", "1", "1", null },
-                // { null, null, null, null, null, null },
-                // { null, null, null, null, null, null }
-                // },
-                // new String[] {
-                // "ID", "Tên nhà cung cấp", "Địa chỉ", "Điện thoại", "Email", "Ngày tạo"
-                // }));
+
+                TableSupplier.setShowGrid(true);
+
                 TableSupplier.getTableHeader().setReorderingAllowed(false);
                 jScrollPane1.setViewportView(TableSupplier);
 

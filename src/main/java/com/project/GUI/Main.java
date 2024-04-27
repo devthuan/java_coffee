@@ -15,6 +15,9 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+
+import com.formdev.flatlaf.FlatLightLaf;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
@@ -29,6 +32,7 @@ public class Main extends javax.swing.JFrame {
                 SwitchControl();
                 Right.add(new BuyProduct()).setVisible(true);
 
+                setLocationRelativeTo(null);
         }
 
         /**
@@ -511,7 +515,9 @@ public class Main extends javax.swing.JFrame {
 
         private void HomeLabelMouseClicked(java.awt.event.MouseEvent evt) {
                 SwitchControl();
-                Right.add(new BuyProduct()).setVisible(true);
+
+                BuyProduct buyProduct = new BuyProduct();
+                Right.add(buyProduct);
         }
 
         private void ProductLabelMouseClicked(java.awt.event.MouseEvent evt) {
@@ -567,6 +573,7 @@ public class Main extends javax.swing.JFrame {
          * @param args the command line arguments
          */
         public static void main(String args[]) {
+                // <<<<<<< HEAD
                 /* Set the Nimbus look and feel */
                 // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
                 // (optional) ">
@@ -576,28 +583,60 @@ public class Main extends javax.swing.JFrame {
                  * For details see
                  * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
                  */
-                try {
-                        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
-                                        .getInstalledLookAndFeels()) {
-                                if ("Windows".equals(info.getName())) {
-                                        javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                                        break;
-                                }
-                        }
-                } catch (ClassNotFoundException ex) {
-                        java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE,
-                                        null, ex);
-                } catch (InstantiationException ex) {
-                        java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE,
-                                        null, ex);
-                } catch (IllegalAccessException ex) {
-                        java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE,
-                                        null, ex);
-                } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-                        java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE,
-                                        null, ex);
+                // try {
+                // for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
+                // .getInstalledLookAndFeels()) {
+                // if ("Windows".equals(info.getName())) {
+                // javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                // break;
+                // }
+                // }
+                // } catch (ClassNotFoundException ex) {
+                // java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE,
+                // null, ex);
+                // } catch (InstantiationException ex) {
+                // java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE,
+                // null, ex);
+                // } catch (IllegalAccessException ex) {
+                // java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE,
+                // null, ex);
+                // } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+                // java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE,
+                // null, ex);
 
+                FlatLightLaf.setup();
+                try {
+                        UIManager.setLookAndFeel(new FlatLightLaf());
+                } catch (Exception e) {
+                        System.err.println("Failed to initialize LaF");
                 }
+                /*
+                 * try {
+                 * for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
+                 * .getInstalledLookAndFeels()) {
+                 * if ("Windows".equals(info.getName())) {
+                 * javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                 * break;
+                 * }
+                 * }
+                 * } catch (ClassNotFoundException ex) {
+                 * java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.
+                 * logging.Level.SEVERE,
+                 * null, ex);
+                 * } catch (InstantiationException ex) {
+                 * java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.
+                 * logging.Level.SEVERE,
+                 * null, ex);
+                 * } catch (IllegalAccessException ex) {
+                 * java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.
+                 * logging.Level.SEVERE,
+                 * null, ex);
+                 * } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+                 * java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.
+                 * logging.Level.SEVERE,
+                 * null, ex);
+                 * }
+                 */
                 // </editor-fold>
                 // </editor-fold>
                 // </editor-fold>

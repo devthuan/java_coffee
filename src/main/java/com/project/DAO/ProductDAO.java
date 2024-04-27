@@ -5,50 +5,112 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.*;
 
+import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 
 import com.project.DTO.ProductDTO;
 
 public class ProductDAO {
 
-    public static ArrayList<ProductDTO> get_all_product() {
-        ArrayList<ProductDTO> list_product = new ArrayList<>();
+    public ArrayList<ProductDTO> getAll() {
+        ArrayList<ProductDTO> products = null;
         try {
             Connection conn = mysqlConnect.getConnection();
-            String sql = "SELECT \r\n" + //
-                    "\tsanpham.id,\r\n" + //
-                    "\tsanpham.ten_SP AS ten_SP,\r\n" + //
-                    "\turl_anh,\r\n" + //
-                    "\tgia,\r\n" + //
-                    "\tloaisanpham.ten_loai AS ten_loai,\r\n" + //
-                    "\tsanpham.is_active,\r\n" + //
-                    "\tsanpham.createdAt\r\n" + //
-                    " from sanpham join loaisanpham on sanpham.LoaiSanPham_id = loaisanpham.id";
+            String sql = "Select * from SanPham";
             PreparedStatement pst = conn.prepareStatement(sql);
-            ResultSet result = pst.executeQuery();
-            while (result.next()) {
-                int id = result.getInt("id");
-                String product_name = result.getString("ten_SP");
-                String url_image = result.getString("url_anh");
-                float price = result.getFloat("gia");
-                String category = result.getString("ten_loai");
-                int is_active = result.getInt("is_active");
-                String created_date = result.getString("createdAt");
-                list_product.add(new ProductDTO(id, product_name, url_image, price, is_active, created_date, category));
+            ResultSet rs = pst.executeQuery();
+
+            products = new ArrayList<>();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String product_name = rs.getString("ten_SP");
+                String url_image = rs.getString("url_anh");
+                float price = rs.getFloat("gia");
+                int is_active = rs.getInt("is_active");
+                int quantity = rs.getInt("so_luong");
+                LocalDateTime createAt = rs.getTimestamp("createdAt").toLocalDateTime();
+                int category_id = rs.getInt("LoaiSanPham_id");
+                products.add(
+                        new ProductDTO(id, product_name, url_image, price, is_active, quantity, createAt, category_id));
             }
             mysqlConnect.closeConnection(conn);
-            return list_product;
         } catch (Exception e) {
             System.out.println(e);
         }
-        return null;
+        return products;
     }
 
-    // public static void main(String[] args) {
-    // ArrayList<ProductDTO> list = get_all_product();
-    // for (ProductDTO productDTO : list) {
-    // System.out.println(productDTO.getProduct_name());
-    // }
-    // }
+    public ProductDTO getProductByID(int product_id) {
+        ProductDTO productDTO = null;
+        try {
+            Connection conn = mysqlConnect.getConnection();
+            String sql = "Select * from SanPham Where id = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, product_id);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String product_name = rs.getString("ten_SP");
+                float price = rs.getFloat("gia");
+                productDTO = new ProductDTO(id, product_name, price);
+            }
+            mysqlConnect.closeConnection(conn);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return productDTO;
+    }
+
+    public ArrayList<ProductDTO> getProductByCategory(int category) {
+        ArrayList<ProductDTO> products = null;
+        try {
+            Connection conn = mysqlConnect.getConnection();
+            String sql = "Select * from SanPham Where LoaiSanPham_id = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, category);
+            ResultSet rs = pst.executeQuery();
+
+            products = new ArrayList<>();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String product_name = rs.getString("ten_SP");
+                String url_image = rs.getString("url_anh");
+                float price = rs.getFloat("gia");
+                int is_active = rs.getInt("is_active");
+                int quantity = rs.getInt("so_luong");
+                LocalDateTime createAt = rs.getTimestamp("createdAt").toLocalDateTime();
+                int category_id = rs.getInt("LoaiSanPham_id");
+                products.add(
+                        new ProductDTO(id, product_name, url_image, price, is_active, quantity, createAt, category_id));
+            }
+            mysqlConnect.closeConnection(conn);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return products;
+    }
+
+    public boolean setProductQuantity(int product_id, int quantity) {
+        boolean rs = false;
+        try {
+            Connection conn = mysqlConnect.getConnection();
+            String sql = "Update SanPham set so_luong = ? Where id = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(2, product_id);
+            pst.setInt(1, quantity);
+            int result = pst.executeUpdate();
+            if (result > 0) {
+                rs = true;
+            }
+            mysqlConnect.closeConnection(conn);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return rs;
+    }
 
 }

@@ -324,16 +324,17 @@ public class Receipt extends javax.swing.JPanel {
                 BoxTable.setLayout(new javax.swing.BoxLayout(BoxTable, javax.swing.BoxLayout.LINE_AXIS));
 
                 TableReceipt.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-                TableReceipt.setModel(new javax.swing.table.DefaultTableModel(
-                                new Object[][] {
-                                                { "test", "test", "test", "test", "test" },
-                                                { null, null, null, null, null },
-                                                { null, null, null, null, null },
-                                                { null, null, null, null, null }
-                                },
-                                new String[] {
-                                                "ID", "Nhà cung cấp", "Nhân viên", "Tổng đơn hàng", "Ngày tạo"
-                                }));
+                // TableReceipt.setModel(new javax.swing.table.DefaultTableModel(
+                //                 new Object[][] {
+                //                                 { "test", "test", "test", "test", "test" },
+                //                                 { null, null, null, null, null },
+                //                                 { null, null, null, null, null },
+                //                                 { null, null, null, null, null }
+                //                 },
+                //                 new String[] {
+                //                                 "ID", "Nhà cung cấp", "Nhân viên", "Tổng đơn hàng", "Ngày tạo"
+                //                 }));
+                TableReceipt.setShowGrid(true);
                 TableReceipt.getTableHeader().setReorderingAllowed(false);
                 jScrollPane1.setViewportView(TableReceipt);
 
@@ -497,7 +498,7 @@ public class Receipt extends javax.swing.JPanel {
                 ValueEndDay.setDate(null);
                 ValueTotalStart.setText("");
                 ValueTotalEnd.setText("");
-                
+
                 ArrayList<EnterCouponDTO> list_enterCoupon = EnterCouponBUS.getAllEnterCouponsBUS();
                 for (EnterCouponDTO enterCoupon : list_enterCoupon) {
                         Object[] rowData = {

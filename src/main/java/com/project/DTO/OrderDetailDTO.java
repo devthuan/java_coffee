@@ -6,6 +6,11 @@ public class OrderDetailDTO {
     private int product_id;
     private int order_id;
     
+    public OrderDetailDTO(int quantity, int product_id) {
+        this.quantity = quantity;
+        this.product_id = product_id;
+    }
+
     public OrderDetailDTO(int id, int quantity, int product_id, int order_id) {
         this.id = id;
         this.quantity = quantity;
