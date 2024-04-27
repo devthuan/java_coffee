@@ -60,7 +60,7 @@ public class BuyProduct extends JPanel implements AddProductListener {
                                                 JOptionPane.OK_CANCEL_OPTION);
                                 if (choice == JOptionPane.YES_OPTION) {
                                         int paymentMethod_id = pnCarts.PanelBottom.getSelectedPaymentMethodID();
-                                        int account_id = 1;
+                                        int account_id = 2;
 
                                         OrderDTO orderDTO = new OrderDTO("pending", paymentMethod_id, account_id);
                                         ArrayList<OrderDetailDTO> orderDetails = new ArrayList<>();

@@ -306,7 +306,6 @@ public class EditOrderForm extends javax.swing.JFrame {
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.setMaximumSize(new java.awt.Dimension(32767, 22));
         jPanel7.setMinimumSize(new java.awt.Dimension(200, 22));
-        jPanel7.setPreferredSize(new java.awt.Dimension(200, 22));
         jPanel7.setLayout(new java.awt.BorderLayout());
 
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
@@ -377,6 +376,7 @@ public class EditOrderForm extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setResizable(false);
         setVisible(true);
     }
 
