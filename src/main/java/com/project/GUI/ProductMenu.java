@@ -4,6 +4,22 @@
  * and open the template in the editor.
  */
 package com.project.GUI;
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+
+import com.project.BUS.ProductBUS;
+import com.project.DTO.ProductDTO;
 
 /**
  *
@@ -14,9 +30,41 @@ public class ProductMenu extends javax.swing.JPanel {
     /**
      * Creates new form ProductMenu
      */
+    
     public ProductMenu() {
         initComponents();
-    }
+
+        
+        ArrayList<ProductDTO> listProduct = ProductBUS.getAllProduct();
+        
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("MÃ HÀNG");
+        model.addColumn("TÊN SẢN PHẨM");
+        model.addColumn("ẢNH");
+        model.addColumn("GIÁ");
+        model.addColumn("");
+        model.addColumn("SỐ LƯỢNG");
+        model.addColumn("NGÀY");
+        model.addColumn("LOẠI SẢN PHẨM");
+        
+        for (ProductDTO productDTO : listProduct) {
+                        Object[] rowData = {
+                                        productDTO.getId(),
+                                        productDTO.getProduct(),
+                                        productDTO.getImg(),
+                                        productDTO.getPrice(),
+                                        productDTO.getHoatdong(),
+                                        productDTO.getSoluong(),
+                                        productDTO.getNgaylap(),
+                                        productDTO.getLoaisp()
+                                     
+                        };
+                        model.addRow(rowData);
+                
+        }
+        Table.setModel(model);
+        }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -64,6 +112,7 @@ public class ProductMenu extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(1085, 768));
         setLayout(new java.awt.BorderLayout());
+        
 
         PanelSouth.setBackground(new java.awt.Color(255, 255, 255));
         PanelSouth.setMinimumSize(new java.awt.Dimension(1085, 608));
@@ -142,24 +191,38 @@ public class ProductMenu extends javax.swing.JPanel {
         Table.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][] {
                         { null, null, null, null, null, null, null, null },
-                        { null, null, null, null, null, null, null, null },
-                        { null, null, null, null, null, null, null, null },
-                        { null, null, null, null, null, null, null, null }
+                        
                 },
                 new String[] {
                         "MÃ HÀNG", "TÊN SẢN PHẨM", "ẢNH", "GIÁ", "", "SỐ LƯỢNG", "NGÀY", "LOẠI SẢN PHẨM"
                 }) {
             Class[] types = new Class[] {
-                    java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class,
+                    java.lang.String.class, java.lang.String.class, javax.swing.ImageIcon.class, java.lang.String.class,
                     java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+        
+        
+
+            class Img extends DefaultTableCellRenderer {
+                public JLabel getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                                                               boolean hasFocus, int row, int column) {
+                    JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    if (value instanceof ImageIcon) {
+                        label.setIcon((ImageIcon) value);
+                        label.setText("");
+                    }
+                    return label;
+                }
+            }
 
             public Class getColumnClass(int columnIndex) {
                 return types[columnIndex];
             }
         });
+        //Table.getColumnModel().getColumn(2).setCellRenderer(new Img());
         Table.setGridColor(new java.awt.Color(204, 204, 204));
         Table.setRowHeight(30);
+        
         jScrollPane1.setViewportView(Table);
 
         PanelTable.add(jScrollPane1);
@@ -240,6 +303,11 @@ public class ProductMenu extends javax.swing.JPanel {
         btnThem.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnThem.setIconTextGap(10);
         btnThem.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnThemActionPerformed(evt);
+                }
+            });
         Btn1.add(btnThem);
 
         btnChitiet.setBackground(new java.awt.Color(255, 255, 255));
@@ -250,7 +318,12 @@ public class ProductMenu extends javax.swing.JPanel {
         btnChitiet.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnChitiet.setIconTextGap(10);
         btnChitiet.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnChitiet.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnChitietActionPerformed(evt);
+                }});
         Btn1.add(btnChitiet);
+
 
         btnXoa.setBackground(new java.awt.Color(255, 255, 255));
         btnXoa.setIcon(new javax.swing.ImageIcon(("src/assets/icon/remove.png"))); // NOI18N
@@ -260,6 +333,13 @@ public class ProductMenu extends javax.swing.JPanel {
         btnXoa.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnXoa.setIconTextGap(10);
         btnXoa.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnXoaActionPerformed(evt);
+                }
+
+               
+            });
         Btn1.add(btnXoa);
 
         btnXuat.setBackground(new java.awt.Color(255, 255, 255));
@@ -288,7 +368,27 @@ public class ProductMenu extends javax.swing.JPanel {
         btnTimkiem.setBackground(new java.awt.Color(255, 255, 255));
         btnTimkiem.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnTimkiem.setIcon(new javax.swing.ImageIcon("./src/assets/icon/magnifying-glass.png"));
+
         txt.setPreferredSize(new java.awt.Dimension(90, 22));
+        txt.getDocument().addDocumentListener(new DocumentListener() {
+                @Override
+                public void insertUpdate(DocumentEvent e) {
+                    updateLabel();
+                }
+    
+                @Override
+                public void removeUpdate(DocumentEvent e) {
+                    updateLabel();
+                }
+    
+                @Override
+                public void changedUpdate(DocumentEvent e) {
+                    updateLabel();
+                }
+    
+               
+            });
+        
 
         btnRefresh.setBackground(new java.awt.Color(255, 255, 255));
         btnRefresh.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -354,6 +454,123 @@ public class ProductMenu extends javax.swing.JPanel {
     private void rbtnCfActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {
+        AddForm formadd = new AddForm();
+        formadd.setVisible(true);
+   }
+   private void btnChitietActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        ChitietForm formChitiet = new ChitietForm();
+        formChitiet.setVisible(true);
+        /*int selectedRow = Table.getSelectedRow();
+                if (selectedRow != -1) { // Nếu có hàng được chọn
+                    String id = (String) Table.getValueAt(selectedRow, 0);
+                    String product_name = (String) Table.getValueAt(selectedRow, 1);
+                    String pic = (String) Table.getValueAt(selectedRow, 2);
+                    String price = (String) Table.getValueAt(selectedRow, 3);
+                    String active = (String) Table.getValueAt(selectedRow, 4);
+                    String quantity = (String) Table.getValueAt(selectedRow, 5);
+                    String date = (String) Table.getValueAt(selectedRow, 6);
+                    String lsp = (String) Table.getValueAt(selectedRow, 7);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Vui lòng chọn một hàng để hiển thị thông tin.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                }
+            }*/
+        }
+   public static void AddRow (Object[] dataRow) {
+        DefaultTableModel model = (DefaultTableModel)Table.getModel();
+        model.addRow(dataRow);
+   }
+   
+//    sự kiện nút xoá
+   private void btnXoaActionPerformed(ActionEvent evt) {
+       int selectedRow = Table.getSelectedRow();
+       if (selectedRow != -1) {
+                try {
+                        int id = (int) Table.getValueAt(selectedRow, 0);
+                        int option = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa ? ","Xác nhận", JOptionPane.YES_NO_OPTION);
+                        if (option == JOptionPane.YES_OPTION) {
+                                ProductBUS.deleteProductBUS(id);
+                        }
+                } catch (Exception e) {
+                        // TODO: handle exception
+                }
+       }else {
+        JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần xóa");
+       }
+}
+
+//    private void txtKeyReleased(java.awt.event.KeyEvent evt) {                                  
+        // String search = txt.getText();
+        // DefaultTableModel model = (DefaultTableModel)Table.getModel();
+        // System.out.println(search);
+        // for (int row=0; row<model.getRowCount(); row++) {
+        //         for (int column=0; column<model.getColumnCount(); column++ ) {
+        //                 String value = String.valueOf(model.getValueAt(row, column));
+        //                 if(value.equals(search)) {
+        //                         Table.changeSelection(row, column, false, false);
+        //                         Table.setDefaultRenderer(Object.class, new Highlight());
+                                
+        //                         return;
+        //                 }
+        //                 else if (search.equals("")) {
+        //                         Table.changeSelection(row, column, false, false);
+        //                 }
+        //         }
+        // }
+        // Table.repaint();
+
+//    } 
+
+        private void updateLabel() {
+                String search = txt.getText();
+                DefaultTableModel model = (DefaultTableModel)Table.getModel();
+                model.setRowCount(0);
+                
+                ArrayList<ProductDTO> listProduct = ProductBUS.searchProductbyNameBUS(search);
+
+                for (ProductDTO productDTO : listProduct) {
+                        Object[] rowData = {
+                                        productDTO.getId(),
+                                        productDTO.getProduct(),
+                                        productDTO.getImg(),
+                                        productDTO.getPrice(),
+                                        productDTO.getHoatdong(),
+                                        productDTO.getSoluong(),
+                                        productDTO.getNgaylap(),
+                                        productDTO.getLoaisp()
+
+                        };
+                        model.addRow(rowData);
+
+        }
+
+        }
+  private class Highlight extends DefaultTableCellRenderer {
+
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        public Component getTableCellRendererComponent(JTable table, Object value, 
+                boolean isSelected, boolean hasFocus, int row, int column){
+        
+              Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+              String searchText = txt.getText();
+              String cellValue = String.valueOf(value);
+
+              
+              // Highlight the cell with yellow background if the cell value matches the search text
+              if(cellValue.equals(searchText) ){
+                
+                  c.setBackground(new Color(204,204,204));
+              }
+              else{ c.setBackground(table.getBackground()); }
+              for (int i = 0; i < table.getColumnCount(); i++) {
+                table.getColumnModel().getColumn(i).setCellRenderer(renderer);
+            }
+              
+              return c;
+        
+        }
+
+  }
 
     // Variables declaration - do not modify
     private javax.swing.JPanel Btn;
@@ -367,7 +584,7 @@ public class ProductMenu extends javax.swing.JPanel {
     private javax.swing.JPanel PanelTimkiem;
     private javax.swing.JPanel PanellblTimkiem;
     private javax.swing.JPanel PanellblTimkiem1;
-    private javax.swing.JTable Table;
+    private static javax.swing.JTable Table;
     private javax.swing.JButton btnChitiet;
     private javax.swing.JButton btnLoc;
     private javax.swing.JButton btnRefresh;
@@ -390,4 +607,7 @@ public class ProductMenu extends javax.swing.JPanel {
     private javax.swing.JRadioButton rbtnTrs;
     private javax.swing.JTextField txt;
     // End of variables declaration
+
+
+    
 }
