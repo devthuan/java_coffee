@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import com.formdev.flatlaf.FlatClientProperties;
 
 public class Formatter {
-    public static String getFormatedPrice(Float price) {
+    public static String getFormatedPrice(float price) {
         NumberFormat nf = NumberFormat.getInstance(new Locale("vn", "VN"));
         return nf.format(price);
     }

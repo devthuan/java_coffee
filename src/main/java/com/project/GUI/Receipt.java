@@ -26,11 +26,13 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.mysql.cj.util.Util;
 import com.project.BUS.EnterCouponBUS;
 import com.project.BUS.SupplierBUS;
 import com.project.Common.Common;
 import com.project.DTO.EnterCouponDTO;
 import com.project.DTO.SupplierDTO;
+import com.project.Util.Formatter;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JDayChooser;
@@ -64,7 +66,8 @@ public class Receipt extends javax.swing.JPanel {
                                         enterCoupon.getNameEnterCoupon(),
                                         enterCoupon.getNameEmployee(),
                                         enterCoupon.getNameSupplier(),
-                                        Common.formatBigNumber(enterCoupon
+                                        // Common.formatBigNumber(enterCoupon
+                                        Formatter.getFormatedPrice(enterCoupon
                                                         .getTotalValues()),
                                         Common.formatedDateTime(enterCoupon.getCreatedAt())
                         };
@@ -325,15 +328,15 @@ public class Receipt extends javax.swing.JPanel {
 
                 TableReceipt.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 // TableReceipt.setModel(new javax.swing.table.DefaultTableModel(
-                //                 new Object[][] {
-                //                                 { "test", "test", "test", "test", "test" },
-                //                                 { null, null, null, null, null },
-                //                                 { null, null, null, null, null },
-                //                                 { null, null, null, null, null }
-                //                 },
-                //                 new String[] {
-                //                                 "ID", "Nhà cung cấp", "Nhân viên", "Tổng đơn hàng", "Ngày tạo"
-                //                 }));
+                // new Object[][] {
+                // { "test", "test", "test", "test", "test" },
+                // { null, null, null, null, null },
+                // { null, null, null, null, null },
+                // { null, null, null, null, null }
+                // },
+                // new String[] {
+                // "ID", "Nhà cung cấp", "Nhân viên", "Tổng đơn hàng", "Ngày tạo"
+                // }));
                 TableReceipt.setShowGrid(true);
                 TableReceipt.getTableHeader().setReorderingAllowed(false);
                 jScrollPane1.setViewportView(TableReceipt);
@@ -469,6 +472,7 @@ public class Receipt extends javax.swing.JPanel {
         private void BtnDetailMouseClicked(java.awt.event.MouseEvent evt) {
                 int selectedRow = TableReceipt.getSelectedRow();
                 if (selectedRow != -1) {
+
                         try {
                                 int id = (int) TableReceipt.getValueAt(selectedRow, 0);
                                 String nameEnterCoupon = (String) TableReceipt.getValueAt(selectedRow, 1);
@@ -478,7 +482,7 @@ public class Receipt extends javax.swing.JPanel {
                                 String createdAt = (String) TableReceipt.getValueAt(selectedRow, 5);
                                 LocalDateTime createAtformat = Common.convertStringtoLocalDateTime(createdAt);
                                 EnterCouponDTO data = new EnterCouponDTO(id, nameEnterCoupon, nameEmployee,
-                                                nameSupplier, Float.parseFloat(total),
+                                                nameSupplier, Common.parseFormattedPrice(total),
                                                 createAtformat);
                                 new FormDetailReceipt(data).setVisible(true);
                         } catch (NumberFormatException e) {
@@ -506,7 +510,7 @@ public class Receipt extends javax.swing.JPanel {
                                         enterCoupon.getNameEnterCoupon(),
                                         enterCoupon.getNameEmployee(),
                                         enterCoupon.getNameSupplier(),
-                                        Common.formatBigNumber(enterCoupon
+                                        Formatter.getFormatedPrice(enterCoupon
                                                         .getTotalValues()),
                                         Common.formatedDateTime(enterCoupon.getCreatedAt())
                         };
@@ -596,17 +600,18 @@ public class Receipt extends javax.swing.JPanel {
                                 int id = (int) TableReceipt.getValueAt(selectedRow, 0);
                                 // Hiển thị hộp thoại xác nhận
                                 int option = JOptionPane.showConfirmDialog(null,
-                                                "Bạn có chắc chắn muốn xoá nhà cung cấp này?", "Xác nhận xoá",
+                                                "Bạn có chắc chắn muốn xoá phiếu nhập cấp này?", "Xác nhận xoá",
                                                 JOptionPane.YES_NO_OPTION);
                                 if (option == JOptionPane.YES_OPTION) {
                                         boolean check_remove = EnterCouponBUS.removeEnterCouponBUS(id);
                                         if (check_remove) {
                                                 JOptionPane.showMessageDialog(null,
-                                                                "Nhà cung cấp đã được xoá thành công.");
+                                                                "phiếu nhập cấp đã được xoá thành công.");
                                                 // Nếu xoá thành công, cập nhật lại JTable hoặc các thành phần khác cần
                                                 // thiết
                                         } else {
-                                                JOptionPane.showMessageDialog(null, "Không thể xoá nhà cung cấp này.");
+                                                JOptionPane.showMessageDialog(null,
+                                                                "Không thể xoá nhà phiếu nhập này.");
                                         }
                                 }
                         } catch (NumberFormatException e) {

@@ -5,12 +5,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -21,6 +23,10 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
 
 public class Common {
 
@@ -98,5 +104,25 @@ public class Common {
         return true;
     }
 
-   
+    public static String getFormatedPriceDouble(double price) {
+        NumberFormat nf = NumberFormat.getInstance(new Locale("vn", "VN"));
+        return nf.format(price);
+    }
+
+    public static float parseFormattedPrice(String formattedPrice) {
+        NumberFormat nf = NumberFormat.getInstance(new Locale("vn", "VN"));
+        Number number = null; // Khởi tạo biến number
+        try {
+            number = nf.parse(formattedPrice);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            // Xử lý ngoại lệ ở đây nếu cần
+        }
+        if (number != null) {
+            return number.floatValue();
+        } else {
+            return 0.0f; // Hoặc giá trị mặc định khác tùy ý
+        }
+    }
+
 }

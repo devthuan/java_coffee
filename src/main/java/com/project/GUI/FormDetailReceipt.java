@@ -41,6 +41,7 @@ import com.project.BUS.EnterCouponBUS;
 import com.project.Common.Common;
 import com.project.DTO.DetailEnterCouponDTO;
 import com.project.DTO.EnterCouponDTO;
+import com.project.Util.Formatter;
 
 /**
  *
@@ -61,7 +62,7 @@ public class FormDetailReceipt extends javax.swing.JFrame {
         ValueDate.setText(String.valueOf(Common.formatedDateTime(data.getCreatedAt())));
         ValueCasher.setText(String.valueOf(data.getNameSupplier()));
         ValuePaymentMethod.setText(String.valueOf(data.getNameEmployee()));
-        ValueTotal.setText(String.valueOf(Common.formatBigNumber(data.getTotalValues()) + " VNĐ"));
+        ValueTotal.setText(String.valueOf(Formatter.getFormatedPrice(data.getTotalValues()) + " VNĐ"));
 
         for (DetailEnterCouponDTO detailEnterCouponDTO : detail_enterCoupon) {
             JLabel ValueNameCopy = new JLabel();
@@ -84,7 +85,7 @@ public class FormDetailReceipt extends javax.swing.JFrame {
 
             ValuePriceCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
             ValuePriceCopy.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-            ValuePriceCopy.setText(String.valueOf(detailEnterCouponDTO.getPrice()));
+            ValuePriceCopy.setText(String.valueOf(Common.getFormatedPriceDouble(detailEnterCouponDTO.getPrice())));
             BoxProductItemCopy.add(ValuePriceCopy);
 
             ValueQuantityCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -94,7 +95,8 @@ public class FormDetailReceipt extends javax.swing.JFrame {
 
             ValueSumMoneyCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
             ValueSumMoneyCopy.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-            ValueSumMoneyCopy.setText(String.valueOf(Common.formatBigNumber(detailEnterCouponDTO.getTotalPrice())));
+            ValueSumMoneyCopy.setText(String.valueOf(Common.getFormatedPriceDouble(
+                    detailEnterCouponDTO.getTotalPrice())));
             BoxProductItemCopy.add(ValueSumMoneyCopy);
 
             jPanel1.add(BoxProductItemCopy);
@@ -533,7 +535,8 @@ public class FormDetailReceipt extends javax.swing.JFrame {
             for (DetailEnterCouponDTO detailEnterCouponDTO : detail_enterCoupon) {
                 table.addCell(createCell(detailEnterCouponDTO.getNameIngredient(), TextAlignment.CENTER));
                 table.addCell(createCell(String.valueOf(detailEnterCouponDTO.getQuantity()), TextAlignment.CENTER));
-                table.addCell(createCell(String.valueOf(detailEnterCouponDTO.getTotalPrice()), TextAlignment.CENTER));
+                table.addCell(createCell(String.valueOf(Common.getFormatedPriceDouble(
+                        detailEnterCouponDTO.getTotalPrice())), TextAlignment.CENTER));
 
             }
 
