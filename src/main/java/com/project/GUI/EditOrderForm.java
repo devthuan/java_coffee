@@ -347,10 +347,20 @@ public class EditOrderForm extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int orderID = Integer.parseInt(OrderID.getText());
+
                 if (new OrderBUS().updateStatus(orderID, cbStatus.getSelectedItem().toString())) {
+                    if (cbStatus.getSelectedItem().toString().equals("cancelled")) {
+                        ProductBUS productBUS = new ProductBUS();
+
+                        for (int row = 0; row < TableOrderDetail.getRowCount(); row++) {
+                            int productID = Integer.parseInt(TableOrderDetail.getValueAt(row, 1).toString());
+                            int quantity = Integer.parseInt(TableOrderDetail.getValueAt(row, 4).toString());
+                            productBUS.increaseProductQuantity(productID, quantity);
+                        }
+                    }
+
                     JOptionPane.showMessageDialog(null, "Cập nhật thành công", "Thông báo",
                             JOptionPane.INFORMATION_MESSAGE);
-                    dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "Có lỗi xảy ra", "Lỗi",
                             JOptionPane.ERROR_MESSAGE);

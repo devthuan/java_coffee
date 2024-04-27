@@ -223,6 +223,7 @@ public class OrderMenu extends javax.swing.JPanel {
                 cbSearch.setMaximumSize(new java.awt.Dimension(60, 30));
                 cbSearch.setMinimumSize(new java.awt.Dimension(60, 30));
                 cbSearch.setPreferredSize(new java.awt.Dimension(60, 50));
+                cbSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
                 cbSearch.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -380,9 +381,16 @@ public class OrderMenu extends javax.swing.JPanel {
                 lblPaymentMethods.setMinimumSize(new java.awt.Dimension(200, 20));
                 lblPaymentMethods.setPreferredSize(new java.awt.Dimension(200, 20));
 
+                // Set cbbox payment methods model
                 cbPaymentMethods.setFont(new java.awt.Font("Arial", 0, 14));
-                cbPaymentMethods.setModel(new javax.swing.DefaultComboBoxModel<>(
-                                new String[] { "Tất cả", "Tiền mặt", "Thẻ ngân hàng", "Chuyển khoản" }));
+                ArrayList<PaymentMethodDTO> pmMethodlist = new PaymentMethodBUS().getAll();
+                String[] pmMethodStrings = new String[pmMethodlist.size() + 1];
+                pmMethodStrings[0] = "Tất cả";
+                for (int i = 1; i <= pmMethodlist.size(); i++) {
+                        pmMethodStrings[i] = pmMethodlist.get(i - 1).getPayment_name();
+                }
+                cbPaymentMethods.setModel(new javax.swing.DefaultComboBoxModel<>(pmMethodStrings));
+
                 cbPaymentMethods.setBorder(
                                 javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
                 cbPaymentMethods.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

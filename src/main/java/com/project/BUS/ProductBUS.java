@@ -42,10 +42,20 @@ public class ProductBUS {
         return products;
     }
 
-    public boolean setProductQuantity(int product_id, int quantity) {
+    public boolean increaseProductQuantity(int product_id, int quantity) {
         boolean rs = false;
         try {
-            rs = productDAO.setProductQuantity(product_id, quantity);
+            rs = productDAO.increaseProductQuantity(product_id, quantity);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        return rs;
+    }
+
+    public boolean decreaseProductQuantity(int product_id, int quantity) {
+        boolean rs = false;
+        try {
+            rs = productDAO.decreaseProductQuantity(product_id, quantity);
         } catch (Exception e) {
             // TODO: handle exception
         }

@@ -75,8 +75,7 @@ public class BuyProduct extends JPanel implements AddProductListener {
                                                 for (ProductDTO product : pnCarts.cartItems.keySet()) {
                                                         CartItem cartItem = pnCarts.cartItems.get(product);
                                                         int quantity = (int) cartItem.SpinnerQuantity.getValue();
-                                                        productBUS.setProductQuantity(product.getId(),
-                                                                        product.getQuantity() - quantity);
+                                                        productBUS.decreaseProductQuantity(product.getId(), quantity);
                                                 }
 
                                                 // Reset
@@ -213,21 +212,26 @@ class PanelCarts extends JPanel {
         }
 
         public void addCartItem(ProductDTO product) {
-                if (cartItems.get(product) == null) {
-                        CartItem cartItem = new CartItem(product);
-
+                CartItem cartItem = cartItems.get(product);
+                if (cartItem == null) {
+                        cartItem = new CartItem(product);
                         cartItems.put(product, cartItem);
 
                         CartList.add(cartItem);
                         CartList.revalidate();
                         CartList.repaint();
                 } else {
-                        CartItem cartItem = cartItems.get(product);
+
                         int currentQuty = (int) cartItem.SpinnerQuantity.getValue();
                         if (currentQuty < product.getQuantity()) {
                                 cartItem.SpinnerQuantity.setValue(currentQuty + 1);
+                        } else {
+                                JOptionPane.showMessageDialog(null, "Số lượng sản phẩm đạt tới giới hạn",
+                                                "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+
                         }
                 }
+                cartItem.SpinnerQuantity.requestFocus();
         }
 
         public void removeCartItem(ProductDTO product) {

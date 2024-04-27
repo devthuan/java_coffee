@@ -91,11 +91,30 @@ public class ProductDAO {
         return products;
     }
 
-    public boolean setProductQuantity(int product_id, int quantity) {
+    public boolean increaseProductQuantity(int product_id, int quantity) {
         boolean rs = false;
         try {
             Connection conn = mysqlConnect.getConnection();
-            String sql = "Update SanPham set so_luong = ? Where id = ?";
+            String sql = "Update SanPham set so_luong = so_luong + ? Where id = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(2, product_id);
+            pst.setInt(1, quantity);
+            int result = pst.executeUpdate();
+            if (result > 0) {
+                rs = true;
+            }
+            mysqlConnect.closeConnection(conn);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return rs;
+    }
+
+    public boolean decreaseProductQuantity(int product_id, int quantity) {
+        boolean rs = false;
+        try {
+            Connection conn = mysqlConnect.getConnection();
+            String sql = "Update SanPham set so_luong = so_luong - ? Where id = ?";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setInt(2, product_id);
             pst.setInt(1, quantity);
