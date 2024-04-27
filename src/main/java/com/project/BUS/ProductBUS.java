@@ -51,4 +51,34 @@ public class ProductBUS {
         }
         return rs;
     }
+
+    public static ArrayList<ProductDTO> getAllProduct() {
+        return ProductDAO.allProduct();
+    }
+
+    public static ArrayList<ProductDTO> searchProductbyNameBUS(String keyword) {
+        return ProductDAO.searchProductDAO(keyword);
+    }
+
+    public static boolean createProductBUS(ProductDTO newProductDTO) {
+        return ProductDAO.addProductDAO(newProductDTO);
+    }
+
+    public static boolean deleteProductBUS(int id) {
+        return ProductDAO.deleteProductDAO(id);
+    }
+
+    public static boolean updatedProductBUS(ProductDTO updatedProduct) {
+        return ProductDAO.updateProductDAO(updatedProduct);
+    }
+
+    public static void main(String[] args) {
+        ArrayList<ProductDTO> getAllProduct = searchProductbyNameBUS("t");
+
+        for (ProductDTO productDTO : getAllProduct) {
+            System.out.println(productDTO.getId());
+            System.out.println(productDTO.getCategory_name());
+        }
+    }
+
 }

@@ -1,5 +1,9 @@
 package com.project.DTO;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class ProductDTO {
@@ -11,26 +15,53 @@ public class ProductDTO {
     private int totalSold;
     private int is_active;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private int category_id;
+    private String category_name;
 
     public ProductDTO(String product_name, float price) {
         this.product_name = product_name;
         this.price = price;
     }
 
-    public ProductDTO(int id, String product_name, String url_image, Float price, int is_active, int quantity,
-            LocalDateTime createdAt, int category_id) {
+    // get product
+    public ProductDTO(int id, String product_name, String url_image, float gia, int is_active, int quantity,
+            int category_id, String category_name, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.product_name = product_name;
+        this.url_image = url_image;
+        this.price = gia;
+        this.is_active = is_active;
+        this.quantity = quantity;
+        this.category_name = category_name;
+        this.category_id = category_id;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    // create product
+    public ProductDTO(String product_name, String url_image, Float price, int quantity,
+            int category_id) {
+        this.product_name = product_name;
+        this.url_image = url_image;
+        this.price = price;
+        this.quantity = quantity;
+        this.category_id = category_id;
+    }
+
+    // update product
+    public ProductDTO(int id, String product_name, String url_image, Float price, int quantity, int category_id) {
         this.id = id;
         this.product_name = product_name;
         this.url_image = url_image;
         this.price = price;
-        this.is_active = is_active;
         this.quantity = quantity;
-        this.createdAt = createdAt;
         this.category_id = category_id;
+
     }
 
     public ProductDTO(int id, String product_name, String url_image, Float price, int is_active, int quantity,
+            int category_id,
             LocalDateTime createdAt) {
         this.id = id;
         this.product_name = product_name;
@@ -38,6 +69,7 @@ public class ProductDTO {
         this.price = price;
         this.is_active = is_active;
         this.quantity = quantity;
+        this.category_id = category_id;
         this.createdAt = createdAt;
     }
 
@@ -88,6 +120,14 @@ public class ProductDTO {
         return totalSold;
     }
 
+    public String getCategory_name() {
+        return category_name;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -122,6 +162,14 @@ public class ProductDTO {
 
     public void setTotalSold(int totalSold) {
         this.totalSold = totalSold;
+    }
+
+    public void setCategory_name(String category_name) {
+        this.category_name = category_name;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override

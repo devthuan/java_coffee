@@ -2,6 +2,9 @@ package com.project.DAO;
 
 import java.sql.*;
 
+import javax.swing.JOptionPane;
+
+
 public class mysqlConnect {
     public static Connection getConnection() {
         Connection c = null;
@@ -15,10 +18,10 @@ public class mysqlConnect {
             String password = "thuan.java";
             // Tao ket noi
             c = DriverManager.getConnection(url, userName, password);
+            
         } catch (Exception e) {
             // TODO: handle exception
-            // JOptionPane.showMessageDialog(null, "Không thể kết nối đến cơ sở dữ liệu
-            // !","Lỗi", JOptionPane.ERROR_MESSAGE);
+             JOptionPane.showMessageDialog(null, "Không thể kết nối đến cơ sở dữ liệu!","Lỗi", JOptionPane.ERROR_MESSAGE);
         }
         return c;
     }

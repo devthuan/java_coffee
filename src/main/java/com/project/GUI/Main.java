@@ -19,9 +19,6 @@ import javax.swing.UIManager;
 
 import com.formdev.flatlaf.FlatLightLaf;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseAdapter;
-
 // import org.apache.poi.ss.usermodel.Color;
 
 public class Main extends javax.swing.JFrame {
