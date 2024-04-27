@@ -9,10 +9,12 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import com.project.BUS.EmployeeBUS;
 import com.project.BUS.OrderBUS;
 import com.project.BUS.PaymentMethodBUS;
 import com.project.BUS.ProductBUS;
 import com.project.Common.Common;
+import com.project.DTO.EmployeeDTO;
 import com.project.DTO.OrderDTO;
 import com.project.DTO.OrderDetailDTO;
 import com.project.DTO.PaymentMethodDTO;
@@ -50,8 +52,13 @@ public class EditOrderForm extends javax.swing.JFrame {
     private void loadData(OrderDTO order) {
         PaymentMethodDTO paymentMethod = new PaymentMethodBUS().getByID(order.getPaymentMethod_id());
         PaymentMethod.setText(paymentMethod.getPayment_name());
-
         AccountID.setText(String.valueOf(order.getAcount_id()));
+
+        EmployeeDTO emp = new EmployeeBUS().getEmpByAccountID(order.getAcount_id());
+        if (emp != null) {
+            FullName.setText(emp.getName());
+        }
+
         CreatedAt.setText(String.valueOf(Common.formatedDateTime(order.getCreatedAt())));
         OrderID.setText(String.valueOf(order.getId()));
         cbStatus.setSelectedIndex(getSelectedStatus(cbStatus, order.getOrder_status()));
@@ -204,7 +211,7 @@ public class EditOrderForm extends javax.swing.JFrame {
         lblFullName.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel4.add(lblFullName);
 
-        FullName.setFont(new java.awt.Font("Arial", 0, 16));
+        FullName.setFont(new java.awt.Font("Arial", 0, 14));
         FullName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         FullName.setText("NULL");
         FullName.setDisabledTextColor(new java.awt.Color(51, 51, 51));
@@ -246,7 +253,7 @@ public class EditOrderForm extends javax.swing.JFrame {
         lblPaymentmethod.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel4.add(lblPaymentmethod);
 
-        PaymentMethod.setFont(new java.awt.Font("Arial", 0, 16));
+        PaymentMethod.setFont(new java.awt.Font("Arial", 0, 14));
         PaymentMethod.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         PaymentMethod.setText("Chuyển khoản");
         PaymentMethod.setDisabledTextColor(new java.awt.Color(51, 51, 51));
