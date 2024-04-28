@@ -47,7 +47,7 @@ public class EditUser extends javax.swing.JFrame {
                         jtfaddress.setText(user.getAddress());
                         cbPosition.setSelectedItem(user.getPosition());
                         jtfphone.setText(user.getPhone());
-                        jtfsalary.setText(String.valueOf(user.getSalary()));
+                        jtfsalary.setText(Common.formatBigNumber(user.getSalary()));
                         Timestamp timestamp = user.getDateCreate();
                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         String formattedDateTime = dateFormat.format(timestamp);
