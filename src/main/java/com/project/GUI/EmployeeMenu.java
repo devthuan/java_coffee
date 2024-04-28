@@ -58,7 +58,8 @@ public class EmployeeMenu extends javax.swing.JPanel {
         dtm.setRowCount(0);
         for (User user : users) {
             dtm.addRow(new Object[] { user.getId(), user.getName(), user.getDate(), user.getAddress(),
-                    user.getPosition(), user.getPhone(), user.getSalary(), user.getDateCreate(),
+                    user.getPosition(), user.getPhone(), com.project.Util.Formatter.getFormatedPrice(user.getSalary()),
+                    user.getDateCreate(),
                     user.getAccountId() });
         }
         Formatter.setBoldHeaderTable(jTable1);
