@@ -4,34 +4,24 @@
  */
 package com.project.GUI;
 
-import java.awt.Cursor;
-
-import java.util.ArrayList;
-import java.awt.*;
 import java.awt.Color;
-
+import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseAdapter;
+import com.formdev.flatlaf.FlatLightLaf;
 
 // import org.apache.poi.ss.usermodel.Color;
-
 
 public class Main extends javax.swing.JFrame {
 
         public Main() {
                 initComponents();
-
-                SwitchControl();
-//                Right.add(new BuyProduct()).setVisible(true);
-
-
+                setLocationRelativeTo(null);
         }
 
         /**
@@ -513,19 +503,19 @@ public class Main extends javax.swing.JFrame {
         }
 
         private void HomeLabelMouseClicked(java.awt.event.MouseEvent evt) {
-              
+
         }
 
         private void ProductLabelMouseClicked(java.awt.event.MouseEvent evt) {
-               
+
         }
 
         private void OrderLabelMouseClicked(java.awt.event.MouseEvent evt) {
-               
+
         }
 
         private void AccountLabelMouseClicked(java.awt.event.MouseEvent evt) {
-              
+
         }
 
         private void EmployeeLabelMouseClicked(java.awt.event.MouseEvent evt) {
@@ -535,15 +525,15 @@ public class Main extends javax.swing.JFrame {
         }
 
         private void ReceiptLabelMouseClicked(java.awt.event.MouseEvent evt) {
-               
+
         }
 
         private void SupplierLabelMouseClicked(java.awt.event.MouseEvent evt) {
-               
+
         }
 
         private void StatisticalLabelMouseClicked(java.awt.event.MouseEvent evt) {
-               
+
         }
 
         private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {
@@ -552,51 +542,20 @@ public class Main extends javax.swing.JFrame {
 
         private void WarehouseLabelMouseClicked(java.awt.event.MouseEvent evt) {
                 SwitchControl();
-            Right.add(new WareHouseMenu()).setVisible(true);
+                Right.add(new WareHouseMenu()).setVisible(true);
         }
 
         /**
          * @param args the command line arguments
          */
         public static void main(String args[]) {
-                /* Set the Nimbus look and feel */
-                // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
-                // (optional) ">
-                /*
-                 * If Nimbus (introduced in Java SE 6) is not available, stay with the default
-                 * look and feel.
-                 * For details see
-                 * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-                 */
+
+                FlatLightLaf.setup();
                 try {
-                        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
-                                        .getInstalledLookAndFeels()) {
-                                if ("Windows".equals(info.getName())) {
-                                        javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                                        break;
-                                }
-                        }
-                } catch (ClassNotFoundException ex) {
-                        java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE,
-                                        null, ex);
-                } catch (InstantiationException ex) {
-                        java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE,
-                                        null, ex);
-                } catch (IllegalAccessException ex) {
-                        java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE,
-                                        null, ex);
-                } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-                        java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE,
-                                        null, ex);
+                        UIManager.setLookAndFeel(new FlatLightLaf());
+                } catch (Exception ex) {
+                        System.err.println("Failed to initialize LaF");
                 }
-                // </editor-fold>
-                // </editor-fold>
-                // </editor-fold>
-                // </editor-fold>
-                // </editor-fold>
-                // </editor-fold>
-                // </editor-fold>
-                // </editor-fold>
 
                 /* Create and display the form */
                 java.awt.EventQueue.invokeLater(new Runnable() {

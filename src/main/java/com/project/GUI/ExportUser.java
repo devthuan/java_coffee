@@ -85,6 +85,7 @@ public class ExportUser extends javax.swing.JFrame {
         try {
             writeExcel(users, excelFilePath);
             JOptionPane.showMessageDialog(this, "Lưu vào excel thành công");
+            dispose();
         } catch (IOException e) {
             e.printStackTrace();
         }
