@@ -93,9 +93,9 @@ public class BuyProduct extends JPanel implements AddProductListener {
                         }
                 });
 
-                pnCarts.PanelBottom.btnPrint.addActionListener(e -> {
+                // pnCarts.PanelBottom.btnPrint.addActionListener(e -> {
 
-                });
+                // });
         }
 
         private void exportPDF() {
@@ -457,7 +457,7 @@ class PanelBottom extends javax.swing.JPanel {
                 TotalTitle = new javax.swing.JLabel();
                 Total = new javax.swing.JLabel();
                 GroupButtons = new javax.swing.JPanel();
-                btnPrint = new javax.swing.JButton();
+                // btnPrint = new javax.swing.JButton();
                 btnOrder = new javax.swing.JButton();
 
                 BoxPaymentMethods.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 0, 3, 0,
@@ -468,7 +468,7 @@ class PanelBottom extends javax.swing.JPanel {
 
                 PaymentMethodsTitle.setFont(new java.awt.Font("Arial", 0, 16));
                 PaymentMethodsTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                PaymentMethodsTitle.setText("Phương thức thanh toán:");
+                PaymentMethodsTitle.setText("Hình thức thanh toán:");
                 PaymentMethodsTitle.setToolTipText("");
                 PaymentMethodsTitle.setMaximumSize(new java.awt.Dimension(32767, 40));
                 PaymentMethodsTitle.setMinimumSize(new java.awt.Dimension(200, 40));
@@ -513,15 +513,15 @@ class PanelBottom extends javax.swing.JPanel {
                 GroupButtons.setMinimumSize(new java.awt.Dimension(380, 100));
                 GroupButtons.setPreferredSize(new java.awt.Dimension(380, 100));
 
-                btnPrint.setBackground(new java.awt.Color(0, 191, 255));
-                btnPrint.setFont(new java.awt.Font("Arial", 1, 20));
-                btnPrint.setForeground(new java.awt.Color(255, 255, 255));
-                btnPrint.setText("In");
-                btnPrint.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                btnPrint.setMaximumSize(new java.awt.Dimension(80, 50));
-                btnPrint.setMinimumSize(new java.awt.Dimension(80, 50));
-                btnPrint.setPreferredSize(new java.awt.Dimension(80, 50));
-                GroupButtons.add(btnPrint);
+                // btnPrint.setBackground(new java.awt.Color(0, 191, 255));
+                // btnPrint.setFont(new java.awt.Font("Arial", 1, 20));
+                // btnPrint.setForeground(new java.awt.Color(255, 255, 255));
+                // btnPrint.setText("In");
+                // btnPrint.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                // btnPrint.setMaximumSize(new java.awt.Dimension(80, 50));
+                // btnPrint.setMinimumSize(new java.awt.Dimension(80, 50));
+                // btnPrint.setPreferredSize(new java.awt.Dimension(80, 50));
+                // GroupButtons.add(btnPrint);
 
                 btnOrder.setBackground(new java.awt.Color(255, 153, 102));
                 btnOrder.setFont(new java.awt.Font("Arial", 1, 18));
@@ -555,7 +555,7 @@ class PanelBottom extends javax.swing.JPanel {
         public javax.swing.JLabel Total;
         public javax.swing.JComboBox<String> cbPaymentMethod;
         public javax.swing.JButton btnOrder;
-        public javax.swing.JButton btnPrint;
+        // public javax.swing.JButton btnPrint;
         public javax.swing.JLabel TotalTitle;
         public javax.swing.JLabel PaymentMethodsTitle;
         public javax.swing.JPanel BoxPaymentMethods;

@@ -58,6 +58,16 @@ public class OrderBUS {
         }
         return orderDTOs;
     }
+    
+    public LinkedHashMap<OrderDTO, Float> getAllWithTotalByEmp_Name(String empName) {
+        LinkedHashMap<OrderDTO, Float> orderDTOs = null;
+        try {
+            orderDTOs = orderDAO.getAllWithTotalByEmp_Name(empName);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        return orderDTOs;
+    }
 
     public LinkedHashMap<OrderDTO, Float> getAllWithTotal() {
         LinkedHashMap<OrderDTO, Float> orderDTOs = null;

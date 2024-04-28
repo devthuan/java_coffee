@@ -32,9 +32,11 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.project.BUS.EmployeeBUS;
 import com.project.BUS.OrderBUS;
 import com.project.BUS.PaymentMethodBUS;
 import com.project.Common.Common;
+import com.project.DTO.EmployeeDTO;
 import com.project.DTO.OrderDTO;
 import com.project.DTO.PaymentMethodDTO;
 import com.project.Util.Formatter;
@@ -46,8 +48,10 @@ import com.project.Util.Formatter;
 public class OrderMenu extends javax.swing.JPanel {
         private static ArrayList<PaymentMethodDTO> paymentMethods = new PaymentMethodBUS().getAll();
         private LinkedHashMap<OrderDTO, Float> orders;
+        private ArrayList<EmployeeDTO> empList;
 
         private static OrderBUS orderBUS = new OrderBUS();
+        private static EmployeeBUS empBUS = new EmployeeBUS();
 
         public OrderMenu() {
                 initComponents();
@@ -55,24 +59,35 @@ public class OrderMenu extends javax.swing.JPanel {
         }
 
         private void loadData() {
-                orders = orderBUS.getAllWithTotal();
+                loadData(orderBUS.getAllWithTotal());
+        }
+
+        private void loadData(LinkedHashMap<OrderDTO, Float> orders) {
+                this.orders = orders;
                 if (orders != null) {
                         DefaultTableModel dtm = (DefaultTableModel) tbTableOrder.getModel();
                         dtm.setRowCount(0);
 
+                        ArrayList<Integer> accountID_List = new ArrayList<Integer>();
+                        for (OrderDTO o : orders.keySet()) {
+                                accountID_List.add(o.getAcount_id());
+                        }
+                        empList = empBUS.getEmpList_ByAccountID(accountID_List);
+
+                        int i = 0;
                         for (OrderDTO o : orders.keySet()) {
                                 Float total = orders.get(o);
 
                                 dtm.addRow(new Object[] {
                                                 o.getId(),
                                                 o.getAcount_id(),
+                                                empList.get(i++).getName(),
                                                 Formatter.getFormatedPrice(total),
                                                 paymentMethods.get(o.getPaymentMethod_id() - 1).getPayment_name(),
                                                 Common.formatedDateTime(o.getCreatedAt()),
                                                 o.getOrder_status()
                                 });
                         }
-
                         Formatter.centerAlignTableCells(tbTableOrder);
                 } else {
                         JOptionPane.showMessageDialog(this, "Có lỗi xảy ra!", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -218,7 +233,8 @@ public class OrderMenu extends javax.swing.JPanel {
 
                 cbSearch.setFont(new java.awt.Font("Arial", 0, 14));
                 cbSearch.setModel(
-                                new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã đơn hàng", "Tài khoản ID" }));
+                                new javax.swing.DefaultComboBoxModel<>(
+                                                new String[] { "Mã đơn hàng", "Tài khoản ID", "Họ tên nhân viên" }));
                 cbSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
                 cbSearch.setMaximumSize(new java.awt.Dimension(60, 30));
                 cbSearch.setMinimumSize(new java.awt.Dimension(60, 30));
@@ -699,8 +715,9 @@ public class OrderMenu extends javax.swing.JPanel {
                 };
                 dtm.addColumn("Mã đơn hàng");
                 dtm.addColumn("Tài khoản ID");
+                dtm.addColumn("Họ tên nhân viên");
                 dtm.addColumn("Tổng tiền");
-                dtm.addColumn("Hình thức thanh toán");
+                dtm.addColumn("Phương thức thanh toán");
                 dtm.addColumn("Ngày tạo");
                 dtm.addColumn("Trạng thái");
 
@@ -708,8 +725,8 @@ public class OrderMenu extends javax.swing.JPanel {
                 tbTableOrder.addComponentListener(new ComponentAdapter() {
                         @Override
                         public void componentResized(ComponentEvent e) {
-                                double[] columnPercentages = { 0.15, 0.15, 0.2, 0.2, 0.1, 0.1 }; // Phần trăm độ rộng
-                                                                                                 // cho từng cột
+                                double[] columnPercentages = { 0.1, 0.1, 0.2, 0.2, 0.2, 0.1, 0.1 }; // Phần trăm độ rộng
+                                                                                                    // cho từng cột
                                 setColumnWidths(tbTableOrder, columnPercentages);
                         }
                 });
@@ -811,11 +828,13 @@ public class OrderMenu extends javax.swing.JPanel {
                 if (selectedRow != -1) {
                         int orderID = (int) tbTableOrder.getValueAt(selectedRow, 0);
 
+                        int i = 0;
                         for (OrderDTO order : orders.keySet()) {
                                 if (order.getId() == orderID) {
-                                        new EditOrderForm(order);
+                                        new EditOrderForm(order, empList.get(i));
                                         return;
                                 }
+                                i++;
                         }
                 } else {
                         JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để xem chi tiết", "Thông báo",
@@ -879,27 +898,10 @@ public class OrderMenu extends javax.swing.JPanel {
                                 cbPaymentMethods.getSelectedIndex(), tsStartDate, tsEndDate,
                                 minTotal, maxTotal);
                 if (orders != null) {
-                        DefaultTableModel dtm = (DefaultTableModel) tbTableOrder.getModel();
-                        dtm.setRowCount(0);
-
-                        for (OrderDTO o : orders.keySet()) {
-                                Float total = orders.get(o);
-
-                                dtm.addRow(new Object[] {
-                                                o.getId(),
-                                                o.getAcount_id(),
-                                                Formatter.getFormatedPrice(total),
-                                                paymentMethods.get(o.getPaymentMethod_id() - 1).getPayment_name(),
-                                                Common.formatedDateTime(o.getCreatedAt()),
-                                                o.getOrder_status()
-                                });
-                        }
-
-                        Formatter.centerAlignTableCells(tbTableOrder);
+                        loadData(orders);
                 } else {
                         JOptionPane.showMessageDialog(this, "Có lỗi xảy ra!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }
-
         }
 
         private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {
@@ -928,22 +930,12 @@ public class OrderMenu extends javax.swing.JPanel {
                                                         .getAllWithTotalByAccountID(
                                                                         Integer.parseInt(txtInputSearch.getText()));
                                         break;
+
+                                case 2:
+                                        orders = orderBUS.getAllWithTotalByEmp_Name(txtInputSearch.getText().trim());
+                                        break;
                         }
-
-                        for (OrderDTO o : orders.keySet()) {
-                                Float total = orders.get(o);
-
-                                dtm.addRow(new Object[] {
-                                                o.getId(),
-                                                o.getAcount_id(),
-                                                Formatter.getFormatedPrice(total),
-                                                paymentMethods.get(o.getPaymentMethod_id() - 1).getPayment_name(),
-                                                Common.formatedDateTime(o.getCreatedAt()),
-                                                o.getOrder_status()
-                                });
-                        }
-
-                        Formatter.centerAlignTableCells(tbTableOrder);
+                        loadData(orders);
                 } else {
                         loadData();
                 }
@@ -958,11 +950,13 @@ public class OrderMenu extends javax.swing.JPanel {
                 if (selectedRow != -1) {
                         int orderID = (int) tbTableOrder.getValueAt(selectedRow, 0);
 
+                        int i = 0;
                         for (OrderDTO order : orders.keySet()) {
                                 if (order.getId() == orderID) {
-                                        new OrderDetail(order);
+                                        new OrderDetail(order, empList.get(i));
                                         return;
                                 }
+                                i++;
                         }
                 } else {
                         JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để xem chi tiết", "Thông báo",
