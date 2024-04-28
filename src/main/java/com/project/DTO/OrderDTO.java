@@ -10,7 +10,6 @@ public class OrderDTO {
     private int acount_id;
 
     public OrderDTO(String order_status, int paymentMethod_id, int acount_id) {
-        this.id = id;
         this.order_status = order_status;
         this.paymentMethod_id = paymentMethod_id;
         this.acount_id = acount_id;

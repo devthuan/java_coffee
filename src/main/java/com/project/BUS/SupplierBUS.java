@@ -42,7 +42,7 @@ public class SupplierBUS {
     public static Boolean removeSupplier(int id) {
         try {
 
-            return SupplierDAO.ChangeIsActiveSupplier(id,false);
+            return SupplierDAO.ChangeIsActiveSupplier(id, false);
         } catch (Exception e) {
             return false;
         }
@@ -61,6 +61,7 @@ public class SupplierBUS {
         }
 
     }
+
     public static ArrayList<SupplierDTO> searchSupplierByEmailBUS(String search_supplier) {
         try {
             ArrayList<SupplierDTO> list_supplier = SupplierDAO.SearchSupplierByEmail(search_supplier);

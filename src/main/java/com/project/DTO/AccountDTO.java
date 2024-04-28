@@ -46,6 +46,12 @@ public class AccountDTO {
         this.roleId = roleId;
 
     }
+    public AccountDTO(int id, String email,  int roleId) {
+        this.id = id;
+        this.email = email;
+        this.roleId = roleId;
+
+    }
 
     public AccountDTO(String email, String password) {
         this.email = email;
@@ -113,6 +119,7 @@ public class AccountDTO {
 
     public void setId(int id) {
         this.id = id;
+
     }
 
     public int getId() {
@@ -137,3 +144,4 @@ public class AccountDTO {
     }
 
 }
+

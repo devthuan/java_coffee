@@ -8,6 +8,9 @@ import java.text.DecimalFormat;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -27,6 +30,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class Common {
@@ -53,6 +58,18 @@ public class Common {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime localDateTime = LocalDateTime.parse(string, formatter);
         return localDateTime;
+    }
+
+
+    public static Date convertStringtoDate(String string) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = formatter.parse(string);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
     }
 
     public static String formateDate(Date date) {
@@ -127,4 +144,17 @@ public class Common {
     }
 
 
+    public static boolean validateVietnamesePhoneNumber(String phoneNumber) {
+        // Regular expression pattern for Vietnamese phone numbers
+        String regex = "(\\+84|0)\\d{9,10}";
+        
+        // Compile the regex pattern
+        Pattern pattern = Pattern.compile(regex);
+        
+        // Create a matcher with the input phone number
+        Matcher matcher = pattern.matcher(phoneNumber);
+        
+        // Check if the input phone number matches the pattern
+        return matcher.matches();
+    }
 }

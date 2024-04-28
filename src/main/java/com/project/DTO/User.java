@@ -1,13 +1,11 @@
 package com.project.DTO;
+
 import java.sql.Timestamp;
-import java.util.Date;
 
-
-public class User 
-{
+public class User {
     private int id;
     private String name;
-    private Date date;
+    private String date;
     private String address;
     private String position;
     private String phone;
@@ -15,7 +13,8 @@ public class User
     private Timestamp dateCreate;
     private int accountId;
 
-    public User(int id, String name, Date date, String address, String position, String phone, float salary, Timestamp dateCreate) {
+    public User(int id, String name, String date, String address, String position, String phone, float salary,
+            Timestamp dateCreate) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -25,8 +24,8 @@ public class User
         this.salary = salary;
         this.dateCreate = dateCreate;
     }
-    public User(int id, String name, Date date, String address, String position, String phone, float salary) 
-    {
+
+    public User(int id, String name, String date, String address, String position, String phone, float salary) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -35,88 +34,86 @@ public class User
         this.phone = phone;
         this.salary = salary;
     }
-    public User()
-    {
+
+    public User() {
     }
 
-
-    public int getId()
-    {
+    public int getId() {
         return id;
     }
-    public void setId(int id)
-    {
+
+    public void setId(int id) {
         this.id = id;
     }
-     public String getName()
-    {
+
+    public String getName() {
         return name;
     }
-    public void setName(String name)
-    {
+
+    public void setName(String name) {
         this.name = name;
     }
-    public Date getDate()
-    {
+
+    public String getDate() {
         return date;
     }
-    public void setDate(Date date)
-    {
-        this.date= date;
+
+    public void setDate(String date) {
+        this.date = date;
     }
-    public String getAddress()
-    {
+
+    public String getAddress() {
         return address;
     }
-    public void setAddress(String address)
-    {
+
+    public void setAddress(String address) {
         this.address = address;
     }
-    public String getPosition()
-    {
+
+    public String getPosition() {
         return position;
     }
-    public void setPosition(String position)
-    {
+
+    public void setPosition(String position) {
         this.position = position;
     }
-    public String getPhone()
-    {
+
+    public String getPhone() {
         return phone;
     }
-    public void setPhone(String phone)
-    {
+
+    public void setPhone(String phone) {
         this.phone = phone;
     }
-    public float getSalary()
-    {
+
+    public float getSalary() {
         return salary;
     }
-    public void setSalary(float salary)
-    {
+
+    public void setSalary(float salary) {
         this.salary = salary;
     }
-    public Timestamp getDateCreate()
-    {
+
+    public Timestamp getDateCreate() {
         return dateCreate;
     }
-    public void setDateCreate(Timestamp dateCreate)
-    {
+
+    public void setDateCreate(Timestamp dateCreate) {
         this.dateCreate = dateCreate;
     }
-    public int getAccountId()
-    {
+
+    public int getAccountId() {
         return accountId;
     }
-    public void setAccountId(int accountId)
-    {
+
+    public void setAccountId(int accountId) {
         this.accountId = accountId;
-          
+
     }
-    public String toString()
-    {
-        return "Usee [id = "+ id +", name = "+ name +", address = "+ address +", position = "+ position +", phone = "+ phone +","
-                + " salary = "+ salary +", accountId = "+ accountId +"]";
+
+    public String toString() {
+        return "Usee [id = " + id + ", name = " + name + ", address = " + address + ", position = " + position
+                + ", phone = " + phone + ","
+                + " salary = " + salary + ", accountId = " + accountId + "]";
     }
 }
-

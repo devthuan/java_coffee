@@ -510,6 +510,7 @@ public class Main extends javax.swing.JFrame {
 
         private void HomeLabelMouseClicked(java.awt.event.MouseEvent evt) {
                 SwitchControl();
+
                 BuyProduct buyProduct = new BuyProduct();
                 Right.add(buyProduct);
         }
@@ -560,7 +561,7 @@ public class Main extends javax.swing.JFrame {
 
         private void WarehouseLabelMouseClicked(java.awt.event.MouseEvent evt) {
                 SwitchControl();
-                Right.add(new Warehouses()).setVisible(true);
+                Right.add(new WareHouseMenu()).setVisible(true);
         }
 
         /**

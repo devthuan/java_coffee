@@ -1,46 +1,50 @@
 package com.project.BUS;
-import com.project.DAO.*;
-import com.project.DTO.*;
-import com.project.GUI.*;
+
 import java.util.List;
+
+import com.project.DAO.UserDao;
+import com.project.DTO.User;
+
 public class UserService {
     UserDao userdao;
-    public UserService()
-    {
+
+    public UserService() {
         userdao = new UserDao();
     }
-    public List<User> getAllUser() throws Exception
-    {
+
+    public List<User> getAllUser() {
         return userdao.getAllUser();
     }
-    public void addUser(User user) throws Exception
-    {
-        userdao.addUser(user);
+
+    public boolean addUser(User user) {
+        return userdao.addUser(user);
     }
-    public void deleteUser(int id) throws Exception
-    {
-        userdao.deleteUser(id);
+
+    public boolean deleteUser(int id) {
+        return userdao.deleteUser(id);
     }
-    public void updateUser(User user) throws Exception
-    {
-        userdao.updateUser(user);
+
+    public boolean updateUser(User user) {
+        return userdao.updateUser(user);
     }
-    public User getIdUser(int id) throws Exception
-    {
+
+    public User getIdUser(int id) {
         return userdao.getIdUser(id);
     }
-    public List<User> searchAllUserByName(String name) throws Exception
-    {
+
+    public User getNameUser(String name) {
+        return userdao.getNameUser(name);
+    }
+
+    public List<User> searchAllUserByName(String name) {
         return userdao.SearchAllUserByName(name);
     }
-    public List<User> searchAllUserById(int id) throws Exception 
-    {
+
+    public List<User> searchAllUserById(int id) {
         return userdao.SearchAllUserById(id);
     }
-    public List<User> searchAllUserByPhone(String phone) throws Exception 
-    {
+
+    public List<User> searchAllUserByPhone(String phone) {
         return userdao.SearchAllUserByPhone(phone);
     }
 }
-
-

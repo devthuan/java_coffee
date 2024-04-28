@@ -15,7 +15,7 @@ import com.project.BUS.EnterCouponBUS;
 import com.project.BUS.SupplierBUS;
 import com.project.Common.Common;
 import com.project.DAO.EmployeeDAO;
-import com.project.DAO.WarehouseDAO;
+import com.project.DAO.WareHouseDao;
 import com.project.DTO.DetailEnterCouponDTO;
 import com.project.DTO.EmployeeDTO;
 import com.project.DTO.EnterCouponDTO;
@@ -40,7 +40,7 @@ public class FormCreateEnterCoupon extends javax.swing.JFrame {
      * Creates new form FormSupplier
      */
     public FormCreateEnterCoupon() {
-        list_ingredient = WarehouseDAO.get_all_ingredients();
+        list_ingredient = WareHouseDao.get_all_ingredients();
         ingredientMap = new HashMap<>();
 
         for (WareHouseDTO wareHouseDTO : list_ingredient) {

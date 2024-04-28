@@ -1,6 +1,5 @@
 
 package com.project.DAO;
-
 import com.itextpdf.text.pdf.PdfName;
 import com.project.DTO.*;
 import java.sql.Connection;
@@ -9,36 +8,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 public class WareHouseDao {
-
-    public static ArrayList<WareHouseDTO> get_all_ingredients() {
-        ArrayList<WareHouseDTO> list_ingredient = new ArrayList<WareHouseDTO>();
-        try {
-            Connection conn = mysqlConnect.getConnection();
-            String sql = "Select * from NguyenLieu where is_active = 1";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            ResultSet rs = pst.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("ten_NL");
-
-                list_ingredient.add(new WareHouseDTO(id, name));
-            }
-
-        } catch (Exception e) {
-            return null;
-        }
-        return list_ingredient;
-    }
-
-    public List<WareHouse> getAllWareHouse() throws Exception {
+    public List<WareHouse> getAllWareHouse() throws Exception
+    {
         Connection connect = mysqlConnect.getConnection();
         List<WareHouse> warehouses = new ArrayList<WareHouse>();
         String sql = "SELECT * FROM NguyenLieu WHERE is_active = 1";
         PreparedStatement ps = connect.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
+        while(rs.next())
+        {
             WareHouse warehouse = new WareHouse();
             warehouse.setId(rs.getInt("id"));
             warehouse.setName(rs.getString("ten_NL"));
@@ -51,8 +30,8 @@ public class WareHouseDao {
         }
         return warehouses;
     }
-
-    public void AddWareHouse(WareHouse warehouse) throws Exception {
+    public void AddWareHouse(WareHouse warehouse) throws Exception
+    {
         Connection connection = mysqlConnect.getConnection();
         String sql = "INSERT INTO NguyenLieu(ten_NL, don_vi, so_luong) VALUES(?, ?, ?)";
         PreparedStatement ps = connection.prepareStatement(sql);
@@ -61,8 +40,8 @@ public class WareHouseDao {
         ps.setInt(3, warehouse.getQuantity());
         ps.executeUpdate();
     }
-
-    public void UpdateWareHouse(WareHouse warehouse) throws Exception {
+    public void UpdateWareHouse(WareHouse warehouse) throws Exception
+    {
         Connection connection = mysqlConnect.getConnection();
         String sql = "UPDATE NguyenLieu SET so_luong = ?, updatedAt = NOW() WHERE ten_NL = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
@@ -70,14 +49,15 @@ public class WareHouseDao {
         ps.setString(2, warehouse.getName());
         ps.executeUpdate();
     }
-
-    public WareHouse getNameWareHouse(String name) throws Exception {
+    public WareHouse getNameWareHouse(String name)  throws Exception
+    {
         Connection connection = mysqlConnect.getConnection();
         String sql = "SELECT * FROM NguyenLieu WHERE ten_NL = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setString(1, name);
         ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
+        while(rs.next())
+        {
             WareHouse warehouse = new WareHouse();
             warehouse.setId(rs.getInt("id"));
             warehouse.setName(rs.getString("ten_NL"));
@@ -87,23 +67,24 @@ public class WareHouseDao {
         }
         return null;
     }
-
-    public void deleteWareHouse(int id) throws SQLException {
+    public void deleteWareHouse(int id) throws SQLException
+    {
         Connection connection = mysqlConnect.getConnection();
         String sql = "UPDATE NguyenLieu SET is_active = 0 WHERE id = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setInt(1, id);
         ps.executeUpdate();
     }
-
-    public List<WareHouse> searchAllWareHouseById(int id) throws Exception {
+    public List<WareHouse> searchAllWareHouseById(int id) throws Exception 
+    {
         List<WareHouse> warehouses = new ArrayList<WareHouse>();
         Connection connection = mysqlConnect.getConnection();
         String sql = "SELECT * FROM NguyenLieu WHERE is_active = 1 AND id = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
+        while(rs.next())
+        {
             WareHouse warehouse = new WareHouse();
             warehouse.setId(rs.getInt("id"));
             warehouse.setName(rs.getString("ten_NL"));
@@ -116,14 +97,15 @@ public class WareHouseDao {
         }
         return warehouses;
     }
-
-    public List<WareHouse> searchAllWareHouseByName(String name) throws Exception {
+    public List<WareHouse> searchAllWareHouseByName(String name) throws Exception 
+    {
         List<WareHouse> warehouses = new ArrayList<WareHouse>();
         Connection connection = mysqlConnect.getConnection();
         String sql = "SELECT * FROM NguyenLieu WHERE is_active = 1 AND ten_NL LIKE '%" + name + "%' ";
         PreparedStatement ps = connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
+        while(rs.next())
+        {
             WareHouse warehouse = new WareHouse();
             warehouse.setId(rs.getInt("id"));
             warehouse.setName(rs.getString("ten_NL"));
@@ -136,14 +118,15 @@ public class WareHouseDao {
         }
         return warehouses;
     }
-
-    public WareHouse getIdWareHouse(int id) throws Exception {
+    public WareHouse getIdWareHouse(int id) throws Exception
+    { 
         Connection connection = mysqlConnect.getConnection();
         String sql = "SELECT * FROM NguyenLieu WHERE id = ? AND is_active = 1";
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
+        while(rs.next())
+        {
             WareHouse warehouse = new WareHouse();
             warehouse.setId(rs.getInt("id"));
             warehouse.setName(rs.getString("ten_NL"));
@@ -156,8 +139,8 @@ public class WareHouseDao {
         }
         return null;
     }
-
-    public void updateNameWareHouse(WareHouse warehouse) throws Exception {
+    public void updateNameWareHouse(WareHouse warehouse) throws Exception 
+    {
         Connection connection = mysqlConnect.getConnection();
         String sql = "UPDATE NguyenLieu SET ten_NL = ?, updatedAt = NOW() WHERE id = ?";
         PreparedStatement ps = connection.prepareStatement(sql);

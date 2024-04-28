@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import com.project.Common.PasswordHasher;
+
 import com.project.DAO.AccountDAO;
 import com.project.DTO.AccountDTO;
 
@@ -69,7 +70,12 @@ public class AccountBUS {
         return AccountDAO.updateUser(account);
     }
 
+    public ArrayList<AccountDTO> getAll_unused(int role_id) {
+        return AccountDAO.getAll_unused(role_id);
+    }
+
     public static void main(String[] args) {
         AccountBUS.login(new AccountDTO("admin@example.com", "admin"));
+
     }
 }
