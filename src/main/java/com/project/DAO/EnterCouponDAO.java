@@ -270,6 +270,7 @@ public class EnterCouponDAO {
             String sql = "SELECT " +
                     "ctpn.id, " +
                     "ten_NL, " +
+                    "nl.id as nl_id, " +
                     "don_gia, " +
                     "ctpn.so_luong, " +
                     "SUM(ctpn.so_luong * don_gia) AS tong_tien " +
@@ -283,11 +284,13 @@ public class EnterCouponDAO {
             ResultSet result = pst.executeQuery();
             while (result.next()) {
                 int id = result.getInt("id");
-                String nameEnterCoupon = result.getString("ten_NL");
+                String nameIngredient = result.getString("ten_NL");
                 float nameEmployee = result.getFloat("don_gia");
-                int nameSupplier = result.getInt("so_luong");
+                int quantity = result.getInt("so_luong");
+                int ingredientId = result.getInt("nl_id");
                 float totalValues = result.getFloat("tong_tien");
-                list_detail.add(new DetailEnterCouponDTO(id, nameEnterCoupon, nameEmployee, nameSupplier, totalValues));
+                list_detail.add(new DetailEnterCouponDTO(id, nameIngredient, nameEmployee, quantity, totalValues,
+                        ingredientId));
             }
 
         } catch (Exception e) {
@@ -360,7 +363,8 @@ public class EnterCouponDAO {
                     "JOIN TaiKhoan ON TaiKhoan.id = pn.TaiKhoan_id " +
                     "left JOIN NhanVien ON NhanVien.TaiKhoan_id = TaiKhoan.id " +
                     "Where pn.is_active = 1 " +
-                    "AND (SELECT SUM(so_luong * don_gia) FROM ChiTietPhieuNhap WHERE PhieuNhap_id = pn.id) BETWEEN ? AND ? " +
+                    "AND (SELECT SUM(so_luong * don_gia) FROM ChiTietPhieuNhap WHERE PhieuNhap_id = pn.id) BETWEEN ? AND ? "
+                    +
                     "GROUP BY pn.id ";
 
             PreparedStatement pst = conn.prepareStatement(sql);
@@ -434,7 +438,7 @@ public class EnterCouponDAO {
         return list_EnterCoupon;
     }
 
-    public static boolean removeEnterCoupon(int id) {
+    public static boolean removeEnterCoupon(int id, ArrayList<DetailEnterCouponDTO> list_detail) {
         try {
             Connection conn = mysqlConnect.getConnection();
             String sql = "UPDATE PhieuNhap SET is_active = 0 WHERE id = ?";
@@ -442,6 +446,10 @@ public class EnterCouponDAO {
             pst.setInt(1, id);
             int affectedRow = pst.executeUpdate();
             if (affectedRow > 0) {
+                for (DetailEnterCouponDTO detailEnterCouponDTO : list_detail) {
+                    DeliveryBillDAO.updateQuantityIngredient(conn, detailEnterCouponDTO.getIngredient_id(),
+                            detailEnterCouponDTO.getQuantity());
+                }
                 return true;
             }
         } catch (Exception e) {

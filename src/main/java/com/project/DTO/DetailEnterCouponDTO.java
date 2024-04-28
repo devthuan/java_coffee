@@ -12,12 +12,13 @@ public class DetailEnterCouponDTO {
     private int quantity;
     private float totalPrice;
 
-    public DetailEnterCouponDTO(int id, String nameIngredient, double price, int quantity, float totalPrice) {
+    public DetailEnterCouponDTO(int id, String nameIngredient, double price, int quantity, float totalPrice, int ingredient_id) {
         this.id = id;
         this.nameIngredient = nameIngredient;
         this.price = price;
         this.quantity = quantity;
         this.totalPrice = totalPrice;
+        this.ingredient_id = ingredient_id;
     }
 
     public DetailEnterCouponDTO(int id, int coupon_id, int ingredient_id, int quantity, double price) {

@@ -856,7 +856,7 @@ public class Statistical extends javax.swing.JPanel {
                 });
                 jPanel2.add(OptionWarehouses);
 
-                BoxChooseDate1.setPreferredSize(new java.awt.Dimension(600, 35));
+                BoxChooseDate1.setPreferredSize(new java.awt.Dimension(800, 35));
                 BoxChooseDate1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 0));
 
                 labelStartDate1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N

@@ -598,20 +598,17 @@ public class Receipt extends javax.swing.JPanel {
                 if (selectedRow != -1) {
                         try {
                                 int id = (int) TableReceipt.getValueAt(selectedRow, 0);
+                                String createdString = (String) TableReceipt.getValueAt(selectedRow, 5);
                                 // Hiển thị hộp thoại xác nhận
                                 int option = JOptionPane.showConfirmDialog(null,
-                                                "Bạn có chắc chắn muốn xoá phiếu nhập cấp này?", "Xác nhận xoá",
+                                                "Bạn có chắc chắn muốn xoá phiếu nhập này?", "Xác nhận xoá",
                                                 JOptionPane.YES_NO_OPTION);
                                 if (option == JOptionPane.YES_OPTION) {
-                                        boolean check_remove = EnterCouponBUS.removeEnterCouponBUS(id);
+                                        boolean check_remove = EnterCouponBUS.removeEnterCouponBUS(id, createdString);
                                         if (check_remove) {
                                                 JOptionPane.showMessageDialog(null,
-                                                                "phiếu nhập cấp đã được xoá thành công.");
-                                                // Nếu xoá thành công, cập nhật lại JTable hoặc các thành phần khác cần
-                                                // thiết
-                                        } else {
-                                                JOptionPane.showMessageDialog(null,
-                                                                "Không thể xoá nhà phiếu nhập này.");
+                                                                "phiếu nhập  đã được xoá thành công.");
+
                                         }
                                 }
                         } catch (NumberFormatException e) {

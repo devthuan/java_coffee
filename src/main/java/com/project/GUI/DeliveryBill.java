@@ -4,6 +4,36 @@ package com.project.GUI;
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import com.project.BUS.DeliveryBillBUS;
+import com.project.BUS.EnterCouponBUS;
+import com.project.BUS.SupplierBUS;
+import com.project.Common.Common;
+import com.project.DTO.DeliveryBillDTO;
+import com.project.DTO.EnterCouponDTO;
+import com.project.DTO.SupplierDTO;
+import com.project.Util.Formatter;
 import com.toedter.calendar.JDateChooser;
 
 /**
@@ -11,12 +41,43 @@ import com.toedter.calendar.JDateChooser;
  * @author thuan
  */
 public class DeliveryBill extends javax.swing.JPanel {
+    private int option_search = 0;
+
+    private ArrayList<DeliveryBillDTO> list_deliveryBills; // array
 
     /**
      * Creates new form Supplier
      */
     public DeliveryBill() {
         initComponents();
+
+        list_deliveryBills = DeliveryBillBUS.getAllDeliveryBill();
+
+        loadData(list_deliveryBills);
+    }
+
+    private void loadData(ArrayList<DeliveryBillDTO> list_deliveryBills) {
+
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID");
+        model.addColumn("Tên phiếu xuất");
+        model.addColumn("Nhân viên");
+        model.addColumn("Tổng số KG");
+        model.addColumn("Ngày tạo");
+
+        for (DeliveryBillDTO deliveryBill : list_deliveryBills) {
+            Object[] rowData = {
+                    deliveryBill.getId(),
+                    deliveryBill.getNameDeliveryBill(),
+                    deliveryBill.getNameEmployee(),
+                    Formatter.getFormatedPrice(deliveryBill
+                            .getAmount()),
+                    Common.formatedDateTime(deliveryBill.getCreatedAt()),
+            };
+            model.addRow(rowData);
+        }
+        TableDeliveryBill.setModel(model);
+
     }
 
     /**
@@ -127,7 +188,9 @@ public class DeliveryBill extends javax.swing.JPanel {
 
         Filter.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         Filter.setModel(
-                new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+                new javax.swing.DefaultComboBoxModel<>(
+                        new String[] { "ID tăng dần", "ID giảm dần", " Tăng dần tổng số kg",
+                                "Giảm dần tổng số kg" }));
         Filter.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         Filter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,10 +209,23 @@ public class DeliveryBill extends javax.swing.JPanel {
 
         InputSearch.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         InputSearch.setText("Tìm kiếm....");
-        InputSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                InputSearchActionPerformed(evt);
+
+        InputSearch.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                handleChangeInputSearch();
             }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                handleChangeInputSearch();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                handleChangeInputSearch();
+            }
+
         });
 
         javax.swing.GroupLayout BoxSearchLayout = new javax.swing.GroupLayout(BoxSearch);
@@ -247,9 +323,9 @@ public class DeliveryBill extends javax.swing.JPanel {
         ValueStart.setMinimumSize(new java.awt.Dimension(64, 20));
         ValueStart.setPreferredSize(new java.awt.Dimension(64, 20));
         // ValueStart.addActionListener(new java.awt.event.ActionListener() {
-        //     public void actionPerformed(java.awt.event.ActionEvent evt) {
-        //         ValueStartActionPerformed(evt);
-        //     }
+        // public void actionPerformed(java.awt.event.ActionEvent evt) {
+        // ValueStartActionPerformed(evt);
+        // }
         // });
         ItemFilterStartDay.add(ValueStart, java.awt.BorderLayout.CENTER);
 
@@ -277,7 +353,7 @@ public class DeliveryBill extends javax.swing.JPanel {
 
         TitleTotalStart.setBackground(new java.awt.Color(255, 255, 255));
         TitleTotalStart.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        TitleTotalStart.setText("Tổng đơn hàng từ");
+        TitleTotalStart.setText("Giá trị từ");
         TitleTotalStart.setPreferredSize(new java.awt.Dimension(37, 25));
         ItemFilterTotalReceiptStart.add(TitleTotalStart, java.awt.BorderLayout.PAGE_START);
 
@@ -292,7 +368,7 @@ public class DeliveryBill extends javax.swing.JPanel {
 
         TitleTotalEnd.setBackground(new java.awt.Color(255, 255, 255));
         TitleTotalEnd.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        TitleTotalEnd.setText("Tổng đơn hàng đến");
+        TitleTotalEnd.setText("Giá trị đến");
         TitleTotalEnd.setPreferredSize(new java.awt.Dimension(37, 25));
         ItemFilterTotalReceiptEnd.add(TitleTotalEnd, java.awt.BorderLayout.PAGE_START);
 
@@ -345,7 +421,7 @@ public class DeliveryBill extends javax.swing.JPanel {
                 }));
         TableDeliveryBill.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(TableDeliveryBill);
-
+        TableDeliveryBill.setShowGrid(true);
         BoxTable.add(jScrollPane1);
 
         jSplitPane1.setRightComponent(BoxTable);
@@ -355,8 +431,31 @@ public class DeliveryBill extends javax.swing.JPanel {
         add(ReceiptCenter, java.awt.BorderLayout.CENTER);
     }// </editor-fold>
 
-    private void ValueStartActionPerformed(java.awt.event.ActionEvent evt) {
+    private void ValueTotalStartActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+    }
+
+    private void handleChangeInputSearch() {
+        DefaultTableModel model = (DefaultTableModel) TableDeliveryBill.getModel();
+        model.setRowCount(0); // Xóa tất cả các hàng
+
+        // Lấy danh sách nhà cung cấp mới từ SupplierBUS
+
+        ArrayList<DeliveryBillDTO> list_deliveryBill = DeliveryBillBUS
+                .searchDeliveryBillByNameBUS(InputSearch.getText());
+
+        // Thêm dữ liệu mới vào JTable
+        for (DeliveryBillDTO deliveryBill : list_deliveryBill) {
+            Object[] rowData = {
+                    deliveryBill.getId(),
+                    deliveryBill.getNameDeliveryBill(),
+                    deliveryBill.getNameEmployee(),
+                    Formatter.getFormatedPrice(deliveryBill
+                            .getAmount()),
+                    Common.formatedDateTime(deliveryBill.getCreatedAt()),
+            };
+            model.addRow(rowData);
+        }
     }
 
     private void ValueTotalEndActionPerformed(java.awt.event.ActionEvent evt) {
@@ -364,35 +463,256 @@ public class DeliveryBill extends javax.swing.JPanel {
     }
 
     private void BtnFilterMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
+        Date startDate = ValueStart.getDate();
+        Date endDate = ValueEndDay.getDate();
+        String startTotalText = ValueTotalStart.getText();
+        String endTotalText = ValueTotalEnd.getText();
+
+        int startTotal = -1;
+        int endTotal = -1;
+        String formatedStartDate = null;
+        String formatedEndDate = null;
+        if (startDate == null && endDate == null && startTotalText.isEmpty() && endTotalText.isEmpty()) {
+            return;
+        }
+
+        if (startDate != null || endDate != null) {
+            if (startDate == null || endDate == null) {
+                JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ giá trị ngày");
+                return;
+            }
+            if (startDate.compareTo(endDate) > 0) {
+                JOptionPane.showMessageDialog(null, "Ngày bắt đầu phải nhỏ hơn ngày kết thúc");
+                return;
+            }
+
+            formatedStartDate = Common.formateDate(startDate);
+            formatedEndDate = Common.formateDate(endDate);
+
+        }
+        if (!startTotalText.isEmpty() || !endTotalText.isEmpty()) {
+            if (startTotalText.isEmpty() || endTotalText.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ giá trị tổng hoá đơn");
+                return;
+            }
+            try {
+                startTotal = Integer.parseInt(ValueTotalStart.getText());
+                endTotal = Integer.parseInt(ValueTotalEnd.getText());
+
+                if (startTotal > endTotal) {
+                    JOptionPane.showMessageDialog(null,
+                            "Tổng tiền bắt đầu phải nhỏ hơn tổng tiền kết thúc.");
+                    return;
+                }
+
+            } catch (Exception e) {
+
+                JOptionPane.showMessageDialog(null, "Nhập dữ liệu là số");
+                return;
+            }
+
+        }
+
+        // System.out.println(formatedStartDate);
+        // System.out.println(formatedEndDate);
+        // System.out.println(startTotal);
+        // System.out.println(endTotal);
+
+        DefaultTableModel model = (DefaultTableModel) TableDeliveryBill.getModel();
+        model.setRowCount(0); // Xóa tất cả các hàng
+
+        ArrayList<DeliveryBillDTO> list_DeliveryBill = DeliveryBillBUS.searchDeliveryBillAdvanced(formatedStartDate,
+                formatedEndDate, startTotal, endTotal);
+        if (list_DeliveryBill == null) {
+            JOptionPane.showMessageDialog(null, "Có lỗi xảy ra!");
+            return;
+        }
+        for (DeliveryBillDTO deliveryBill : list_DeliveryBill) {
+            Object[] rowData = {
+                    deliveryBill.getId(),
+                    deliveryBill.getNameDeliveryBill(),
+                    deliveryBill.getNameEmployee(),
+                    Formatter.getFormatedPrice(deliveryBill
+                            .getAmount()),
+                    Common.formatedDateTime(deliveryBill.getCreatedAt()),
+            };
+            model.addRow(rowData);
+        }
     }
 
     private void BtnAddActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        new FormCreateDeliveryBill().setVisible(true);
     }
 
     private void BtnDetailActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        int selectedRow = TableDeliveryBill.getSelectedRow();
+        if (selectedRow != -1) {
+
+            try {
+                int id = (int) TableDeliveryBill.getValueAt(selectedRow, 0);
+                for (DeliveryBillDTO deliveryBillDTO : list_deliveryBills) {
+                    if (deliveryBillDTO.getId() == id) {
+                        new FormDetailDeliveryBill(deliveryBillDTO).setVisible(true);
+
+                    }
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Lỗi: ID không hợp lệ.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để xem chi tiết.");
+        }
     }
 
     private void BtnDeleteActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        int selectedRow = TableDeliveryBill.getSelectedRow();
+        if (selectedRow != -1) {
+            try {
+                int id = (int) TableDeliveryBill.getValueAt(selectedRow, 0);
+                String createdAString = (String) TableDeliveryBill.getValueAt(selectedRow, 4);
+                // Hiển thị hộp thoại xác nhận
+                int option = JOptionPane.showConfirmDialog(null,
+                        "Bạn có chắc chắn muốn xoá phiếu xuất này?", "Xác nhận xoá",
+                        JOptionPane.YES_NO_OPTION);
+                if (option == JOptionPane.YES_OPTION) {
+                    boolean check_remove = DeliveryBillBUS.removeDeliveryBillBUS(id, createdAString);
+                    if (check_remove) {
+                        JOptionPane.showMessageDialog(null,
+                                "Phiếu xuất đã được xoá thành công.");
+                        // Nếu xoá thành công, cập nhật lại JTable hoặc các thành phần khác cần
+                        // thiết
+                    }
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Lỗi: ID không hợp lệ.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để xem chi tiết.");
+        }
     }
 
     private void BtnExportActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        exportToExcel();
     }
 
     private void BtnRefreshActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        // Xóa dữ liệu hiện tại trong JTable
+        DefaultTableModel model = (DefaultTableModel) TableDeliveryBill.getModel();
+        model.setRowCount(0); // Xóa tất cả các hàng
+
+        // Lấy danh sách nhà cung cấp mới từ SupplierBUS
+        list_deliveryBills = DeliveryBillBUS.getAllDeliveryBill();
+
+        // Thêm dữ liệu mới vào JTable
+        for (DeliveryBillDTO deliveryBill : list_deliveryBills) {
+            Object[] rowData = {
+                    deliveryBill.getId(),
+                    deliveryBill.getNameDeliveryBill(),
+                    deliveryBill.getNameEmployee(),
+                    Formatter.getFormatedPrice(deliveryBill
+                            .getAmount()),
+                    Common.formatedDateTime(deliveryBill.getCreatedAt()),
+            };
+            model.addRow(rowData);
+        }
     }
 
     private void FilterActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        int option = Filter.getSelectedIndex();
+
+        DefaultTableModel model = (DefaultTableModel) TableDeliveryBill.getModel();
+        model.setRowCount(0); // Xóa tất cả các hàng
+
+        if (option == 0) {
+
+            list_deliveryBills.sort(Comparator.comparing(DeliveryBillDTO::getId));
+
+        } else if (option == 1) {
+            list_deliveryBills.sort(Comparator.comparing(DeliveryBillDTO::getId).reversed());
+
+        } else if (option == 2) {
+            list_deliveryBills.sort(Comparator.comparing(DeliveryBillDTO::getAmount));
+
+        } else if (option == 3) {
+            list_deliveryBills.sort(Comparator.comparing(DeliveryBillDTO::getAmount).reversed());
+
+        }
+
+        for (DeliveryBillDTO deliveryBill : list_deliveryBills) {
+            Object[] rowData = {
+                    deliveryBill.getId(),
+                    deliveryBill.getNameDeliveryBill(),
+                    deliveryBill.getNameEmployee(),
+                    Formatter.getFormatedPrice(deliveryBill
+                            .getAmount()),
+                    Common.formatedDateTime(deliveryBill.getCreatedAt()),
+            };
+            model.addRow(rowData);
+        }
     }
 
-    private void InputSearchActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+    private void exportToExcel() {
+        JFileChooser fileChooser = new JFileChooser(); // Tạo một JFileChooser
+
+        // Thiết lập hộp thoại để chọn tệp và đặt tiêu đề
+        fileChooser.setDialogTitle("Chọn nơi lưu tệp Excel");
+
+        int userSelection = fileChooser.showSaveDialog(this); // Hiển thị hộp thoại và chờ người dùng chọn nơi
+                                                              // lưu
+
+        // Kiểm tra xem người dùng đã chọn "Save" hay chưa
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            try {
+                File fileToSave = fileChooser.getSelectedFile(); // Lấy đường dẫn được chọn bởi người
+                                                                 // dùng
+
+                // Ghi dữ liệu vào tệp Excel
+                try (Workbook workbook = new XSSFWorkbook()) {
+                    Sheet sheet = workbook.createSheet("Sheet1");
+
+                    // Lấy mô hình của JTable
+                    DefaultTableModel model = (DefaultTableModel) TableDeliveryBill.getModel();
+                    // Viết tiêu đề cột
+                    Row headerRow = sheet.createRow(0);
+                    for (int col = 0; col < model.getColumnCount(); col++) {
+                        headerRow.createCell(col).setCellValue(model.getColumnName(col));
+                    }
+
+                    // Viết dữ liệu từ JTable vào tệp Excel
+                    for (int row = 0; row < model.getRowCount(); row++) {
+                        Row excelRow = sheet.createRow(row + 1); // Bắt đầu từ hàng thứ 2 (hàng
+                                                                 // đầu tiên là tiêu đề)
+                        for (int col = 0; col < model.getColumnCount(); col++) {
+                            Object cellValue = model.getValueAt(row, col);
+                            if (cellValue != null) {
+                                Cell excelCell = excelRow.createCell(col);
+                                if (cellValue instanceof String) {
+                                    excelCell.setCellValue((String) cellValue);
+                                } else if (cellValue instanceof Integer) {
+                                    excelCell.setCellValue((Integer) cellValue);
+                                } else if (cellValue instanceof LocalDate) {
+                                    System.out.println(cellValue);
+                                    String stringValue = ((LocalDate) cellValue)
+                                            .format(DateTimeFormatter
+                                                    .ofPattern("yyyy-MM-dd"));
+                                    excelCell.setCellValue(stringValue);
+                                } // Và có thể thêm các kiểu dữ liệu khác tùy theo nhu
+                                  // cầu
+                            }
+                        }
+                    }
+
+                    // Ghi vào tệp Excel
+                    try (FileOutputStream outputStream = new FileOutputStream(
+                            fileToSave + ".xlsx")) {
+                        workbook.write(outputStream);
+                    }
+                    JOptionPane.showMessageDialog(null, "Xuất file excel thành công.");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     // Variables declaration - do not modify
