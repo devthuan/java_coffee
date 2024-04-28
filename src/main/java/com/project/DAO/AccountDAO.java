@@ -1,0 +1,275 @@
+package com.project.DAO;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+import javax.naming.spi.DirStateFactory.Result;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+
+import com.project.DTO.AccountDTO;
+
+public class AccountDAO {
+    public static ArrayList<AccountDTO> getAllUser() {
+        ArrayList<AccountDTO> listAccount = new ArrayList<AccountDTO>();
+        try {
+            Connection con = mysqlConnect.getConnection();
+            String sql = "SELECT tk.id, tk.email, tk.password, tk.createdAt, tk.updatedAt, q.ten_quyen " +
+                    "FROM TaiKhoan tk " +
+                    "JOIN Quyen q ON tk.Quyen_id = q.id " +
+                    "WHERE  tk.is_active = 1";
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet result = pst.executeQuery();
+            while (result.next()) {
+                int id = result.getInt("id");
+                String email = result.getString("email");
+                String password = result.getString("password");
+                String role = result.getString("ten_quyen");
+                LocalDateTime createdAt = result.getTimestamp("createdAt").toLocalDateTime();
+                Timestamp updateAt = result.getTimestamp("updatedAt");
+                LocalDateTime updatedAt = updateAt != null ? updateAt.toLocalDateTime() : null;
+                listAccount.add(new AccountDTO(id, email, password, role, createdAt, updatedAt));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return listAccount;
+    }
+
+    public static AccountDTO getUser(AccountDTO account) {
+        try {
+            Connection con = mysqlConnect.getConnection();
+            String sql = "SELECT * FROM TaiKhoan WHERE is_active = 1";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, account.getEmail());
+            ResultSet result = pst.executeQuery();
+            AccountDTO accountDTO = null;
+            while (result.next()) {
+                int id = result.getInt("id");
+                String email = result.getString("email");
+                String password = result.getString("password");
+                accountDTO = new AccountDTO(id, email, password);
+            }
+            return accountDTO;
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        return null;
+    }
+
+    public static AccountDTO getUserByEmail(String email) {
+        AccountDTO data = null;
+
+        try {
+            Connection con = mysqlConnect.getConnection();
+            String sql = "SELECT * FROM TaiKhoan Where email=?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, email);
+            ResultSet result = pst.executeQuery();
+            while (result.next()) {
+                // int id= result.getInt("id");
+                String mail = result.getString("email");
+                String password = result.getString("password");
+                data = new AccountDTO(mail, password);
+            }
+            con.close(); // Đóng kết nối sau khi sử dụng
+            return data;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static boolean addUser(AccountDTO account) {
+        try {
+            Connection con = mysqlConnect.getConnection();
+            String insertQuery = "INSERT INTO TaiKhoan (email,password,Quyen_id) VALUES(?,?,?)";
+            PreparedStatement pst = con.prepareStatement(insertQuery);
+            pst.setString(1, account.getEmail());
+            pst.setString(2, account.getPassword());
+            pst.setInt(3, account.getRoleId());
+            int a = pst.executeUpdate();
+            if (a > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLIntegrityConstraintViolationException e) {
+            // Xử lý ngoại lệ khi cố gắng cập nhật một bản ghi với một email đã tồn tại
+            JOptionPane.showMessageDialog(null, "Email đã tồn tại trong cơ sở dữ liệu.");
+            e.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // public static Boolean addUser(AccountDTO account)
+    // {
+
+    // try {
+    // Connection con = mysqlConnect.getConnection();
+    // String insertQuery = "INSERT INTO TaiKhoan (email,password,Quyen_id)
+    // VALUES(?,?,?)";
+    // PreparedStatement pst =con.prepareStatement(insertQuery);
+    // pst.setString(1, account.getEmail());
+    // pst.setString(2,account.getPassword());
+    // pst.setInt(3,1);
+    // int a= pst.executeUpdate();
+    // if(a>0)
+    // {
+    // return true;
+    // }
+    // else
+    // {
+    // return false;
+    // }
+    // } catch (Exception e) {
+    // // TODO: handle exception
+    // e.printStackTrace();
+    // return false;
+    // }
+
+    // }
+
+    public static boolean deleteUser(int id) {
+        Connection con = mysqlConnect.getConnection();
+        String deleteQuery = "UPDATE TaiKhoan SET is_active =? where id =?";
+        if (con != null) {
+            try {
+                PreparedStatement pst = con.prepareStatement(deleteQuery);
+                pst.setInt(1, 0);
+                pst.setInt(2, id);
+                int a = pst.executeUpdate();
+                if (a > 0) {
+                    System.out.println("Thành công");
+                    return true;
+                } else {
+                    System.out.println("Thất bại!!");
+                    return false;
+                }
+
+            } catch (Exception e) {
+                // TODO: handle exception
+                e.printStackTrace();
+                return false;
+
+            }
+
+        }
+        return false;
+
+    }
+
+    public static boolean updateUser(AccountDTO account) {
+        try {
+            Connection con = mysqlConnect.getConnection();
+            String selectEmailQuery = "SELECT email FROM TaiKhoan WHERE id = ?";
+            PreparedStatement selectEmailStmt = con.prepareStatement(selectEmailQuery);
+            selectEmailStmt.setInt(1, account.getId());
+            ResultSet rs = selectEmailStmt.executeQuery();
+
+            String oldEmail = "";
+            if (rs.next()) {
+                oldEmail = rs.getString("email");
+            }
+
+            if (!oldEmail.equals(account.getEmail())) {
+                String updateQuery = "UPDATE TaiKhoan SET email =?, password =?, Quyen_id = ?, updatedAt = NOW() WHERE id =?";
+                PreparedStatement pst = con.prepareStatement(updateQuery);
+                pst.setString(1, account.getEmail());
+                pst.setString(2, account.getPassword());
+                pst.setInt(3, account.getRoleId());
+                pst.setInt(4, account.getId());
+                int a = pst.executeUpdate();
+                if (a > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            } else {
+                String updateQuery = "UPDATE TaiKhoan SET password =?, Quyen_id = ?, updatedAt = NOW() WHERE id =?";
+                PreparedStatement pst = con.prepareStatement(updateQuery);
+                pst.setString(1, account.getPassword());
+                pst.setInt(2, account.getRoleId());
+                pst.setInt(3, account.getId());
+                int a = pst.executeUpdate();
+                if (a > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+        } catch (SQLIntegrityConstraintViolationException e) {
+            // Xử lý ngoại lệ khi cố gắng cập nhật một bản ghi với một email đã tồn tại
+            JOptionPane.showMessageDialog(null, "Email đã tồn tại trong cơ sở dữ liệu.");
+            e.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static ArrayList<AccountDTO> searchAccount(String search_acc) {
+        ArrayList<AccountDTO> listAccount = new ArrayList<>();
+
+        try {
+
+            Connection conn = mysqlConnect.getConnection();
+
+            String sql = "SELECT " +
+                    "tk.id, " +
+                    "tk.email, " +
+                    "tk.password, " +
+                    "tk.createdAt, " +
+                    "tk.updatedAt, " +
+                    "q.ten_quyen " +
+                    "FROM " +
+                    "TaiKhoan tk " +
+                    "JOIN " +
+                    "Quyen q ON tk.Quyen_id = q.id " +
+                    "WHERE " +
+                    "tk.is_active = 1 AND tk.email LIKE ?";
+
+            PreparedStatement pst = conn.prepareStatement(sql);
+
+            pst.setString(1, search_acc + "%");
+
+            ResultSet result_query = pst.executeQuery();
+
+            while (result_query.next()) {
+                int id = result_query.getInt("id");
+                String email = result_query.getString("email");
+                String password = result_query.getString("password");
+                String role = result_query.getString("ten_quyen");
+                LocalDateTime createdAt = result_query.getTimestamp("createdAt").toLocalDateTime();
+                LocalDateTime updatedAt = result_query.getTimestamp("updatedAt").toLocalDateTime();
+                listAccount.add(new AccountDTO(id, email, password, role, createdAt, updatedAt));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return listAccount;
+    }
+
+    public static void main(String[] args) {
+
+    }
+}

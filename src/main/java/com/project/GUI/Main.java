@@ -531,7 +531,7 @@ public class Main extends javax.swing.JFrame {
 
         private void AccountLabelMouseClicked(java.awt.event.MouseEvent evt) {
                 SwitchControl();
-                TaiKhoan orderMenu = new TaiKhoan();
+                Account orderMenu = new Account();
                 Right.add(orderMenu);
         }
 
