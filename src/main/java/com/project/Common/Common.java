@@ -5,14 +5,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
+
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
+
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -27,6 +27,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
+
 
 public class Common {
 
@@ -124,5 +125,6 @@ public class Common {
             return 0.0f; // Hoặc giá trị mặc định khác tùy ý
         }
     }
+
 
 }

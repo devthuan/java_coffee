@@ -9,7 +9,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-import com.project.BUS.EmployeeBUS;
+
 import com.project.BUS.OrderBUS;
 import com.project.BUS.PaymentMethodBUS;
 import com.project.BUS.ProductBUS;
@@ -29,14 +29,18 @@ import com.project.Util.Formatter;
 /* Chỉ cập nhật trạng thái đơn hàng */
 
 public class EditOrderForm extends javax.swing.JFrame {
-    public EditOrderForm(OrderDTO order) {
+
+    public EditOrderForm(OrderDTO order, EmployeeDTO emp) {
         setTitle("Cập nhật đơn hàng");
-        initComponents();
-        loadData(order);
+        initComponents(order.getOrder_status());
+        loadData(order, emp);
     }
 
-    private static String[] getOrderStatus() {
-        return new String[] { "successful", "pending", "cancelled" };
+    private static String[] getOrderStatus(String currenStatus) {
+        if (currenStatus.equals("successful")) {
+            return new String[] { "successful", "cancelled" };
+        }
+        return new String[] { "pending", "cancelled", "successful" };
     }
 
     private static int getSelectedStatus(JComboBox cb, String status) {
@@ -49,13 +53,13 @@ public class EditOrderForm extends javax.swing.JFrame {
         return -1;
     }
 
-    private void loadData(OrderDTO order) {
+
+    private void loadData(OrderDTO order, EmployeeDTO emp) {
         PaymentMethodDTO paymentMethod = new PaymentMethodBUS().getByID(order.getPaymentMethod_id());
         PaymentMethod.setText(paymentMethod.getPayment_name());
-        AccountID.setText(String.valueOf(order.getAcount_id()));
+        AccountID.setText(String.valueOf(emp.getAccount_id()));
 
-        EmployeeDTO emp = new EmployeeBUS().getEmpByAccountID(order.getAcount_id());
-        if (emp != null) {
+        if (emp.getName() != null) {
             FullName.setText(emp.getName());
         }
 
@@ -63,9 +67,10 @@ public class EditOrderForm extends javax.swing.JFrame {
         OrderID.setText(String.valueOf(order.getId()));
         cbStatus.setSelectedIndex(getSelectedStatus(cbStatus, order.getOrder_status()));
 
-        // Disable các cbox phương thức thanh toán và nút btnSave nếu đơn hàng đã hoàn
+
+        // Disable các cb status và btnSave nếu đơn hàng đã hủy
         // thành hoặc hủy
-        if (!order.getOrder_status().equals("pending")) {
+        if (order.getOrder_status().equals("cancelled")) {
             cbStatus.setEnabled(false);
             btnSave.setEnabled(false);
         }
@@ -103,9 +108,11 @@ public class EditOrderForm extends javax.swing.JFrame {
 
         TableOrderDetail.setModel(dtm);
         Formatter.centerAlignTableCells(TableOrderDetail);
+
+        Formatter.setBoldHeaderTable(TableOrderDetail);
     }
 
-    private void initComponents() {
+    private void initComponents(String currentOrderStatus) {
 
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -247,7 +254,8 @@ public class EditOrderForm extends javax.swing.JFrame {
         OrderID.setMaximumSize(new java.awt.Dimension(150, 50));
         jPanel4.add(OrderID);
 
-        lblPaymentmethod.setFont(new java.awt.Font("Arial", 0, 16));
+
+        lblPaymentmethod.setFont(new java.awt.Font("Arial", 0, 15));
         lblPaymentmethod.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPaymentmethod.setText("Hình thức thanh toán: ");
         lblPaymentmethod.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -268,7 +276,8 @@ public class EditOrderForm extends javax.swing.JFrame {
         jPanel4.add(lblStatus);
 
         cbStatus.setFont(new java.awt.Font("Arial", 0, 16));
-        cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(getOrderStatus()));
+
+        cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(getOrderStatus(currentOrderStatus)));
 
         cbStatus.setMaximumSize(new java.awt.Dimension(150, 50));
         jPanel4.add(cbStatus);
@@ -306,7 +315,7 @@ public class EditOrderForm extends javax.swing.JFrame {
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.setMaximumSize(new java.awt.Dimension(32767, 22));
         jPanel7.setMinimumSize(new java.awt.Dimension(200, 22));
-        jPanel7.setPreferredSize(new java.awt.Dimension(200, 22));
+
         jPanel7.setLayout(new java.awt.BorderLayout());
 
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
@@ -347,14 +356,30 @@ public class EditOrderForm extends javax.swing.JFrame {
         btnSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int orderID = Integer.parseInt(OrderID.getText());
-                if (new OrderBUS().updateStatus(orderID, cbStatus.getSelectedItem().toString())) {
-                    JOptionPane.showMessageDialog(null, "Cập nhật thành công", "Thông báo",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Có lỗi xảy ra", "Lỗi",
-                            JOptionPane.ERROR_MESSAGE);
+
+                int choice = JOptionPane.showConfirmDialog(null, "Xác nhận cập nhật đơn hàng?", "Xác nhận",
+                        JOptionPane.YES_NO_OPTION);
+
+                if (choice == JOptionPane.YES_OPTION) {
+                    int orderID = Integer.parseInt(OrderID.getText());
+
+                    if (new OrderBUS().updateStatus(orderID, cbStatus.getSelectedItem().toString())) {
+                        if (cbStatus.getSelectedItem().toString().equals("cancelled")) {
+                            ProductBUS productBUS = new ProductBUS();
+
+                            for (int row = 0; row < TableOrderDetail.getRowCount(); row++) {
+                                int productID = Integer.parseInt(TableOrderDetail.getValueAt(row, 1).toString());
+                                int quantity = Integer.parseInt(TableOrderDetail.getValueAt(row, 4).toString());
+                                productBUS.increaseProductQuantity(productID, quantity);
+                            }
+                        }
+
+                        JOptionPane.showMessageDialog(null, "Cập nhật thành công", "Thông báo",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Có lỗi xảy ra", "Lỗi",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         });
@@ -377,6 +402,8 @@ public class EditOrderForm extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+        setResizable(false);
         setVisible(true);
     }
 

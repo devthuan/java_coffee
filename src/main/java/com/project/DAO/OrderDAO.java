@@ -163,6 +163,45 @@ public class OrderDAO {
         return orderDTOs;
     }
 
+
+    public LinkedHashMap<OrderDTO, Float> getAllWithTotalByEmp_Name(String empName) {
+        LinkedHashMap<OrderDTO, Float> orderDTOs = new LinkedHashMap<OrderDTO, Float>();
+        try {
+            Connection conn = mysqlConnect.getConnection();
+
+            String sql = "SELECT HD.id, HD.trang_thai, HD.PTThanhToan_id, HD.TaiKhoan_id, HD.createdAt, SUM(SP.gia * CTHD.so_luong) as tong "
+                    +
+                    "FROM HoaDon HD " +
+                    "INNER JOIN ChiTietHoaDon CTHD ON HD.id = CTHD.HoaDon_id " +
+                    "INNER JOIN SanPham SP ON CTHD.SanPham_id = SP.id " +
+                    "INNER JOIN NhanVien NV ON HD.TaiKhoan_id = NV.TaiKhoan_id " +
+                    "WHERE NV.ho_va_ten LIKE ? " +
+                    "GROUP BY HD.id " +
+                    "ORDER BY HD.createdAt DESC";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, "%" + empName + "%");
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String order_status = rs.getString("trang_thai");
+                int paymentMethod_id = rs.getInt("PTThanhToan_id");
+                int acount_id = rs.getInt("TaiKhoan_id");
+                LocalDateTime createdAt = rs.getTimestamp("createdAt").toLocalDateTime();
+
+                OrderDTO orderDTO = new OrderDTO(id, order_status, createdAt, paymentMethod_id, acount_id);
+                Float total = rs.getFloat("tong");
+                orderDTOs.put(orderDTO, total);
+            }
+
+            mysqlConnect.closeConnection(conn);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return orderDTOs;
+    }
+
     public LinkedHashMap<OrderDTO, Float> getAllWithTotal(String orderStatus, int pmMethod_id, Timestamp startDate,
             Timestamp endDate, Float startTotal, Float endTotal) {
         LinkedHashMap<OrderDTO, Float> orderDTOs = new LinkedHashMap<>();
@@ -234,161 +273,7 @@ public class OrderDAO {
         }
         return orderDTOs;
     }
-    /*
-     * public LinkedHashMap<OrderDTO, Float> getAllWithTotalByStatus(String status)
-     * {
-     * LinkedHashMap<OrderDTO, Float> orderDTOs = new LinkedHashMap<OrderDTO,
-     * Float>();
-     * try {
-     * Connection conn = mysqlConnect.getConnection();
-     * 
-     * String sql =
-     * "SELECT HD.*, SUM(gia * CTHD.so_luong) as tong FROM HoaDon HD, ChiTietHoaDon CTHD, SanPham SP\r\n"
-     * +
-     * "WHERE HD.id = CTHD.HoaDon_id AND SP.id = CTHD.SanPham_id AND HD.trang_thai like ?\r\n"
-     * +
-     * "GROUP BY HD.id ORDER BY HD.createdAt DESC";
-     * PreparedStatement pst = conn.prepareStatement(sql);
-     * pst.setString(1, status + "%");
-     * ResultSet rs = pst.executeQuery();
-     * 
-     * while (rs.next()) {
-     * int id = rs.getInt("id");
-     * String order_status = rs.getString("trang_thai");
-     * int paymentMethod_id = rs.getInt("PTThanhToan_id");
-     * int acount_id = rs.getInt("TaiKhoan_id");
-     * LocalDateTime createdAt = rs.getTimestamp("createdAt").toLocalDateTime();
-     * 
-     * OrderDTO orderDTO = new OrderDTO(id, order_status, createdAt,
-     * paymentMethod_id, acount_id);
-     * Float total = rs.getFloat("tong");
-     * orderDTOs.put(orderDTO, total);
-     * }
-     * 
-     * mysqlConnect.closeConnection(conn);
-     * } catch (Exception e) {
-     * e.printStackTrace();
-     * }
-     * 
-     * return orderDTOs;
-     * }
-     * 
-     * public LinkedHashMap<OrderDTO, Float> getAllWithTotalByPaymentMethod(int
-     * pmMethod_id) {
-     * LinkedHashMap<OrderDTO, Float> orderDTOs = new LinkedHashMap<OrderDTO,
-     * Float>();
-     * try {
-     * Connection conn = mysqlConnect.getConnection();
-     * 
-     * String sql =
-     * "SELECT HD.*, SUM(gia * CTHD.so_luong) as tong FROM HoaDon HD, ChiTietHoaDon CTHD, SanPham SP\r\n"
-     * +
-     * "WHERE HD.id = CTHD.HoaDon_id AND SP.id = CTHD.SanPham_id AND HD.PTThanhToan_id = ?\r\n"
-     * +
-     * "GROUP BY HD.id ORDER BY HD.createdAt DESC";
-     * PreparedStatement pst = conn.prepareStatement(sql);
-     * pst.setInt(1, pmMethod_id);
-     * ResultSet rs = pst.executeQuery();
-     * 
-     * while (rs.next()) {
-     * int id = rs.getInt("id");
-     * String order_status = rs.getString("trang_thai");
-     * int paymentMethod_id = rs.getInt("PTThanhToan_id");
-     * int acount_id = rs.getInt("TaiKhoan_id");
-     * LocalDateTime createdAt = rs.getTimestamp("createdAt").toLocalDateTime();
-     * 
-     * OrderDTO orderDTO = new OrderDTO(id, order_status, createdAt,
-     * paymentMethod_id, acount_id);
-     * Float total = rs.getFloat("tong");
-     * orderDTOs.put(orderDTO, total);
-     * }
-     * 
-     * mysqlConnect.closeConnection(conn);
-     * } catch (Exception e) {
-     * e.printStackTrace();
-     * }
-     * 
-     * return orderDTOs;
-     * }
-     * 
-     * public LinkedHashMap<OrderDTO, Float> getAllWithTotalByDateRange(Timestamp
-     * startDate, Timestamp endDate) {
-     * LinkedHashMap<OrderDTO, Float> orderDTOs = new LinkedHashMap<OrderDTO,
-     * Float>();
-     * try {
-     * Connection conn = mysqlConnect.getConnection();
-     * 
-     * String sql =
-     * "SELECT HD.*, SUM(gia * CTHD.so_luong) as tong FROM HoaDon HD, ChiTietHoaDon CTHD, SanPham SP\r\n"
-     * +
-     * "WHERE HD.id = CTHD.HoaDon_id AND SP.id = CTHD.SanPham_id AND HD.PTThanhToan_id = ? AND HD.createdAt BETWEEN ? AND ?\r\n"
-     * +
-     * "GROUP BY HD.id ORDER BY HD.createdAt DESC";
-     * PreparedStatement pst = conn.prepareStatement(sql);
-     * pst.setTimestamp(1, startDate);
-     * pst.setTimestamp(2, endDate);
-     * ResultSet rs = pst.executeQuery();
-     * 
-     * while (rs.next()) {
-     * int id = rs.getInt("id");
-     * String order_status = rs.getString("trang_thai");
-     * int paymentMethod_id = rs.getInt("PTThanhToan_id");
-     * int acount_id = rs.getInt("TaiKhoan_id");
-     * LocalDateTime createdAt = rs.getTimestamp("createdAt").toLocalDateTime();
-     * 
-     * OrderDTO orderDTO = new OrderDTO(id, order_status, createdAt,
-     * paymentMethod_id, acount_id);
-     * Float total = rs.getFloat("tong");
-     * orderDTOs.put(orderDTO, total);
-     * }
-     * 
-     * mysqlConnect.closeConnection(conn);
-     * } catch (Exception e) {
-     * e.printStackTrace();
-     * }
-     * 
-     * return orderDTOs;
-     * }
-     * 
-     * public LinkedHashMap<OrderDTO, Float> getAllWithTotalByTotalRange(Float
-     * startTotal, Float endTotal) {
-     * LinkedHashMap<OrderDTO, Float> orderDTOs = new LinkedHashMap<OrderDTO,
-     * Float>();
-     * try {
-     * Connection conn = mysqlConnect.getConnection();
-     * 
-     * String sql =
-     * "SELECT HD.*, SUM(gia * CTHD.so_luong) as tong FROM HoaDon HD, ChiTietHoaDon CTHD, SanPham SP\r\n"
-     * +
-     * "WHERE HD.id = CTHD.HoaDon_id AND SP.id = CTHD.SanPham_id AND HD.PTThanhToan_id = ? HAVING tong >= ? AND tong <= ?\r\n"
-     * +
-     * "GROUP BY HD.id ORDER BY HD.createdAt DESC";
-     * PreparedStatement pst = conn.prepareStatement(sql);
-     * pst.setFloat(1, startTotal);
-     * pst.setFloat(2, endTotal);
-     * ResultSet rs = pst.executeQuery();
-     * 
-     * while (rs.next()) {
-     * int id = rs.getInt("id");
-     * String order_status = rs.getString("trang_thai");
-     * int paymentMethod_id = rs.getInt("PTThanhToan_id");
-     * int acount_id = rs.getInt("TaiKhoan_id");
-     * LocalDateTime createdAt = rs.getTimestamp("createdAt").toLocalDateTime();
-     * 
-     * OrderDTO orderDTO = new OrderDTO(id, order_status, createdAt,
-     * paymentMethod_id, acount_id);
-     * Float total = rs.getFloat("tong");
-     * orderDTOs.put(orderDTO, total);
-     * }
-     * 
-     * mysqlConnect.closeConnection(conn);
-     * } catch (Exception e) {
-     * e.printStackTrace();
-     * }
-     * 
-     * return orderDTOs;
-     * }
-     */
+
 
     public boolean addOrder(OrderDTO order, ArrayList<OrderDetailDTO> orderDetails) {
         Connection conn = mysqlConnect.getConnection();

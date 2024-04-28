@@ -1,5 +1,4 @@
 
-
 package com.project.GUI;
 
 import java.awt.Dimension;
@@ -58,7 +57,8 @@ public class BuyProduct extends JPanel implements AddProductListener {
                                                 JOptionPane.OK_CANCEL_OPTION);
                                 if (choice == JOptionPane.YES_OPTION) {
                                         int paymentMethod_id = pnCarts.PanelBottom.getSelectedPaymentMethodID();
-                                        int account_id = 1;
+
+                                        int account_id = 2;
 
                                         OrderDTO orderDTO = new OrderDTO("pending", paymentMethod_id, account_id);
                                         ArrayList<OrderDetailDTO> orderDetails = new ArrayList<>();
@@ -73,8 +73,8 @@ public class BuyProduct extends JPanel implements AddProductListener {
                                                 for (ProductDTO product : pnCarts.cartItems.keySet()) {
                                                         CartItem cartItem = pnCarts.cartItems.get(product);
                                                         int quantity = (int) cartItem.SpinnerQuantity.getValue();
-                                                        productBUS.setProductQuantity(product.getId(),
-                                                                        product.getQuantity() - quantity);
+
+                                                        productBUS.decreaseProductQuantity(product.getId(), quantity);
                                                 }
 
                                                 // Reset
@@ -92,9 +92,6 @@ public class BuyProduct extends JPanel implements AddProductListener {
                         }
                 });
 
-                pnCarts.PanelBottom.btnPrint.addActionListener(e -> {
-
-                });
         }
 
         private void exportPDF() {
@@ -211,21 +208,27 @@ class PanelCarts extends JPanel {
         }
 
         public void addCartItem(ProductDTO product) {
-                if (cartItems.get(product) == null) {
-                        CartItem cartItem = new CartItem(product);
 
+                CartItem cartItem = cartItems.get(product);
+                if (cartItem == null) {
+                        cartItem = new CartItem(product);
                         cartItems.put(product, cartItem);
 
                         CartList.add(cartItem);
                         CartList.revalidate();
                         CartList.repaint();
                 } else {
-                        CartItem cartItem = cartItems.get(product);
+
                         int currentQuty = (int) cartItem.SpinnerQuantity.getValue();
                         if (currentQuty < product.getQuantity()) {
                                 cartItem.SpinnerQuantity.setValue(currentQuty + 1);
+                        } else {
+                                JOptionPane.showMessageDialog(null, "Số lượng sản phẩm đạt tới giới hạn",
+                                                "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+
                         }
                 }
+                cartItem.SpinnerQuantity.requestFocus();
         }
 
         public void removeCartItem(ProductDTO product) {
@@ -370,7 +373,8 @@ class ProductCard extends JPanel {
                 jPanel1.add(lblQuantity);
 
                 Remaining.setBackground(new java.awt.Color(255, 255, 255));
-                Remaining.setFont(new java.awt.Font("Arial", 1, 17));
+
+                Remaining.setFont(new java.awt.Font("Arial", 1, 18));
                 Remaining.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                 Remaining.setText(String.valueOf(product.getQuantity()));
                 Remaining.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -451,7 +455,7 @@ class PanelBottom extends javax.swing.JPanel {
                 TotalTitle = new javax.swing.JLabel();
                 Total = new javax.swing.JLabel();
                 GroupButtons = new javax.swing.JPanel();
-                btnPrint = new javax.swing.JButton();
+
                 btnOrder = new javax.swing.JButton();
 
                 BoxPaymentMethods.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 0, 3, 0,
@@ -462,7 +466,8 @@ class PanelBottom extends javax.swing.JPanel {
 
                 PaymentMethodsTitle.setFont(new java.awt.Font("Arial", 0, 16));
                 PaymentMethodsTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                PaymentMethodsTitle.setText("Phương thức thanh toán:");
+
+                PaymentMethodsTitle.setText("Hình thức thanh toán:");
                 PaymentMethodsTitle.setToolTipText("");
                 PaymentMethodsTitle.setMaximumSize(new java.awt.Dimension(32767, 40));
                 PaymentMethodsTitle.setMinimumSize(new java.awt.Dimension(200, 40));
@@ -507,15 +512,8 @@ class PanelBottom extends javax.swing.JPanel {
                 GroupButtons.setMinimumSize(new java.awt.Dimension(380, 100));
                 GroupButtons.setPreferredSize(new java.awt.Dimension(380, 100));
 
-                btnPrint.setBackground(new java.awt.Color(0, 191, 255));
-                btnPrint.setFont(new java.awt.Font("Arial", 1, 20));
-                btnPrint.setForeground(new java.awt.Color(255, 255, 255));
-                btnPrint.setText("In");
-                btnPrint.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                btnPrint.setMaximumSize(new java.awt.Dimension(80, 50));
-                btnPrint.setMinimumSize(new java.awt.Dimension(80, 50));
-                btnPrint.setPreferredSize(new java.awt.Dimension(80, 50));
-                GroupButtons.add(btnPrint);
+
+
 
                 btnOrder.setBackground(new java.awt.Color(255, 153, 102));
                 btnOrder.setFont(new java.awt.Font("Arial", 1, 18));
@@ -549,7 +547,7 @@ class PanelBottom extends javax.swing.JPanel {
         public javax.swing.JLabel Total;
         public javax.swing.JComboBox<String> cbPaymentMethod;
         public javax.swing.JButton btnOrder;
-        public javax.swing.JButton btnPrint;
+        // public javax.swing.JButton btnPrint;
         public javax.swing.JLabel TotalTitle;
         public javax.swing.JLabel PaymentMethodsTitle;
         public javax.swing.JPanel BoxPaymentMethods;
@@ -649,11 +647,7 @@ class CartItem extends JPanel {
                 btnRemove.setMaximumSize(new java.awt.Dimension(85, 30));
                 btnRemove.setMinimumSize(new java.awt.Dimension(85, 30));
                 btnRemove.setPreferredSize(new java.awt.Dimension(85, 30));
-                btnRemove.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                btnRemoveActionPerformed(evt);
-                        }
-                });
+
 
                 javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(BottomRight);
                 BottomRight.setLayout(jPanel14Layout);
@@ -689,9 +683,7 @@ class CartItem extends JPanel {
                 add(Top);
         }
 
-        private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {
-                // TODO add your handling code here:
-        }
+       
 
         public javax.swing.JLabel Name;
         public javax.swing.JLabel Price;

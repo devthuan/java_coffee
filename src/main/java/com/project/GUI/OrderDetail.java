@@ -1,10 +1,25 @@
 package com.project.GUI;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-import com.project.BUS.EmployeeBUS;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.project.BUS.OrderBUS;
 import com.project.BUS.PaymentMethodBUS;
 import com.project.BUS.ProductBUS;
@@ -22,19 +37,18 @@ import com.project.Util.Formatter;
  */
 public class OrderDetail extends javax.swing.JFrame {
 
-    public OrderDetail(OrderDTO order) {
+    public OrderDetail(OrderDTO order, EmployeeDTO emp) {
         setTitle("Chi tiết đơn hàng");
         initComponents();
-        loadData(order);
+        loadData(order, emp);
     }
 
-    private void loadData(OrderDTO order) {
+    private void loadData(OrderDTO order, EmployeeDTO emp) {
         PaymentMethodDTO paymentMethod = new PaymentMethodBUS().getByID(order.getPaymentMethod_id());
         PaymentMethod.setText(paymentMethod.getPayment_name());
+        AccountID.setText(String.valueOf(emp.getAccount_id()));
 
-        AccountID.setText(String.valueOf(order.getAcount_id()));
-        EmployeeDTO emp = new EmployeeBUS().getEmpByAccountID(order.getAcount_id());
-        if (emp != null) {
+        if (emp.getName() != null) {
             FullName.setText(emp.getName());
         }
 
@@ -75,6 +89,8 @@ public class OrderDetail extends javax.swing.JFrame {
 
         TableOrderDetail.setModel(dtm);
         Formatter.centerAlignTableCells(TableOrderDetail);
+
+        Formatter.setBoldHeaderTable(TableOrderDetail);
     }
 
     private void initComponents() {
@@ -280,7 +296,7 @@ public class OrderDetail extends javax.swing.JFrame {
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.setMaximumSize(new java.awt.Dimension(32767, 22));
         jPanel7.setMinimumSize(new java.awt.Dimension(200, 22));
-        jPanel7.setPreferredSize(new java.awt.Dimension(200, 22));
+
         jPanel7.setLayout(new java.awt.BorderLayout());
 
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
@@ -318,6 +334,16 @@ public class OrderDetail extends javax.swing.JFrame {
         btnPrint.setMaximumSize(new java.awt.Dimension(80, 50));
         btnPrint.setMinimumSize(new java.awt.Dimension(80, 50));
         btnPrint.setPreferredSize(new java.awt.Dimension(80, 50));
+
+        btnPrint.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                exportPF();
+            }
+
+        });
+
         pnButton.add(btnPrint, java.awt.BorderLayout.CENTER);
 
         pnBottom.add(pnButton, java.awt.BorderLayout.CENTER);
@@ -335,10 +361,132 @@ public class OrderDetail extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
 
         pack();
-        setAlwaysOnTop(true);
+
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setResizable(false);
         setVisible(true);
+    }
+
+    private void exportPF() {
+        JFileChooser fileChooser = new JFileChooser();
+        int userSelection = fileChooser.showSaveDialog(this);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            boolean rs = false;
+            try {
+                String path = fileChooser.getSelectedFile().getAbsolutePath();
+                Document document = new Document();
+                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path + ".pdf"));
+                document.open();
+                rs = addComponentToDocument(document);
+                document.close();
+                writer.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if (rs) {
+                JOptionPane.showMessageDialog(null, "Xuất file PDF thành công!", "Thông báo",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Có lỗi xảy ra!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private boolean addComponentToDocument(Document document) {
+        boolean rs = false;
+        try {
+            Font normalFont = new Font(
+                    BaseFont.createFont("java_coffee\\src\\assets\\VietFontsWeb1_ttf\\vuTimes.ttf", BaseFont.IDENTITY_H,
+                            BaseFont.EMBEDDED),
+                    13, Font.NORMAL);
+            Font boldFont = new Font(
+                    BaseFont.createFont("java_coffee\\src\\assets\\VietFontsWeb1_ttf\\vuTimesBold.ttf",
+                            BaseFont.IDENTITY_H,
+                            BaseFont.EMBEDDED),
+                    13, Font.NORMAL);
+
+            Paragraph separator = new Paragraph(
+                    "-----------------------------------------------------------------------------------");
+            separator.setAlignment(Paragraph.ALIGN_CENTER);
+
+            Paragraph title = new Paragraph("Coffe-Shop", new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD));
+            title.setAlignment(Paragraph.ALIGN_CENTER);
+            document.add(title);
+
+            Paragraph shopInfo = new Paragraph("273 An Dương Vương, Phường 3, Quận 5, TP.HCM\n+0123456789", normalFont);
+            shopInfo.setAlignment(Paragraph.ALIGN_CENTER);
+            document.add(shopInfo);
+
+            document.add(separator);
+
+            Paragraph orderInfo1 = new Paragraph();
+            orderInfo1.setAlignment(Paragraph.ALIGN_CENTER);
+            orderInfo1.add(new Chunk("Mã HD: " + OrderID.getText(), normalFont));
+            orderInfo1.add("                       ");
+            orderInfo1.add(new Chunk("Ngày: " + CreatedAt.getText(), normalFont));
+            orderInfo1.add(Chunk.NEWLINE);
+            document.add(orderInfo1);
+
+            Paragraph orderInfo2 = new Paragraph();
+            orderInfo2.add(new Chunk("Nhân viên: " + FullName.getText(), normalFont));
+            orderInfo2.add(Chunk.NEWLINE);
+            orderInfo2.add(new Chunk("Hình thức thanh toán: " + PaymentMethod.getText(), normalFont));
+            orderInfo2.setIndentationLeft(120);
+            document.add(orderInfo2);
+
+            document.add(separator);
+
+            PdfPTable table = new PdfPTable(5);
+            table.setWidthPercentage(55);
+            table.setWidths(new float[] { 1, 2.8f, 1.2f, 1.2f, 2 });
+            Stream.of("STT", "Tên sản phẩm", "Đơn giá", "Số lượng", "Tổng")
+                    .forEach(columnTitle -> {
+                        PdfPCell header = new PdfPCell();
+                        header.setBorderWidth(2);
+                        header.setPhrase(new Phrase(columnTitle, boldFont));
+                        header.setHorizontalAlignment(Phrase.ALIGN_CENTER);
+                        header.setBorder(Rectangle.NO_BORDER);
+                        table.addCell(header);
+                    });
+
+            for (int row = 0; row < TableOrderDetail.getRowCount(); row++) {
+                for (int col = 0; col < TableOrderDetail.getColumnCount(); col++) {
+                    if (col == 1)
+                        continue;
+                    PdfPCell cell = new PdfPCell();
+                    cell.setPhrase(new Phrase(TableOrderDetail.getValueAt(row, col).toString(), normalFont));
+                    cell.setHorizontalAlignment(Phrase.ALIGN_CENTER);
+                    cell.setBorder(Rectangle.NO_BORDER);
+                    table.addCell(cell);
+                }
+            }
+
+            document.add(table);
+            document.add(separator);
+
+            Paragraph total = new Paragraph();
+            total.add(new Chunk("Tổng cộng: ", boldFont));
+            total.add(new Chunk(Total.getText(), normalFont));
+            total.setAlignment(Paragraph.ALIGN_RIGHT);
+            total.setIndentationRight(100);
+            document.add(total);
+
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+            Paragraph thanks = new Paragraph("Thank you! Please visit us again!", boldFont);
+            thanks.setAlignment(Paragraph.ALIGN_CENTER);
+            document.add(thanks);
+
+            rs = true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
     }
 
     private javax.swing.JTextField AccountID;

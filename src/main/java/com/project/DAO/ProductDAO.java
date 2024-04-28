@@ -1,9 +1,16 @@
 package com.project.DAO;
 
+// <<<<<<< HEAD
 import java.sql.*;
 
 import java.time.LocalDateTime;
 
+// =======
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.time.LocalDateTime;
+// >>>>>>> luan
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -19,6 +26,7 @@ public class ProductDAO {
         try {
             Connection conn = mysqlConnect.getConnection();
             String sql = "Select * from SanPham where is_active = 1";
+
             PreparedStatement pst = conn.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
 
@@ -35,6 +43,7 @@ public class ProductDAO {
                 int category_id = rs.getInt("LoaiSanPham_id");
                 products.add(
                         new ProductDTO(id, product_name, url_image, price, is_active, quantity, category_id, createAt));
+
             }
             mysqlConnect.closeConnection(conn);
         } catch (Exception e) {
@@ -48,6 +57,7 @@ public class ProductDAO {
         try {
             Connection conn = mysqlConnect.getConnection();
             String sql = "Select * from SanPham Where id = ? and is_active = 1";
+
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setInt(1, product_id);
             ResultSet rs = pst.executeQuery();
@@ -70,6 +80,7 @@ public class ProductDAO {
         try {
             Connection conn = mysqlConnect.getConnection();
             String sql = "Select * from SanPham Where LoaiSanPham_id = ? and is_active = 1";
+
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setInt(1, category);
             ResultSet rs = pst.executeQuery();
@@ -87,6 +98,7 @@ public class ProductDAO {
                 int category_id = rs.getInt("LoaiSanPham_id");
                 products.add(
                         new ProductDTO(id, product_name, url_image, price, is_active, quantity, category_id, createAt));
+
             }
             mysqlConnect.closeConnection(conn);
         } catch (Exception e) {
@@ -95,11 +107,12 @@ public class ProductDAO {
         return products;
     }
 
-    public boolean setProductQuantity(int product_id, int quantity) {
+
+    public boolean increaseProductQuantity(int product_id, int quantity) {
         boolean rs = false;
         try {
             Connection conn = mysqlConnect.getConnection();
-            String sql = "Update SanPham set so_luong = ? Where id = ? and is_active = 1";
+            String sql = "Update SanPham set so_luong = so_luong + ? Where id = ?";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setInt(2, product_id);
             pst.setInt(1, quantity);
@@ -287,5 +300,23 @@ public class ProductDAO {
     }
 
     // loc san pham
+    public boolean decreaseProductQuantity(int product_id, int quantity) {
+        boolean rs = false;
+        try {
+            Connection conn = mysqlConnect.getConnection();
+            String sql = "Update SanPham set so_luong = so_luong - ? Where id = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(2, product_id);
+            pst.setInt(1, quantity);
+            int result = pst.executeUpdate();
+            if (result > 0) {
+                rs = true;
+            }
+            mysqlConnect.closeConnection(conn);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return rs;
+    }
 
 }
