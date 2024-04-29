@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.naming.spi.DirStateFactory.Result;
 import javax.swing.JOptionPane;
@@ -71,15 +72,17 @@ public class AccountDAO {
 
         try {
             Connection con = mysqlConnect.getConnection();
-            String sql = "SELECT * FROM TaiKhoan Where email=?";
+            String sql = "SELECT TaiKhoan.id, email, password, ten_quyen, Quyen.id as roleId FROM TaiKhoan JOIN Quyen ON TaiKhoan.Quyen_id = Quyen.id Where email=?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, email);
             ResultSet result = pst.executeQuery();
             while (result.next()) {
-                // int id= result.getInt("id");
+                int id = result.getInt("id");
                 String mail = result.getString("email");
                 String password = result.getString("password");
-                data = new AccountDTO(mail, password);
+                String roleName = result.getString("ten_quyen");
+                int roleId = result.getInt("roleId");
+                data = new AccountDTO(id, mail, password, roleName, roleId);
             }
             con.close(); // Đóng kết nối sau khi sử dụng
             return data;
@@ -89,6 +92,27 @@ public class AccountDAO {
         }
     }
 
+    // get all functions
+    public static HashMap<String, Boolean> getAllFunction(int roleId) {
+        HashMap<String, Boolean> listFunction = new HashMap<>();
+        try {
+            Connection con = mysqlConnect.getConnection();
+            String sql = "SELECT QuyenChucNang.id, ten_cn FROM QuyenChucNang JOIN ChucNang ON QuyenChucNang.ChucNang_id = ChucNang.id WHERE Quyen_id = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setInt(1, roleId);
+            ResultSet result = pst.executeQuery();
+            while (result.next()) {
+                String name = result.getString("ten_cn");
+                // Gán giá trị true cho quyền
+                listFunction.put(name, true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return listFunction;
+    }
+
     public static boolean addUser(AccountDTO account) {
         try {
             Connection con = mysqlConnect.getConnection();
@@ -96,7 +120,7 @@ public class AccountDAO {
             PreparedStatement pst = con.prepareStatement(insertQuery);
             pst.setString(1, account.getEmail());
             pst.setString(2, account.getPassword());
-            pst.setInt(3, account.getRoleId());
+            pst.setInt(3, 3);
             int a = pst.executeUpdate();
             if (a > 0) {
                 return true;

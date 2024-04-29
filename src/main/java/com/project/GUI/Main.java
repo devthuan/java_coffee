@@ -14,20 +14,28 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import com.project.DTO.PermissionAccount;
 
 public class Main extends javax.swing.JFrame {
+        private PermissionAccount permissionList;
 
         public Main() {
                 initComponents();
-
                 SwitchControl();
+
+                permissionList = PermissionAccount.getInstance();
+
                 Right.add(new BuyProduct()).setVisible(true);
 
                 setLocationRelativeTo(null);
+
+                jLabel13.setText(permissionList.getRoleName());
+
         }
 
         /**
@@ -528,20 +536,40 @@ public class Main extends javax.swing.JFrame {
         }
 
         private void AccountLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                SwitchControl();
-                Account orderMenu = new Account();
-                Right.add(orderMenu);
+                if (permissionList.hasPermission("READ_USER")) {
+                        SwitchControl();
+                        Account account = new Account();
+                        Right.add(account);
+
+                } else {
+                        JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+                        return;
+                }
         }
 
         private void EmployeeLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                SwitchControl();
-                EmployeeMenu employeeMenu = new EmployeeMenu();
-                Right.add(employeeMenu);
+
+                if (permissionList.hasPermission("Admin")) {
+                        SwitchControl();
+                        EmployeeMenu employeeMenu = new EmployeeMenu();
+                        Right.add(employeeMenu);
+
+                } else {
+                        JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+                        return;
+                }
         }
 
         private void ReceiptLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                SwitchControl();
-                Right.add(new ReceiptDeliveryBill()).setVisible(true);
+                if (permissionList.hasPermission("Admin") && permissionList.hasPermission("Manager")) {
+                        SwitchControl();
+                        Right.add(new ReceiptDeliveryBill()).setVisible(true);
+
+                } else {
+                        JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+                        return;
+                }
+
         }
 
         private void SupplierLabelMouseClicked(java.awt.event.MouseEvent evt) {
@@ -556,7 +584,14 @@ public class Main extends javax.swing.JFrame {
         }
 
         private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {
-                // TODO add your handling code here:
+                // confirm logout
+                if (JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn đăng xuất?", "Thông báo",
+                                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        permissionList.reset();
+                        this.setVisible(false);
+                        new FormLogin().setVisible(true);
+                }
+
         }
 
         private void WarehouseLabelMouseClicked(java.awt.event.MouseEvent evt) {
@@ -575,38 +610,6 @@ public class Main extends javax.swing.JFrame {
                 } catch (Exception ex) {
                         System.err.println("Failed to initialize LaF");
                 }
-                /*
-                 * try {
-                 * for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
-                 * .getInstalledLookAndFeels()) {
-                 * if ("Windows".equals(info.getName())) {
-                 * javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                 * break;
-                 * }
-                 * }
-                 * } catch (ClassNotFoundException ex) {
-                 * java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.
-                 * logging.Level.SEVERE,
-                 * null, ex);
-                 * } catch (InstantiationException ex) {
-                 * java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.
-                 * logging.Level.SEVERE,
-                 * null, ex);
-                 * } catch (IllegalAccessException ex) {
-                 * java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.
-                 * logging.Level.SEVERE,
-                 * null, ex);
-                 * } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-                 * java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.
-                 * logging.Level.SEVERE,
-                 * null, ex);
-                 * }
-                 */
-
-                // </editor-fold>
-                // </editor-fold>
-                // </editor-fold>
-                // </editor-fold>
 
                 /* Create and display the form */
                 java.awt.EventQueue.invokeLater(new Runnable() {

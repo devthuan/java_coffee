@@ -1,13 +1,14 @@
 package com.project.BUS;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.JOptionPane;
 
 import com.project.Common.PasswordHasher;
-
 import com.project.DAO.AccountDAO;
 import com.project.DTO.AccountDTO;
+import com.project.DTO.PermissionAccount;
 
 public class AccountBUS {
 
@@ -20,8 +21,16 @@ public class AccountBUS {
         }
 
         if (PasswordHasher.checkPassword(acc.getPassword(), accDAO.getPassword())) {
+            HashMap<String, Boolean> list_permission = AccountDAO.getAllFunction(accDAO.getRoleId());
+
+            // Thiết lập dữ liệu quyền cho PermissionAccount
+            PermissionAccount permissionAccount = PermissionAccount.getInstance();
+            permissionAccount.setPermissionData(accDAO.getId(), accDAO.getRoleId(),
+                    accDAO.getRole(), list_permission);
+
             return true;
         } else {
+            JOptionPane.showMessageDialog(null, "Mật khẩu không chính xác");
 
             return false;
         }

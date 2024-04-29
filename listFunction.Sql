@@ -29,8 +29,38 @@ INSERT INTO chucnang (id, ten_cn, mo_ta, is_active) VALUES
 (24,"IMPORT_WAREHOUSE", "tạo kho nguyên liệu bằng import file excel", 1),
 (25,"EXPORT_WAREHOUSE", "xuất danh sách tất cả kho nguyên liệu", 1),
 
-(26,"READ_STATISTICAL", "xem thống kê", 1),
-(27,"EXPORT_STATISTICAL", "xuất file excel thống kê", 1);
+
+(26,"READ_EMPLOYEE", "xem danh sách tất cả nhân viên", 1),
+(27,"CREATE_EMPLOYEE", "tạo nhân viên mới", 1),
+(28,"UPDATE_EMPLOYEE", "chỉnh sửa nhân viên", 1),
+(29,"DELETE_EMPLOYEE", "xoá tài khoản nhân viên", 1),
+(30,"IMPORT_EMPLOYEE", "tạo nhân viên bằng import file excel", 1),
+(31,"EXPORT_EMPLOYEE", "xuất danh sách tất cả nhân viên", 1),
+
+(32,"READ_WAREHOUSE_RECEIPT", "xem danh sách tất cả phiếu nhập", 1),
+(33,"CREATE_WAREHOUSE_RECEIPT", "tạo phiếu nhập mới", 1),
+(34,"UPDATE_WAREHOUSE_RECEIPT", "chỉnh sửa phiếu nhập", 1),
+(35,"DELETE_WAREHOUSE_RECEIPT", "xoá tài khoản phiếu nhập", 1),
+(36,"IMPORT_WAREHOUSE_RECEIPT", "tạo phiếu nhập bằng import file excel", 1),
+(37,"EXPORT_WAREHOUSE_RECEIPT", "xuất danh sách tất cả phiếu nhập", 1),
+
+(38,"READ_WAREHOUSE_DISPATCH_NOTE", "xem danh sách tất cả phiếu xuất", 1),
+(39,"CREATE_WAREHOUSE_DISPATCH_NOTE", "tạo phiếu xuất mới", 1),
+(40,"UPDATE_WAREHOUSE_DISPATCH_NOTE", "chỉnh sửa phiếu xuất", 1),
+(41,"DELETE_WAREHOUSE_DISPATCH_NOTE", "xoá tài khoản phiếu xuất", 1),
+(42,"IMPORT_WAREHOUSE_DISPATCH_NOTE", "tạo phiếu xuất bằng import file excel", 1),
+(43,"EXPORT_WAREHOUSE_DISPATCH_NOTE", "xuất danh sách tất cả phiếu xuất", 1),
+
+(44,"READ_SUPPLIER", "xem danh sách tất cả nhà cung cấp", 1),
+(45,"CREATE_SUPPLIER", "tạo nhà cung cấp mới", 1),
+(46,"UPDATE_SUPPLIER", "chỉnh sửa nhà cung cấp", 1),
+(47,"DELETE_SUPPLIER", "xoá tài khoản nhà cung cấp", 1),
+(48,"IMPORT_SUPPLIER", "tạo nhà cung cấp bằng import file excel", 1),
+(49,"EXPORT_SUPPLIER", "xuất danh sách tất cả nhà cung cấp", 1),
+
+
+(50,"READ_STATISTICAL", "xem thống kê", 1),
+(51,"EXPORT_STATISTICAL", "xuất file excel thống kê", 1);
 
 
 INSERT INTO quyenchucnang (Quyen_id, ChucNang_id, is_active) VALUES 

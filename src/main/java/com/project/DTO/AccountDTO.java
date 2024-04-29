@@ -12,6 +12,7 @@ public class AccountDTO {
     private LocalDateTime updatedAt;
     private String role;
     private int roleId;
+    private String nameFunction;
 
     public AccountDTO(int id, String email, String password) {
         this.id = id;
@@ -46,9 +47,19 @@ public class AccountDTO {
         this.roleId = roleId;
 
     }
-    public AccountDTO(int id, String email,  int roleId) {
+
+    public AccountDTO(int id, String email, int roleId) {
         this.id = id;
         this.email = email;
+        this.roleId = roleId;
+
+    }
+
+    public AccountDTO(int id, String email, String password, String role, int roleId) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.role = role;
         this.roleId = roleId;
 
     }
@@ -56,6 +67,10 @@ public class AccountDTO {
     public AccountDTO(String email, String password) {
         this.email = email;
         this.password = password;
+    }
+    public AccountDTO(int id, String nameFunction) {
+        this.id = id;
+        this.nameFunction = nameFunction;
     }
 
     public AccountDTO(String email, String password, String hoten, String phone) {
@@ -87,6 +102,10 @@ public class AccountDTO {
 
     public int getRoleId() {
         return roleId;
+    }
+
+    public String getNameFucntion() {
+        return nameFunction;
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {
@@ -143,5 +162,9 @@ public class AccountDTO {
         return phone;
     }
 
-}
+    public void setNameFucntion(String nameFunction) {
+        this.nameFunction = nameFunction;
+    }
 
+
+}
