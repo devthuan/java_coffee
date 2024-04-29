@@ -20,7 +20,7 @@ import com.project.DTO.AccountDTO;
 
 public class AccountDAO {
     public static ArrayList<AccountDTO> getAllUser() {
-        ArrayList<AccountDTO> listAccount = new ArrayList<AccountDTO>();
+        ArrayList<AccountDTO> listAccount = null;
         try {
             Connection con = mysqlConnect.getConnection();
             String sql = "SELECT tk.id, tk.email, tk.password, tk.createdAt, tk.updatedAt, q.ten_quyen " +
@@ -29,6 +29,7 @@ public class AccountDAO {
                     "WHERE  tk.is_active = 1";
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet result = pst.executeQuery();
+            listAccount = new ArrayList<AccountDTO>();
             while (result.next()) {
                 int id = result.getInt("id");
                 String email = result.getString("email");
@@ -282,8 +283,9 @@ public class AccountDAO {
                 String password = result_query.getString("password");
                 String role = result_query.getString("ten_quyen");
                 LocalDateTime createdAt = result_query.getTimestamp("createdAt").toLocalDateTime();
-                LocalDateTime updatedAt = result_query.getTimestamp("updatedAt").toLocalDateTime();
-                listAccount.add(new AccountDTO(id, email, password, role, createdAt, updatedAt));
+                Timestamp updatedAt = result_query.getTimestamp("updatedAt");
+                LocalDateTime updatedAtFormat = updatedAt != null ? updatedAt.toLocalDateTime() : null;
+                listAccount.add(new AccountDTO(id, email, password, role, createdAt, updatedAtFormat));
             }
 
         } catch (Exception e) {

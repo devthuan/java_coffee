@@ -31,6 +31,7 @@ import com.project.BUS.EnterCouponBUS;
 import com.project.BUS.SupplierBUS;
 import com.project.Common.Common;
 import com.project.DTO.EnterCouponDTO;
+import com.project.DTO.PermissionAccount;
 import com.project.DTO.SupplierDTO;
 import com.project.Util.Formatter;
 import com.toedter.calendar.JCalendar;
@@ -43,13 +44,14 @@ import com.toedter.calendar.JDayChooser;
  */
 public class Receipt extends javax.swing.JPanel {
         private int option_search = 0;
+        private PermissionAccount permissionList;
 
         /**
          * Creates new form Supplier
          */
         public Receipt() {
                 initComponents();
-
+                permissionList = PermissionAccount.getInstance();
                 ArrayList<EnterCouponDTO> list_enterCoupon = EnterCouponBUS.getAllEnterCouponsBUS();
 
                 DefaultTableModel model = new DefaultTableModel();
@@ -470,27 +472,34 @@ public class Receipt extends javax.swing.JPanel {
         }
 
         private void BtnDetailMouseClicked(java.awt.event.MouseEvent evt) {
-                int selectedRow = TableReceipt.getSelectedRow();
-                if (selectedRow != -1) {
+                if (permissionList.hasPermission("UPDATE_WAREHOUSE_RECEIPT")) {
+                        int selectedRow = TableReceipt.getSelectedRow();
+                        if (selectedRow != -1) {
 
-                        try {
-                                int id = (int) TableReceipt.getValueAt(selectedRow, 0);
-                                String nameEnterCoupon = (String) TableReceipt.getValueAt(selectedRow, 1);
-                                String nameEmployee = (String) TableReceipt.getValueAt(selectedRow, 2);
-                                String nameSupplier = (String) TableReceipt.getValueAt(selectedRow, 3);
-                                String total = (String) TableReceipt.getValueAt(selectedRow, 4);
-                                String createdAt = (String) TableReceipt.getValueAt(selectedRow, 5);
-                                LocalDateTime createAtformat = Common.convertStringtoLocalDateTime(createdAt);
-                                EnterCouponDTO data = new EnterCouponDTO(id, nameEnterCoupon, nameEmployee,
-                                                nameSupplier, Common.parseFormattedPrice(total),
-                                                createAtformat);
-                                new FormDetailReceipt(data).setVisible(true);
-                        } catch (NumberFormatException e) {
-                                JOptionPane.showMessageDialog(null, "Lỗi: ID không hợp lệ.");
+                                try {
+                                        int id = (int) TableReceipt.getValueAt(selectedRow, 0);
+                                        String nameEnterCoupon = (String) TableReceipt.getValueAt(selectedRow, 1);
+                                        String nameEmployee = (String) TableReceipt.getValueAt(selectedRow, 2);
+                                        String nameSupplier = (String) TableReceipt.getValueAt(selectedRow, 3);
+                                        String total = (String) TableReceipt.getValueAt(selectedRow, 4);
+                                        String createdAt = (String) TableReceipt.getValueAt(selectedRow, 5);
+                                        LocalDateTime createAtformat = Common.convertStringtoLocalDateTime(createdAt);
+                                        EnterCouponDTO data = new EnterCouponDTO(id, nameEnterCoupon, nameEmployee,
+                                                        nameSupplier, Common.parseFormattedPrice(total),
+                                                        createAtformat);
+                                        new FormDetailReceipt(data).setVisible(true);
+                                } catch (NumberFormatException e) {
+                                        JOptionPane.showMessageDialog(null, "Lỗi: ID không hợp lệ.");
+                                }
+                        } else {
+                                JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để xem chi tiết.");
                         }
+
                 } else {
-                        JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để xem chi tiết.");
+                        JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+                        return;
                 }
+
         }
 
         private void BtnRefreshMouseClicked(java.awt.event.MouseEvent evt) {
@@ -594,33 +603,47 @@ public class Receipt extends javax.swing.JPanel {
         }
 
         private void BtnRemoveMouseClicked(java.awt.event.MouseEvent evt) {
-                int selectedRow = TableReceipt.getSelectedRow();
-                if (selectedRow != -1) {
-                        try {
-                                int id = (int) TableReceipt.getValueAt(selectedRow, 0);
-                                String createdString = (String) TableReceipt.getValueAt(selectedRow, 5);
-                                // Hiển thị hộp thoại xác nhận
-                                int option = JOptionPane.showConfirmDialog(null,
-                                                "Bạn có chắc chắn muốn xoá phiếu nhập này?", "Xác nhận xoá",
-                                                JOptionPane.YES_NO_OPTION);
-                                if (option == JOptionPane.YES_OPTION) {
-                                        boolean check_remove = EnterCouponBUS.removeEnterCouponBUS(id, createdString);
-                                        if (check_remove) {
-                                                JOptionPane.showMessageDialog(null,
-                                                                "phiếu nhập  đã được xoá thành công.");
+                if (permissionList.hasPermission("DELETE_WAREHOUSE_RECEIPT")) {
+                        int selectedRow = TableReceipt.getSelectedRow();
+                        if (selectedRow != -1) {
+                                try {
+                                        int id = (int) TableReceipt.getValueAt(selectedRow, 0);
+                                        String createdString = (String) TableReceipt.getValueAt(selectedRow, 5);
+                                        // Hiển thị hộp thoại xác nhận
+                                        int option = JOptionPane.showConfirmDialog(null,
+                                                        "Bạn có chắc chắn muốn xoá phiếu nhập này?", "Xác nhận xoá",
+                                                        JOptionPane.YES_NO_OPTION);
+                                        if (option == JOptionPane.YES_OPTION) {
+                                                boolean check_remove = EnterCouponBUS.removeEnterCouponBUS(id,
+                                                                createdString);
+                                                if (check_remove) {
+                                                        JOptionPane.showMessageDialog(null,
+                                                                        "phiếu nhập  đã được xoá thành công.");
 
+                                                }
                                         }
+                                } catch (NumberFormatException e) {
+                                        JOptionPane.showMessageDialog(null, "Lỗi: ID không hợp lệ.");
                                 }
-                        } catch (NumberFormatException e) {
-                                JOptionPane.showMessageDialog(null, "Lỗi: ID không hợp lệ.");
+                        } else {
+                                JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để xem chi tiết.");
                         }
+
                 } else {
-                        JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để xem chi tiết.");
+                        JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+                        return;
                 }
+
         }
 
         private void BtnExportExcelMouseClicked(java.awt.event.MouseEvent evt) {
-                exportToExcel();
+                if (permissionList.hasPermission("EXPORT_WAREHOUSE_RECEIPT")) {
+                        exportToExcel();
+
+                } else {
+                        JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+                        return;
+                }
         }
 
         private void ValueStartActionPerformed(java.awt.event.ActionEvent evt) {
@@ -657,7 +680,13 @@ public class Receipt extends javax.swing.JPanel {
         }
 
         private void BtnDetail1MouseClicked(java.awt.event.MouseEvent evt) {
-                new FormCreateEnterCoupon().setVisible(true);
+                if (permissionList.hasPermission("CREATE_WAREHOUSE_RECEIPT")) {
+                        new FormCreateEnterCoupon().setVisible(true);
+
+                } else {
+                        JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+                        return;
+                }
         }
 
         private void exportToExcel() {

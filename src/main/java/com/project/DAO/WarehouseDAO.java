@@ -52,14 +52,24 @@ public class WareHouseDao {
         return warehouses;
     }
 
-    public void AddWareHouse(WareHouse warehouse) throws Exception {
-        Connection connection = mysqlConnect.getConnection();
-        String sql = "INSERT INTO NguyenLieu(ten_NL, don_vi, so_luong) VALUES(?, ?, ?)";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setString(1, warehouse.getName());
-        ps.setString(2, warehouse.getUnit());
-        ps.setInt(3, warehouse.getQuantity());
-        ps.executeUpdate();
+    public boolean AddWareHouse(WareHouse warehouse) throws Exception {
+        try {
+            Connection connection = mysqlConnect.getConnection();
+            String sql = "INSERT INTO NguyenLieu(ten_NL, don_vi, so_luong) VALUES(?, ?, ?)";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, warehouse.getName());
+            ps.setString(2, warehouse.getUnit());
+            ps.setInt(3, warehouse.getQuantity());
+
+            if (ps.executeUpdate() > 0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public void UpdateWareHouse(WareHouse warehouse) throws Exception {

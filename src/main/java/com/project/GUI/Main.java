@@ -524,15 +524,30 @@ public class Main extends javax.swing.JFrame {
         }
 
         private void ProductLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                SwitchControl();
-                ProductMenu productMenu = new ProductMenu();
-                Right.add(productMenu).setVisible(true);
+
+                if (permissionList.hasPermission("READ_PRODUCT")) {
+                        SwitchControl();
+                        ProductMenu productMenu = new ProductMenu();
+                        Right.add(productMenu).setVisible(true);
+
+                } else {
+                        JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+                        return;
+                }
         }
 
         private void OrderLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                SwitchControl();
-                OrderMenu orderMenu = new OrderMenu();
-                Right.add(orderMenu);
+
+                if (permissionList.hasPermission("READ_PRODUCT")) {
+
+                        SwitchControl();
+                        OrderMenu orderMenu = new OrderMenu();
+                        Right.add(orderMenu);
+
+                } else {
+                        JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+                        return;
+                }
         }
 
         private void AccountLabelMouseClicked(java.awt.event.MouseEvent evt) {
@@ -549,7 +564,7 @@ public class Main extends javax.swing.JFrame {
 
         private void EmployeeLabelMouseClicked(java.awt.event.MouseEvent evt) {
 
-                if (permissionList.hasPermission("Admin")) {
+                if (permissionList.hasPermission("READ_EMPLOYEE")) {
                         SwitchControl();
                         EmployeeMenu employeeMenu = new EmployeeMenu();
                         Right.add(employeeMenu);
@@ -561,7 +576,8 @@ public class Main extends javax.swing.JFrame {
         }
 
         private void ReceiptLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                if (permissionList.hasPermission("Admin") && permissionList.hasPermission("Manager")) {
+                if (permissionList.hasPermission("READ_WAREHOUSE_RECEIPT")
+                                || permissionList.hasPermission("CREATE_WAREHOUSE_DISPATCH_NOTE")) {
                         SwitchControl();
                         Right.add(new ReceiptDeliveryBill()).setVisible(true);
 
@@ -573,14 +589,27 @@ public class Main extends javax.swing.JFrame {
         }
 
         private void SupplierLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                SwitchControl();
-                Right.add(new Supplier()).setVisible(true);
+
+                if (permissionList.hasPermission("READ_SUPPLIER")) {
+                        SwitchControl();
+                        Right.add(new Supplier()).setVisible(true);
+
+                } else {
+                        JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+                        return;
+                }
 
         }
 
         private void StatisticalLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                SwitchControl();
-                Right.add(new Statistical()).setVisible(true);
+
+                if (permissionList.hasPermission("READ_STATISTICAL")) {
+                        SwitchControl();
+                        Right.add(new Statistical()).setVisible(true);
+                } else {
+                        JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+                        return;
+                }
         }
 
         private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {
@@ -595,8 +624,15 @@ public class Main extends javax.swing.JFrame {
         }
 
         private void WarehouseLabelMouseClicked(java.awt.event.MouseEvent evt) {
-                SwitchControl();
-                Right.add(new WareHouseMenu()).setVisible(true);
+
+                if (permissionList.hasPermission("READ_WAREHOUSE")) {
+                        SwitchControl();
+                        Right.add(new WareHouseMenu()).setVisible(true);
+
+                } else {
+                        JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+                        return;
+                }
         }
 
         /**

@@ -32,6 +32,7 @@ import com.project.BUS.SupplierBUS;
 import com.project.Common.Common;
 import com.project.DTO.DeliveryBillDTO;
 import com.project.DTO.EnterCouponDTO;
+import com.project.DTO.PermissionAccount;
 import com.project.DTO.SupplierDTO;
 import com.project.Util.Formatter;
 import com.toedter.calendar.JDateChooser;
@@ -42,7 +43,7 @@ import com.toedter.calendar.JDateChooser;
  */
 public class DeliveryBill extends javax.swing.JPanel {
     private int option_search = 0;
-
+    private PermissionAccount permissionList;
     private ArrayList<DeliveryBillDTO> list_deliveryBills; // array
 
     /**
@@ -50,6 +51,7 @@ public class DeliveryBill extends javax.swing.JPanel {
      */
     public DeliveryBill() {
         initComponents();
+        permissionList = PermissionAccount.getInstance();
 
         list_deliveryBills = DeliveryBillBUS.getAllDeliveryBill();
 
@@ -541,7 +543,13 @@ public class DeliveryBill extends javax.swing.JPanel {
     }
 
     private void BtnAddActionPerformed(java.awt.event.ActionEvent evt) {
-        new FormCreateDeliveryBill().setVisible(true);
+        if (permissionList.hasPermission("READ_WAREHOUSE_DISPATCH_NOTE")) {
+            new FormCreateDeliveryBill().setVisible(true);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+            return;
+        }
     }
 
     private void BtnDetailActionPerformed(java.awt.event.ActionEvent evt) {
@@ -565,34 +573,46 @@ public class DeliveryBill extends javax.swing.JPanel {
     }
 
     private void BtnDeleteActionPerformed(java.awt.event.ActionEvent evt) {
-        int selectedRow = TableDeliveryBill.getSelectedRow();
-        if (selectedRow != -1) {
-            try {
-                int id = (int) TableDeliveryBill.getValueAt(selectedRow, 0);
-                String createdAString = (String) TableDeliveryBill.getValueAt(selectedRow, 4);
-                // Hiển thị hộp thoại xác nhận
-                int option = JOptionPane.showConfirmDialog(null,
-                        "Bạn có chắc chắn muốn xoá phiếu xuất này?", "Xác nhận xoá",
-                        JOptionPane.YES_NO_OPTION);
-                if (option == JOptionPane.YES_OPTION) {
-                    boolean check_remove = DeliveryBillBUS.removeDeliveryBillBUS(id, createdAString);
-                    if (check_remove) {
-                        JOptionPane.showMessageDialog(null,
-                                "Phiếu xuất đã được xoá thành công.");
-                        // Nếu xoá thành công, cập nhật lại JTable hoặc các thành phần khác cần
-                        // thiết
+        if (permissionList.hasPermission("DELETE_WAREHOUSE_DISPATCH_NOTE")) {
+            int selectedRow = TableDeliveryBill.getSelectedRow();
+            if (selectedRow != -1) {
+                try {
+                    int id = (int) TableDeliveryBill.getValueAt(selectedRow, 0);
+                    String createdAString = (String) TableDeliveryBill.getValueAt(selectedRow, 4);
+                    // Hiển thị hộp thoại xác nhận
+                    int option = JOptionPane.showConfirmDialog(null,
+                            "Bạn có chắc chắn muốn xoá phiếu xuất này?", "Xác nhận xoá",
+                            JOptionPane.YES_NO_OPTION);
+                    if (option == JOptionPane.YES_OPTION) {
+                        boolean check_remove = DeliveryBillBUS.removeDeliveryBillBUS(id, createdAString);
+                        if (check_remove) {
+                            JOptionPane.showMessageDialog(null,
+                                    "Phiếu xuất đã được xoá thành công.");
+                            // Nếu xoá thành công, cập nhật lại JTable hoặc các thành phần khác cần
+                            // thiết
+                        }
                     }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Lỗi: ID không hợp lệ.");
                 }
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Lỗi: ID không hợp lệ.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để xem chi tiết.");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để xem chi tiết.");
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+            return;
         }
+
     }
 
     private void BtnExportActionPerformed(java.awt.event.ActionEvent evt) {
-        exportToExcel();
+        if (permissionList.hasPermission("EXPORT_WAREHOUSE_DISPATCH_NOTE")) {
+            exportToExcel();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+            return;
+        }
     }
 
     private void BtnRefreshActionPerformed(java.awt.event.ActionEvent evt) {

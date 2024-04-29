@@ -12,6 +12,7 @@ import java.text.Normalizer.Form;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -32,6 +33,8 @@ import com.project.Common.Authen;
 import com.project.Common.Common;
 import com.project.DAO.AccountDAO;
 import com.project.DTO.AccountDTO;
+import com.project.DTO.DeliveryBillDTO;
+import com.project.DTO.PermissionAccount;
 import com.project.DTO.SupplierDTO;
 
 /**
@@ -39,6 +42,7 @@ import com.project.DTO.SupplierDTO;
  * @author admin
  */
 public class Account extends javax.swing.JPanel {
+    private PermissionAccount permissionList;
 
     private ArrayList<AccountDTO> listAccount;
 
@@ -47,7 +51,10 @@ public class Account extends javax.swing.JPanel {
      */
     public Account() {
         initComponents();
+        permissionList = PermissionAccount.getInstance();
+
         listAccount = AccountBUS.getAllAccount();
+        listAccount.sort(Comparator.comparing(AccountDTO::getId));
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("ID");
         model.addColumn("Email");
@@ -306,8 +313,13 @@ public class Account extends javax.swing.JPanel {
     }
 
     private void btn_addMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
-        new AddAccountForm().setVisible(true);
+        if (permissionList.hasPermission("CREATE_USER")) {
+            new AddAccountForm().setVisible(true);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+            return;
+        }
 
     }
 
@@ -316,59 +328,78 @@ public class Account extends javax.swing.JPanel {
     }
 
     private void btn_detailMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
-        int selectedRow = TK_Table.getSelectedRow();
-        if (selectedRow != -1) {
-            try {
-                int id = (int) TK_Table.getValueAt(selectedRow, 0);
+        if (permissionList.hasPermission("UPDATE_USER")) {
+            int selectedRow = TK_Table.getSelectedRow();
+            if (selectedRow != -1) {
+                try {
+                    int id = (int) TK_Table.getValueAt(selectedRow, 0);
 
-                for (AccountDTO accountDTO : listAccount) {
-                    if (id == accountDTO.getId()) {
-                        new DetailAccountForm(accountDTO).setVisible(true);
+                    for (AccountDTO accountDTO : listAccount) {
+                        if (id == accountDTO.getId()) {
+                            new DetailAccountForm(accountDTO).setVisible(true);
+
+                        }
 
                     }
 
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Lỗi: ID không hợp lệ.");
                 }
-
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Lỗi: ID không hợp lệ.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để xem chi tiết.");
             }
+
         } else {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để xem chi tiết.");
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+            return;
         }
     }
 
     private void btn_deleteMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
-        int selectedRow = TK_Table.getSelectedRow();
-        if (selectedRow != -1) {
-            try {
-                int id = (int) TK_Table.getValueAt(selectedRow, 0);
-                // Hiển thị hộp thoại xác nhận
-                int option = JOptionPane.showConfirmDialog(null,
-                        "Bạn có chắc chắn muốn xoá tài khoản này?", "Xác nhận xoá",
-                        JOptionPane.YES_NO_OPTION);
-                if (option == JOptionPane.YES_OPTION) {
-                    boolean check_remove = AccountBUS.deleteUser(id);
-                    if (check_remove) {
-                        JOptionPane.showMessageDialog(null,
-                                "Tài khoản đã được xoá thành công.");
-                        // Nếu xoá thành công, cập nhật lại JTable hoặc các thành phần khác cần
-                        // thiết
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Không thể xoá tài khoản này.");
+        if (permissionList.hasPermission("DELETE_USER")) {
+
+            // TODO add your handling code here:
+            int selectedRow = TK_Table.getSelectedRow();
+            if (selectedRow != -1) {
+                try {
+                    int id = (int) TK_Table.getValueAt(selectedRow, 0);
+                    // Hiển thị hộp thoại xác nhận
+                    int option = JOptionPane.showConfirmDialog(null,
+                            "Bạn có chắc chắn muốn xoá tài khoản này?", "Xác nhận xoá",
+                            JOptionPane.YES_NO_OPTION);
+                    if (option == JOptionPane.YES_OPTION) {
+                        boolean check_remove = AccountBUS.deleteUser(id);
+                        if (check_remove) {
+                            JOptionPane.showMessageDialog(null,
+                                    "Tài khoản đã được xoá thành công.");
+                            // Nếu xoá thành công, cập nhật lại JTable hoặc các thành phần khác cần
+                            // thiết
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Không thể xoá tài khoản này.");
+                        }
                     }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Lỗi: ID không hợp lệ.");
                 }
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Lỗi: ID không hợp lệ.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để xem chi tiết.");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để xem chi tiết.");
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+            return;
         }
+
     }
 
     private void btn_exelsMouseClicked(java.awt.event.MouseEvent evt) {
-        exportToExcel();
+        if (permissionList.hasPermission("EXPORT_USER")) {
+
+            exportToExcel();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+            return;
+        }
 
     }
 
@@ -448,8 +479,8 @@ public class Account extends javax.swing.JPanel {
                     account.getId(),
                     account.getEmail(),
                     account.getRole(),
-                    Authen.formatDateTime(account.getCreatedAt()),
-                    Authen.formatDateTime(account.getUpdatedAt()),
+                    Common.formatedDateTime(account.getCreatedAt()),
+                    Common.formatedDateTime(account.getUpdatedAt()),
             };
             model.addRow(rowData);
         }
@@ -459,8 +490,8 @@ public class Account extends javax.swing.JPanel {
         // Xóa dữ liệu hiện tại trong JTable
         DefaultTableModel model = (DefaultTableModel) TK_Table.getModel();
         model.setRowCount(0); // Xóa tất cả các hàng
-
         listAccount = AccountBUS.getAllAccount();
+        listAccount.sort(Comparator.comparing(AccountDTO::getId));
 
         for (AccountDTO account : listAccount) {
             Object[] rowData = {

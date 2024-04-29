@@ -39,6 +39,7 @@ import com.project.Common.Common;
 import com.project.DTO.EmployeeDTO;
 import com.project.DTO.OrderDTO;
 import com.project.DTO.PaymentMethodDTO;
+import com.project.DTO.PermissionAccount;
 import com.project.Util.Formatter;
 
 /**
@@ -46,6 +47,8 @@ import com.project.Util.Formatter;
  * @author LuanLe
  */
 public class OrderMenu extends javax.swing.JPanel {
+        private PermissionAccount permissionList;
+
         private static ArrayList<PaymentMethodDTO> paymentMethods = new PaymentMethodBUS().getAll();
         private LinkedHashMap<OrderDTO, Float> orders;
 
@@ -56,6 +59,8 @@ public class OrderMenu extends javax.swing.JPanel {
 
         public OrderMenu() {
                 initComponents();
+                permissionList = PermissionAccount.getInstance();
+
                 loadData();
         }
 
@@ -830,21 +835,27 @@ public class OrderMenu extends javax.swing.JPanel {
         }
 
         private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {
-                int selectedRow = tbTableOrder.getSelectedRow();
-                if (selectedRow != -1) {
-                        int orderID = (int) tbTableOrder.getValueAt(selectedRow, 0);
+                if (permissionList.hasPermission("UPDATE_BILL")) {
+                        int selectedRow = tbTableOrder.getSelectedRow();
+                        if (selectedRow != -1) {
+                                int orderID = (int) tbTableOrder.getValueAt(selectedRow, 0);
 
-                        int i = 0;
-                        for (OrderDTO order : orders.keySet()) {
-                                if (order.getId() == orderID) {
-                                        new EditOrderForm(order, empList.get(i));
-                                        return;
+                                int i = 0;
+                                for (OrderDTO order : orders.keySet()) {
+                                        if (order.getId() == orderID) {
+                                                new EditOrderForm(order, empList.get(i));
+                                                return;
+                                        }
+                                        i++;
                                 }
-                                i++;
+                        } else {
+                                JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để xem chi tiết", "Thông báo",
+                                                JOptionPane.INFORMATION_MESSAGE);
                         }
+
                 } else {
-                        JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để xem chi tiết", "Thông báo",
-                                        JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+                        return;
                 }
         }
 
@@ -953,7 +964,13 @@ public class OrderMenu extends javax.swing.JPanel {
         }
 
         private void btnExportExcelActionPerformed(java.awt.event.ActionEvent evt) {
-                exportToExcel();
+                if (permissionList.hasPermission("EXPORT_BILL")) {
+                        exportToExcel();
+
+                } else {
+                        JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+                        return;
+                }
         }
 
         private void btnViewDetailsActionPerformed(java.awt.event.ActionEvent evt) {

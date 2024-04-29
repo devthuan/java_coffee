@@ -13,9 +13,11 @@ import javax.swing.table.DefaultTableModel;
 public class WareHouseMenu extends javax.swing.JPanel {
     WareHouseService wareHouseService;
     DefaultTableModel dtm;
+    private PermissionAccount permissionList;
 
     public WareHouseMenu() {
         initComponents();
+        permissionList = PermissionAccount.getInstance();
         wareHouseService = new WareHouseService();
         dtm = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
@@ -288,7 +290,13 @@ public class WareHouseMenu extends javax.swing.JPanel {
     }// </editor-fold>
 
     private void BtnImportMouseClicked(java.awt.event.MouseEvent evt) {
-        new FormCreateEnterCoupon().setVisible(true);
+        if (permissionList.hasPermission("CREATE_WAREHOUSE_RECEIPT")) {
+            new FormCreateEnterCoupon().setVisible(true);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+            return;
+        }
     }
 
     private void BtnRefreshMouseClicked(java.awt.event.MouseEvent evt) {
@@ -296,10 +304,17 @@ public class WareHouseMenu extends javax.swing.JPanel {
     }
 
     private void BtnExportMouseClicked(java.awt.event.MouseEvent evt) {
-        new FormCreateDeliveryBill().setVisible(true);
+        if (permissionList.hasPermission("CREATE_WAREHOUSE_DISPATCH_NOTE")) {
+            new FormCreateDeliveryBill().setVisible(true);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+            return;
+        }
     }
 
     private void BtnDetailMouseClicked(java.awt.event.MouseEvent evt) {
+
         int selectedRow = TableReceipt.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn nguyên liệu muốn cập nhật");
@@ -314,7 +329,13 @@ public class WareHouseMenu extends javax.swing.JPanel {
     }
 
     private void BtnCreateMouseClicked(java.awt.event.MouseEvent evt) {
-        new CreateWareHouse().setVisible(true);
+        if (permissionList.hasPermission("CREATE_WAREHOUSE")) {
+            new CreateWareHouse().setVisible(true);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+            return;
+        }
     }
 
     private void InputSearchActionPerformed(java.awt.event.ActionEvent evt) {
@@ -337,37 +358,50 @@ public class WareHouseMenu extends javax.swing.JPanel {
     }
 
     private void BtnDeleteMouseClicked(java.awt.event.MouseEvent evt) {
-        int selectedRow = TableReceipt.getSelectedRow();
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn nguyên liệu muốn xóa");
-        } else {
-            int choice = JOptionPane.showConfirmDialog(this, "Bạn có thực sự muốn xóa nguyên liệu này ?");
-            if (choice == JOptionPane.YES_OPTION) {
-                int idWareHouse = Integer.parseInt(String.valueOf(TableReceipt.getValueAt(selectedRow, 0)));
-                try {
-                    wareHouseService.deleteWareHouse(idWareHouse);
-                } catch (Exception ex) {
-                    Logger.getLogger(WareHouseMenu.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                dtm.setRowCount(0);
-                List<WareHouse> warehouses = null;
-                try {
-                    warehouses = wareHouseService.getAllWareHouse();
-                } catch (Exception ex) {
-                    Logger.getLogger(WareHouseMenu.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                for (WareHouse warehouse : warehouses) {
-                    dtm.addRow(new Object[] { warehouse.getId(), warehouse.getName(), warehouse.getUnit(),
-                            warehouse.getQuantity(),
-                            warehouse.getCreateDate(),
-                            warehouse.getUpdateDate() });
+        if (permissionList.hasPermission("DELETE_WAREHOUSE")) {
+            int selectedRow = TableReceipt.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn nguyên liệu muốn xóa");
+            } else {
+                int choice = JOptionPane.showConfirmDialog(this, "Bạn có thực sự muốn xóa nguyên liệu này ?");
+                if (choice == JOptionPane.YES_OPTION) {
+                    int idWareHouse = Integer.parseInt(String.valueOf(TableReceipt.getValueAt(selectedRow, 0)));
+                    try {
+                        wareHouseService.deleteWareHouse(idWareHouse);
+                    } catch (Exception ex) {
+                        Logger.getLogger(WareHouseMenu.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    dtm.setRowCount(0);
+                    List<WareHouse> warehouses = null;
+                    try {
+                        warehouses = wareHouseService.getAllWareHouse();
+                    } catch (Exception ex) {
+                        Logger.getLogger(WareHouseMenu.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    for (WareHouse warehouse : warehouses) {
+                        dtm.addRow(new Object[] { warehouse.getId(), warehouse.getName(), warehouse.getUnit(),
+                                warehouse.getQuantity(),
+                                warehouse.getCreateDate(),
+                                warehouse.getUpdateDate() });
+                    }
                 }
             }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+            return;
         }
+
     }
 
     private void BtnExportExcelMouseClicked(java.awt.event.MouseEvent evt) {
-        new ExportWareHouse().setVisible(true);
+        if (permissionList.hasPermission("EXPORT_WAREHOUSE")) {
+            new ExportWareHouse().setVisible(true);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+            return;
+        }
     }
 
     private void BtnCreateActionPerformed(java.awt.event.ActionEvent evt) {

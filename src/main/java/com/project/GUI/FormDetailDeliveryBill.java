@@ -34,6 +34,7 @@ import com.project.DTO.DeliveryBillDTO;
 import com.project.DTO.DetailDeliveryBillDTO;
 import com.project.DTO.DetailEnterCouponDTO;
 import com.project.DTO.EnterCouponDTO;
+import com.project.DTO.PermissionAccount;
 import com.project.Util.Formatter;
 
 /**
@@ -42,12 +43,15 @@ import com.project.Util.Formatter;
  */
 public class FormDetailDeliveryBill extends javax.swing.JFrame {
     private ArrayList<DetailDeliveryBillDTO> detail_deliveryBill;
+    private PermissionAccount permissionList;
 
     /**
      * Creates new form FormSupplier
      */
     public FormDetailDeliveryBill(DeliveryBillDTO data) {
         initComponents();
+        permissionList = PermissionAccount.getInstance();
+
         detail_deliveryBill = DeliveryBillBUS.getDetailDeliveryBillBUS(data.getId());
         loadData(data);
 
@@ -428,7 +432,13 @@ public class FormDetailDeliveryBill extends javax.swing.JFrame {
     }
 
     private void BtnPrintActionPerformed(java.awt.event.ActionEvent evt) {
-        exportToPDF();
+        if (permissionList.hasPermission("EXPORT_WAREHOUSE_DISPATCH_NOTE")) {
+            exportToPDF();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+            return;
+        }
 
     }
 

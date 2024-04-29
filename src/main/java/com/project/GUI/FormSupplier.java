@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 
 import com.project.BUS.SupplierBUS;
 import com.project.Common.SupplierCommon;
+import com.project.DTO.PermissionAccount;
 import com.project.DTO.SupplierDTO;
 
 /**
@@ -18,12 +19,13 @@ import com.project.DTO.SupplierDTO;
  * @author thuan
  */
 public class FormSupplier extends javax.swing.JFrame {
-
+    private PermissionAccount permissionList;
     private int id_supplier = -1;
 
     public FormSupplier(String titleForm, SupplierDTO data_supplier) {
 
         initComponents();
+        permissionList = PermissionAccount.getInstance();
         jLabel1.setText(titleForm);
         BtnAdd.setText("Thêm");
 

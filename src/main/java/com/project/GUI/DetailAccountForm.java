@@ -9,6 +9,7 @@ import com.project.Common.Authen;
 import com.project.Common.Common;
 import com.project.Common.PasswordHasher;
 import com.project.DTO.AccountDTO;
+import com.project.DTO.PermissionAccount;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -21,11 +22,13 @@ import com.project.DTO.AccountDTO;
  */
 public class DetailAccountForm extends javax.swing.JFrame {
     private AccountDTO dataAccountDTO;
+    private PermissionAccount permissionList;
 
     /**
      * Creates new form DetailProduct
      */
     public DetailAccountForm(AccountDTO data) {
+        permissionList = PermissionAccount.getInstance();
         initComponents();
         dataAccountDTO = data;
         loadData(data);
@@ -150,8 +153,15 @@ public class DetailAccountForm extends javax.swing.JFrame {
         jLabel5.setPreferredSize(new java.awt.Dimension(90, 17));
         jPanel8.add(jLabel5, java.awt.BorderLayout.LINE_START);
 
-        jComboBox1.setModel(
-                new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Manager", "Staff" }));
+        if (permissionList.getRoleId() == 1) {
+            jComboBox1.setModel(
+                    new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Manager", "Staff" }));
+        } else {
+            jComboBox1.setModel(
+                    new javax.swing.DefaultComboBoxModel<>(new String[] { "Manager", "Staff" }));
+
+        }
+
         jPanel8.add(jComboBox1, java.awt.BorderLayout.CENTER);
 
         jPanel3.add(jPanel8);
@@ -228,6 +238,14 @@ public class DetailAccountForm extends javax.swing.JFrame {
     }// </editor-fold>
 
     private void BtnUpdateActionPerformed(java.awt.event.ActionEvent evt) {
+
+        if ("Manager".equals(permissionList.getRoleName())) {
+            if (dataAccountDTO.getRole().equals("Admin")) {
+                JOptionPane.showMessageDialog(null, "Bạn không thể chỉnh sửa tài khoản có quyền cao hơn.");
+                return;
+            }
+        }
+
         int id = Integer.parseInt(jTextField1.getText());
         String email = jTextField2.getText();
         int role_id = jComboBox1.getSelectedIndex();
@@ -238,7 +256,7 @@ public class DetailAccountForm extends javax.swing.JFrame {
             return;
         }
 
-        boolean check = AccountBUS.updateUserBUS(new AccountDTO(id, email, password, role_id+1));
+        boolean check = AccountBUS.updateUserBUS(new AccountDTO(id, email, password, role_id + 1));
 
         if (check) {
             JOptionPane.showMessageDialog(null, "Cập nhật thông tin tài khoản thành công.");
@@ -257,6 +275,14 @@ public class DetailAccountForm extends javax.swing.JFrame {
     }
 
     private void btnResetPasswordActionPerformed(java.awt.event.ActionEvent evt) {
+
+        if ("Manager".equals(permissionList.getRoleName())) {
+            if (dataAccountDTO.getRole().equals("Admin")) {
+                JOptionPane.showMessageDialog(null, "Bạn không thể chỉnh sửa tài khoản có quyền cao hơn.");
+                return;
+            }
+        }
+
         int option = JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc chắn muốn đặt lại mật khẩu?", getTitle(),
                 JOptionPane.YES_NO_OPTION);
         if (option == JOptionPane.YES_OPTION) {
@@ -266,6 +292,7 @@ public class DetailAccountForm extends javax.swing.JFrame {
         } else {
             return;
         }
+
     }
 
     /**

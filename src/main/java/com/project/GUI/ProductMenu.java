@@ -23,6 +23,7 @@ import javax.swing.table.TableCellRenderer;
 import com.project.BUS.ProductBUS;
 import com.project.BUS.SupplierBUS;
 import com.project.Common.Common;
+import com.project.DTO.PermissionAccount;
 import com.project.DTO.ProductDTO;
 import com.project.DTO.SupplierDTO;
 import com.project.Util.Formatter;
@@ -33,6 +34,7 @@ import com.project.Util.Formatter;
  */
 public class ProductMenu extends javax.swing.JPanel {
         private ArrayList<ProductDTO> listProduct;
+        private PermissionAccount permissionList;
 
         /**
          * Creates new form ProductMenu
@@ -40,6 +42,7 @@ public class ProductMenu extends javax.swing.JPanel {
 
         public ProductMenu() {
                 initComponents();
+                permissionList = PermissionAccount.getInstance();
 
                 listProduct = ProductBUS.getAllProduct();
 
@@ -529,11 +532,17 @@ public class ProductMenu extends javax.swing.JPanel {
         }
 
         private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {
-                new CreateProductForm().setVisible(true);
+                if (permissionList.hasPermission("CREATE_PRODUCT")) {
+
+                        new CreateProductForm().setVisible(true);
+
+                } else {
+                        JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+                        return;
+                }
         }
 
         private void btnChitietActionPerformed(java.awt.event.ActionEvent evt) {
-
                 int selectedRow = Table.getSelectedRow();
                 if (selectedRow != -1) { // Nếu có hàng được chọn
 
@@ -542,7 +551,7 @@ public class ProductMenu extends javax.swing.JPanel {
                         for (ProductDTO productDTO : listProduct) {
                                 if (productDTO.getId() == id) {
                                         new DetailProduct(productDTO).setVisible(true);
-
+                                        return;
                                 }
                         }
 
@@ -551,6 +560,7 @@ public class ProductMenu extends javax.swing.JPanel {
                                         "Vui lòng chọn một hàng để hiển thị thông tin.", "Thông báo",
                                         JOptionPane.WARNING_MESSAGE);
                 }
+               
 
         }
 
@@ -561,44 +571,29 @@ public class ProductMenu extends javax.swing.JPanel {
 
         // sự kiện nút xoá
         private void btnXoaActionPerformed(ActionEvent evt) {
-                int selectedRow = Table.getSelectedRow();
-                if (selectedRow != -1) {
-                        try {
-                                int id = (int) Table.getValueAt(selectedRow, 0);
-                                int option = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa ? ",
-                                                "Xác nhận", JOptionPane.YES_NO_OPTION);
-                                if (option == JOptionPane.YES_OPTION) {
-                                        ProductBUS.deleteProductBUS(id);
+
+                if (permissionList.hasPermission("DELETE_PRODUCT")) {
+                        int selectedRow = Table.getSelectedRow();
+                        if (selectedRow != -1) {
+                                try {
+                                        int id = (int) Table.getValueAt(selectedRow, 0);
+                                        int option = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa ? ",
+                                                        "Xác nhận", JOptionPane.YES_NO_OPTION);
+                                        if (option == JOptionPane.YES_OPTION) {
+                                                ProductBUS.deleteProductBUS(id);
+                                        }
+                                } catch (Exception e) {
+                                        // TODO: handle exception
                                 }
-                        } catch (Exception e) {
-                                // TODO: handle exception
+                        } else {
+                                JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần xóa");
                         }
                 } else {
-                        JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần xóa");
+                        JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+                        return;
                 }
+
         }
-
-        // private void txtKeyReleased(java.awt.event.KeyEvent evt) {
-        // String search = txt.getText();
-        // DefaultTableModel model = (DefaultTableModel)Table.getModel();
-        // System.out.println(search);
-        // for (int row=0; row<model.getRowCount(); row++) {
-        // for (int column=0; column<model.getColumnCount(); column++ ) {
-        // String value = String.valueOf(model.getValueAt(row, column));
-        // if(value.equals(search)) {
-        // Table.changeSelection(row, column, false, false);
-        // Table.setDefaultRenderer(Object.class, new Highlight());
-
-        // return;
-        // }
-        // else if (search.equals("")) {
-        // Table.changeSelection(row, column, false, false);
-        // }
-        // }
-        // }
-        // Table.repaint();
-
-        // }
 
         private void updateLabel() {
                 String search = txt.getText();

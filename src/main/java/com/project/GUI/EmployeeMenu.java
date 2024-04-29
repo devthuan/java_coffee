@@ -25,15 +25,18 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.project.BUS.UserService;
+import com.project.DTO.PermissionAccount;
 import com.project.DTO.User;
 import com.project.Util.Formatter;
 
 public class EmployeeMenu extends javax.swing.JPanel {
     UserService userservice;
     DefaultTableModel dtm;
+    private PermissionAccount permissionList;
 
     public EmployeeMenu() {
         initComponents();
+        permissionList = PermissionAccount.getInstance();
         userservice = new UserService();
         dtm = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
@@ -347,125 +350,167 @@ public class EmployeeMenu extends javax.swing.JPanel {
                                         Short.MAX_VALUE)));
     }
 
-
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {
-        new AddUser().setVisible(true);
+        if (permissionList.hasPermission("CREATE_EMPLOYEE")) {
+            new AddUser().setVisible(true);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+            return;
+        }
     }
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {
-        int selectedRow = jTable1.getSelectedRow();
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên muốn cập nhật");
-        } else {
-            int userId = Integer.parseInt(String.valueOf(jTable1.getValueAt(selectedRow, 0)));
-            try {
-                // new EditUser(userId).setVisible(true);
-            } catch (Exception ex) {
-                ex.printStackTrace();
+        if (permissionList.hasPermission("UPDATE_EMPLOYEE")) {
+            int selectedRow = jTable1.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên muốn cập nhật");
+            } else {
+                int userId = Integer.parseInt(String.valueOf(jTable1.getValueAt(selectedRow, 0)));
+                try {
+                    // new EditUser(userId).setVisible(true);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+            return;
         }
+
     }
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {
-        int selectedRow = jTable1.getSelectedRow();
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên muốn xóa");
-        } else {
-            int choice = JOptionPane.showConfirmDialog(this, "Bạn có thực sự muốn xóa nhân viên này ?");
-            if (choice == JOptionPane.YES_OPTION) {
-                int userId = Integer.parseInt(String.valueOf(jTable1.getValueAt(selectedRow, 0)));
-                if (userservice.deleteUser(userId)) {
-                    JOptionPane.showMessageDialog(null, "Xóa nhân viên thành công!", "Thông báo",
-                            JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Có lỗi xảy ra!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        if (permissionList.hasPermission("DELETE_EMPLOYEE")) {
+            int selectedRow = jTable1.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên muốn xóa");
+            } else {
+                int choice = JOptionPane.showConfirmDialog(this, "Bạn có thực sự muốn xóa nhân viên này ?");
+                if (choice == JOptionPane.YES_OPTION) {
+                    int userId = Integer.parseInt(String.valueOf(jTable1.getValueAt(selectedRow, 0)));
+                    if (userservice.deleteUser(userId)) {
+                        JOptionPane.showMessageDialog(null, "Xóa nhân viên thành công!", "Thông báo",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Có lỗi xảy ra!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    }
+                    loadDataTable(userservice.getAllUser());
                 }
-                loadDataTable(userservice.getAllUser());
             }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+            return;
         }
+
     }
 
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {
+
+        if (permissionList.hasPermission("IMPORT_EMPLOYEE")) {
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+            return;
+        }
         // File excelFile;
         // FileInputStream excelFIS = null;
         // BufferedInputStream excelBIS = null;
         // XSSFWorkbook excelJTableImport = null;
         // String defaultCurrentDirectoryPath = "C:/Code/books.xlsx";
-        // JFileChooser excelFileChooser = new JFileChooser(defaultCurrentDirectoryPath);
-        // FileNameExtensionFilter fnef = new FileNameExtensionFilter("EXCEL FILES", "xls", "xlsx", "xlsm");
+        // JFileChooser excelFileChooser = new
+        // JFileChooser(defaultCurrentDirectoryPath);
+        // FileNameExtensionFilter fnef = new FileNameExtensionFilter("EXCEL FILES",
+        // "xls", "xlsx", "xlsm");
         // excelFileChooser.setFileFilter(fnef);
         // excelFileChooser.setDialogTitle("Select Excel File");
         // int excelChooser = excelFileChooser.showOpenDialog(null);
         // dtm.setRowCount(0);
         // if (excelChooser == JFileChooser.APPROVE_OPTION) {
-        //     try {
-        //         excelFile = excelFileChooser.getSelectedFile();
-        //         excelFIS = new FileInputStream(excelFile);
-        //         excelBIS = new BufferedInputStream(excelFIS);
-        //         excelJTableImport = new XSSFWorkbook(excelBIS);
-        //         XSSFSheet excelSheet = excelJTableImport.getSheetAt(0);
-        //         for (int row = 1; row <= excelSheet.getLastRowNum(); row++) {
-        //             XSSFRow excelRow = excelSheet.getRow(row);
+        // try {
+        // excelFile = excelFileChooser.getSelectedFile();
+        // excelFIS = new FileInputStream(excelFile);
+        // excelBIS = new BufferedInputStream(excelFIS);
+        // excelJTableImport = new XSSFWorkbook(excelBIS);
+        // XSSFSheet excelSheet = excelJTableImport.getSheetAt(0);
+        // for (int row = 1; row <= excelSheet.getLastRowNum(); row++) {
+        // XSSFRow excelRow = excelSheet.getRow(row);
 
-        //             XSSFCell excelId = excelRow.getCell(0);
-        //             int idValue = 0;
-        //             if (excelId != null) {
-        //                 if (excelId.getCellTypeEnum() == CellType.NUMERIC) {
-        //                     idValue = (int) excelId.getNumericCellValue();
-        //                 } else if (excelId.getCellTypeEnum() == CellType.STRING) {
-        //                     String idString = excelId.getStringCellValue();
-        //                     try {
-        //                         idValue = Integer.parseInt(idString);
-        //                     } catch (NumberFormatException e) {
-        //                         e.printStackTrace();
-        //                     }
-        //                 }
-        //             }
+        // XSSFCell excelId = excelRow.getCell(0);
+        // int idValue = 0;
+        // if (excelId != null) {
+        // if (excelId.getCellTypeEnum() == CellType.NUMERIC) {
+        // idValue = (int) excelId.getNumericCellValue();
+        // } else if (excelId.getCellTypeEnum() == CellType.STRING) {
+        // String idString = excelId.getStringCellValue();
+        // try {
+        // idValue = Integer.parseInt(idString);
+        // } catch (NumberFormatException e) {
+        // e.printStackTrace();
+        // }
+        // }
+        // }
 
-        //             XSSFCell excelName = excelRow.getCell(1);
-        //             XSSFCell excelDate = excelRow.getCell(2);
-        //             XSSFCell excelAddress = excelRow.getCell(3);
-        //             XSSFCell excelPosition = excelRow.getCell(4);
-        //             XSSFCell excelPhone = excelRow.getCell(5);
-        //             XSSFCell excelSalary = excelRow.getCell(6);
+        // XSSFCell excelName = excelRow.getCell(1);
+        // XSSFCell excelDate = excelRow.getCell(2);
+        // XSSFCell excelAddress = excelRow.getCell(3);
+        // XSSFCell excelPosition = excelRow.getCell(4);
+        // XSSFCell excelPhone = excelRow.getCell(5);
+        // XSSFCell excelSalary = excelRow.getCell(6);
 
-        //             XSSFCell excelDateCreate = excelRow.getCell(7);
-        //             SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
-        //             String formattedDate = sdf.format(excelDateCreate.getDateCellValue());
+        // XSSFCell excelDateCreate = excelRow.getCell(7);
+        // SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+        // String formattedDate = sdf.format(excelDateCreate.getDateCellValue());
 
-        //             XSSFCell excelIdAccount = excelRow.getCell(8);
-        //             int idAccountValue = 0;
-        //             if (excelIdAccount != null) {
-        //                 if (excelIdAccount.getCellTypeEnum() == CellType.NUMERIC) {
-        //                     idAccountValue = (int) excelIdAccount.getNumericCellValue();
-        //                 } else if (excelIdAccount.getCellTypeEnum() == CellType.STRING) {
-        //                     String idAccountString = excelIdAccount.getStringCellValue();
-        //                     try {
-        //                         idAccountValue = Integer.parseInt(idAccountString);
-        //                     } catch (NumberFormatException e) {
-        //                         e.printStackTrace();
-        //                     }
-        //                 }
-        //             }
+        // XSSFCell excelIdAccount = excelRow.getCell(8);
+        // int idAccountValue = 0;
+        // if (excelIdAccount != null) {
+        // if (excelIdAccount.getCellTypeEnum() == CellType.NUMERIC) {
+        // idAccountValue = (int) excelIdAccount.getNumericCellValue();
+        // } else if (excelIdAccount.getCellTypeEnum() == CellType.STRING) {
+        // String idAccountString = excelIdAccount.getStringCellValue();
+        // try {
+        // idAccountValue = Integer.parseInt(idAccountString);
+        // } catch (NumberFormatException e) {
+        // e.printStackTrace();
+        // }
+        // }
+        // }
 
-        //             dtm.addRow(new Object[] { idValue, excelName, excelDate, excelAddress, excelPosition, excelPhone,
-        //                     excelSalary, formattedDate, idAccountValue });
-        //         }
-        //         JOptionPane.showMessageDialog(null, "Import file excel thành công!", "Thông báo",
-        //                 JOptionPane.INFORMATION_MESSAGE);
-        //     } catch (Exception e) {
-        //         e.printStackTrace();
-        //     }
+        // dtm.addRow(new Object[] { idValue, excelName, excelDate, excelAddress,
+        // excelPosition, excelPhone,
+        // excelSalary, formattedDate, idAccountValue });
+        // }
+        // JOptionPane.showMessageDialog(null, "Import file excel thành công!", "Thông
+        // báo",
+        // JOptionPane.INFORMATION_MESSAGE);
+        // } catch (Exception e) {
+        // e.printStackTrace();
+        // }
         // }
     }
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {
-        new ExportUser().setVisible(true);
+        if (permissionList.hasPermission("EXPORT_EMPLOYEE")) {
+
+            new ExportUser().setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+            return;
+        }
     }
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {
+        if (permissionList.hasPermission("EXPORT_EMPLOYEE")) {
 
-        new PrintUser().setVisible(true);
+            new PrintUser().setVisible(true);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+            return;
+        }
     }
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {

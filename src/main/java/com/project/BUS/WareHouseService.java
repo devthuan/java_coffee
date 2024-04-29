@@ -13,9 +13,9 @@ public class WareHouseService {
     {
         return warehousedao.getAllWareHouse();
     }
-    public void AddWareHouse(WareHouse warehouse) throws Exception
+    public boolean AddWareHouse(WareHouse warehouse) throws Exception
     {
-        warehousedao.AddWareHouse(warehouse);
+        return warehousedao.AddWareHouse(warehouse);
     }
     public void updateWareHouse(WareHouse warehouse) throws Exception
     {

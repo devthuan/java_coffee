@@ -33,6 +33,7 @@ import javax.swing.event.DocumentListener;
 import com.project.BUS.SupplierBUS;
 import com.project.Common.Common;
 import com.project.Common.SupplierCommon;
+import com.project.DTO.PermissionAccount;
 import com.project.DTO.SupplierDTO;
 
 /**
@@ -41,12 +42,14 @@ import com.project.DTO.SupplierDTO;
  */
 public class Supplier extends javax.swing.JPanel {
         private int option_search = 0;
+        private PermissionAccount permissionList;
 
         /**
          * Creates new form Supplier
          */
         public Supplier() {
                 initComponents();
+                permissionList = PermissionAccount.getInstance();
 
                 ArrayList<SupplierDTO> list_supplier = SupplierBUS.get_all_supplier();
 
@@ -334,85 +337,120 @@ public class Supplier extends javax.swing.JPanel {
         }
 
         private void BtnAddMouseClicked(java.awt.event.MouseEvent evt) {
-                new FormSupplier("Thêm nhà cung cấp", new SupplierDTO()).setVisible(true);
-        }
+                if (permissionList.hasPermission("CREATE_SUPPLIER")) {
 
-        private void BtnDetailMouseClicked(java.awt.event.MouseEvent evt) {
-                int selectedRow = TableSupplier.getSelectedRow();
-                if (selectedRow != -1) {
-                        try {
-                                int id = (int) TableSupplier.getValueAt(selectedRow, 0);
-                                String name = (String) TableSupplier.getValueAt(selectedRow, 1);
-                                String address = (String) TableSupplier.getValueAt(selectedRow, 2);
-                                String phone = (String) TableSupplier.getValueAt(selectedRow, 3);
-                                String email = (String) TableSupplier.getValueAt(selectedRow, 4);
-
-                                SupplierDTO update_supplier = new SupplierDTO(id, name, address, phone, email);
-
-                                new FormSupplier("Chi tiết nhà cung cấp", update_supplier).setVisible(true);
-                        } catch (NumberFormatException e) {
-                                JOptionPane.showMessageDialog(null, "Lỗi: ID không hợp lệ.");
-                        }
+                        new FormSupplier("Thêm nhà cung cấp", new SupplierDTO()).setVisible(true);
                 } else {
-                        JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để xem chi tiết.");
-                }
-        }
-
-        private void BtnRemoveMouseClicked(java.awt.event.MouseEvent evt) {
-                int selectedRow = TableSupplier.getSelectedRow();
-                if (selectedRow != -1) {
-                        try {
-                                int id = (int) TableSupplier.getValueAt(selectedRow, 0);
-                                // Hiển thị hộp thoại xác nhận
-                                int option = JOptionPane.showConfirmDialog(null,
-                                                "Bạn có chắc chắn muốn xoá nhà cung cấp này?", "Xác nhận xoá",
-                                                JOptionPane.YES_NO_OPTION);
-                                if (option == JOptionPane.YES_OPTION) {
-                                        boolean check_remove = SupplierBUS.removeSupplier(id);
-                                        if (check_remove) {
-                                                JOptionPane.showMessageDialog(null,
-                                                                "Nhà cung cấp đã được xoá thành công.");
-                                                // Nếu xoá thành công, cập nhật lại JTable hoặc các thành phần khác cần
-                                                // thiết
-                                        } else {
-                                                JOptionPane.showMessageDialog(null, "Không thể xoá nhà cung cấp này.");
-                                        }
-                                }
-                        } catch (NumberFormatException e) {
-                                JOptionPane.showMessageDialog(null, "Lỗi: ID không hợp lệ.");
-                        }
-                } else {
-                        JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để xem chi tiết.");
-                }
-        }
-
-        private void BtnImportExcelMouseClicked(java.awt.event.MouseEvent evt) {
-                try {
-                        JFileChooser fileChooser = new JFileChooser();
-                        fileChooser.setDialogTitle("Chọn file excel");
-                        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                        fileChooser.setFileFilter(new FileNameExtensionFilter("Excel files", "xlsx", "xls"));
-
-                        int result = fileChooser.showOpenDialog(this);
-
-                        if (result == JFileChooser.APPROVE_OPTION) {
-                                File selected_file = fileChooser.getSelectedFile();
-                                if (importExcelData(selected_file)) {
-                                        JOptionPane.showMessageDialog(null, "Nhập file excel thành công.");
-                                } else {
-                                        JOptionPane.showMessageDialog(null, "Nhập file excel thất bại.");
-
-                                }
-                        }
-
-                } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, "Có lỗi xảy ra, vui lòng chọn đúng file excel.");
+                        JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
                         return;
                 }
         }
 
+        private void BtnDetailMouseClicked(java.awt.event.MouseEvent evt) {
+                if (permissionList.hasPermission("UPDATE_SUPPLIER")) {
+
+                        int selectedRow = TableSupplier.getSelectedRow();
+                        if (selectedRow != -1) {
+                                try {
+                                        int id = (int) TableSupplier.getValueAt(selectedRow, 0);
+                                        String name = (String) TableSupplier.getValueAt(selectedRow, 1);
+                                        String address = (String) TableSupplier.getValueAt(selectedRow, 2);
+                                        String phone = (String) TableSupplier.getValueAt(selectedRow, 3);
+                                        String email = (String) TableSupplier.getValueAt(selectedRow, 4);
+
+                                        SupplierDTO update_supplier = new SupplierDTO(id, name, address, phone, email);
+
+                                        new FormSupplier("Chi tiết nhà cung cấp", update_supplier).setVisible(true);
+                                } catch (NumberFormatException e) {
+                                        JOptionPane.showMessageDialog(null, "Lỗi: ID không hợp lệ.");
+                                }
+                        } else {
+                                JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để xem chi tiết.");
+                        }
+                } else {
+                        JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+                        return;
+                }
+
+        }
+
+        private void BtnRemoveMouseClicked(java.awt.event.MouseEvent evt) {
+
+                if (permissionList.hasPermission("DELETE_SUPPLIER")) {
+                        int selectedRow = TableSupplier.getSelectedRow();
+                        if (selectedRow != -1) {
+                                try {
+                                        int id = (int) TableSupplier.getValueAt(selectedRow, 0);
+                                        // Hiển thị hộp thoại xác nhận
+                                        int option = JOptionPane.showConfirmDialog(null,
+                                                        "Bạn có chắc chắn muốn xoá nhà cung cấp này?", "Xác nhận xoá",
+                                                        JOptionPane.YES_NO_OPTION);
+                                        if (option == JOptionPane.YES_OPTION) {
+                                                boolean check_remove = SupplierBUS.removeSupplier(id);
+                                                if (check_remove) {
+                                                        JOptionPane.showMessageDialog(null,
+                                                                        "Nhà cung cấp đã được xoá thành công.");
+                                                        // Nếu xoá thành công, cập nhật lại JTable hoặc các thành phần
+                                                        // khác cần
+                                                        // thiết
+                                                } else {
+                                                        JOptionPane.showMessageDialog(null,
+                                                                        "Không thể xoá nhà cung cấp này.");
+                                                }
+                                        }
+                                } catch (NumberFormatException e) {
+                                        JOptionPane.showMessageDialog(null, "Lỗi: ID không hợp lệ.");
+                                }
+                        } else {
+                                JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng để xem chi tiết.");
+                        }
+
+                } else {
+                        JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+                        return;
+                }
+
+        }
+
+        private void BtnImportExcelMouseClicked(java.awt.event.MouseEvent evt) {
+                if (permissionList.hasPermission("IMPORT_SUPPLIER")) {
+                        try {
+                                JFileChooser fileChooser = new JFileChooser();
+                                fileChooser.setDialogTitle("Chọn file excel");
+                                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                                fileChooser.setFileFilter(new FileNameExtensionFilter("Excel files", "xlsx", "xls"));
+
+                                int result = fileChooser.showOpenDialog(this);
+
+                                if (result == JFileChooser.APPROVE_OPTION) {
+                                        File selected_file = fileChooser.getSelectedFile();
+                                        if (importExcelData(selected_file)) {
+                                                JOptionPane.showMessageDialog(null, "Nhập file excel thành công.");
+                                        } else {
+                                                JOptionPane.showMessageDialog(null, "Nhập file excel thất bại.");
+
+                                        }
+                                }
+
+                        } catch (Exception e) {
+                                JOptionPane.showMessageDialog(null, "Có lỗi xảy ra, vui lòng chọn đúng file excel.");
+                                return;
+                        }
+                } else {
+                        JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+                        return;
+                }
+
+        }
+
         private void BtnExportExcelMouseClicked(java.awt.event.MouseEvent evt) {
-                exportToExcel();
+                if (permissionList.hasPermission("EXPORT_SUPPLIER")) {
+                        exportToExcel();
+
+                } else {
+                        JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+                        return;
+                }
         }
 
         private void BtnRefreshMouseClicked(java.awt.event.MouseEvent evt) {

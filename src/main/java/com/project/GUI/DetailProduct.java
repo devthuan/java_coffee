@@ -13,16 +13,18 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.project.BUS.ProductBUS;
 import com.project.Common.Common;
+import com.project.DTO.PermissionAccount;
 import com.project.DTO.ProductDTO;
 
 public class DetailProduct extends javax.swing.JFrame {
+    private PermissionAccount permissionList;
 
     /**
      * Creates new form DetailProduct
      */
     public DetailProduct(ProductDTO data) {
         initComponents();
-
+        permissionList = PermissionAccount.getInstance();
         loadDataDetailProduct(data);
     }
 
@@ -239,54 +241,61 @@ public class DetailProduct extends javax.swing.JFrame {
     }// </editor-fold>
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-        int id = Integer.parseInt(jTextField1.getText());
-        String product_name = jTextField2.getText().trim();
-        String url_image = jTextField6.getText().trim();
-        String priceString = jTextField3.getText().trim();
-        String quantityString = jTextField4.getText().trim();
-        int category_id = jComboBox1.getSelectedIndex();
 
-        if (product_name.isEmpty() || priceString.isEmpty() || quantityString.isEmpty() || url_image.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ giá trị");
-            return;
-        }
-        float price = 0;
-        int quantity = 0;
-        try {
-            price = Float.parseFloat(priceString);
-            if (price < 0) {
-                JOptionPane.showMessageDialog(null, "Giá phải là số phải là số lớn hơn hoặc bằng 0.");
+        if (permissionList.hasPermission("UPDATE_PRODUCT")) {
+
+            int id = Integer.parseInt(jTextField1.getText());
+            String product_name = jTextField2.getText().trim();
+            String url_image = jTextField6.getText().trim();
+            String priceString = jTextField3.getText().trim();
+            String quantityString = jTextField4.getText().trim();
+            int category_id = jComboBox1.getSelectedIndex();
+
+            if (product_name.isEmpty() || priceString.isEmpty() || quantityString.isEmpty() || url_image.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ giá trị");
                 return;
             }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Giá trị không hợp lệ");
-            return;
-        }
-        try {
-            quantity = Integer.parseInt(quantityString);
-            if (quantity < 0) {
-                JOptionPane.showMessageDialog(null, "Số lượng phải là số lớn hơn hoặc bằng 0.");
+            float price = 0;
+            int quantity = 0;
+            try {
+                price = Float.parseFloat(priceString);
+                if (price < 0) {
+                    JOptionPane.showMessageDialog(null, "Giá phải là số phải là số lớn hơn hoặc bằng 0.");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Giá trị không hợp lệ");
                 return;
             }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Giá trị không hợp lệ");
-            return;
-        }
+            try {
+                quantity = Integer.parseInt(quantityString);
+                if (quantity < 0) {
+                    JOptionPane.showMessageDialog(null, "Số lượng phải là số lớn hơn hoặc bằng 0.");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Giá trị không hợp lệ");
+                return;
+            }
 
-        System.out.println(category_id + 1);
+            System.out.println(category_id + 1);
 
-        ProductDTO productDTO = new ProductDTO(id, product_name, url_image, price, quantity, category_id + 1);
-        try {
-            boolean check = ProductBUS.updatedProductBUS(productDTO);
-            if (!check) {
+            ProductDTO productDTO = new ProductDTO(id, product_name, url_image, price, quantity, category_id + 1);
+            try {
+                boolean check = ProductBUS.updatedProductBUS(productDTO);
+                if (!check) {
+                    JOptionPane.showMessageDialog(null, "Cập nhật thất bại");
+                    return;
+                }
+                JOptionPane.showMessageDialog(null, "Cập nhật thành công");
+                this.setVisible(false);
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Cập nhật thất bại");
-                return;
+                e.printStackTrace();
             }
-            JOptionPane.showMessageDialog(null, "Cập nhật thành công");
-            this.setVisible(false);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Cập nhật thất bại");
-            e.printStackTrace();
+        } else {
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+            return;
         }
 
     }
@@ -296,33 +305,48 @@ public class DetailProduct extends javax.swing.JFrame {
     }
 
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {
-        JFileChooser fileChooser = new JFileChooser();
 
-        // Thiết lập filter chỉ cho phép chọn các tệp ảnh
-        FileNameExtensionFilter imageFilter = new FileNameExtensionFilter(
-                "Image files", ImageIO.getReaderFileSuffixes());
-        fileChooser.setFileFilter(imageFilter);
+        if (permissionList.hasPermission("UPDATE_PRODUCT")) {
+            JFileChooser fileChooser = new JFileChooser();
 
-        // Hiển thị hộp thoại chọn tệp và kiểm tra xem người dùng đã chọn tệp nào chưa
-        int result = fileChooser.showOpenDialog(this); // 'this' ở đây là JFrame hoặc JDialog chứa JTextField
+            // Thiết lập filter chỉ cho phép chọn các tệp ảnh
+            FileNameExtensionFilter imageFilter = new FileNameExtensionFilter(
+                    "Image files", ImageIO.getReaderFileSuffixes());
+            fileChooser.setFileFilter(imageFilter);
 
-        // Nếu người dùng chọn một tệp ảnh
-        if (result == JFileChooser.APPROVE_OPTION) {
-            // Lấy đường dẫn của tệp được chọn
-            File selectedFile = fileChooser.getSelectedFile();
-            String filePath = selectedFile.getAbsolutePath();
+            // Hiển thị hộp thoại chọn tệp và kiểm tra xem người dùng đã chọn tệp nào chưa
+            int result = fileChooser.showOpenDialog(this); // 'this' ở đây là JFrame hoặc JDialog chứa JTextField
 
-            // Lưu tệp vào thư mục trong dự án của bạn
-            String destinationPath = "./src/assets/icon/" + selectedFile.getName();
-            // Kiểm tra xem tệp đã tồn tại trong dự án hay không
-            File destinationFile = new File(destinationPath);
+            // Nếu người dùng chọn một tệp ảnh
+            if (result == JFileChooser.APPROVE_OPTION) {
+                // Lấy đường dẫn của tệp được chọn
+                File selectedFile = fileChooser.getSelectedFile();
+                String filePath = selectedFile.getAbsolutePath();
 
-            if (destinationFile.exists()) {
-                // Hiển thị cảnh báo cho người dùng
-                int option = JOptionPane.showConfirmDialog(this, "Hình ảnh đã tồn tại. Bạn có muốn ghi đè?",
-                        "Xác nhận ghi đè", JOptionPane.YES_NO_OPTION);
-                if (option == JOptionPane.YES_OPTION) {
-                    // Ghi đè nếu người dùng chọn YES
+                // Lưu tệp vào thư mục trong dự án của bạn
+                String destinationPath = "./src/assets/icon/" + selectedFile.getName();
+                // Kiểm tra xem tệp đã tồn tại trong dự án hay không
+                File destinationFile = new File(destinationPath);
+
+                if (destinationFile.exists()) {
+                    // Hiển thị cảnh báo cho người dùng
+                    int option = JOptionPane.showConfirmDialog(this, "Hình ảnh đã tồn tại. Bạn có muốn ghi đè?",
+                            "Xác nhận ghi đè", JOptionPane.YES_NO_OPTION);
+                    if (option == JOptionPane.YES_OPTION) {
+                        // Ghi đè nếu người dùng chọn YES
+                        try {
+                            Files.copy(Paths.get(filePath), Paths.get(destinationPath),
+                                    StandardCopyOption.REPLACE_EXISTING);
+                            jTextField6.setText(destinationPath); // Hiển thị đường dẫn mới trong JTextField
+                            jToggleButton1.setIcon(new javax.swing.ImageIcon((destinationPath))); // Đặt hình ảnh mới
+                                                                                                  // cho
+                                                                                                  // JToggleButton
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } else {
+                    // Copy tệp từ đường dẫn nguồn (đã chọn) vào đường dẫn đích trong dự án của bạn
                     try {
                         Files.copy(Paths.get(filePath), Paths.get(destinationPath),
                                 StandardCopyOption.REPLACE_EXISTING);
@@ -333,18 +357,12 @@ public class DetailProduct extends javax.swing.JFrame {
                         e.printStackTrace();
                     }
                 }
-            } else {
-                // Copy tệp từ đường dẫn nguồn (đã chọn) vào đường dẫn đích trong dự án của bạn
-                try {
-                    Files.copy(Paths.get(filePath), Paths.get(destinationPath), StandardCopyOption.REPLACE_EXISTING);
-                    jTextField6.setText(destinationPath); // Hiển thị đường dẫn mới trong JTextField
-                    jToggleButton1.setIcon(new javax.swing.ImageIcon((destinationPath))); // Đặt hình ảnh mới cho
-                                                                                          // JToggleButton
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+            return;
         }
+
     }
 
     /**
