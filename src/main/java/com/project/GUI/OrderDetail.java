@@ -399,11 +399,11 @@ public class OrderDetail extends javax.swing.JFrame {
         boolean rs = false;
         try {
             Font normalFont = new Font(
-                    BaseFont.createFont("java_coffee\\src\\assets\\VietFontsWeb1_ttf\\vuTimes.ttf", BaseFont.IDENTITY_H,
+                    BaseFont.createFont("src\\assets\\VietFontsWeb1_ttf\\vuTimes.ttf", BaseFont.IDENTITY_H,
                             BaseFont.EMBEDDED),
                     13, Font.NORMAL);
             Font boldFont = new Font(
-                    BaseFont.createFont("java_coffee\\src\\assets\\VietFontsWeb1_ttf\\vuTimesBold.ttf",
+                    BaseFont.createFont("src\\assets\\VietFontsWeb1_ttf\\vuTimesBold.ttf",
                             BaseFont.IDENTITY_H,
                             BaseFont.EMBEDDED),
                     13, Font.NORMAL);
