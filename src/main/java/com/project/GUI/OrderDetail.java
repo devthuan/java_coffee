@@ -71,7 +71,7 @@ public class OrderDetail extends javax.swing.JFrame {
         float total = 0;
         for (int i = 0; i < orderDetails.size(); i++) {
             orderDetail = orderDetails.get(i);
-            product = productBUS.getProductByID(orderDetail.getProduct_id());
+            product = productBUS.getProductByID_IgnoreActiveState(orderDetail.getProduct_id());
             float subTotal = orderDetail.getQuantity() * product.getPrice();
 
             dtm.addRow(new Object[] { i + 1,
@@ -370,6 +370,7 @@ public class OrderDetail extends javax.swing.JFrame {
 
     private void exportPF() {
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setSelectedFile(new java.io.File("HD" + OrderID.getText()));
         int userSelection = fileChooser.showSaveDialog(this);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             boolean rs = false;
@@ -389,6 +390,8 @@ public class OrderDetail extends javax.swing.JFrame {
             if (rs) {
                 JOptionPane.showMessageDialog(null, "Xuất file PDF thành công!", "Thông báo",
                         JOptionPane.INFORMATION_MESSAGE);
+                        
+                dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Có lỗi xảy ra!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             }

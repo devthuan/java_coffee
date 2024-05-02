@@ -75,6 +75,29 @@ public class ProductDAO {
         return productDTO;
     }
 
+    public ProductDTO getProductByID_IgnoreActiveState(int product_id) {
+        ProductDTO productDTO = null;
+        try {
+            Connection conn = mysqlConnect.getConnection();
+            String sql = "Select * from SanPham Where id = ?";
+
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, product_id);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String product_name = rs.getString("ten_SP");
+                float price = rs.getFloat("gia");
+                productDTO = new ProductDTO(id, product_name, price);
+            }
+            mysqlConnect.closeConnection(conn);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return productDTO;
+    }
+
     public ArrayList<ProductDTO> getProductByCategory(int category) {
         ArrayList<ProductDTO> products = null;
         try {

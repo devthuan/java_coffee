@@ -376,6 +376,8 @@ public class EditOrderForm extends javax.swing.JFrame {
 
                         JOptionPane.showMessageDialog(null, "Cập nhật thành công", "Thông báo",
                                 JOptionPane.INFORMATION_MESSAGE);
+
+                        dispose();
                     } else {
                         JOptionPane.showMessageDialog(null, "Có lỗi xảy ra", "Lỗi",
                                 JOptionPane.ERROR_MESSAGE);
