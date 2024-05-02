@@ -6,6 +6,7 @@ import java.awt.event.ComponentEvent;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.formdev.flatlaf.json.ParseException;
 import com.project.BUS.UserService;
 import com.project.DTO.PermissionAccount;
 import com.project.DTO.User;
@@ -368,7 +370,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
             } else {
                 int userId = Integer.parseInt(String.valueOf(jTable1.getValueAt(selectedRow, 0)));
                 try {
-                    // new EditUser(userId).setVisible(true);
+                    new EditUser(userId).setVisible(true);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -415,81 +417,119 @@ public class EmployeeMenu extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
             return;
         }
-        // File excelFile;
-        // FileInputStream excelFIS = null;
-        // BufferedInputStream excelBIS = null;
-        // XSSFWorkbook excelJTableImport = null;
-        // String defaultCurrentDirectoryPath = "C:/Code/books.xlsx";
-        // JFileChooser excelFileChooser = new
-        // JFileChooser(defaultCurrentDirectoryPath);
-        // FileNameExtensionFilter fnef = new FileNameExtensionFilter("EXCEL FILES",
-        // "xls", "xlsx", "xlsm");
-        // excelFileChooser.setFileFilter(fnef);
-        // excelFileChooser.setDialogTitle("Select Excel File");
-        // int excelChooser = excelFileChooser.showOpenDialog(null);
-        // dtm.setRowCount(0);
-        // if (excelChooser == JFileChooser.APPROVE_OPTION) {
-        // try {
-        // excelFile = excelFileChooser.getSelectedFile();
-        // excelFIS = new FileInputStream(excelFile);
-        // excelBIS = new BufferedInputStream(excelFIS);
-        // excelJTableImport = new XSSFWorkbook(excelBIS);
-        // XSSFSheet excelSheet = excelJTableImport.getSheetAt(0);
-        // for (int row = 1; row <= excelSheet.getLastRowNum(); row++) {
-        // XSSFRow excelRow = excelSheet.getRow(row);
-
-        // XSSFCell excelId = excelRow.getCell(0);
-        // int idValue = 0;
-        // if (excelId != null) {
-        // if (excelId.getCellTypeEnum() == CellType.NUMERIC) {
-        // idValue = (int) excelId.getNumericCellValue();
-        // } else if (excelId.getCellTypeEnum() == CellType.STRING) {
-        // String idString = excelId.getStringCellValue();
-        // try {
-        // idValue = Integer.parseInt(idString);
-        // } catch (NumberFormatException e) {
-        // e.printStackTrace();
-        // }
-        // }
+        File excelFile;
+        FileInputStream excelFIS = null;
+        BufferedInputStream excelBIS = null;
+        XSSFWorkbook excelJTableImport = null;
+        String defaultCurrentDirectoryPath = "";
+        JFileChooser excelFileChooser = new
+        JFileChooser(defaultCurrentDirectoryPath);
+        FileNameExtensionFilter fnef = new FileNameExtensionFilter("EXCEL FILES",
+        "xls", "xlsx", "xlsm");
+        excelFileChooser.setFileFilter(fnef);
+        excelFileChooser.setDialogTitle("Select Excel File");
+        int excelChooser = excelFileChooser.showOpenDialog(null);
+        dtm.setRowCount(0);
+        if (excelChooser == JFileChooser.APPROVE_OPTION) {
+        try {
+        excelFile = excelFileChooser.getSelectedFile();
+        excelFIS = new FileInputStream(excelFile);
+        excelBIS = new BufferedInputStream(excelFIS);
+        excelJTableImport = new XSSFWorkbook(excelBIS);
+        XSSFSheet excelSheet = excelJTableImport.getSheetAt(0);
+        int numberOfColumnsExpected = 9; // Số cột bạn mong đợi trong file Excel
+        for (int row = 1; row <= excelSheet.getLastRowNum(); row++)
+        {
+        XSSFRow excelRow = excelSheet.getRow(row);
+        System.out.println(row);
+        // if (excelRow.getPhysicalNumberOfCells() != numberOfColumnsExpected)
+        // {
+        //     JOptionPane.showMessageDialog(null, "Import Excel không thành công");
+        //     return;
         // }
 
-        // XSSFCell excelName = excelRow.getCell(1);
-        // XSSFCell excelDate = excelRow.getCell(2);
-        // XSSFCell excelAddress = excelRow.getCell(3);
-        // XSSFCell excelPosition = excelRow.getCell(4);
-        // XSSFCell excelPhone = excelRow.getCell(5);
-        // XSSFCell excelSalary = excelRow.getCell(6);
+        // if (excelRow != null && excelRow.getPhysicalNumberOfCells() == numberOfColumnsExpected)
+        // {  
+            XSSFCell excelId = excelRow.getCell(0);
+            int idValue = 0;
+            if (excelId != null) 
+            {
+                if (excelId.getCellType() == CellType.NUMERIC) 
+                {
+                    idValue = (int) excelId.getNumericCellValue();
+                } 
+                else if (excelId.getCellType() == CellType.STRING)
+                {
+                String idString = excelId.getStringCellValue();
+                try {
+                    idValue = Integer.parseInt(idString);
+                } 
+                catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                }
+            }
+    
+            XSSFCell excelName = excelRow.getCell(1);
+            XSSFCell excelDate = excelRow.getCell(2);
+            XSSFCell excelAddress = excelRow.getCell(3);
+            XSSFCell excelPosition = excelRow.getCell(4);
+            System.out.println(excelPosition);
+            XSSFCell excelPhone = excelRow.getCell(5);
+            XSSFCell excelSalary = excelRow.getCell(6);
+    
+            XSSFCell excelDateCreate = excelRow.getCell(7);
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+            String formattedDate = sdf.format(excelDateCreate.getDateCellValue());
+            
+            SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+            String dateFormat = sdfDate.format(excelDate.getDateCellValue());
+            System.out.println(dateFormat);
+            XSSFCell excelIdAccount = excelRow.getCell(8);
+            int idAccountValue = 0;
+            if (excelIdAccount != null)
+            {
+                if (excelIdAccount.getCellType() == CellType.NUMERIC)
+                {
+                    idAccountValue = (int) excelIdAccount.getNumericCellValue();
+                } 
+                else if (excelIdAccount.getCellType() == CellType.STRING) 
+                {
+                    String idAccountString = excelIdAccount.getStringCellValue();
+                    try 
+                    {
+                        idAccountValue = Integer.parseInt(idAccountString);
+                    } 
+                    catch (NumberFormatException e) 
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }
 
-        // XSSFCell excelDateCreate = excelRow.getCell(7);
-        // SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
-        // String formattedDate = sdf.format(excelDateCreate.getDateCellValue());
+           
+            
 
-        // XSSFCell excelIdAccount = excelRow.getCell(8);
-        // int idAccountValue = 0;
-        // if (excelIdAccount != null) {
-        // if (excelIdAccount.getCellTypeEnum() == CellType.NUMERIC) {
-        // idAccountValue = (int) excelIdAccount.getNumericCellValue();
-        // } else if (excelIdAccount.getCellTypeEnum() == CellType.STRING) {
-        // String idAccountString = excelIdAccount.getStringCellValue();
-        // try {
-        // idAccountValue = Integer.parseInt(idAccountString);
-        // } catch (NumberFormatException e) {
-        // e.printStackTrace();
+            dtm.addRow(new Object[] { idValue, excelName, excelDate, excelAddress,
+            excelPosition, excelPhone,
+            excelSalary, formattedDate, idAccountValue });
+            User user = new User();
+            user.setName(excelName.getStringCellValue());
+            user.setDate(dateFormat);
+            user.setAddress(excelAddress.getStringCellValue());
+            user.setPosition(excelPosition.getStringCellValue());
+            user.setPhone(excelPhone.getStringCellValue());
+            user.setSalary((float) (excelSalary.getNumericCellValue()));
+            user.setAccountId((int) (excelIdAccount.getNumericCellValue()));
+            userservice.addUser(user);
+        }
         // }
-        // }
-        // }
-
-        // dtm.addRow(new Object[] { idValue, excelName, excelDate, excelAddress,
-        // excelPosition, excelPhone,
-        // excelSalary, formattedDate, idAccountValue });
-        // }
-        // JOptionPane.showMessageDialog(null, "Import file excel thành công!", "Thông
-        // báo",
-        // JOptionPane.INFORMATION_MESSAGE);
-        // } catch (Exception e) {
-        // e.printStackTrace();
-        // }
-        // }
+        JOptionPane.showMessageDialog(null, "Import file excel thành công!", "Thông báo",
+        JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+        e.printStackTrace();
+        }
+        }
     }
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {

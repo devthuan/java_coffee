@@ -69,12 +69,12 @@ public class PrintUser extends javax.swing.JFrame {
             PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream(path));
             document.open();
 
-            com.itextpdf.text.Font font = new com.itextpdf.text.Font(BaseFont.createFont(
-                    "src\\assets\\VietFontsWeb1_ttf\\vuTimes.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 12);
+            // com.itextpdf.text.Font font = new com.itextpdf.text.Font(BaseFont.createFont(
+            //         "src\\assets\\VietFontsWeb1_ttf\\vuTimes.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 12);
 
             PdfPTable table = new PdfPTable(9);
             table.setWidthPercentage(100);
-            table.addCell(new PdfPCell(new Phrase("Text", font)));
+            // table.addCell(new PdfPCell(new Phrase("Text", font)));
             float[] columnWidths = { 2f, 2f, 2f, 3f, 2f, 2f, 2f, 2f, 2f };
             table.setWidths(columnWidths);
             table.addCell("Mã nhân viên");

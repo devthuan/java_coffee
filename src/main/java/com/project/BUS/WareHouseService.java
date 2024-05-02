@@ -4,10 +4,10 @@ import com.project.DAO.*;
 import com.project.DTO.*;
 import java.util.List;
 public class WareHouseService {
-    WareHouseDao warehousedao;
+    WareHouseDAO warehousedao;
     public WareHouseService()
     {
-        warehousedao = new WareHouseDao();
+        warehousedao = new WareHouseDAO();
     }
     public List<WareHouse> getAllWareHouse() throws Exception
     {
