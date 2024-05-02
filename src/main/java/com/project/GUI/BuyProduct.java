@@ -19,6 +19,7 @@ import com.project.DTO.CategoryDTO;
 import com.project.DTO.OrderDTO;
 import com.project.DTO.OrderDetailDTO;
 import com.project.DTO.PaymentMethodDTO;
+import com.project.DTO.PermissionAccount;
 import com.project.DTO.ProductDTO;
 import com.project.Util.Formatter;
 
@@ -58,7 +59,7 @@ public class BuyProduct extends JPanel implements AddProductListener {
                                 if (choice == JOptionPane.YES_OPTION) {
                                         int paymentMethod_id = pnCarts.PanelBottom.getSelectedPaymentMethodID();
 
-                                        int account_id = 2;
+                                        int account_id = PermissionAccount.getInstance().getAccountId();
 
                                         OrderDTO orderDTO = new OrderDTO("pending", paymentMethod_id, account_id);
                                         ArrayList<OrderDetailDTO> orderDetails = new ArrayList<>();
