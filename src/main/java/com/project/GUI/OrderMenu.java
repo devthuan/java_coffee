@@ -176,7 +176,7 @@ public class OrderMenu extends javax.swing.JPanel {
                 GroupButton.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
 
                 btnCreate.setFont(new java.awt.Font("Arial", 0, 16));
-                btnCreate.setIcon(new javax.swing.ImageIcon("./src/assets/icon/add.png"));
+                btnCreate.setIcon(new javax.swing.ImageIcon("./src/assets/icon/plus.png"));
                 btnCreate.setText("Tạo");
                 btnCreate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
                 btnCreate.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -208,7 +208,7 @@ public class OrderMenu extends javax.swing.JPanel {
                 GroupButton.add(btnEdit);
 
                 btnViewDetails.setFont(new java.awt.Font("Arial", 0, 16));
-                btnViewDetails.setIcon(new javax.swing.ImageIcon("./src/assets/icon/info.png"));
+                btnViewDetails.setIcon(new javax.swing.ImageIcon("./src/assets/icon/info-rgb.png"));
                 btnViewDetails.setText("Chi tiết");
                 btnViewDetails.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
                 btnViewDetails.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -263,7 +263,7 @@ public class OrderMenu extends javax.swing.JPanel {
                 txtInputSearch.setMinimumSize(new java.awt.Dimension(100, 30));
                 txtInputSearch.setPreferredSize(new java.awt.Dimension(100, 50));
 
-                Formatter.setPlaceHolder(txtInputSearch, "Nhập nội dung tìm kiếm");
+                Formatter.setPlaceHolder(txtInputSearch, "Nhập từ khóa tìm kiếm");
                 txtInputSearch.addKeyListener(new KeyAdapter() {
                         @Override
                         public void keyReleased(KeyEvent e) {

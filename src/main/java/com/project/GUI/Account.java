@@ -36,6 +36,7 @@ import com.project.DTO.AccountDTO;
 import com.project.DTO.DeliveryBillDTO;
 import com.project.DTO.PermissionAccount;
 import com.project.DTO.SupplierDTO;
+import com.project.Util.Formatter;
 
 /**
  *
@@ -73,6 +74,8 @@ public class Account extends javax.swing.JPanel {
             model.addRow(rowData);
         }
         TK_Table.setModel(model);
+        Formatter.setBoldHeaderTable(TK_Table);
+        Formatter.centerAlignTableCells(TK_Table);
     }
 
     /**
@@ -142,7 +145,7 @@ public class Account extends javax.swing.JPanel {
         btn_left.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
 
         btn_add.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btn_add.setIcon(new javax.swing.ImageIcon("./src/assets/icon/add.png")); // NOI18N
+        btn_add.setIcon(new javax.swing.ImageIcon("./src/assets/icon/plus.png")); // NOI18N
         btn_add.setText("THÊM");
         btn_add.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn_add.setPreferredSize(new java.awt.Dimension(80, 80));
@@ -160,7 +163,7 @@ public class Account extends javax.swing.JPanel {
         btn_left.add(btn_add);
 
         btn_detail.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btn_detail.setIcon(new javax.swing.ImageIcon("./src/assets/icon/warning (1).png")); // NOI18N
+        btn_detail.setIcon(new javax.swing.ImageIcon("./src/assets/icon/info-rgb.png")); // NOI18N
         btn_detail.setText("CHI TIẾT");
         btn_detail.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn_detail.setPreferredSize(new java.awt.Dimension(80, 80));
@@ -208,7 +211,8 @@ public class Account extends javax.swing.JPanel {
         // "Item 1", "Item 2", "Item 3", "Item 4" }));
         // jComboBox1.setPreferredSize(new java.awt.Dimension(111, 50));
 
-        input_search.setText("Nhập tìm kiếm");
+        // input_search.setText("Nhập tìm kiếm");
+        Formatter.setPlaceHolder(input_search,"Nhập từ khóa tìm kiếm");
         input_search.setPreferredSize(new java.awt.Dimension(270, 50));
         // input_search.addInputMethodListener(new java.awt.event.InputMethodListener()
         // {

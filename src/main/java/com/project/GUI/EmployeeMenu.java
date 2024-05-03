@@ -106,7 +106,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         btnAdd.setFont(new java.awt.Font("Arial", 0, 14));
-        btnAdd.setIcon(new javax.swing.ImageIcon("./src/assets/icon/plus (1).png"));
+        btnAdd.setIcon(new javax.swing.ImageIcon("./src/assets/icon/plus.png"));
         btnAdd.setText("Thêm");
         btnAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -325,6 +325,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
                 setColumnWidths(jTable1, columnPercentages);
             }
         });
+        jTable1.setShowGrid(true);
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

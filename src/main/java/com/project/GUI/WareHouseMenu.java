@@ -2,6 +2,7 @@
 package com.project.GUI;
 
 import com.project.DTO.*;
+import com.project.Util.Formatter;
 import com.project.BUS.WareHouseService;
 import com.project.DAO.*;
 import java.util.List;
@@ -44,6 +45,8 @@ public class WareHouseMenu extends javax.swing.JPanel {
                             warehouse.getCreateDate(), warehouse.getUpdateDate() });
 
         }
+        Formatter.setBoldHeaderTable(TableReceipt);
+        Formatter.centerAlignTableCells(TableReceipt);
     }
 
     @SuppressWarnings("unchecked")
@@ -189,6 +192,7 @@ public class WareHouseMenu extends javax.swing.JPanel {
 
         InputSearch.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         // InputSearch.setText("Tìm kiếm....");
+        Formatter.setPlaceHolder(InputSearch, "Nhập từ khóa tìm kiếm");
         InputSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 InputSearchActionPerformed(evt);
@@ -283,6 +287,7 @@ public class WareHouseMenu extends javax.swing.JPanel {
                 }));
         TableReceipt.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(TableReceipt);
+        TableReceipt.setShowGrid(true);
 
         ReceiptCenter.add(jScrollPane1);
 

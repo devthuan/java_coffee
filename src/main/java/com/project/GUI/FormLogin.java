@@ -232,6 +232,7 @@ public class FormLogin extends javax.swing.JFrame {
         getContentPane().add(ContentLogin);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {

@@ -76,6 +76,8 @@ public class Receipt extends javax.swing.JPanel {
                         model.addRow(rowData);
                 }
                 TableReceipt.setModel(model);
+                Formatter.setBoldHeaderTable(TableReceipt);
+                Formatter.centerAlignTableCells(TableReceipt);
         }
 
         /**
@@ -205,6 +207,7 @@ public class Receipt extends javax.swing.JPanel {
 
                 InputSearch.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 // InputSearch.setText(");
+                Formatter.setPlaceHolder(InputSearch, "Nhập từ khóa tìm kiếm");
                 InputSearch.getDocument().addDocumentListener(new DocumentListener() {
                         @Override
                         public void insertUpdate(DocumentEvent e) {
@@ -465,6 +468,7 @@ public class Receipt extends javax.swing.JPanel {
         private void FilterActionPerformed(ActionEvent evt) {
                 int option = Filter.getSelectedIndex();
                 option_search = option;
+                InputSearch.requestFocus();
         }
 
         private void ValueTotalEndActionPerformed(java.awt.event.ActionEvent evt) {

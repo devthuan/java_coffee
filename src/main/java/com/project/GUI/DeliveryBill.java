@@ -79,6 +79,8 @@ public class DeliveryBill extends javax.swing.JPanel {
             model.addRow(rowData);
         }
         TableDeliveryBill.setModel(model);
+        Formatter.setBoldHeaderTable(TableDeliveryBill);
+        Formatter.centerAlignTableCells(TableDeliveryBill);
 
     }
 
@@ -191,7 +193,7 @@ public class DeliveryBill extends javax.swing.JPanel {
         Filter.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         Filter.setModel(
                 new javax.swing.DefaultComboBoxModel<>(
-                        new String[] { "ID tăng dần", "ID giảm dần", " Tăng dần tổng số kg",
+                        new String[] { "ID tăng dần", "ID giảm dần", "Tăng dần tổng số kg",
                                 "Giảm dần tổng số kg" }));
         Filter.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         Filter.addActionListener(new java.awt.event.ActionListener() {
@@ -210,7 +212,8 @@ public class DeliveryBill extends javax.swing.JPanel {
         });
 
         InputSearch.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        InputSearch.setText("Tìm kiếm....");
+        // InputSearch.setText("Tìm kiếm....");
+        Formatter.setPlaceHolder(InputSearch, "Nhập từ khóa tìm kiếm");
 
         InputSearch.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -639,6 +642,7 @@ public class DeliveryBill extends javax.swing.JPanel {
 
     private void FilterActionPerformed(java.awt.event.ActionEvent evt) {
         int option = Filter.getSelectedIndex();
+        InputSearch.requestFocus();
 
         DefaultTableModel model = (DefaultTableModel) TableDeliveryBill.getModel();
         model.setRowCount(0); // Xóa tất cả các hàng
