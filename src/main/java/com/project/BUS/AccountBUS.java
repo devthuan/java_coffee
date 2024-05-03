@@ -83,6 +83,23 @@ public class AccountBUS {
         return AccountDAO.getAll_unused(role_id);
     }
 
+    public static AccountDTO getDetailAccountBUS(int id) {
+        return AccountDAO.getDetailAccount(id);
+    }
+
+    public static boolean changePassword(int accountId, String oldPassword, String newPassword) {
+        AccountDTO acc = AccountDAO.getUserById(accountId);
+
+        if (PasswordHasher.checkPassword(oldPassword, acc.getPassword())) {
+            String hashedPassword = PasswordHasher.hashPassword(newPassword);
+            acc.setPassword(hashedPassword);
+            return AccountDAO.changePassword(acc);
+        } else {
+            JOptionPane.showMessageDialog(null, "Mật khẩu sai");
+            return false;
+        }
+    }
+
     public static void main(String[] args) {
         AccountBUS.login(new AccountDTO("admin@example.com", "admin"));
 

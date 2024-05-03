@@ -154,11 +154,11 @@ INSERT INTO quyenchucnang (Quyen_id, ChucNang_id, is_active) VALUES
 (3,13,1),
 -- group bill
 (3,14,1),
--- (3,15,1),
--- (3,16,1),
+(3,15,1),
+(3,16,1),
 -- (3,17,1), 
 -- (3,18,1),
--- (3,19,1),
+(3,19,1),
 -- group warehouse
 (3,20,1),
 -- (3,21,1),
@@ -181,7 +181,7 @@ INSERT INTO quyenchucnang (Quyen_id, ChucNang_id, is_active) VALUES
 -- (3,34,1),
 -- (3,35,1),
 -- (3,36,1),
--- (3,37,1),
+(3,37,1),
 
 -- group warehouse dispatch note
 (3,38,1),

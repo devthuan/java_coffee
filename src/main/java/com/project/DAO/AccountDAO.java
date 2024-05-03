@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 import com.project.DTO.AccountDTO;
+import com.project.DTO.EmployeeDTO;
 
 public class AccountDAO {
     public static ArrayList<AccountDTO> getAllUser() {
@@ -93,6 +95,29 @@ public class AccountDAO {
         }
     }
 
+    public static AccountDTO getUserById(int idAccount) {
+        AccountDTO data = null;
+
+        try {
+            Connection con = mysqlConnect.getConnection();
+            String sql = "SELECT id, email, password from TaiKhoan Where id = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setInt(1, idAccount);
+            ResultSet result = pst.executeQuery();
+            while (result.next()) {
+                int id = result.getInt("id");
+                String mail = result.getString("email");
+                String password = result.getString("password");
+                data = new AccountDTO(id, mail, password);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return data;
+
+    }
+
     // get all functions
     public static HashMap<String, Boolean> getAllFunction(int roleId) {
         HashMap<String, Boolean> listFunction = new HashMap<>();
@@ -139,34 +164,6 @@ public class AccountDAO {
             return false;
         }
     }
-
-    // public static Boolean addUser(AccountDTO account)
-    // {
-
-    // try {
-    // Connection con = mysqlConnect.getConnection();
-    // String insertQuery = "INSERT INTO TaiKhoan (email,password,Quyen_id)
-    // VALUES(?,?,?)";
-    // PreparedStatement pst =con.prepareStatement(insertQuery);
-    // pst.setString(1, account.getEmail());
-    // pst.setString(2,account.getPassword());
-    // pst.setInt(3,1);
-    // int a= pst.executeUpdate();
-    // if(a>0)
-    // {
-    // return true;
-    // }
-    // else
-    // {
-    // return false;
-    // }
-    // } catch (Exception e) {
-    // // TODO: handle exception
-    // e.printStackTrace();
-    // return false;
-    // }
-
-    // }
 
     public static boolean deleteUser(int id) {
         Connection con = mysqlConnect.getConnection();
@@ -319,6 +316,77 @@ public class AccountDAO {
         }
 
         return accounts;
+    }
+
+    // get detail account information
+    public static AccountDTO getDetailAccount(int idAccount) {
+        AccountDTO account = null;
+        try {
+            Connection conn = mysqlConnect.getConnection();
+            String sql = "SELECT " +
+                    "    TaiKhoan.id, " +
+                    "    email, " +
+                    "    password, " +
+                    "    ten_quyen, " +
+                    "    TaiKhoan.createdAt, " +
+                    "    TaiKhoan.updatedAt, " +
+                    "    ho_va_ten, " +
+                    "    ngay_sinh, " +
+                    "    dia_chi, " +
+                    "    sdt, " +
+                    "    chuc_vu, " +
+                    "    luong " +
+                    "FROM TaiKhoan " +
+                    "left JOIN Quyen ON TaiKhoan.Quyen_id = Quyen.id " +
+                    "left JOIN NhanVien ON TaiKhoan.id = NhanVien.TaiKhoan_id " +
+                    "WHERE TaiKhoan.id = ?";
+
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, idAccount);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                String role = rs.getString("ten_quyen");
+                LocalDateTime createdAt = rs.getTimestamp("createdAt").toLocalDateTime();
+                Timestamp updatedAt = rs.getTimestamp("updatedAt");
+                LocalDateTime updatedAtFormat = updatedAt != null ? updatedAt.toLocalDateTime() : null;
+                String hoten = rs.getString("ho_va_ten");
+                String ngaysinh = rs.getString("ngay_sinh");
+                String diachi = rs.getString("dia_chi");
+                String phone = rs.getString("sdt");
+                String chucvu = rs.getString("chuc_vu");
+                float luong = rs.getFloat("luong");
+                EmployeeDTO employee = new EmployeeDTO(hoten, ngaysinh, diachi, phone, chucvu, luong);
+                account = new AccountDTO(id, email, password, role, createdAt, updatedAtFormat, employee);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return account;
+    }
+
+    // change password
+    public static boolean changePassword(AccountDTO account) {
+        try {
+            Connection conn = mysqlConnect.getConnection();
+            String sql = "UPDATE TaiKhoan SET password =? WHERE id =?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, account.getPassword());
+            pst.setInt(2, account.getId());
+            int a = pst.executeUpdate();
+            if (a > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public static void main(String[] args) {

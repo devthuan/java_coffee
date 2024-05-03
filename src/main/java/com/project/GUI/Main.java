@@ -76,6 +76,8 @@ public class Main extends javax.swing.JFrame {
                 HoverCusorMenu();
                 HoverMenu();
                 addClickEffectElement();
+                setLocationRelativeTo(null);
+
                 setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
                 setMinimumSize(new java.awt.Dimension(1270, 768));
                 setPreferredSize(new java.awt.Dimension(1290, 768));
@@ -93,9 +95,19 @@ public class Main extends javax.swing.JFrame {
                 Profile.setMinimumSize(new java.awt.Dimension(128, 110));
 
                 jLabel6.setIcon(new javax.swing.ImageIcon("./src/assets/icon/profile-64.png")); // NOI18N
+                jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseClicked(java.awt.event.MouseEvent evt) {
+                                jLabel6MouseClicked(evt);
+                        }
 
+                });
+                // jLabel13.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                // jLabel13.setPreferredSize(new java.awt.Dimension(185, 25));
+                // jLabel13.setText("Admin");
                 jLabel13.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                 jLabel13.setText("Admin");
+                jLabel13.setPreferredSize(new java.awt.Dimension(100, 17));
 
                 javax.swing.GroupLayout ProfileLayout = new javax.swing.GroupLayout(Profile);
                 Profile.setLayout(ProfileLayout);
@@ -103,13 +115,16 @@ public class Main extends javax.swing.JFrame {
                                 ProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addGroup(ProfileLayout.createSequentialGroup()
                                                                 .addGap(58, 58, 58)
-                                                                .addGroup(ProfileLayout.createParallelGroup(
-                                                                                javax.swing.GroupLayout.Alignment.TRAILING)
-                                                                                .addComponent(jLabel13,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                53,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addComponent(jLabel6))
+                                                                .addComponent(jLabel6)
+                                                                .addContainerGap(60, Short.MAX_VALUE))
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ProfileLayout
+                                                                .createSequentialGroup()
+                                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                Short.MAX_VALUE)
+                                                                .addComponent(jLabel13,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                131,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
                                                                                 Short.MAX_VALUE)));
                 ProfileLayout.setVerticalGroup(
@@ -633,6 +648,10 @@ public class Main extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
                         return;
                 }
+        }
+
+        private void jLabel6MouseClicked(MouseEvent evt) {
+                new DetailAccount().setVisible(true);
         }
 
         /**
