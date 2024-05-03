@@ -109,6 +109,7 @@ public class DetailWareHouse extends javax.swing.JFrame {
         jlbCreate1.setFont(new java.awt.Font("Microsoft Sans Serif", 2, 18)); // NOI18N
         jlbCreate1.setText("Cập nhật gần đây");
 
+        jtfUpdate.setEnabled(false);
         jtfUpdate.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jtfUpdate.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtfUpdate.addActionListener(new java.awt.event.ActionListener() {
@@ -241,6 +242,8 @@ public class DetailWareHouse extends javax.swing.JFrame {
             warehouse.setName(jtfName.getText());
             try {
                 wareHouseService.updateNameWareHouse(warehouse);
+                JOptionPane.showMessageDialog(null, "Cập nhật nguyên liệu thành công");
+                this.dispose();
             } catch (Exception ex) {
                 Logger.getLogger(DetailWareHouse.class.getName()).log(Level.SEVERE, null, ex);
             }

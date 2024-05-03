@@ -16,7 +16,7 @@ import com.project.BUS.EnterCouponBUS;
 import com.project.BUS.SupplierBUS;
 import com.project.Common.Common;
 import com.project.DAO.EmployeeDAO;
-import com.project.DAO.WareHouseDao;
+import com.project.DAO.WareHouseDAO;
 import com.project.DTO.DeliveryBillDTO;
 import com.project.DTO.DetailDeliveryBillDTO;
 import com.project.DTO.DetailEnterCouponDTO;
@@ -42,7 +42,7 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
      * Creates new form FormSupplier
      */
     public FormCreateDeliveryBill() {
-        list_ingredient = WareHouseDao.get_all_ingredients();
+        list_ingredient = WareHouseDAO.get_all_ingredients();
         ingredientMap = new HashMap<>();
 
         for (WareHouseDTO wareHouseDTO : list_ingredient) {
@@ -479,7 +479,7 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
         // list_new_detail_delivery);
         Boolean check = DeliveryBillBUS.createDeliveryBillBUS(newDeliveryBillDTO, list_new_detail_delivery);
         if (check) {
-            JOptionPane.showMessageDialog(null, "Tạo phiếu nhập thành công.");
+            JOptionPane.showMessageDialog(null, "Tạo phiếu xuất thành công.");
             this.setVisible(false);
         }
     }

@@ -472,7 +472,7 @@ public class EditUser extends javax.swing.JFrame {
                                 }
                         }
 
-                        boolean rs = userService.addUser(user);
+                        boolean rs = userService.updateUser(user);
                         if (rs) {
                                 JOptionPane.showMessageDialog(null, "Cập nhật thông tin nhân viên thành công",
                                                 "Thông báo",
