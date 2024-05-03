@@ -20,10 +20,12 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.project.BUS.AccountBUS;
 import com.project.BUS.OrderBUS;
 import com.project.BUS.PaymentMethodBUS;
 import com.project.BUS.ProductBUS;
 import com.project.Common.Common;
+import com.project.DTO.AccountDTO;
 import com.project.DTO.EmployeeDTO;
 import com.project.DTO.OrderDTO;
 import com.project.DTO.OrderDetailDTO;
@@ -37,16 +39,16 @@ import com.project.Util.Formatter;
  */
 public class OrderDetail extends javax.swing.JFrame {
 
-    public OrderDetail(OrderDTO order, EmployeeDTO emp) {
+    public OrderDetail(OrderDTO order, EmployeeDTO emp, AccountDTO acc) {
         setTitle("Chi tiết đơn hàng");
         initComponents();
-        loadData(order, emp);
+        loadData(order, emp, acc);
     }
 
-    private void loadData(OrderDTO order, EmployeeDTO emp) {
+    private void loadData(OrderDTO order, EmployeeDTO emp, AccountDTO acc) {
         PaymentMethodDTO paymentMethod = new PaymentMethodBUS().getByID(order.getPaymentMethod_id());
         PaymentMethod.setText(paymentMethod.getPayment_name());
-        AccountID.setText(String.valueOf(emp.getAccount_id()));
+        Email.setText(acc.getEmail());
 
         if (emp.getName() != null) {
             FullName.setText(emp.getName());
@@ -101,8 +103,8 @@ public class OrderDetail extends javax.swing.JFrame {
         Title = new javax.swing.JLabel();
         pnInfo = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        lblAccountID = new javax.swing.JLabel();
-        AccountID = new javax.swing.JTextField();
+        lblEmail = new javax.swing.JLabel();
+        Email = new javax.swing.JTextField();
         lblFullName = new javax.swing.JLabel();
         FullName = new javax.swing.JTextField();
         lblCreatedAt = new javax.swing.JLabel();
@@ -179,19 +181,19 @@ public class OrderDetail extends javax.swing.JFrame {
         jPanel4.setPreferredSize(new java.awt.Dimension(980, 50));
         jPanel4.setLayout(new java.awt.GridLayout(2, 6, 5, 5));
 
-        lblAccountID.setFont(new java.awt.Font("Arial", 0, 16));
-        lblAccountID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblAccountID.setText("Tài khoản ID: ");
-        lblAccountID.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel4.add(lblAccountID);
+        lblEmail.setFont(new java.awt.Font("Arial", 0, 16));
+        lblEmail.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEmail.setText("Email: ");
+        lblEmail.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanel4.add(lblEmail);
 
-        AccountID.setFont(new java.awt.Font("Arial", 0, 16));
-        AccountID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        AccountID.setText("1");
-        AccountID.setDisabledTextColor(new java.awt.Color(51, 51, 51));
-        AccountID.setEnabled(false);
-        AccountID.setMaximumSize(new java.awt.Dimension(150, 50));
-        jPanel4.add(AccountID);
+        Email.setFont(new java.awt.Font("Arial", 0, 14));
+        Email.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Email.setText("");
+        Email.setDisabledTextColor(new java.awt.Color(51, 51, 51));
+        Email.setEditable(false);
+        Email.setMaximumSize(new java.awt.Dimension(150, 50));
+        jPanel4.add(Email);
 
         lblFullName.setFont(new java.awt.Font("Arial", 0, 16));
         lblFullName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -203,7 +205,7 @@ public class OrderDetail extends javax.swing.JFrame {
         FullName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         FullName.setText("NULL");
         FullName.setDisabledTextColor(new java.awt.Color(51, 51, 51));
-        FullName.setEnabled(false);
+        FullName.setEditable(false);
         FullName.setMaximumSize(new java.awt.Dimension(150, 50));
         jPanel4.add(FullName);
 
@@ -217,7 +219,7 @@ public class OrderDetail extends javax.swing.JFrame {
         CreatedAt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         CreatedAt.setText("11/11/2023");
         CreatedAt.setDisabledTextColor(new java.awt.Color(51, 51, 51));
-        CreatedAt.setEnabled(false);
+        CreatedAt.setEditable(false);
         CreatedAt.setMaximumSize(new java.awt.Dimension(150, 50));
         jPanel4.add(CreatedAt);
 
@@ -231,7 +233,7 @@ public class OrderDetail extends javax.swing.JFrame {
         OrderID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         OrderID.setText("28");
         OrderID.setDisabledTextColor(new java.awt.Color(51, 51, 51));
-        OrderID.setEnabled(false);
+        OrderID.setEditable(false);
         OrderID.setMaximumSize(new java.awt.Dimension(150, 50));
         jPanel4.add(OrderID);
 
@@ -245,7 +247,7 @@ public class OrderDetail extends javax.swing.JFrame {
         PaymentMethod.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         PaymentMethod.setText("Chuyển khoản");
         PaymentMethod.setDisabledTextColor(new java.awt.Color(51, 51, 51));
-        PaymentMethod.setEnabled(false);
+        PaymentMethod.setEditable(false);
         PaymentMethod.setMaximumSize(new java.awt.Dimension(150, 50));
         jPanel4.add(PaymentMethod);
 
@@ -259,7 +261,7 @@ public class OrderDetail extends javax.swing.JFrame {
         Status.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Status.setText("successful");
         Status.setDisabledTextColor(new java.awt.Color(51, 51, 51));
-        Status.setEnabled(false);
+        Status.setEditable(false);
         Status.setMaximumSize(new java.awt.Dimension(150, 50));
         jPanel4.add(Status);
 
@@ -284,6 +286,8 @@ public class OrderDetail extends javax.swing.JFrame {
         TableOrderDetail.setMinimumSize(new java.awt.Dimension(1000, 150));
         TableOrderDetail.setPreferredSize(new java.awt.Dimension(1000, 200));
         TableOrderDetail.setMaximumSize(new java.awt.Dimension(1000, 327676));
+        TableOrderDetail.setShowGrid(true);
+        TableOrderDetail.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(TableOrderDetail);
 
         pnTable.add(jScrollPane1);
@@ -305,7 +309,7 @@ public class OrderDetail extends javax.swing.JFrame {
         jPanel7.add(jLabel7, java.awt.BorderLayout.WEST);
 
         Total.setFont(new java.awt.Font("Arial", 0, 18));
-        Total.setText("123$$$$$$$$$$$$$$");
+        Total.setText("");
         Total.setMaximumSize(new java.awt.Dimension(32767, 22));
         Total.setMinimumSize(new java.awt.Dimension(800, 22));
         jPanel7.add(Total, java.awt.BorderLayout.EAST);
@@ -492,7 +496,7 @@ public class OrderDetail extends javax.swing.JFrame {
         return rs;
     }
 
-    private javax.swing.JTextField AccountID;
+    private javax.swing.JTextField Email;
     private javax.swing.JTextField CreatedAt;
     private javax.swing.JTextField FullName;
     private javax.swing.JTextField OrderID;
@@ -501,7 +505,7 @@ public class OrderDetail extends javax.swing.JFrame {
     private javax.swing.JLabel Title;
     private javax.swing.JLabel Total;
     private javax.swing.JButton btnPrint;
-    private javax.swing.JLabel lblAccountID;
+    private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblFullName;
     private javax.swing.JLabel lblCreatedAt;
     private javax.swing.JLabel jLabel4;

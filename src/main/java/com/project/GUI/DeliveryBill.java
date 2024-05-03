@@ -203,7 +203,7 @@ public class DeliveryBill extends javax.swing.JPanel {
                 new javax.swing.DefaultComboBoxModel<>(
                         new String[] { "ID tăng dần", "ID giảm dần", "Tăng dần tổng số kg",
                                 "Giảm dần tổng số kg" }));
-        Filter.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Filter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Filter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 FilterActionPerformed(evt);

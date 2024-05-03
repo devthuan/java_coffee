@@ -416,6 +416,7 @@ public class FormDetailReceipt extends javax.swing.JFrame {
         getContentPane().add(Bottom, java.awt.BorderLayout.PAGE_END);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>
 
     private void BtnPrintMouseClicked(java.awt.event.MouseEvent evt) {

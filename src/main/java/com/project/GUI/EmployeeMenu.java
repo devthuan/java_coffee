@@ -1,16 +1,17 @@
 
 package com.project.GUI;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -26,7 +27,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.formdev.flatlaf.json.ParseException;
+import com.itextpdf.text.Font;
 import com.project.BUS.UserService;
 import com.project.DTO.PermissionAccount;
 import com.project.DTO.User;
@@ -94,15 +95,17 @@ public class EmployeeMenu extends javax.swing.JPanel {
 
         setMinimumSize(new java.awt.Dimension(1085, 768));
         setPreferredSize(new java.awt.Dimension(1085, 768));
+        setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel5.setFont(new java.awt.Font("Arial Semibold", 2, 24));
+        jLabel5.setFont(new java.awt.Font("Arial", Font.BOLD, 24));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setIcon(new javax.swing.ImageIcon(""));
+        jLabel5.setIcon(new javax.swing.ImageIcon("./src/assets/icon/employees.png"));
         jLabel5.setText("Quản lí nhân viên");
         jLabel5.setToolTipText("");
-        jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        // jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jLabel5.setIconTextGap(10);
-        jLabel5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        // jLabel5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel5.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
 
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
@@ -131,7 +134,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         });
 
         btnDelete.setFont(new java.awt.Font("Arial", 0, 14));
-        btnDelete.setIcon(new javax.swing.ImageIcon("./src/assets/icon/delete_user.png"));
+        btnDelete.setIcon(new javax.swing.ImageIcon("./src/assets/icon/cancel.png"));
         btnDelete.setText("Xóa");
         btnDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDelete.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -219,15 +222,17 @@ public class EmployeeMenu extends javax.swing.JPanel {
                                         .addComponent(btnPrint, javax.swing.GroupLayout.Alignment.TRAILING,
                                                 javax.swing.GroupLayout.PREFERRED_SIZE, 72,
                                                 javax.swing.GroupLayout.PREFERRED_SIZE))));
-
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.ipadx = 20;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         jPanel1.add(jPanel2, gridBagConstraints);
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         cbSelect.setFont(new java.awt.Font("Arial", 0, 14));
+        cbSelect.setCursor(new Cursor(Cursor.HAND_CURSOR));
         cbSelect.setModel(new javax.swing.DefaultComboBoxModel<>(
                 new String[] { "Tìm kiếm theo mã", "Tìm kiếm theo tên", "Tìm kiếm theo số điện thoại" }));
         cbSelect.addActionListener(new java.awt.event.ActionListener() {
@@ -270,6 +275,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         btnRefresh.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
                 jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -425,113 +431,97 @@ public class EmployeeMenu extends javax.swing.JPanel {
         BufferedInputStream excelBIS = null;
         XSSFWorkbook excelJTableImport = null;
         String defaultCurrentDirectoryPath = "";
-        JFileChooser excelFileChooser = new
-        JFileChooser(defaultCurrentDirectoryPath);
+        JFileChooser excelFileChooser = new JFileChooser(defaultCurrentDirectoryPath);
         FileNameExtensionFilter fnef = new FileNameExtensionFilter("EXCEL FILES",
-        "xls", "xlsx", "xlsm");
+                "xls", "xlsx", "xlsm");
         excelFileChooser.setFileFilter(fnef);
         excelFileChooser.setDialogTitle("Select Excel File");
         int excelChooser = excelFileChooser.showOpenDialog(null);
         dtm.setRowCount(0);
         if (excelChooser == JFileChooser.APPROVE_OPTION) {
-        try {
-        excelFile = excelFileChooser.getSelectedFile();
-        excelFIS = new FileInputStream(excelFile);
-        excelBIS = new BufferedInputStream(excelFIS);
-        excelJTableImport = new XSSFWorkbook(excelBIS);
-        XSSFSheet excelSheet = excelJTableImport.getSheetAt(0);
-        int numberOfColumnsExpected = 9; // Số cột bạn mong đợi trong file Excel
-        for (int row = 1; row <= excelSheet.getLastRowNum(); row++)
-        {
-        XSSFRow excelRow = excelSheet.getRow(row);
-        System.out.println(row);
-        // if (excelRow.getPhysicalNumberOfCells() != numberOfColumnsExpected)
-        // {
-        //     JOptionPane.showMessageDialog(null, "Import Excel không thành công");
-        //     return;
-        // }
+            try {
+                excelFile = excelFileChooser.getSelectedFile();
+                excelFIS = new FileInputStream(excelFile);
+                excelBIS = new BufferedInputStream(excelFIS);
+                excelJTableImport = new XSSFWorkbook(excelBIS);
+                XSSFSheet excelSheet = excelJTableImport.getSheetAt(0);
+                int numberOfColumnsExpected = 9; // Số cột bạn mong đợi trong file Excel
+                for (int row = 1; row <= excelSheet.getLastRowNum(); row++) {
+                    XSSFRow excelRow = excelSheet.getRow(row);
+                    System.out.println(row);
+                    // if (excelRow.getPhysicalNumberOfCells() != numberOfColumnsExpected)
+                    // {
+                    // JOptionPane.showMessageDialog(null, "Import Excel không thành công");
+                    // return;
+                    // }
 
-        // if (excelRow != null && excelRow.getPhysicalNumberOfCells() == numberOfColumnsExpected)
-        // {  
-            XSSFCell excelId = excelRow.getCell(0);
-            int idValue = 0;
-            if (excelId != null) 
-            {
-                if (excelId.getCellType() == CellType.NUMERIC) 
-                {
-                    idValue = (int) excelId.getNumericCellValue();
-                } 
-                else if (excelId.getCellType() == CellType.STRING)
-                {
-                String idString = excelId.getStringCellValue();
-                try {
-                    idValue = Integer.parseInt(idString);
-                } 
-                catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
-                }
-            }
-    
-            XSSFCell excelName = excelRow.getCell(1);
-            XSSFCell excelDate = excelRow.getCell(2);
-            XSSFCell excelAddress = excelRow.getCell(3);
-            XSSFCell excelPosition = excelRow.getCell(4);
-            System.out.println(excelPosition);
-            XSSFCell excelPhone = excelRow.getCell(5);
-            XSSFCell excelSalary = excelRow.getCell(6);
-    
-            XSSFCell excelDateCreate = excelRow.getCell(7);
-            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
-            String formattedDate = sdf.format(excelDateCreate.getDateCellValue());
-            
-            SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
-            String dateFormat = sdfDate.format(excelDate.getDateCellValue());
-            System.out.println(dateFormat);
-            XSSFCell excelIdAccount = excelRow.getCell(8);
-            int idAccountValue = 0;
-            if (excelIdAccount != null)
-            {
-                if (excelIdAccount.getCellType() == CellType.NUMERIC)
-                {
-                    idAccountValue = (int) excelIdAccount.getNumericCellValue();
-                } 
-                else if (excelIdAccount.getCellType() == CellType.STRING) 
-                {
-                    String idAccountString = excelIdAccount.getStringCellValue();
-                    try 
-                    {
-                        idAccountValue = Integer.parseInt(idAccountString);
-                    } 
-                    catch (NumberFormatException e) 
-                    {
-                        e.printStackTrace();
+                    // if (excelRow != null && excelRow.getPhysicalNumberOfCells() ==
+                    // numberOfColumnsExpected)
+                    // {
+                    XSSFCell excelId = excelRow.getCell(0);
+                    int idValue = 0;
+                    if (excelId != null) {
+                        if (excelId.getCellType() == CellType.NUMERIC) {
+                            idValue = (int) excelId.getNumericCellValue();
+                        } else if (excelId.getCellType() == CellType.STRING) {
+                            String idString = excelId.getStringCellValue();
+                            try {
+                                idValue = Integer.parseInt(idString);
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
+
+                    XSSFCell excelName = excelRow.getCell(1);
+                    XSSFCell excelDate = excelRow.getCell(2);
+                    XSSFCell excelAddress = excelRow.getCell(3);
+                    XSSFCell excelPosition = excelRow.getCell(4);
+                    System.out.println(excelPosition);
+                    XSSFCell excelPhone = excelRow.getCell(5);
+                    XSSFCell excelSalary = excelRow.getCell(6);
+
+                    XSSFCell excelDateCreate = excelRow.getCell(7);
+                    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+                    String formattedDate = sdf.format(excelDateCreate.getDateCellValue());
+
+                    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+                    String dateFormat = sdfDate.format(excelDate.getDateCellValue());
+                    System.out.println(dateFormat);
+                    XSSFCell excelIdAccount = excelRow.getCell(8);
+                    int idAccountValue = 0;
+                    if (excelIdAccount != null) {
+                        if (excelIdAccount.getCellType() == CellType.NUMERIC) {
+                            idAccountValue = (int) excelIdAccount.getNumericCellValue();
+                        } else if (excelIdAccount.getCellType() == CellType.STRING) {
+                            String idAccountString = excelIdAccount.getStringCellValue();
+                            try {
+                                idAccountValue = Integer.parseInt(idAccountString);
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    dtm.addRow(new Object[] { idValue, excelName, excelDate, excelAddress,
+                            excelPosition, excelPhone,
+                            excelSalary, formattedDate, idAccountValue });
+                    User user = new User();
+                    user.setName(excelName.getStringCellValue());
+                    user.setDate(dateFormat);
+                    user.setAddress(excelAddress.getStringCellValue());
+                    user.setPosition(excelPosition.getStringCellValue());
+                    user.setPhone(excelPhone.getStringCellValue());
+                    user.setSalary((float) (excelSalary.getNumericCellValue()));
+                    user.setAccountId((int) (excelIdAccount.getNumericCellValue()));
+                    userservice.addUser(user);
                 }
+                // }
+                JOptionPane.showMessageDialog(null, "Import file excel thành công!", "Thông báo",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-           
-            
-
-            dtm.addRow(new Object[] { idValue, excelName, excelDate, excelAddress,
-            excelPosition, excelPhone,
-            excelSalary, formattedDate, idAccountValue });
-            User user = new User();
-            user.setName(excelName.getStringCellValue());
-            user.setDate(dateFormat);
-            user.setAddress(excelAddress.getStringCellValue());
-            user.setPosition(excelPosition.getStringCellValue());
-            user.setPhone(excelPhone.getStringCellValue());
-            user.setSalary((float) (excelSalary.getNumericCellValue()));
-            user.setAccountId((int) (excelIdAccount.getNumericCellValue()));
-            userservice.addUser(user);
-        }
-        // }
-        JOptionPane.showMessageDialog(null, "Import file excel thành công!", "Thông báo",
-        JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
-        e.printStackTrace();
-        }
         }
     }
 

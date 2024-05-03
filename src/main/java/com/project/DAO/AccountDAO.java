@@ -47,6 +47,32 @@ public class AccountDAO {
         return listAccount;
     }
 
+    public static ArrayList<AccountDTO> getAllUser(ArrayList<Integer> accountID_List) {
+        ArrayList<AccountDTO> listAccount = null;
+        try {
+            Connection con = mysqlConnect.getConnection();
+            String sql = "SELECT * From TaiKhoan Where id = ?";
+
+            listAccount = new ArrayList<AccountDTO>();
+            for(int accID : accountID_List){
+                PreparedStatement pst = con.prepareStatement(sql);
+                pst.setInt(1, accID);
+                ResultSet result = pst.executeQuery();
+                while (result.next()) {
+                    int id = result.getInt("id");
+                    String email = result.getString("email");
+                    int role_id = result.getInt("quyen_id");
+                    listAccount.add(new AccountDTO(id, email, role_id));
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return listAccount;
+    }
+
     public static AccountDTO getUser(AccountDTO account) {
         try {
             Connection con = mysqlConnect.getConnection();

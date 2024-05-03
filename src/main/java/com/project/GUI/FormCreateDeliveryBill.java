@@ -308,6 +308,7 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
         getContentPane().add(BoxBtn, java.awt.BorderLayout.PAGE_END);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>
 
     public void generaTitleUI() {

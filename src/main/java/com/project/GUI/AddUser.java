@@ -32,7 +32,6 @@ public class AddUser extends javax.swing.JFrame {
         private void initComponents() {
                 setTitle("Thêm nhân viên");
                 setResizable(false);
-
                 jPanel1 = new javax.swing.JPanel();
                 jLabel2 = new javax.swing.JLabel();
                 jtfName = new javax.swing.JTextField();

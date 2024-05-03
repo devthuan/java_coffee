@@ -1,17 +1,18 @@
 
 package com.project.GUI;
 
-import com.project.DTO.*;
-import com.project.Util.Formatter;
-import com.project.BUS.WareHouseService;
-import com.project.DAO.*;
-
 import java.awt.Cursor;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
+import com.project.BUS.WareHouseService;
+import com.project.DTO.PermissionAccount;
+import com.project.DTO.WareHouse;
+import com.project.Util.Formatter;
 
 public class WareHouseMenu extends javax.swing.JPanel {
     WareHouseService wareHouseService;
@@ -95,7 +96,7 @@ public class WareHouseMenu extends javax.swing.JPanel {
 
         BtnCreate.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         BtnCreate.setIcon(new javax.swing.ImageIcon("./src/assets/icon/plus.png")); // NOI18N
-        BtnCreate.setText("Tạo");
+        BtnCreate.setText("Thêm");
         BtnCreate.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         BtnCreate.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         BtnCreate.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -123,7 +124,7 @@ public class WareHouseMenu extends javax.swing.JPanel {
         BoxBtn.add(BtnImport);
 
         BtnExport.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        BtnExport.setIcon(new javax.swing.ImageIcon("./src/assets/icon/export.png")); // NOI18N
+        BtnExport.setIcon(new javax.swing.ImageIcon("./src/assets/icon/xls.png")); // NOI18N
         BtnExport.setText("Xuất");
         BtnExport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         BtnExport.setMargin(new java.awt.Insets(2, 1, 2, 1));
@@ -179,7 +180,7 @@ public class WareHouseMenu extends javax.swing.JPanel {
         Filter.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         Filter.setModel(
                 new javax.swing.DefaultComboBoxModel<>(new String[] { "Tìm kiếm theo mã", "Tìm kiếm theo tên" }));
-        Filter.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Filter.setCursor(new Cursor(Cursor.HAND_CURSOR));
         Filter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 FilterActionPerformed(evt);

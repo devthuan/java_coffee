@@ -361,7 +361,7 @@ public class ProductMenu extends javax.swing.JPanel {
                 Btn1.add(btnChitiet);
 
                 btnXoa.setBackground(new java.awt.Color(255, 255, 255));
-                btnXoa.setIcon(new javax.swing.ImageIcon(("src/assets/icon/remove.png"))); // NOI18N
+                btnXoa.setIcon(new javax.swing.ImageIcon(("./src/assets/icon/cancel.png"))); // NOI18N
                 btnXoa.setText("XÓA");
                 btnXoa.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
                 // btnXoa.setBorderPainted(false);
@@ -379,7 +379,7 @@ public class ProductMenu extends javax.swing.JPanel {
 
                 btnXuat.setBackground(new java.awt.Color(255, 255, 255));
                 btnXuat.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-                btnXuat.setIcon(new javax.swing.ImageIcon(("src/assets/icon/excel.png"))); // NOI18N
+                btnXuat.setIcon(new javax.swing.ImageIcon(("./src/assets/icon/xls.png"))); // NOI18N
                 btnXuat.setText("XUẤT");
                 btnXuat.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
                 // btnXuat.setBorderPainted(false);

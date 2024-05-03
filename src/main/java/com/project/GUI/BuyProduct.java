@@ -513,9 +513,6 @@ class PanelBottom extends javax.swing.JPanel {
                 GroupButtons.setMinimumSize(new java.awt.Dimension(380, 100));
                 GroupButtons.setPreferredSize(new java.awt.Dimension(380, 100));
 
-
-
-
                 btnOrder.setBackground(new java.awt.Color(255, 153, 102));
                 btnOrder.setFont(new java.awt.Font("Arial", 1, 18));
                 btnOrder.setForeground(new java.awt.Color(255, 255, 255));
@@ -582,8 +579,26 @@ class CartItem extends JPanel {
                 btnRemove = new javax.swing.JButton();
 
                 // Thiết lập giới hạn cho spinner
-                javax.swing.SpinnerModel sm = new javax.swing.SpinnerNumberModel(1, 1, product.getQuantity(), 1);
+                javax.swing.SpinnerModel sm = new javax.swing.SpinnerNumberModel(1, 0, product.getQuantity() + 1, 1);
                 SpinnerQuantity = new javax.swing.JSpinner(sm);
+                SpinnerQuantity.addChangeListener(new javax.swing.event.ChangeListener() {
+                        public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                                int currentValue = (int) SpinnerQuantity.getValue();
+                                int maxValue = product.getQuantity();
+
+                                if (currentValue > maxValue) {
+                                        SpinnerQuantity.setValue(maxValue);
+                                        JOptionPane.showMessageDialog(null, "Số lượng sản phẩm đạt tới giới hạn",
+                                                        "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                                }
+
+                                if (currentValue <= 0) {
+                                        SpinnerQuantity.setValue(1);
+                                        JOptionPane.showMessageDialog(null, "Số lượng sản phẩm tối thiểu là 1",
+                                                        "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                                }
+                        }
+                });
 
                 Top.setBackground(new java.awt.Color(255, 255, 255));
                 Top.setMaximumSize(new java.awt.Dimension(32767, 80));
@@ -649,7 +664,6 @@ class CartItem extends JPanel {
                 btnRemove.setMinimumSize(new java.awt.Dimension(85, 30));
                 btnRemove.setPreferredSize(new java.awt.Dimension(85, 30));
 
-
                 javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(BottomRight);
                 BottomRight.setLayout(jPanel14Layout);
                 jPanel14Layout.setHorizontalGroup(
@@ -683,8 +697,6 @@ class CartItem extends JPanel {
                 Top.add(Bottom);
                 add(Top);
         }
-
-       
 
         public javax.swing.JLabel Name;
         public javax.swing.JLabel Price;

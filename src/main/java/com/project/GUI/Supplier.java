@@ -207,7 +207,7 @@ public class Supplier extends javax.swing.JPanel {
                 Filter.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 Filter.setModel(new javax.swing.DefaultComboBoxModel<>(
                                 new String[] { "Theo tên", "Theo email" }));
-                Filter.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+                Filter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
                 Filter.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 FilterActionPerformed(evt);

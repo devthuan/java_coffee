@@ -62,6 +62,11 @@ public class AccountBUS {
         return AccountDAO.getAllUser();
     }
 
+    public static ArrayList<AccountDTO> getAllAccount(ArrayList<Integer> accountID_List)
+    {
+        return AccountDAO.getAllUser(accountID_List);
+    }
+
     public static Boolean deleteUser(int id) {
         try {
             return AccountDAO.deleteUser(id);

@@ -4,22 +4,21 @@
  */
 package com.project.GUI;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.Normalizer.Form;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -29,14 +28,9 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.project.BUS.AccountBUS;
-import com.project.BUS.SupplierBUS;
-import com.project.Common.Authen;
 import com.project.Common.Common;
-import com.project.DAO.AccountDAO;
 import com.project.DTO.AccountDTO;
-import com.project.DTO.DeliveryBillDTO;
 import com.project.DTO.PermissionAccount;
-import com.project.DTO.SupplierDTO;
 import com.project.Util.Formatter;
 
 /**
@@ -113,6 +107,7 @@ public class Account extends javax.swing.JPanel {
 
         setPreferredSize(new java.awt.Dimension(1085, 768));
         setLayout(new java.awt.BorderLayout());
+        setBackground(new java.awt.Color(255, 255, 255));
 
         TK_Bot.setPreferredSize(new java.awt.Dimension(1085, 600));
         TK_Bot.setLayout(new javax.swing.BoxLayout(TK_Bot, javax.swing.BoxLayout.LINE_AXIS));
@@ -142,11 +137,15 @@ public class Account extends javax.swing.JPanel {
         TK_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         TK_title.setIcon(new javax.swing.ImageIcon("./src/assets/icon/user (1).png")); // NOI18N
         TK_title.setText("QUẢN LÝ TÀI KHOẢN");
+        TK_title.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
         TK_title.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         TK_title.setIconTextGap(10);
+        TK_title.setBackground(new java.awt.Color(255, 255, 255));
         Title.add(TK_title, "card2");
+        Title.setBackground(new java.awt.Color(255, 255, 255));
 
         TK_Top.add(Title);
+        TK_Top.setBackground(new java.awt.Color(255, 255, 255));
 
         btn_left.setPreferredSize(new java.awt.Dimension(92, 80));
         btn_left.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
@@ -183,7 +182,7 @@ public class Account extends javax.swing.JPanel {
         btn_left.add(btn_detail);
 
         btn_delete.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btn_delete.setIcon(new javax.swing.ImageIcon("./src/assets/icon/remove (1).png")); // NOI18N
+        btn_delete.setIcon(new javax.swing.ImageIcon("./src/assets/icon/cancel.png")); // NOI18N
         btn_delete.setText("XÓA");
         btn_delete.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn_delete.setPreferredSize(new java.awt.Dimension(80, 80));
@@ -213,6 +212,7 @@ public class Account extends javax.swing.JPanel {
         });
 
         btn_left.add(btn_exels);
+        btn_left.setBackground(new java.awt.Color(255, 255, 255));
 
         // jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {
         // "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -257,6 +257,7 @@ public class Account extends javax.swing.JPanel {
 
         });
         javax.swing.GroupLayout btn_rightLayout = new javax.swing.GroupLayout(btn_right);
+        btn_right.setBackground(new java.awt.Color(255, 255, 255));
         btn_right.setLayout(btn_rightLayout);
         btn_rightLayout.setHorizontalGroup(
                 btn_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -291,6 +292,7 @@ public class Account extends javax.swing.JPanel {
 
         javax.swing.GroupLayout BTNLayout = new javax.swing.GroupLayout(BTN);
         BTN.setLayout(BTNLayout);
+        BTN.setBackground(new java.awt.Color(255, 255, 255));
         // BTN.setPreferredSize(new java.awt.Dimension(97, 200));
         BTNLayout.setHorizontalGroup(
                 BTNLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

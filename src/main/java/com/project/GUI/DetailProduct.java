@@ -238,6 +238,7 @@ public class DetailProduct extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
