@@ -1,7 +1,6 @@
 
 package com.project.GUI;
 
-
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -87,7 +86,9 @@ public class AddUser extends javax.swing.JFrame {
                 jLabel6.setText("Chức vụ");
 
                 cbPosition.setFont(new java.awt.Font("Arial", 0, 16));
-                cbPosition.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {}));
+                cbPosition.setModel(
+                                new javax.swing.DefaultComboBoxModel<>(
+                                                new String[] { "Quản lý", "Nhân viên bán hàng" }));
                 cbPosition.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 cbPositionActionPerformed(evt);
@@ -303,9 +304,15 @@ public class AddUser extends javax.swing.JFrame {
         }
 
         private void displayPosition() {
-                ArrayList<ActionDTO> actions = actionBUS.getAll();
-                for (ActionDTO a : actions) {
-                        cbPosition.addItem(a.getName());
+                // ArrayList<ActionDTO> actions = actionBUS.getAll();
+                // for (ActionDTO a : actions) {
+                // cbPosition.addItem(a.getName());
+                // }
+
+                accountDTOs = accountBUS.getAll_unused((int) (cbPosition.getSelectedIndex()) + 1);
+                cbEmail.removeAllItems();
+                for (AccountDTO acc : accountDTOs) {
+                        cbEmail.addItem(acc.getEmail());
                 }
         }
 
@@ -384,11 +391,7 @@ public class AddUser extends javax.swing.JFrame {
         }
 
         private void cbPositionActionPerformed(java.awt.event.ActionEvent evt) {
-                accountDTOs = accountBUS.getAll_unused((int) (cbPosition.getSelectedIndex()) + 1);
-                cbEmail.removeAllItems();
-                for (AccountDTO acc : accountDTOs) {
-                        cbEmail.addItem(acc.getEmail());
-                }
+
         }
 
         private javax.swing.JLabel jLabel1;

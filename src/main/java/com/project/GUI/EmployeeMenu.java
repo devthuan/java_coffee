@@ -355,6 +355,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {
         if (permissionList.hasPermission("CREATE_EMPLOYEE")) {
             new AddUser().setVisible(true);
+            
 
         } else {
             JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");

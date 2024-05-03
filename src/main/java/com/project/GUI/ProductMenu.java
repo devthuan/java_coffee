@@ -5,6 +5,7 @@
  */
 package com.project.GUI;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -12,13 +13,32 @@ import javax.swing.event.DocumentListener;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.ClientAnchor;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Drawing;
+import org.apache.poi.ss.usermodel.Picture;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.project.BUS.ProductBUS;
 import com.project.BUS.SupplierBUS;
@@ -380,6 +400,12 @@ public class ProductMenu extends javax.swing.JPanel {
                 btnXuat.setIconTextGap(10);
                 btnXuat.setMinimumSize(new java.awt.Dimension(33, 59));
                 btnXuat.setPreferredSize(new java.awt.Dimension(33, 59));
+                btnXuat.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseClicked(java.awt.event.MouseEvent evt) {
+                                btnXuatMouseClicked(evt);
+                        }
+
+                });
                 btnXuat.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
                 Btn1.add(btnXuat);
 
@@ -560,7 +586,6 @@ public class ProductMenu extends javax.swing.JPanel {
                                         "Vui lòng chọn một hàng để hiển thị thông tin.", "Thông báo",
                                         JOptionPane.WARNING_MESSAGE);
                 }
-               
 
         }
 
@@ -621,6 +646,121 @@ public class ProductMenu extends javax.swing.JPanel {
 
                 }
 
+        }
+
+        private void btnXuatMouseClicked(MouseEvent evt) {
+                exportToExcel();
+        }
+
+        private void exportToExcel() {
+                JFileChooser fileChooser = new JFileChooser(); // Tạo một JFileChooser
+
+                // Thiết lập hộp thoại để chọn tệp và đặt tiêu đề
+                fileChooser.setDialogTitle("Chọn nơi lưu tệp Excel");
+
+                int userSelection = fileChooser.showSaveDialog(this); // Hiển thị hộp thoại và chờ người dùng chọn nơi
+                                                                      // lưu
+
+                // Kiểm tra xem người dùng đã chọn "Save" hay chưa
+                if (userSelection == JFileChooser.APPROVE_OPTION) {
+                        try {
+                                File fileToSave = fileChooser.getSelectedFile(); // Lấy đường dẫn được chọn bởi người
+                                                                                 // dùng
+
+                                // Ghi dữ liệu vào tệp Excel
+                                try (Workbook workbook = new XSSFWorkbook()) {
+                                        Sheet sheet = workbook.createSheet("Sheet1");
+
+                                        // Lấy mô hình của JTable
+                                        DefaultTableModel model = (DefaultTableModel) Table.getModel();
+                                        // Viết tiêu đề cột
+                                        Row headerRow = sheet.createRow(0);
+                                        for (int col = 0; col < model.getColumnCount(); col++) {
+                                                headerRow.createCell(col).setCellValue(model.getColumnName(col));
+                                        }
+
+                                        // Viết dữ liệu từ JTable vào tệp Excel
+                                        for (int row = 0; row < model.getRowCount(); row++) {
+                                                Row excelRow = sheet.createRow(row + 1); // Bắt đầu từ hàng thứ 2 (hàng
+                                                                                         // đầu tiên là tiêu đề)
+                                                for (int col = 0; col < model.getColumnCount(); col++) {
+                                                        Object cellValue = model.getValueAt(row, col);
+                                                        if (cellValue != null) {
+                                                                Cell excelCell = excelRow.createCell(col);
+                                                                if (cellValue instanceof String) {
+
+                                                                        excelCell.setCellValue((String) cellValue);
+
+                                                                } else if (cellValue instanceof Integer) {
+
+                                                                        excelCell.setCellValue((Integer) cellValue);
+
+                                                                } else if (cellValue instanceof LocalDate) {
+
+                                                                        System.out.println(cellValue);
+                                                                        String stringValue = ((LocalDate) cellValue)
+                                                                                        .format(DateTimeFormatter
+                                                                                                        .ofPattern("yyyy-MM-dd"));
+                                                                        excelCell.setCellValue(stringValue);
+
+                                                                } else if (cellValue instanceof ImageIcon) {
+                                                                        // Chuyển ImageIcon thành byte array
+                                                                        ImageIcon icon = (ImageIcon) cellValue;
+                                                                        BufferedImage bufferedImage = new BufferedImage(
+                                                                                        icon.getIconWidth(),
+                                                                                        icon.getIconHeight(),
+                                                                                        BufferedImage.TYPE_INT_RGB);
+                                                                        Graphics2D graphics = bufferedImage
+                                                                                        .createGraphics();
+                                                                        icon.paintIcon(null, graphics, 0, 0);
+                                                                        graphics.dispose();
+
+                                                                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                                                        ImageIO.write(bufferedImage, "png", baos);
+                                                                        baos.flush();
+                                                                        byte[] imageInByte = baos.toByteArray();
+                                                                        baos.close();
+
+                                                                        // Thêm hình ảnh vào tệp Excel
+                                                                        int pictureIdx = workbook.addPicture(
+                                                                                        imageInByte,
+                                                                                        Workbook.PICTURE_TYPE_PNG);
+                                                                        CreationHelper helper = workbook
+                                                                                        .getCreationHelper();
+                                                                        Drawing drawing = sheet
+                                                                                        .createDrawingPatriarch();
+                                                                        ClientAnchor anchor = helper
+                                                                                        .createClientAnchor();
+
+                                                                        // Thiết lập vị trí của hình ảnh
+                                                                        anchor.setCol1(col); // Cột bắt đầu
+                                                                        anchor.setRow1(row + 1); // Hàng bắt đầu (bỏ qua
+                                                                                                 // hàng tiêu đề)
+                                                                        anchor.setCol2(col + 1); // Cột kết thúc
+                                                                        anchor.setRow2(row + 2); // Hàng kết thúc
+
+                                                                        // // Đính kèm hình ảnh vào tệp Excel
+                                                                        Picture pict = drawing.createPicture(anchor,
+                                                                                        pictureIdx);
+                                                                        // pict.resize(); // Tự động điều chỉnh kích
+                                                                        // thước
+
+                                                                }
+                                                        }
+                                                }
+                                        }
+
+                                        // Ghi vào tệp Excel
+                                        try (FileOutputStream outputStream = new FileOutputStream(
+                                                        fileToSave + ".xlsx")) {
+                                                workbook.write(outputStream);
+                                        }
+                                        JOptionPane.showMessageDialog(null, "Xuất file excel thành công.");
+                                }
+                        } catch (IOException e) {
+                                e.printStackTrace();
+                        }
+                }
         }
 
         private class Highlight extends DefaultTableCellRenderer {

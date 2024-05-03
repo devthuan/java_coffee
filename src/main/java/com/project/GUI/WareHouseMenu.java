@@ -282,6 +282,7 @@ public class WareHouseMenu extends javax.swing.JPanel {
                         "ID", "Tên nguyên liệu", "Số lượng", "Đơn vị", "Ngày tạo", "Cập nhật cuối"
                 }));
         TableReceipt.getTableHeader().setReorderingAllowed(false);
+        TableReceipt.setShowGrid(true);
         jScrollPane1.setViewportView(TableReceipt);
 
         ReceiptCenter.add(jScrollPane1);

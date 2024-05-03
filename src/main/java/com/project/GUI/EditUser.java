@@ -138,6 +138,9 @@ public class EditUser extends javax.swing.JFrame {
                 jLabel28.setText("Chức vụ");
 
                 cbPosition.setFont(new java.awt.Font("Arial", 0, 14));
+                cbPosition.setModel(
+                                new javax.swing.DefaultComboBoxModel<>(
+                                                new String[] { "Quản lý", "Nhân viên bán hàng" }));
                 cbPosition.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 btnPositionActionPerformed(evt);
@@ -405,11 +408,7 @@ public class EditUser extends javax.swing.JFrame {
         }
 
         private void btnPositionActionPerformed(java.awt.event.ActionEvent evt) {
-                accountDTOs = accountBUS.getAll_unused((int) (cbPosition.getSelectedIndex()) + 1);
-                cbEmail.removeAllItems();
-                for (AccountDTO acc : accountDTOs) {
-                        cbEmail.addItem(acc.getEmail());
-                }
+
         }
 
         private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {
@@ -488,9 +487,10 @@ public class EditUser extends javax.swing.JFrame {
         }
 
         private void displayPosition() {
-                ArrayList<ActionDTO> actions = new ActionBUS().getAll();
-                for (ActionDTO a : actions) {
-                        cbPosition.addItem(a.getName());
+                accountDTOs = accountBUS.getAll_unused((int) (cbPosition.getSelectedIndex()) + 1);
+                cbEmail.removeAllItems();
+                for (AccountDTO acc : accountDTOs) {
+                        cbEmail.addItem(acc.getEmail());
                 }
         }
 

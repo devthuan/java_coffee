@@ -75,7 +75,7 @@ public class AccountDAO {
 
         try {
             Connection con = mysqlConnect.getConnection();
-            String sql = "SELECT TaiKhoan.id, email, password, ten_quyen, Quyen.id as roleId FROM TaiKhoan JOIN Quyen ON TaiKhoan.Quyen_id = Quyen.id Where email=?";
+            String sql = "SELECT TaiKhoan.id, email, password, ten_quyen, Quyen.id as roleId FROM TaiKhoan JOIN Quyen ON TaiKhoan.Quyen_id = Quyen.id Where email= ? and is_active = 1";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, email);
             ResultSet result = pst.executeQuery();
