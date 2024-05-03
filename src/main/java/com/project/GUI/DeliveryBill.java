@@ -4,6 +4,7 @@ package com.project.GUI;
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 
+import java.awt.Cursor;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -126,6 +127,13 @@ public class DeliveryBill extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         TableDeliveryBill = new javax.swing.JTable();
 
+        BtnAdd.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+        BtnDetail.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+        BtnDelete.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+        BtnExport.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+        BtnFilter.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+        BtnRefresh.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+        
         setMinimumSize(new java.awt.Dimension(1085, 768));
         setName(""); // NOI18N
         setPreferredSize(new java.awt.Dimension(1085, 768));

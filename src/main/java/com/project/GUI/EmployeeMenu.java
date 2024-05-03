@@ -1,6 +1,7 @@
 
 package com.project.GUI;
 
+import java.awt.Cursor;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.BufferedInputStream;
@@ -266,6 +267,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
                 btnRefreshActionPerformed(evt);
             }
         });
+        btnRefresh.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);

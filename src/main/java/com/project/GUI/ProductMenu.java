@@ -12,6 +12,7 @@ import javax.swing.event.DocumentListener;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -237,6 +238,7 @@ public class ProductMenu extends javax.swing.JPanel {
                 btnLoc.setText("Lọc");
                 btnLoc.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
                 btnLoc.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+                btnLoc.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
                 PanelTimkiem.add(btnLoc);
 
                 jSplitPane1.setLeftComponent(PanelTimkiem);
@@ -338,6 +340,7 @@ public class ProductMenu extends javax.swing.JPanel {
                                 btnThemActionPerformed(evt);
                         }
                 });
+                btnThem.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
                 Btn1.add(btnThem);
 
                 btnChitiet.setBackground(new java.awt.Color(255, 255, 255));
@@ -346,6 +349,7 @@ public class ProductMenu extends javax.swing.JPanel {
                 btnChitiet.setBorder(
                                 javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
                 // btnChitiet.setBorderPainted(false);
+                btnChitiet.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
                 btnChitiet.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
                 btnChitiet.setIconTextGap(10);
                 btnChitiet.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -361,6 +365,7 @@ public class ProductMenu extends javax.swing.JPanel {
                 btnXoa.setText("XÓA");
                 btnXoa.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
                 // btnXoa.setBorderPainted(false);
+                btnXoa.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
                 btnXoa.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
                 btnXoa.setIconTextGap(10);
                 btnXoa.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -378,6 +383,7 @@ public class ProductMenu extends javax.swing.JPanel {
                 btnXuat.setText("XUẤT");
                 btnXuat.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
                 // btnXuat.setBorderPainted(false);
+                btnXuat.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
                 btnXuat.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
                 btnXuat.setIconTextGap(10);
                 btnXuat.setMinimumSize(new java.awt.Dimension(33, 59));
@@ -398,6 +404,7 @@ public class ProductMenu extends javax.swing.JPanel {
                 btnTimkiem.setBackground(new java.awt.Color(255, 255, 255));
                 btnTimkiem.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 btnTimkiem.setIcon(new javax.swing.ImageIcon("./src/assets/icon/magnifying-glass.png"));
+                btnTimkiem.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
 
                 txt.setPreferredSize(new java.awt.Dimension(90, 22));
                 Formatter.setPlaceHolder(txt,"Nhập từ khóa tìm kiếm");
@@ -424,6 +431,7 @@ public class ProductMenu extends javax.swing.JPanel {
                 btnRefresh.setIcon(new javax.swing.ImageIcon(("src/assets/icon/refresh (1).png"))); // NOI18N
                 btnRefresh.setText("Làm mới");
                 // btnRefresh.setBorder(null);
+                btnRefresh.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
                 btnRefresh.setPreferredSize(new java.awt.Dimension(100, 41));
                 btnRefresh.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {

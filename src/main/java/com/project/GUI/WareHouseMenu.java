@@ -5,6 +5,8 @@ import com.project.DTO.*;
 import com.project.Util.Formatter;
 import com.project.BUS.WareHouseService;
 import com.project.DAO.*;
+
+import java.awt.Cursor;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -70,6 +72,14 @@ public class WareHouseMenu extends javax.swing.JPanel {
         ReceiptCenter = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TableReceipt = new javax.swing.JTable();
+
+        BtnCreate.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+        BtnDelete.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+        BtnDetail.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+        BtnExport.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+        BtnImport.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+        BtnRefresh.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+        BtnExportExcel.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
 
         setMinimumSize(new java.awt.Dimension(1085, 768));
         setName(""); // NOI18N

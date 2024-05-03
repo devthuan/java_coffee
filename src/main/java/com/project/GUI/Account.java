@@ -4,6 +4,7 @@
  */
 package com.project.GUI;
 
+import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -103,6 +104,12 @@ public class Account extends javax.swing.JPanel {
         // jComboBox1 = new javax.swing.JComboBox<>();
         input_search = new javax.swing.JTextField();
         btn_refresh = new javax.swing.JButton();
+
+        btn_add.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+        btn_delete.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+        btn_detail.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+        btn_exels.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+        btn_refresh.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
 
         setPreferredSize(new java.awt.Dimension(1085, 768));
         setLayout(new java.awt.BorderLayout());

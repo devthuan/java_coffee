@@ -4,6 +4,7 @@
  */
 package com.project.GUI;
 
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -91,7 +92,7 @@ public class Receipt extends javax.swing.JPanel {
 
                 ReceiptTop = new javax.swing.JPanel();
                 BoxBtn = new javax.swing.JPanel();
-                BtnDetail1 = new javax.swing.JButton();
+                BtnAdd = new javax.swing.JButton();
                 BtnDetail = new javax.swing.JButton();
                 BtnRemove = new javax.swing.JButton();
                 BtnExportExcel = new javax.swing.JButton();
@@ -122,6 +123,13 @@ public class Receipt extends javax.swing.JPanel {
                 ValueTotalEnd = new javax.swing.JTextField();
                 BtnFilter = new javax.swing.JButton();
 
+                BtnAdd.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnDetail.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnRemove.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnExportExcel.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnFilter.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnRefresh.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+
                 setMinimumSize(new java.awt.Dimension(1085, 768));
                 setName(""); // NOI18N
                 setPreferredSize(new java.awt.Dimension(1085, 768));
@@ -134,17 +142,17 @@ public class Receipt extends javax.swing.JPanel {
                 BoxBtn.setPreferredSize(new java.awt.Dimension(380, 45));
                 BoxBtn.setLayout(new java.awt.GridLayout(1, 4, 10, 0));
 
-                BtnDetail1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-                BtnDetail1.setIcon(new javax.swing.ImageIcon("./src/assets/icon/plus.png")); // NOI18N
-                BtnDetail1.setText("Thêm");
-                BtnDetail1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-                BtnDetail1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-                BtnDetail1.addMouseListener(new java.awt.event.MouseAdapter() {
+                BtnAdd.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                BtnAdd.setIcon(new javax.swing.ImageIcon("./src/assets/icon/plus.png")); // NOI18N
+                BtnAdd.setText("Thêm");
+                BtnAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+                BtnAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+                BtnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
                         public void mouseClicked(java.awt.event.MouseEvent evt) {
                                 BtnDetail1MouseClicked(evt);
                         }
                 });
-                BoxBtn.add(BtnDetail1);
+                BoxBtn.add(BtnAdd);
 
                 BtnDetail.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 BtnDetail.setIcon(new javax.swing.ImageIcon("./src/assets/icon/info-rgb.png")); // NOI18N
@@ -764,7 +772,7 @@ public class Receipt extends javax.swing.JPanel {
         private javax.swing.JPanel BoxTable;
         private javax.swing.JPanel BoxTitle;
         private javax.swing.JButton BtnDetail;
-        private javax.swing.JButton BtnDetail1;
+        private javax.swing.JButton BtnAdd;
         private javax.swing.JButton BtnExportExcel;
         private javax.swing.JButton BtnFilter;
         private javax.swing.JButton BtnRefresh;

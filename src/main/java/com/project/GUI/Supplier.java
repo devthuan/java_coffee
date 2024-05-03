@@ -4,6 +4,7 @@
  */
 package com.project.GUI;
 
+import java.awt.Cursor;
 import java.awt.event.ComponentAdapter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -105,6 +106,13 @@ public class Supplier extends javax.swing.JPanel {
                 SupplierCenter = new javax.swing.JPanel();
                 jScrollPane1 = new javax.swing.JScrollPane();
                 TableSupplier = new javax.swing.JTable();
+
+                BtnAdd.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnDetail.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnRemove.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnImportExcel.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnExportExcel.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnRefresh.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
 
                 setMinimumSize(new java.awt.Dimension(1085, 768));
                 setName(""); // NOI18N
