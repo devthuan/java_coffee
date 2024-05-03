@@ -324,4 +324,31 @@ public class AccountDAO {
     public static void main(String[] args) {
 
     }
+    
+    public static AccountDTO getAccountByAccountID(int accountID) {
+        try {
+
+            Connection conn = mysqlConnect.getConnection();
+
+            String sql = "SELECT * FROM TaiKhoan WHERE id = ?";
+
+            PreparedStatement pst = conn.prepareStatement(sql);
+
+            pst.setInt(1, accountID);
+
+            ResultSet result_query = pst.executeQuery();
+
+            while (result_query.next()) {
+                int id = result_query.getInt("id");
+                String email = result_query.getString("email");
+                int roleID = result_query.getInt("quyen_id");
+                return (new AccountDTO(id, email, roleID));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return null;
+    }
 }

@@ -75,6 +75,10 @@ public class AccountBUS {
         return AccountDAO.searchAccount(email);
     }
 
+    public static AccountDTO getAccountByAccountID(int accountID) {
+        return AccountDAO.getAccountByAccountID(accountID);
+    }
+
     public static boolean updateUserBUS(AccountDTO account) {
         return AccountDAO.updateUser(account);
     }
