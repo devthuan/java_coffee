@@ -4,15 +4,13 @@
  */
 package com.project.GUI;
 
-import java.awt.Cursor;
-
-import java.util.ArrayList;
-import java.awt.*;
 import java.awt.Color;
-
+import java.awt.Cursor;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -46,7 +44,13 @@ public class Main extends javax.swing.JFrame {
         @SuppressWarnings("unchecked")
         // <editor-fold defaultstate="collapsed" desc="Generated Code">
         private void initComponents() {
-
+                setTitle("Coffee-Shop");
+                ImageIcon icon = new ImageIcon("./src/assets/icon/coffee-shop.png");
+                Image image = icon.getImage();
+                Image scaledImg = image.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
+                icon = new ImageIcon(scaledImg);
+                setIconImage(icon.getImage());
+                
                 Left = new javax.swing.JPanel();
                 Profile = new javax.swing.JPanel();
                 jLabel6 = new javax.swing.JLabel();

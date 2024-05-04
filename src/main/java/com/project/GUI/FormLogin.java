@@ -5,6 +5,7 @@
 package com.project.GUI;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -12,6 +13,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
@@ -48,7 +50,11 @@ public class FormLogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
         setTitle("Đăng nhập");
-
+        ImageIcon icon = new ImageIcon("./src/assets/icon/sign-in.png");
+        Image image = icon.getImage();
+        Image scaledImg = image.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
+        icon = new ImageIcon(scaledImg);
+        setIconImage(icon.getImage());
         ContentSignUp = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
