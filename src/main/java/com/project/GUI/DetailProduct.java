@@ -91,9 +91,9 @@ public class DetailProduct extends javax.swing.JFrame {
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         titleForm.setBackground(new java.awt.Color(255, 153, 102));
-        titleForm.setPreferredSize(new java.awt.Dimension(602, 70));
+        titleForm.setPreferredSize(new java.awt.Dimension(602, 35));
         titleForm.setLayout(new java.awt.CardLayout());
-        titleForm.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, java.awt.Color.BLACK));
+        // titleForm.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, java.awt.Color.BLACK));
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

@@ -94,7 +94,7 @@ public class DetailAccountForm extends javax.swing.JFrame {
 
         titleForm.setBackground(new java.awt.Color(255, 153, 102));
         titleForm.setForeground(new java.awt.Color(255, 255, 255));
-        titleForm.setPreferredSize(new java.awt.Dimension(602, 70));
+        titleForm.setPreferredSize(new java.awt.Dimension(602, 30));
         titleForm.setLayout(new java.awt.CardLayout());
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));

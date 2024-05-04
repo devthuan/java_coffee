@@ -155,9 +155,9 @@ public class Account extends javax.swing.JPanel {
         btn_left.setPreferredSize(new java.awt.Dimension(92, 80));
         btn_left.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
 
-        btn_add.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        btn_add.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btn_add.setIcon(new javax.swing.ImageIcon("./src/assets/icon/plus.png")); // NOI18N
-        btn_add.setText("THÊM");
+        btn_add.setText("Thêm");
         btn_add.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn_add.setPreferredSize(new java.awt.Dimension(80, 80));
         btn_add.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -173,9 +173,9 @@ public class Account extends javax.swing.JPanel {
         });
         btn_left.add(btn_add);
 
-        btn_detail.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        btn_detail.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btn_detail.setIcon(new javax.swing.ImageIcon("./src/assets/icon/info-rgb.png")); // NOI18N
-        btn_detail.setText("CHI TIẾT");
+        btn_detail.setText("Chi tiết");
         btn_detail.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn_detail.setPreferredSize(new java.awt.Dimension(80, 80));
         btn_detail.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -186,9 +186,9 @@ public class Account extends javax.swing.JPanel {
         });
         btn_left.add(btn_detail);
 
-        btn_delete.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        btn_delete.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btn_delete.setIcon(new javax.swing.ImageIcon("./src/assets/icon/cancel.png")); // NOI18N
-        btn_delete.setText("XÓA");
+        btn_delete.setText("Xóa");
         btn_delete.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn_delete.setPreferredSize(new java.awt.Dimension(80, 80));
         btn_delete.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -204,9 +204,9 @@ public class Account extends javax.swing.JPanel {
             }
         });
 
-        btn_exels.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        btn_exels.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btn_exels.setIcon(new javax.swing.ImageIcon("./src/assets/icon/xls.png")); // NOI18N
-        btn_exels.setText("XUẤT");
+        btn_exels.setText("Xuất");
         btn_exels.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn_exels.setPreferredSize(new java.awt.Dimension(80, 80));
         btn_exels.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);

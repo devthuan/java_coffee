@@ -173,9 +173,9 @@ public class FormDetailReceipt extends javax.swing.JFrame {
 
         Top.setMaximumSize(new java.awt.Dimension(600, 505));
         Top.setMinimumSize(new java.awt.Dimension(100, 70));
-        Top.setPreferredSize(new java.awt.Dimension(722, 70));
+        Top.setPreferredSize(new java.awt.Dimension(722, 30));
         Top.setBackground(new java.awt.Color(255, 153, 102));
-        Top.setPreferredSize(new java.awt.Dimension(602, 70));
+        Top.setPreferredSize(new java.awt.Dimension(602, 30));
 
         Ttitle.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         Ttitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

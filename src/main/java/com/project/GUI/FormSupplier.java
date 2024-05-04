@@ -74,8 +74,8 @@ public class FormSupplier extends javax.swing.JFrame {
         setMaximumSize(new java.awt.Dimension(1085, 768));
         setMinimumSize(new java.awt.Dimension(722, 453));
 
-        jPanel1.setMinimumSize(new java.awt.Dimension(100, 70));
-        jPanel1.setPreferredSize(new java.awt.Dimension(722, 70));
+        jPanel1.setMinimumSize(new java.awt.Dimension(100, 30));
+        jPanel1.setPreferredSize(new java.awt.Dimension(722, 30));
         jPanel1.setBackground(new java.awt.Color(255, 153, 102));
 
 
@@ -260,7 +260,7 @@ public class FormSupplier extends javax.swing.JFrame {
                     System.out.println(update_supplier.getId());
                     boolean isSupplierAdded = SupplierBUS.updateSupplier(update_supplier);
                     if (isSupplierAdded) {
-                        JOptionPane.showMessageDialog(null, "cập nhật nhà cung cấp thành công.");
+                        JOptionPane.showMessageDialog(null, "Cập nhật nhà cung cấp thành công.");
                         // JOptionPane.showMessageDialog(null, "Tạo nhà cung cấp thành công.");
                         this.setVisible(false);
 

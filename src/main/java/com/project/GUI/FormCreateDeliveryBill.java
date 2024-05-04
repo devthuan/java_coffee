@@ -112,8 +112,8 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(822, 453));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setMinimumSize(new java.awt.Dimension(100, 70));
-        jPanel1.setPreferredSize(new java.awt.Dimension(722, 70));
+        jPanel1.setMinimumSize(new java.awt.Dimension(100, 30));
+        jPanel1.setPreferredSize(new java.awt.Dimension(722, 30));
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

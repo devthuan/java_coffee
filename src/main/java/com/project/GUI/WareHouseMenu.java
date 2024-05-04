@@ -124,7 +124,7 @@ public class WareHouseMenu extends javax.swing.JPanel {
         BoxBtn.add(BtnImport);
 
         BtnExport.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        BtnExport.setIcon(new javax.swing.ImageIcon("./src/assets/icon/xls.png")); // NOI18N
+        BtnExport.setIcon(new javax.swing.ImageIcon("./src/assets/icon/export.png")); // NOI18N
         BtnExport.setText("Xuất");
         BtnExport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         BtnExport.setMargin(new java.awt.Insets(2, 1, 2, 1));
@@ -163,7 +163,7 @@ public class WareHouseMenu extends javax.swing.JPanel {
         BoxBtn.add(BtnDelete);
 
         BtnExportExcel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        BtnExportExcel.setIcon(new javax.swing.ImageIcon("./src/assets/icon/excel.png")); // NOI18N
+        BtnExportExcel.setIcon(new javax.swing.ImageIcon("./src/assets/icon/xls.png")); // NOI18N
         BtnExportExcel.setText("export");
         BtnExportExcel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         BtnExportExcel.setMargin(new java.awt.Insets(2, 1, 2, 1));

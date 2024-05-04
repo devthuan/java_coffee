@@ -359,7 +359,7 @@ public class ProductMenu extends javax.swing.JPanel {
                 btnThem.setBackground(new java.awt.Color(255, 255, 255));
                 btnThem.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 btnThem.setIcon(new javax.swing.ImageIcon(("./src/assets/icon/plus.png"))); // NOI18N
-                btnThem.setText("THÊM");
+                btnThem.setText("Thêm");
                 btnThem.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
                 // btnThem.setBorderPainted(false);
                 btnThem.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -375,7 +375,8 @@ public class ProductMenu extends javax.swing.JPanel {
 
                 btnChitiet.setBackground(new java.awt.Color(255, 255, 255));
                 btnChitiet.setIcon(new javax.swing.ImageIcon(("./src/assets/icon/info-rgb.png"))); // NOI18N
-                btnChitiet.setText("CHI TIẾT");
+                btnChitiet.setFont(new java.awt.Font("Arial", 0, 14));
+                btnChitiet.setText("Chi tiết");
                 btnChitiet.setBorder(
                                 javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
                 // btnChitiet.setBorderPainted(false);
@@ -392,7 +393,8 @@ public class ProductMenu extends javax.swing.JPanel {
 
                 btnXoa.setBackground(new java.awt.Color(255, 255, 255));
                 btnXoa.setIcon(new javax.swing.ImageIcon(("./src/assets/icon/cancel.png"))); // NOI18N
-                btnXoa.setText("XÓA");
+                btnXoa.setFont(new java.awt.Font("Arial", 0, 14));
+                btnXoa.setText("Xóa");
                 btnXoa.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
                 // btnXoa.setBorderPainted(false);
                 btnXoa.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
@@ -410,7 +412,8 @@ public class ProductMenu extends javax.swing.JPanel {
                 btnXuat.setBackground(new java.awt.Color(255, 255, 255));
                 btnXuat.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
                 btnXuat.setIcon(new javax.swing.ImageIcon(("./src/assets/icon/xls.png"))); // NOI18N
-                btnXuat.setText("XUẤT");
+                btnXuat.setFont(new java.awt.Font("Arial", 0, 14));
+                btnXuat.setText("Xuất");
                 btnXuat.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
                 // btnXuat.setBorderPainted(false);
                 btnXuat.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
