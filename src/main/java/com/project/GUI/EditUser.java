@@ -1,6 +1,7 @@
 
 package com.project.GUI;
 
+import java.awt.Cursor;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -151,6 +152,7 @@ public class EditUser extends javax.swing.JFrame {
 
                 btnEdit.setFont(new java.awt.Font("Arial Semibold", 2, 18));
                 btnEdit.setText("Sửa");
+                btnEdit.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 btnEdit.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 btnEditActionPerformed(evt);

@@ -58,7 +58,12 @@ public class OrderDetail extends javax.swing.JFrame {
         OrderID.setText(String.valueOf(order.getId()));
         Status.setText(order.getOrder_status());
 
-        DefaultTableModel dtm = new DefaultTableModel();
+        DefaultTableModel dtm = new DefaultTableModel() {
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                                return false;
+                        }
+                };
         dtm.addColumn("STT");
         dtm.addColumn("Mã sản phẩm");
         dtm.addColumn("Tên sản phẩm");

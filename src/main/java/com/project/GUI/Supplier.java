@@ -55,7 +55,12 @@ public class Supplier extends javax.swing.JPanel {
 
                 ArrayList<SupplierDTO> list_supplier = SupplierBUS.get_all_supplier();
 
-                DefaultTableModel model = new DefaultTableModel();
+                DefaultTableModel model = new DefaultTableModel() {
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                                return false;
+                        }
+                };
                 model.addColumn("ID");
                 model.addColumn("Tên nhà cung cấp");
                 model.addColumn("Địa chỉ");

@@ -2,6 +2,7 @@
 package com.project.GUI;
 
 
+import java.awt.Cursor;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -98,6 +99,7 @@ public class AddUser extends javax.swing.JFrame {
 
                 btnAdd.setFont(new java.awt.Font("Arial Semibold", 2, 24));
                 btnAdd.setText("Thêm");
+                btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 btnAdd.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 btnAddActionPerformed(evt);

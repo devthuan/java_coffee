@@ -73,7 +73,12 @@ public class EditOrderForm extends javax.swing.JFrame {
             btnSave.setEnabled(false);
         }
 
-        DefaultTableModel dtm = new DefaultTableModel();
+        DefaultTableModel dtm = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         dtm.addColumn("STT");
         dtm.addColumn("Mã sản phẩm");
         dtm.addColumn("Tên sản phẩm");

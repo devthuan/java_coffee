@@ -18,6 +18,7 @@ import com.itextpdf.layout.properties.TextAlignment;
 // import com.itextpdf.kernel.font.StandardFonts;
 import com.itextpdf.layout.properties.UnitValue;
 
+import java.awt.Cursor;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -175,9 +176,12 @@ public class FormDetailDeliveryBill extends javax.swing.JFrame {
         Top.setMaximumSize(new java.awt.Dimension(600, 505));
         Top.setMinimumSize(new java.awt.Dimension(100, 70));
         Top.setPreferredSize(new java.awt.Dimension(722, 70));
+        Top.setBackground(new java.awt.Color(255, 153, 102));
 
-        Ttitle.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        Ttitle.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         Ttitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Ttitle.setBackground(new java.awt.Color(255, 153, 102));
+        Ttitle.setForeground(new java.awt.Color(255, 255, 255));
         Ttitle.setText("Chi tiết phiếu xuất");
         Ttitle.setPreferredSize(new java.awt.Dimension(37, 50));
 
@@ -386,9 +390,12 @@ public class FormDetailDeliveryBill extends javax.swing.JFrame {
         flowLayout1.setAlignOnBaseline(true);
         Bottom.setLayout(flowLayout1);
 
-        BtnPrint.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        BtnPrint.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         BtnPrint.setText("In");
-        BtnPrint.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        BtnPrint.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        BtnPrint.setForeground(new java.awt.Color(255, 255, 255));
+        BtnPrint.setBackground(new java.awt.Color(0, 191, 255));
+        // BtnPrint.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         BtnPrint.setMaximumSize(new java.awt.Dimension(100, 55));
         BtnPrint.setMinimumSize(new java.awt.Dimension(100, 55));
         BtnPrint.setPreferredSize(new java.awt.Dimension(100, 55));
@@ -404,9 +411,12 @@ public class FormDetailDeliveryBill extends javax.swing.JFrame {
         });
         Bottom.add(BtnPrint);
 
-        BtnClose.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        BtnClose.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         BtnClose.setText("Đóng");
-        BtnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        BtnClose.setForeground(new java.awt.Color(255, 255, 255));
+        BtnClose.setBackground(java.awt.Color.RED);
+        BtnClose.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        // BtnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         BtnClose.setMaximumSize(new java.awt.Dimension(100, 55));
         BtnClose.setMinimumSize(new java.awt.Dimension(100, 55));
         BtnClose.setPreferredSize(new java.awt.Dimension(100, 55));
