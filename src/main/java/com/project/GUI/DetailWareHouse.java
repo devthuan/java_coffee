@@ -3,6 +3,8 @@ package com.project.GUI;
 
 import com.project.DTO.*;
 import com.project.BUS.*;
+
+import java.awt.Cursor;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
@@ -100,6 +102,7 @@ public class DetailWareHouse extends javax.swing.JFrame {
 
         jbUpdate.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jbUpdate.setText("Cập nhật");
+        jbUpdate.setCursor(new Cursor(Cursor.HAND_CURSOR));
         jbUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbUpdateActionPerformed(evt);
@@ -223,6 +226,7 @@ public class DetailWareHouse extends javax.swing.JFrame {
                                 .addGap(30, 30, 30)));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jtfCodeActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jtfCodeActionPerformed

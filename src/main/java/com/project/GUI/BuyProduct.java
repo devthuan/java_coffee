@@ -61,7 +61,7 @@ public class BuyProduct extends JPanel implements AddProductListener {
                                 if (choice == JOptionPane.YES_OPTION) {
                                         int paymentMethod_id = pnCarts.PanelBottom.getSelectedPaymentMethodID();
 
-                                        int account_id = permissionList.getAccountId();
+                                        int account_id = PermissionAccount.getInstance().getAccountId();
 
                                         OrderDTO orderDTO = new OrderDTO("pending", paymentMethod_id, account_id);
                                         ArrayList<OrderDetailDTO> orderDetails = new ArrayList<>();
@@ -581,8 +581,26 @@ class CartItem extends JPanel {
                 btnRemove = new javax.swing.JButton();
 
                 // Thiết lập giới hạn cho spinner
-                javax.swing.SpinnerModel sm = new javax.swing.SpinnerNumberModel(1, 1, product.getQuantity(), 1);
+                javax.swing.SpinnerModel sm = new javax.swing.SpinnerNumberModel(1, 0, product.getQuantity() + 1, 1);
                 SpinnerQuantity = new javax.swing.JSpinner(sm);
+                SpinnerQuantity.addChangeListener(new javax.swing.event.ChangeListener() {
+                        public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                                int currentValue = (int) SpinnerQuantity.getValue();
+                                int maxValue = product.getQuantity();
+
+                                if (currentValue > maxValue) {
+                                        SpinnerQuantity.setValue(maxValue);
+                                        JOptionPane.showMessageDialog(null, "Số lượng sản phẩm đạt tới giới hạn",
+                                                        "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                                }
+
+                                if (currentValue <= 0) {
+                                        SpinnerQuantity.setValue(1);
+                                        JOptionPane.showMessageDialog(null, "Số lượng sản phẩm tối thiểu là 1",
+                                                        "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                                }
+                        }
+                });
 
                 Top.setBackground(new java.awt.Color(255, 255, 255));
                 Top.setMaximumSize(new java.awt.Dimension(32767, 80));

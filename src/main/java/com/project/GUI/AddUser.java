@@ -1,6 +1,7 @@
 
 package com.project.GUI;
 
+import java.awt.Cursor;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -31,7 +32,6 @@ public class AddUser extends javax.swing.JFrame {
         private void initComponents() {
                 setTitle("Thêm nhân viên");
                 setResizable(false);
-
                 jPanel1 = new javax.swing.JPanel();
                 jLabel2 = new javax.swing.JLabel();
                 jtfName = new javax.swing.JTextField();
@@ -100,6 +100,7 @@ public class AddUser extends javax.swing.JFrame {
 
                 btnAdd.setFont(new java.awt.Font("Arial Semibold", 2, 24));
                 btnAdd.setText("Thêm");
+                btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 btnAdd.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 btnAddActionPerformed(evt);

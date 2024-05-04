@@ -4,13 +4,24 @@
  */
 package com.project.GUI;
 
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import com.project.BUS.AccountBUS;
 import com.project.Common.Authen;
 import com.project.DTO.AccountDTO;
+import com.project.Util.Formatter;
 
 /**
  *
@@ -35,6 +46,7 @@ public class FormLogin extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
+        setTitle("Đăng nhập");
 
         ContentSignUp = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
@@ -64,9 +76,10 @@ public class FormLogin extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
+        setResizable(false);
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
-        setPreferredSize(new java.awt.Dimension(600, 460));
+        setPreferredSize(new java.awt.Dimension(535, 460));
 
         ContentSignUp.setMinimumSize(new java.awt.Dimension(535, 429));
         ContentSignUp.setPreferredSize(new java.awt.Dimension(535, 429));
@@ -75,9 +88,11 @@ public class FormLogin extends javax.swing.JFrame {
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
         jPanel9.setLayout(new java.awt.CardLayout());
 
-        jLabel5.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Đăng ký");
+        jLabel5.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        jLabel5.setForeground(new Color(102, 85, 170));
         jLabel5.setPreferredSize(new java.awt.Dimension(77, 50));
         jPanel9.add(jLabel5, "card2");
 
@@ -85,16 +100,19 @@ public class FormLogin extends javax.swing.JFrame {
 
         jPanel10.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 25));
 
-        jPanel3.setPreferredSize(new java.awt.Dimension(450, 50));
+        jPanel3.setPreferredSize(new java.awt.Dimension(325, 50));
         jPanel3.setLayout(new java.awt.BorderLayout());
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        jLabel6.setIcon(new javax.swing.ImageIcon("./src/assets/icon/user.png")); // NOI18N
-        jLabel6.setText("Email");
-        jLabel6.setPreferredSize(new java.awt.Dimension(150, 16));
+        jLabel6.setIcon(new javax.swing.ImageIcon("./src/assets/icon/login_icon_user.png")); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        // jLabel6.setText("Email");
+        jLabel6.setPreferredSize(new java.awt.Dimension(40, 16));
+        jLabel6.setPreferredSize(new java.awt.Dimension(40, 16));
         jPanel3.add(jLabel6, java.awt.BorderLayout.LINE_START);
 
         jTextField2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Formatter.setPlaceHolder(jTextField2, "Nhập email");
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
@@ -104,46 +122,57 @@ public class FormLogin extends javax.swing.JFrame {
 
         jPanel10.add(jPanel3);
 
-        jPanel11.setPreferredSize(new java.awt.Dimension(450, 50));
+        jPanel11.setPreferredSize(new java.awt.Dimension(325, 50));
         jPanel11.setLayout(new java.awt.BorderLayout());
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        jLabel7.setText("Mật khẩu");
-        jLabel7.setPreferredSize(new java.awt.Dimension(150, 16));
+        jLabel7.setIcon(new javax.swing.ImageIcon("./src/assets/icon/login_icon_Pwd.png"));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        // jLabel7.setText("Mật khẩu");
+        jLabel7.setPreferredSize(new java.awt.Dimension(40, 16));
+        jLabel7.setPreferredSize(new java.awt.Dimension(40, 16));
         jPanel11.add(jLabel7, java.awt.BorderLayout.LINE_START);
 
         jPasswordField2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Formatter.setPlaceHolder(jPasswordField2, "Nhập mật khẩu");
         jPanel11.add(jPasswordField2, java.awt.BorderLayout.CENTER);
 
         jPanel10.add(jPanel11);
 
-        jPanel12.setPreferredSize(new java.awt.Dimension(450, 50));
+        jPanel12.setPreferredSize(new java.awt.Dimension(325, 50));
         jPanel12.setLayout(new java.awt.BorderLayout());
 
         jLabel9.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        jLabel9.setText("Nhập lại mật khẩu");
-        jLabel9.setPreferredSize(new java.awt.Dimension(150, 16));
+        jLabel9.setIcon(new javax.swing.ImageIcon("./src/assets/icon/login_icon_confirmPwd.png"));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setPreferredSize(new java.awt.Dimension(40, 16));
+        jLabel9.setPreferredSize(new java.awt.Dimension(40, 16));
         jPanel12.add(jLabel9, java.awt.BorderLayout.LINE_START);
 
         jPasswordField3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Formatter.setPlaceHolder(jPasswordField3, "Nhập lại mật khẩu");
         jPanel12.add(jPasswordField3, java.awt.BorderLayout.CENTER);
 
         jPanel10.add(jPanel12);
 
-        jButton2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jButton2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jButton2.setText("Đăng ký");
+        Formatter.setStyleButtonLoginForm(jButton2);
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.setPreferredSize(new java.awt.Dimension(250, 50));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
+
         jPanel10.add(jButton2);
 
         jLabel8.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 102, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Bạn đã có tài khoản ?");
+        jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel8.setPreferredSize(new java.awt.Dimension(500, 30));
         jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -151,6 +180,7 @@ public class FormLogin extends javax.swing.JFrame {
             }
         });
         jPanel10.add(jLabel8);
+        jPanel10.setBackground(Color.WHITE);
 
         ContentSignUp.add(jPanel10, java.awt.BorderLayout.CENTER);
 
@@ -164,25 +194,33 @@ public class FormLogin extends javax.swing.JFrame {
         jPanel7.setLayout(new java.awt.CardLayout());
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Đăng nhập");
+        jLabel3.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        jLabel3.setForeground(new Color(102, 85, 170));
         jLabel3.setPreferredSize(new java.awt.Dimension(77, 50));
         jPanel7.add(jLabel3, "card2");
 
         ContentLogin.add(jPanel7, java.awt.BorderLayout.PAGE_START);
 
         jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 25));
+        jPanel5.setBackground(Color.WHITE);
 
-        jPanel1.setPreferredSize(new java.awt.Dimension(400, 50));
+        jPanel1.setPreferredSize(new java.awt.Dimension(325, 50));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel1.setText("Email");
-        jLabel1.setPreferredSize(new java.awt.Dimension(130, 16));
+        jLabel1.setIcon(new javax.swing.ImageIcon("./src/assets/icon/login_icon_user.png"));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        // jLabel1.setText("Email");
+        jLabel1.setPreferredSize(new java.awt.Dimension(40, 16));
+        jLabel1.setPreferredSize(new java.awt.Dimension(40, 16));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(jLabel1, java.awt.BorderLayout.LINE_START);
 
         jTextField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Formatter.setPlaceHolder(jTextField1, "Nhập email");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -192,21 +230,27 @@ public class FormLogin extends javax.swing.JFrame {
 
         jPanel5.add(jPanel1);
 
-        jPanel2.setPreferredSize(new java.awt.Dimension(400, 50));
+        jPanel2.setPreferredSize(new java.awt.Dimension(325, 50));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel2.setText("Password");
-        jLabel2.setPreferredSize(new java.awt.Dimension(130, 16));
+        jLabel2.setIcon(new javax.swing.ImageIcon("./src/assets/icon/login_icon_Pwd.png"));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        // jLabel2.setText("Password");
+        jLabel2.setPreferredSize(new java.awt.Dimension(40, 16));
+        jLabel2.setPreferredSize(new java.awt.Dimension(40, 16));
         jPanel2.add(jLabel2, java.awt.BorderLayout.LINE_START);
 
         jPasswordField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Formatter.setPlaceHolder(jPasswordField1, "Nhập mật khẩu");
         jPanel2.add(jPasswordField1, java.awt.BorderLayout.CENTER);
 
         jPanel5.add(jPanel2);
 
         jButton1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jButton1.setText("Đăng nhập");
+        Formatter.setStyleButtonLoginForm(jButton1);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.setPreferredSize(new java.awt.Dimension(250, 50));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -218,6 +262,7 @@ public class FormLogin extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 102, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel4.setText("Bạn chưa có tài khoản ?");
         jLabel4.setPreferredSize(new java.awt.Dimension(500, 30));
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -230,8 +275,62 @@ public class FormLogin extends javax.swing.JFrame {
         ContentLogin.add(jPanel5, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(ContentLogin);
+        Action action = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (ContentLogin.isVisible()) {
+                    jButton1ActionPerformed(e);
+                } else if (ContentSignUp.isVisible()) {
+                    jButton2ActionPerformed(e);
+                }
+            }
+        };
+
+        ContentLogin.setFocusable(true);
+        ContentLogin.setFocusable(true);
+
+        ContentLogin.getActionMap().put("enterPressed", action);
+        ContentLogin.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,
+                0),
+                "enterPressed");
+        ContentSignUp.getActionMap().put("enterPressed", action);
+        ContentSignUp.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,
+                0),
+                "enterPressed");
+
+        // Vì một số lý do nào đó mà khi textfield email đang focus thì việc nhấn enter,
+        // action không
+        // hoạt động nên có thêm đoạn code sau
+
+        // <------------------------------------------------------------>
+        jTextField1.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    if (ContentLogin.isVisible()) {
+                        jButton1ActionPerformed(null);
+                    } else if (ContentSignUp.isVisible()) {
+                        jButton2ActionPerformed(null);
+                    }
+                }
+            }
+        });
+        jTextField2.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    if (ContentLogin.isVisible()) {
+                        jButton1ActionPerformed(null);
+                    } else if (ContentSignUp.isVisible()) {
+                        jButton2ActionPerformed(null);
+                    }
+                }
+            }
+        });
+        // <------------------------------------------------------------>
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -286,6 +385,7 @@ public class FormLogin extends javax.swing.JFrame {
     }
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {
+        setTitle("Đăng nhập");
         ContentLogin.setVisible(true);
         ContentSignUp.setVisible(false);
     }
@@ -309,6 +409,7 @@ public class FormLogin extends javax.swing.JFrame {
     }
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {
+        setTitle("Đăng ký");
         ContentLogin.setVisible(false);
         ContentSignUp.setVisible(true);
     }
@@ -320,6 +421,7 @@ public class FormLogin extends javax.swing.JFrame {
         FlatLightLaf.setup();
         try {
             UIManager.setLookAndFeel(new FlatLightLaf());
+            UIManager.put("PasswordField.showRevealButton", true);
         } catch (Exception ex) {
             System.err.println("Failed to initialize LaF");
         }
@@ -359,5 +461,6 @@ public class FormLogin extends javax.swing.JFrame {
     private javax.swing.JPasswordField jPasswordField3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+
     // End of variables declaration
 }

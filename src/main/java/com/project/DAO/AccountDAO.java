@@ -49,6 +49,32 @@ public class AccountDAO {
         return listAccount;
     }
 
+    public static ArrayList<AccountDTO> getAllUser(ArrayList<Integer> accountID_List) {
+        ArrayList<AccountDTO> listAccount = null;
+        try {
+            Connection con = mysqlConnect.getConnection();
+            String sql = "SELECT * From TaiKhoan Where id = ?";
+
+            listAccount = new ArrayList<AccountDTO>();
+            for(int accID : accountID_List){
+                PreparedStatement pst = con.prepareStatement(sql);
+                pst.setInt(1, accID);
+                ResultSet result = pst.executeQuery();
+                while (result.next()) {
+                    int id = result.getInt("id");
+                    String email = result.getString("email");
+                    int role_id = result.getInt("quyen_id");
+                    listAccount.add(new AccountDTO(id, email, role_id));
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return listAccount;
+    }
+
     public static AccountDTO getUser(AccountDTO account) {
         try {
             Connection con = mysqlConnect.getConnection();
@@ -391,5 +417,32 @@ public class AccountDAO {
 
     public static void main(String[] args) {
 
+    }
+    
+    public static AccountDTO getAccountByAccountID(int accountID) {
+        try {
+
+            Connection conn = mysqlConnect.getConnection();
+
+            String sql = "SELECT * FROM TaiKhoan WHERE id = ?";
+
+            PreparedStatement pst = conn.prepareStatement(sql);
+
+            pst.setInt(1, accountID);
+
+            ResultSet result_query = pst.executeQuery();
+
+            while (result_query.next()) {
+                int id = result_query.getInt("id");
+                String email = result_query.getString("email");
+                int roleID = result_query.getInt("quyen_id");
+                return (new AccountDTO(id, email, roleID));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return null;
     }
 }

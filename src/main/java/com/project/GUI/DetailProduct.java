@@ -1,5 +1,7 @@
 package com.project.GUI;
 
+import java.awt.Color;
+import java.awt.Cursor;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -88,13 +90,15 @@ public class DetailProduct extends javax.swing.JFrame {
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        titleForm.setBackground(new java.awt.Color(255, 255, 255));
+        titleForm.setBackground(new java.awt.Color(255, 153, 102));
         titleForm.setPreferredSize(new java.awt.Dimension(602, 70));
         titleForm.setLayout(new java.awt.CardLayout());
+        titleForm.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, java.awt.Color.BLACK));
 
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setBackground(new java.awt.Color(255, 153, 102));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Chi tiết sản phẩm");
         titleForm.add(jLabel1, "card2");
 
@@ -213,9 +217,13 @@ public class DetailProduct extends javax.swing.JFrame {
         jPanel2.setPreferredSize(new java.awt.Dimension(728, 50));
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 30, 0));
 
-        jButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton1.setText("Cập nhật");
+
         jButton1.setPreferredSize(new java.awt.Dimension(100, 50));
+        jButton1.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setBackground(new java.awt.Color(0, 191, 255));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -223,8 +231,11 @@ public class DetailProduct extends javax.swing.JFrame {
         });
         jPanel2.add(jButton1);
 
-        jButton2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jButton2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton2.setText("Đóng");
+        jButton2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setBackground(java.awt.Color.RED);
         jButton2.setPreferredSize(new java.awt.Dimension(100, 50));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -232,12 +243,14 @@ public class DetailProduct extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jButton2);
+        jPanel2.setBackground(java.awt.Color.WHITE);
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.PAGE_END);
 
         getContentPane().add(jPanel1);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {

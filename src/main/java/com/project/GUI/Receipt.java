@@ -4,6 +4,7 @@
  */
 package com.project.GUI;
 
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -54,7 +55,12 @@ public class Receipt extends javax.swing.JPanel {
                 permissionList = PermissionAccount.getInstance();
                 ArrayList<EnterCouponDTO> list_enterCoupon = EnterCouponBUS.getAllEnterCouponsBUS();
 
-                DefaultTableModel model = new DefaultTableModel();
+                DefaultTableModel model = new DefaultTableModel() {
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                                return false;
+                        }
+                };
                 model.addColumn("ID");
                 model.addColumn("Tên phiếu nhập");
                 model.addColumn("Nhân viên");
@@ -76,6 +82,8 @@ public class Receipt extends javax.swing.JPanel {
                         model.addRow(rowData);
                 }
                 TableReceipt.setModel(model);
+                Formatter.setBoldHeaderTable(TableReceipt);
+                Formatter.centerAlignTableCells(TableReceipt);
         }
 
         /**
@@ -89,7 +97,7 @@ public class Receipt extends javax.swing.JPanel {
 
                 ReceiptTop = new javax.swing.JPanel();
                 BoxBtn = new javax.swing.JPanel();
-                BtnDetail1 = new javax.swing.JButton();
+                BtnAdd = new javax.swing.JButton();
                 BtnDetail = new javax.swing.JButton();
                 BtnRemove = new javax.swing.JButton();
                 BtnExportExcel = new javax.swing.JButton();
@@ -120,6 +128,13 @@ public class Receipt extends javax.swing.JPanel {
                 ValueTotalEnd = new javax.swing.JTextField();
                 BtnFilter = new javax.swing.JButton();
 
+                BtnAdd.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnDetail.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnRemove.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnExportExcel.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnFilter.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnRefresh.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+
                 setMinimumSize(new java.awt.Dimension(1085, 768));
                 setName(""); // NOI18N
                 setPreferredSize(new java.awt.Dimension(1085, 768));
@@ -132,17 +147,17 @@ public class Receipt extends javax.swing.JPanel {
                 BoxBtn.setPreferredSize(new java.awt.Dimension(380, 45));
                 BoxBtn.setLayout(new java.awt.GridLayout(1, 4, 10, 0));
 
-                BtnDetail1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-                BtnDetail1.setIcon(new javax.swing.ImageIcon("./src/assets/icon/plus.png")); // NOI18N
-                BtnDetail1.setText("Thêm");
-                BtnDetail1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-                BtnDetail1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-                BtnDetail1.addMouseListener(new java.awt.event.MouseAdapter() {
+                BtnAdd.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                BtnAdd.setIcon(new javax.swing.ImageIcon("./src/assets/icon/plus.png")); // NOI18N
+                BtnAdd.setText("Thêm");
+                BtnAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+                BtnAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+                BtnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
                         public void mouseClicked(java.awt.event.MouseEvent evt) {
                                 BtnDetail1MouseClicked(evt);
                         }
                 });
-                BoxBtn.add(BtnDetail1);
+                BoxBtn.add(BtnAdd);
 
                 BtnDetail.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 BtnDetail.setIcon(new javax.swing.ImageIcon("./src/assets/icon/info-rgb.png")); // NOI18N
@@ -187,7 +202,7 @@ public class Receipt extends javax.swing.JPanel {
                 Filter.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 Filter.setModel(new javax.swing.DefaultComboBoxModel<>(
                                 new String[] { "Tên phiếu nhập", "Tên nhà cung cấp", "Tên nhân viên" }));
-                Filter.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+                Filter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
                 Filter.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 FilterActionPerformed(evt);
@@ -205,6 +220,7 @@ public class Receipt extends javax.swing.JPanel {
 
                 InputSearch.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 // InputSearch.setText(");
+                Formatter.setPlaceHolder(InputSearch, "Nhập từ khóa tìm kiếm");
                 InputSearch.getDocument().addDocumentListener(new DocumentListener() {
                         @Override
                         public void insertUpdate(DocumentEvent e) {
@@ -465,6 +481,7 @@ public class Receipt extends javax.swing.JPanel {
         private void FilterActionPerformed(ActionEvent evt) {
                 int option = Filter.getSelectedIndex();
                 option_search = option;
+                InputSearch.requestFocus();
         }
 
         private void ValueTotalEndActionPerformed(java.awt.event.ActionEvent evt) {
@@ -760,7 +777,7 @@ public class Receipt extends javax.swing.JPanel {
         private javax.swing.JPanel BoxTable;
         private javax.swing.JPanel BoxTitle;
         private javax.swing.JButton BtnDetail;
-        private javax.swing.JButton BtnDetail1;
+        private javax.swing.JButton BtnAdd;
         private javax.swing.JButton BtnExportExcel;
         private javax.swing.JButton BtnFilter;
         private javax.swing.JButton BtnRefresh;

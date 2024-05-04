@@ -32,6 +32,16 @@ public class ProductBUS {
         return product;
     }
 
+    public ProductDTO getProductByID_IgnoreActiveState(int id) {
+        ProductDTO product = null;
+        try {
+            product = productDAO.getProductByID_IgnoreActiveState(id);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        return product;
+    }
+
     public ArrayList<ProductDTO> getProductByCategory(int category) {
         ArrayList<ProductDTO> products = null;
         try {

@@ -21,6 +21,7 @@ import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.text.Chunk;
 
+import java.awt.Cursor;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,6 +30,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import org.jfree.chart.title.Title;
 
 import com.project.BUS.EnterCouponBUS;
 import com.project.Common.Common;
@@ -162,6 +165,8 @@ public class FormDetailReceipt extends javax.swing.JFrame {
         Bottom = new javax.swing.JPanel();
         BtnPrint = new javax.swing.JButton();
         BtnClose = new javax.swing.JButton();
+        BtnClose.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        BtnPrint.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         // setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(519, 600));
@@ -169,9 +174,13 @@ public class FormDetailReceipt extends javax.swing.JFrame {
         Top.setMaximumSize(new java.awt.Dimension(600, 505));
         Top.setMinimumSize(new java.awt.Dimension(100, 70));
         Top.setPreferredSize(new java.awt.Dimension(722, 70));
+        Top.setBackground(new java.awt.Color(255, 153, 102));
+        Top.setPreferredSize(new java.awt.Dimension(602, 70));
 
-        Ttitle.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        Ttitle.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         Ttitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Ttitle.setBackground(new java.awt.Color(255, 153, 102));
+        Ttitle.setForeground(new java.awt.Color(255, 255, 255));
         Ttitle.setText("Chi tiết phiếu nhập");
         Ttitle.setPreferredSize(new java.awt.Dimension(37, 50));
 
@@ -379,12 +388,14 @@ public class FormDetailReceipt extends javax.swing.JFrame {
         flowLayout1.setAlignOnBaseline(true);
         Bottom.setLayout(flowLayout1);
 
-        BtnPrint.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        BtnPrint.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         BtnPrint.setText("In");
-        BtnPrint.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        // BtnPrint.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         BtnPrint.setMaximumSize(new java.awt.Dimension(100, 55));
         BtnPrint.setMinimumSize(new java.awt.Dimension(100, 55));
         BtnPrint.setPreferredSize(new java.awt.Dimension(100, 55));
+        BtnPrint.setForeground(new java.awt.Color(255, 255, 255));
+        BtnPrint.setBackground(new java.awt.Color(0, 191, 255));
         BtnPrint.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BtnPrintMouseClicked(evt);
@@ -397,12 +408,14 @@ public class FormDetailReceipt extends javax.swing.JFrame {
         });
         Bottom.add(BtnPrint);
 
-        BtnClose.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        BtnClose.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         BtnClose.setText("Đóng");
-        BtnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        // BtnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         BtnClose.setMaximumSize(new java.awt.Dimension(100, 55));
         BtnClose.setMinimumSize(new java.awt.Dimension(100, 55));
         BtnClose.setPreferredSize(new java.awt.Dimension(100, 55));
+        BtnClose.setForeground(new java.awt.Color(255, 255, 255));
+        BtnClose.setBackground(java.awt.Color.RED);
         BtnClose.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BtnCloseMouseClicked(evt);
@@ -418,6 +431,7 @@ public class FormDetailReceipt extends javax.swing.JFrame {
         getContentPane().add(Bottom, java.awt.BorderLayout.PAGE_END);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>
 
     private void BtnPrintMouseClicked(java.awt.event.MouseEvent evt) {

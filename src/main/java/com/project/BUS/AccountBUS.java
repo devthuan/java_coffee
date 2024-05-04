@@ -62,6 +62,11 @@ public class AccountBUS {
         return AccountDAO.getAllUser();
     }
 
+    public static ArrayList<AccountDTO> getAllAccount(ArrayList<Integer> accountID_List)
+    {
+        return AccountDAO.getAllUser(accountID_List);
+    }
+
     public static Boolean deleteUser(int id) {
         try {
             return AccountDAO.deleteUser(id);
@@ -73,6 +78,10 @@ public class AccountBUS {
 
     public static ArrayList<AccountDTO> searchAccount(String email) {
         return AccountDAO.searchAccount(email);
+    }
+
+    public static AccountDTO getAccountByAccountID(int accountID) {
+        return AccountDAO.getAccountByAccountID(accountID);
     }
 
     public static boolean updateUserBUS(AccountDTO account) {

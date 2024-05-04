@@ -1,5 +1,7 @@
 package com.project.GUI;
 
+import java.awt.Color;
+import java.awt.Cursor;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -36,7 +38,7 @@ public class CreateProductForm extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
-
+        setTitle("Tạo mới sản phẩm");
         jPanel1 = new javax.swing.JPanel();
         titleForm = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -66,12 +68,15 @@ public class CreateProductForm extends javax.swing.JFrame {
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        titleForm.setBackground(new java.awt.Color(255, 255, 255));
+        titleForm.setBackground(new java.awt.Color(255, 153, 102));
+        titleForm.setForeground(new java.awt.Color(255, 255, 255));
+        titleForm.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
         titleForm.setPreferredSize(new java.awt.Dimension(602, 70));
         titleForm.setLayout(new java.awt.CardLayout());
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Tạo mới sản phẩm");
         titleForm.add(jLabel1, "card2");
@@ -158,7 +163,10 @@ public class CreateProductForm extends javax.swing.JFrame {
         jPanel2.setPreferredSize(new java.awt.Dimension(728, 50));
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 30, 0));
 
-        BtnCreate.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        BtnCreate.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        BtnCreate.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        BtnCreate.setBackground(new java.awt.Color(0, 191, 255));
+        BtnCreate.setForeground(new java.awt.Color(255, 255, 255));
         BtnCreate.setText("Tạo mới");
         BtnCreate.setPreferredSize(new java.awt.Dimension(100, 50));
         BtnCreate.addActionListener(new java.awt.event.ActionListener() {
@@ -168,7 +176,10 @@ public class CreateProductForm extends javax.swing.JFrame {
         });
         jPanel2.add(BtnCreate);
 
-        btnClose.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnClose.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnClose.setBackground(Color.RED);
+        btnClose.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnClose.setForeground(new java.awt.Color(255, 255, 255));
         btnClose.setText("Đóng");
         btnClose.setPreferredSize(new java.awt.Dimension(100, 50));
         btnClose.addActionListener(new java.awt.event.ActionListener() {
@@ -177,12 +188,14 @@ public class CreateProductForm extends javax.swing.JFrame {
             }
         });
         jPanel2.add(btnClose);
+        jPanel2.setBackground(Color.WHITE);
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.PAGE_END);
 
         getContentPane().add(jPanel1);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>
 
     private void BtnCreateActionPerformed(java.awt.event.ActionEvent evt) {

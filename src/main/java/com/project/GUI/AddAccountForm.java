@@ -1,5 +1,8 @@
 package com.project.GUI;
 
+import java.awt.Color;
+import java.awt.Cursor;
+
 import javax.swing.JOptionPane;
 
 import com.project.BUS.AccountBUS;
@@ -59,13 +62,14 @@ public class AddAccountForm extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 153, 102));
         jPanel1.setMinimumSize(new java.awt.Dimension(100, 70));
         jPanel1.setPreferredSize(new java.awt.Dimension(722, 70));
 
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Thêm tài khoản");
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setPreferredSize(new java.awt.Dimension(37, 50));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -163,9 +167,12 @@ public class AddAccountForm extends javax.swing.JFrame {
         flowLayout1.setAlignOnBaseline(true);
         BoxBtn.setLayout(flowLayout1);
 
-        BtnClose.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        BtnClose.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         BtnClose.setText("Đóng");
-        BtnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        BtnClose.setForeground(new java.awt.Color(255, 255, 255));
+        BtnClose.setBackground(java.awt.Color.RED);
+        BtnClose.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        // BtnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         BtnClose.setMaximumSize(new java.awt.Dimension(100, 55));
         BtnClose.setMinimumSize(new java.awt.Dimension(100, 55));
         BtnClose.setPreferredSize(new java.awt.Dimension(100, 55));
@@ -176,9 +183,12 @@ public class AddAccountForm extends javax.swing.JFrame {
         });
         BoxBtn.add(BtnClose);
 
-        BtnAdd.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        BtnAdd.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         BtnAdd.setText("Thêm");
-        BtnAdd.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        BtnAdd.setForeground(new java.awt.Color(255, 255, 255));
+        BtnAdd.setBackground(new java.awt.Color(0, 191, 255));
+        BtnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        // BtnAdd.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         BtnAdd.setMaximumSize(new java.awt.Dimension(100, 55));
         BtnAdd.setMinimumSize(new java.awt.Dimension(100, 55));
         BtnAdd.setPreferredSize(new java.awt.Dimension(100, 55));
@@ -193,10 +203,12 @@ public class AddAccountForm extends javax.swing.JFrame {
             }
         });
         BoxBtn.add(BtnAdd);
+        BoxBtn.setBackground(Color.white);
 
         getContentPane().add(BoxBtn, java.awt.BorderLayout.PAGE_END);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>
 
     // event clicked

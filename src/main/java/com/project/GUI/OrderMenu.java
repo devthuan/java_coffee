@@ -32,10 +32,12 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.project.BUS.AccountBUS;
 import com.project.BUS.EmployeeBUS;
 import com.project.BUS.OrderBUS;
 import com.project.BUS.PaymentMethodBUS;
 import com.project.Common.Common;
+import com.project.DTO.AccountDTO;
 import com.project.DTO.EmployeeDTO;
 import com.project.DTO.OrderDTO;
 import com.project.DTO.PaymentMethodDTO;
@@ -50,12 +52,17 @@ public class OrderMenu extends javax.swing.JPanel {
         private PermissionAccount permissionList;
 
         private static ArrayList<PaymentMethodDTO> paymentMethods = new PaymentMethodBUS().getAll();
-        private LinkedHashMap<OrderDTO, Float> orders;
-
-        private ArrayList<EmployeeDTO> empList;
-
         private static OrderBUS orderBUS = new OrderBUS();
         private static EmployeeBUS empBUS = new EmployeeBUS();
+
+        private LinkedHashMap<OrderDTO, Float> orders;
+        private ArrayList<EmployeeDTO> empList;
+        private ArrayList<AccountDTO> accList;
+
+        private EditOrderForm editOrderForm;
+        private OrderDetail orderDetailForm;
+        private BuyProduct BuyProductPanel;
+        private JFrame BuyProductForm;
 
         public OrderMenu() {
                 initComponents();
@@ -80,6 +87,7 @@ public class OrderMenu extends javax.swing.JPanel {
                                 accountID_List.add(o.getAcount_id());
                         }
                         empList = empBUS.getEmpList_ByAccountID(accountID_List);
+                        accList = AccountBUS.getAllAccount(accountID_List);
 
                         int i = 0;
                         for (OrderDTO o : orders.keySet()) {
@@ -87,13 +95,14 @@ public class OrderMenu extends javax.swing.JPanel {
 
                                 dtm.addRow(new Object[] {
                                                 o.getId(),
-                                                o.getAcount_id(),
-                                                empList.get(i++).getName(),
+                                                accList.get(i).getEmail(),
+                                                empList.get(i).getName(),
                                                 Formatter.getFormatedPrice(total),
                                                 paymentMethods.get(o.getPaymentMethod_id() - 1).getPayment_name(),
                                                 Common.formatedDateTime(o.getCreatedAt()),
                                                 o.getOrder_status()
                                 });
+                                i++;
                         }
 
                         Formatter.centerAlignTableCells(tbTableOrder);
@@ -176,8 +185,8 @@ public class OrderMenu extends javax.swing.JPanel {
                 GroupButton.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
 
                 btnCreate.setFont(new java.awt.Font("Arial", 0, 16));
-                btnCreate.setIcon(new javax.swing.ImageIcon("./src/assets/icon/add.png"));
-                btnCreate.setText("Tạo");
+                btnCreate.setIcon(new javax.swing.ImageIcon("./src/assets/icon/plus.png"));
+                btnCreate.setText("Thêm");
                 btnCreate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
                 btnCreate.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
                 btnCreate.setMaximumSize(new java.awt.Dimension(30, 30));
@@ -208,7 +217,7 @@ public class OrderMenu extends javax.swing.JPanel {
                 GroupButton.add(btnEdit);
 
                 btnViewDetails.setFont(new java.awt.Font("Arial", 0, 16));
-                btnViewDetails.setIcon(new javax.swing.ImageIcon("./src/assets/icon/info.png"));
+                btnViewDetails.setIcon(new javax.swing.ImageIcon("./src/assets/icon/info-rgb.png"));
                 btnViewDetails.setText("Chi tiết");
                 btnViewDetails.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
                 btnViewDetails.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -224,7 +233,7 @@ public class OrderMenu extends javax.swing.JPanel {
                 GroupButton.add(btnViewDetails);
 
                 btnExportExcel.setFont(new java.awt.Font("Arial", 0, 16));
-                btnExportExcel.setIcon(new javax.swing.ImageIcon("./src/assets/icon/excel.png"));
+                btnExportExcel.setIcon(new javax.swing.ImageIcon("./src/assets/icon/xls.png"));
                 btnExportExcel.setText("Xuất");
                 btnExportExcel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
                 btnExportExcel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -243,7 +252,7 @@ public class OrderMenu extends javax.swing.JPanel {
                 cbSearch.setModel(
 
                                 new javax.swing.DefaultComboBoxModel<>(
-                                                new String[] { "Mã đơn hàng", "Tài khoản ID", "Họ tên nhân viên" }));
+                                                new String[] { "Mã đơn hàng", "Họ tên nhân viên" }));
                 cbSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
                 cbSearch.setMaximumSize(new java.awt.Dimension(60, 30));
                 cbSearch.setMinimumSize(new java.awt.Dimension(60, 30));
@@ -263,7 +272,7 @@ public class OrderMenu extends javax.swing.JPanel {
                 txtInputSearch.setMinimumSize(new java.awt.Dimension(100, 30));
                 txtInputSearch.setPreferredSize(new java.awt.Dimension(100, 50));
 
-                Formatter.setPlaceHolder(txtInputSearch, "Nhập nội dung tìm kiếm");
+                Formatter.setPlaceHolder(txtInputSearch, "Nhập từ khóa tìm kiếm");
                 txtInputSearch.addKeyListener(new KeyAdapter() {
                         @Override
                         public void keyReleased(KeyEvent e) {
@@ -725,7 +734,7 @@ public class OrderMenu extends javax.swing.JPanel {
                         }
                 };
                 dtm.addColumn("Mã đơn hàng");
-                dtm.addColumn("Tài khoản ID");
+                dtm.addColumn("Email");
                 dtm.addColumn("Họ tên nhân viên");
                 dtm.addColumn("Tổng tiền");
                 dtm.addColumn("Phương thức thanh toán");
@@ -824,14 +833,22 @@ public class OrderMenu extends javax.swing.JPanel {
         }
 
         private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {
-                JFrame BuyProductForm = new JFrame("Chọn sản phẩm");
-                BuyProductForm.setAlwaysOnTop(true);
-                BuyProductForm.setSize(1085, 768);
-                BuyProductForm.add(new BuyProduct());
-                BuyProductForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                BuyProductForm.pack();
-                BuyProductForm.setLocationRelativeTo(null);
-                BuyProductForm.setVisible(true);
+                if (BuyProductForm == null) {
+                        BuyProductForm = new JFrame("Chọn sản phẩm");
+                        BuyProductForm.setAlwaysOnTop(true);
+                        BuyProductForm.setSize(1085, 768);
+                        BuyProductForm.setPreferredSize(new java.awt.Dimension(1085, 768));
+                        BuyProductForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        BuyProductForm.pack();
+                        BuyProductForm.setLocationRelativeTo(null);
+                        if (BuyProductPanel == null) {
+                                BuyProductPanel = new BuyProduct();
+                        }
+                        BuyProductForm.add(BuyProductPanel);
+                } else {
+                        BuyProductForm.setVisible(true);
+                }
+
         }
 
         private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {
@@ -843,7 +860,11 @@ public class OrderMenu extends javax.swing.JPanel {
                                 int i = 0;
                                 for (OrderDTO order : orders.keySet()) {
                                         if (order.getId() == orderID) {
-                                                new EditOrderForm(order, empList.get(i));
+                                                if (editOrderForm != null) {
+                                                        editOrderForm.dispose();
+                                                }
+                                                editOrderForm = new EditOrderForm(order, empList.get(i),
+                                                                accList.get(i));
                                                 return;
                                         }
                                         i++;
@@ -945,13 +966,8 @@ public class OrderMenu extends javax.swing.JPanel {
                                         orders = orderBUS.getAllWithTotalByOrderID(
                                                         Integer.parseInt(txtInputSearch.getText()));
                                         break;
-                                case 1:
-                                        orders = orderBUS
-                                                        .getAllWithTotalByAccountID(
-                                                                        Integer.parseInt(txtInputSearch.getText()));
-                                        break;
 
-                                case 2:
+                                case 1:
                                         orders = orderBUS.getAllWithTotalByEmp_Name(txtInputSearch.getText().trim());
                                         break;
                         }
@@ -981,7 +997,10 @@ public class OrderMenu extends javax.swing.JPanel {
                         int i = 0;
                         for (OrderDTO order : orders.keySet()) {
                                 if (order.getId() == orderID) {
-                                        new OrderDetail(order, empList.get(i));
+                                        if (orderDetailForm != null) {
+                                                orderDetailForm.dispose();
+                                        }
+                                        orderDetailForm = new OrderDetail(order, empList.get(i), accList.get(i));
                                         return;
                                 }
                                 i++;

@@ -13,6 +13,7 @@ import javax.swing.event.DocumentListener;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -74,6 +75,10 @@ public class ProductMenu extends javax.swing.JPanel {
                                 }
                                 return super.getColumnClass(columnIndex);
                         }
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                                return false;
+                        }
                 };
 
                 // DefaultTableModel model = new DefaultTableModel();
@@ -105,6 +110,8 @@ public class ProductMenu extends javax.swing.JPanel {
 
                 }
                 Table.setModel(model);
+                Formatter.setBoldHeaderTable(Table);
+                Formatter.centerAlignTableCells(Table);
 
                 // Tạo một custom renderer để hiển thị hình ảnh scaled trong cột "Hình ảnh"
                 Table.getColumnModel().getColumn(2).setCellRenderer(new DefaultTableCellRenderer() {
@@ -255,6 +262,7 @@ public class ProductMenu extends javax.swing.JPanel {
                 btnLoc.setText("Lọc");
                 btnLoc.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
                 btnLoc.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+                btnLoc.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
                 PanelTimkiem.add(btnLoc);
 
                 jSplitPane1.setLeftComponent(PanelTimkiem);
@@ -344,10 +352,10 @@ public class ProductMenu extends javax.swing.JPanel {
 
                 btnThem.setBackground(new java.awt.Color(255, 255, 255));
                 btnThem.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-                btnThem.setIcon(new javax.swing.ImageIcon(("src/assets/icon/plus (1).png"))); // NOI18N
+                btnThem.setIcon(new javax.swing.ImageIcon(("./src/assets/icon/plus.png"))); // NOI18N
                 btnThem.setText("THÊM");
                 btnThem.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-                btnThem.setBorderPainted(false);
+                // btnThem.setBorderPainted(false);
                 btnThem.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
                 btnThem.setIconTextGap(10);
                 btnThem.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -356,14 +364,16 @@ public class ProductMenu extends javax.swing.JPanel {
                                 btnThemActionPerformed(evt);
                         }
                 });
+                btnThem.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
                 Btn1.add(btnThem);
 
                 btnChitiet.setBackground(new java.awt.Color(255, 255, 255));
-                btnChitiet.setIcon(new javax.swing.ImageIcon(("src/assets/icon/letter-i (1).png"))); // NOI18N
+                btnChitiet.setIcon(new javax.swing.ImageIcon(("./src/assets/icon/info-rgb.png"))); // NOI18N
                 btnChitiet.setText("CHI TIẾT");
                 btnChitiet.setBorder(
                                 javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-                btnChitiet.setBorderPainted(false);
+                // btnChitiet.setBorderPainted(false);
+                btnChitiet.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
                 btnChitiet.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
                 btnChitiet.setIconTextGap(10);
                 btnChitiet.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -375,10 +385,11 @@ public class ProductMenu extends javax.swing.JPanel {
                 Btn1.add(btnChitiet);
 
                 btnXoa.setBackground(new java.awt.Color(255, 255, 255));
-                btnXoa.setIcon(new javax.swing.ImageIcon(("src/assets/icon/remove.png"))); // NOI18N
+                btnXoa.setIcon(new javax.swing.ImageIcon(("./src/assets/icon/cancel.png"))); // NOI18N
                 btnXoa.setText("XÓA");
                 btnXoa.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-                btnXoa.setBorderPainted(false);
+                // btnXoa.setBorderPainted(false);
+                btnXoa.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
                 btnXoa.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
                 btnXoa.setIconTextGap(10);
                 btnXoa.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -392,10 +403,11 @@ public class ProductMenu extends javax.swing.JPanel {
 
                 btnXuat.setBackground(new java.awt.Color(255, 255, 255));
                 btnXuat.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-                btnXuat.setIcon(new javax.swing.ImageIcon(("src/assets/icon/excel.png"))); // NOI18N
+                btnXuat.setIcon(new javax.swing.ImageIcon(("./src/assets/icon/xls.png"))); // NOI18N
                 btnXuat.setText("XUẤT");
                 btnXuat.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-                btnXuat.setBorderPainted(false);
+                // btnXuat.setBorderPainted(false);
+                btnXuat.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
                 btnXuat.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
                 btnXuat.setIconTextGap(10);
                 btnXuat.setMinimumSize(new java.awt.Dimension(33, 59));
@@ -422,8 +434,10 @@ public class ProductMenu extends javax.swing.JPanel {
                 btnTimkiem.setBackground(new java.awt.Color(255, 255, 255));
                 btnTimkiem.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 btnTimkiem.setIcon(new javax.swing.ImageIcon("./src/assets/icon/magnifying-glass.png"));
+                btnTimkiem.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
 
                 txt.setPreferredSize(new java.awt.Dimension(90, 22));
+                Formatter.setPlaceHolder(txt,"Nhập từ khóa tìm kiếm");
                 txt.getDocument().addDocumentListener(new DocumentListener() {
                         @Override
                         public void insertUpdate(DocumentEvent e) {
@@ -446,7 +460,8 @@ public class ProductMenu extends javax.swing.JPanel {
                 btnRefresh.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
                 btnRefresh.setIcon(new javax.swing.ImageIcon(("src/assets/icon/refresh (1).png"))); // NOI18N
                 btnRefresh.setText("Làm mới");
-                btnRefresh.setBorder(null);
+                // btnRefresh.setBorder(null);
+                btnRefresh.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
                 btnRefresh.setPreferredSize(new java.awt.Dimension(100, 41));
                 btnRefresh.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
