@@ -4,10 +4,13 @@ package com.project.GUI;
 import com.project.BUS.*;
 import com.project.DTO.*;
 import com.project.DAO.*;
+import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
+import javax.swing.border.Border;
 
 public class CreateWareHouse extends javax.swing.JFrame {
     WareHouseService wareHouseService;
@@ -159,14 +162,86 @@ public class CreateWareHouse extends javax.swing.JFrame {
     private void jtfQuantityActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jtfQuantityActionPerformed
         // TODO add your handling code here:
     }// GEN-LAST:event_jtfQuantityActionPerformed
-
+    public boolean isNumeric(String str) {
+        return str.matches("-?[0-9]+");
+    }
     private void jbAddActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jbAddActionPerformed
         try {
+        Border redBorder = BorderFactory.createLineBorder(Color.RED);
             WareHouse warehouse = new WareHouse();
             warehouse.setName(jtfName.getText());
             warehouse.setUnit(jtfUInit.getText());
-            warehouse.setQuantity(Integer.parseInt(jtfQuantity.getText()));
-            if (wareHouseService.AddWareHouse(warehouse)) {
+            if (wareHouseService.WareHouseExist(warehouse.getName()) || jtfName.getText().isEmpty() || jtfQuantity.getText().isEmpty() || 
+            !isNumeric(jtfQuantity.getText()) || Integer.parseInt(jtfQuantity.getText()) < 0) {
+                if(jtfName.getText().isEmpty())
+                {
+                        JOptionPane.showMessageDialog(null, "Tên nguyên liệu không được để trống. Không thể tạo nguyên liệu mới.");
+                        jtfName.requestFocus();
+                        jtfName.setBorder(redBorder);
+                        if(!jtfQuantity.getText().isEmpty() || isNumeric(jtfQuantity.getText()) || Integer.parseInt(jtfQuantity.getText()) >= 0)
+                        {
+                                jtfQuantity.setBorder(null);
+                        }
+                        return;
+                }
+                else 
+                {
+                        jtfName.setBorder(null);
+
+                }
+                if(wareHouseService.WareHouseExist(warehouse.getName()))
+                {
+                        JOptionPane.showMessageDialog(null, "Tên nguyên liệu đã tồn tại trong cơ sở dữ liệu. Không thể tạo nguyên liệu mới.");
+                        jtfName.requestFocus();
+                        jtfName.setBorder(redBorder);
+                        if(!jtfQuantity.getText().isEmpty() || isNumeric(jtfQuantity.getText()) || Integer.parseInt(jtfQuantity.getText()) >= 0)
+                        {
+                                jtfQuantity.setBorder(null);
+                        }
+                        return; 
+                }
+                else 
+                {
+                        jtfName.setBorder(null);
+                }
+                if(jtfQuantity.getText().isEmpty())
+                {
+                        JOptionPane.showMessageDialog(null, "Số lượng nguyên liệu không được rỗng. Không thể tạo nguyên liệu mới.");
+                        jtfQuantity.requestFocus();
+                        jtfQuantity.setBorder(redBorder);
+                        return;   
+                }
+                else 
+                {
+                        jtfQuantity.setBorder(null);
+                }
+                if(!isNumeric(jtfQuantity.getText()))
+                {
+                        JOptionPane.showMessageDialog(null, "Số lượng nguyên liệu phải là một số. Không thể tạo nguyên liệu mới.");
+                        jtfQuantity.requestFocus();
+                        jtfQuantity.setBorder(redBorder);
+                        return;   
+                }
+                else 
+                {
+                        jtfQuantity.setBorder(null);   
+                }
+                if(Integer.parseInt(jtfQuantity.getText()) < 0)
+                {
+                        JOptionPane.showMessageDialog(null, "Số lượng nguyên liệu không được nhỏ hơn 0. Không thể tạo nguyên liệu mới.");
+                        jtfQuantity.requestFocus();
+                        jtfQuantity.setBorder(redBorder);
+                        return;
+                }
+                else 
+                {
+                        jtfQuantity.setBorder(null);
+                }
+            }
+            else 
+            {
+                warehouse.setQuantity(Integer.parseInt(jtfQuantity.getText()));
+                wareHouseService.AddWareHouse(warehouse);
                 JOptionPane.showMessageDialog(null, "Tạo nguyên liệu thành công.");
                 this.setVisible(false);
                 return;

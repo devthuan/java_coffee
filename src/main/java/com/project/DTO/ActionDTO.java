@@ -14,7 +14,6 @@ public class ActionDTO {
         this.description = description;
         this.createdAt = createdAt;
     }
-
     public ActionDTO(int id, String name) {
         this.id = id;
         this.name = name;

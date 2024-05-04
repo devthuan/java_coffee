@@ -4,6 +4,7 @@ package com.project.GUI;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,20 +28,23 @@ public class EditUser extends javax.swing.JFrame {
         User user;
         AccountBUS accountBUS;
         ActionBUS actionBUS;
+        AccountDTO accountDTO;
         ArrayList<AccountDTO> accountDTOs;
-
+        private int hiddenId;
         public EditUser(int userId) {
                 initComponents();
                 setLocationRelativeTo(null);
                 userService = new UserService();
                 accountBUS = new AccountBUS();
+                accountDTO = accountBUS.getIdAccountUser(userId);
                 actionBUS = new ActionBUS();
-                displayPosition();
                 userService = new UserService();
                 try {
                         user = userService.getIdUser(userId);
                         jtfCode.setText(String.valueOf(user.getId()));
+                        hiddenId = userId;
                         jtfCode.setEnabled(false);
+                        displayPosition();
                         jtfname.setText(user.getName());
                         Date date = Common.convertStringtoDate(user.getDate());
                         jdcdate.setDate(date);
@@ -53,15 +57,7 @@ public class EditUser extends javax.swing.JFrame {
                         String formattedDateTime = dateFormat.format(timestamp);
                         jtfCreate.setText(formattedDateTime);
                         jtfCreate.setEnabled(false);
-                        Connection con = mysqlConnect.getConnection();
-                        String sql = "SELECT * FROM TaiKhoan WHERE id = ?";
-                        PreparedStatement ps = con.prepareStatement(sql);
-                        ps.setInt(1, Integer.parseInt(jtfCode.getText()));
-                        ResultSet rs = ps.executeQuery();
-                        if (rs.next()) {
-
-                                cbEmail.setSelectedItem(rs.getString("email"));
-                        }
+                        cbEmail.setSelectedItem(accountDTO.getEmail());
                 } catch (Exception ex) {
                         Logger.getLogger(EditUser.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -405,11 +401,12 @@ public class EditUser extends javax.swing.JFrame {
         }
 
         private void btnPositionActionPerformed(java.awt.event.ActionEvent evt) {
-                accountDTOs = accountBUS.getAll_unused((int) (cbPosition.getSelectedIndex()) + 1);
+                accountDTOs = accountBUS.getAllEditUser_unused((int) (cbPosition.getSelectedIndex()) + 1, accountDTO.getId());
                 cbEmail.removeAllItems();
                 for (AccountDTO acc : accountDTOs) {
                         cbEmail.addItem(acc.getEmail());
                 }
+                
         }
 
         private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {

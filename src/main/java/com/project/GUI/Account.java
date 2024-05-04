@@ -524,4 +524,9 @@ public class Account extends javax.swing.JPanel {
     // private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration
+
+    public void setId(int int1) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setId'");
+    }
 }

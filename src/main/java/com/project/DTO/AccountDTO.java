@@ -47,7 +47,10 @@ public class AccountDTO {
         this.roleId = roleId;
 
     }
-
+    public AccountDTO()
+    {
+        
+    }
     public AccountDTO(int id, String email, int roleId) {
         this.id = id;
         this.email = email;

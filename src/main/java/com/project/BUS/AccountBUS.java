@@ -1,5 +1,4 @@
 package com.project.BUS;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,6 +8,7 @@ import com.project.Common.PasswordHasher;
 import com.project.DAO.AccountDAO;
 import com.project.DTO.AccountDTO;
 import com.project.DTO.PermissionAccount;
+import com.project.GUI.Account;
 
 public class AccountBUS {
 
@@ -82,9 +82,19 @@ public class AccountBUS {
     public ArrayList<AccountDTO> getAll_unused(int role_id) {
         return AccountDAO.getAll_unused(role_id);
     }
-
+    public ArrayList<AccountDTO> getAllEditUser_unused(int role_id, int myId) {
+        return AccountDAO.getAllEditUser_unused(role_id, myId);
+    }
+    public AccountDTO getIdAccountUser(int id)
+    {
+        return AccountDAO.getIdAccountUser(id);
+    }
     public static void main(String[] args) {
         AccountBUS.login(new AccountDTO("admin@example.com", "admin"));
 
+    }
+    public int getLastAccountId()
+    {
+        return AccountDAO.getLastAccountId();
     }
 }

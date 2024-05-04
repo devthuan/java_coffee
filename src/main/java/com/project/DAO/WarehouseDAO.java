@@ -1,7 +1,9 @@
 
 package com.project.DAO;
 
+import com.itextpdf.signatures.LtvVerification.Level;
 import com.itextpdf.text.pdf.PdfName;
+import com.project.BUS.WareHouseService;
 import com.project.DTO.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.text.html.HTMLDocument.HTMLReader.PreAction;
 
 public class WareHouseDAO {
 
@@ -174,5 +178,28 @@ public class WareHouseDAO {
         ps.setString(1, warehouse.getName());
         ps.setInt(2, warehouse.getId());
         ps.executeUpdate();
+    }
+    public boolean WareHouseExist(String name)
+    {
+        boolean exist = false;
+        try 
+        {
+            Connection connection = mysqlConnect.getConnection();
+            String sql = "SELECT COUNT(*) FROM NguyenLieu WHERE ten_NL = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                if (count > 0) {
+                    exist = true; 
+                }
+            }
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return exist;
     }
 }

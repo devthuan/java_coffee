@@ -2,13 +2,18 @@
 package com.project.GUI;
 
 import com.project.DTO.*;
+import com.project.Util.Formatter;
 import com.project.BUS.WareHouseService;
 import com.project.DAO.*;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.*;
+import java.awt.*;
+
 
 public class WareHouseMenu extends javax.swing.JPanel {
     WareHouseService wareHouseService;
@@ -38,12 +43,17 @@ public class WareHouseMenu extends javax.swing.JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        int rowIndex = 0;
         for (WareHouse warehouse : warehouses) {
             dtm.addRow(
                     new Object[] { warehouse.getId(), warehouse.getName(), warehouse.getUnit(), warehouse.getQuantity(),
                             warehouse.getCreateDate(), warehouse.getUpdateDate() });
-
+                            addBottomBorderToRow(TableReceipt, rowIndex );
+                            rowIndex++;
         }
+        Formatter.setBoldHeaderTable(TableReceipt);
+        TableReceipt.setShowVerticalLines(true);
+        TableReceipt.setGridColor(Color.BLACK);
     }
 
     @SuppressWarnings("unchecked")
@@ -408,6 +418,26 @@ public class WareHouseMenu extends javax.swing.JPanel {
         // TODO add your handling code here:
     }
 
+    private void addBottomBorderToRow(JTable table, int row) {
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                
+                // Kiểm tra nếu là dòng cần áp dụng border dưới
+                if (row == row) {
+                    // Thiết lập border dưới
+                    ((JComponent) c).setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+                } else {
+                    // Không có border
+                    ((JComponent) c).setBorder(BorderFactory.createEmptyBorder());
+                }
+                
+                return c;
+            }
+        });
+    }
+
     private void FilterActionPerformed(java.awt.event.ActionEvent evt) {
         InputSearch.setText("");
         InputSearch.requestFocus();
@@ -484,6 +514,7 @@ public class WareHouseMenu extends javax.swing.JPanel {
             }
         }
     }
+    
 
     // Variables declaration - do not modify
     private javax.swing.JPanel BoxBtn;

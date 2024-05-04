@@ -241,9 +241,18 @@ public class DetailWareHouse extends javax.swing.JFrame {
         if (permissionList.hasPermission("UPDATE_WAREHOUSE")) {
             warehouse.setName(jtfName.getText());
             try {
-                wareHouseService.updateNameWareHouse(warehouse);
-                JOptionPane.showMessageDialog(null, "Cập nhật nguyên liệu thành công");
-                this.dispose();
+                if(wareHouseService.WareHouseExist(warehouse.getName()))
+                {
+                        JOptionPane.showMessageDialog(null, "Tên nguyên liệu '" + warehouse.getName() + "'  đã tồn tại. Không thể chỉnh sửa nguyên liệu này.");
+                        jtfName.requestFocus();
+                        return;
+                }
+                else 
+                {
+                        wareHouseService.updateNameWareHouse(warehouse);
+                        JOptionPane.showMessageDialog(null, "Cập nhật nguyên liệu thành công");
+                        this.dispose();
+                }
             } catch (Exception ex) {
                 Logger.getLogger(DetailWareHouse.class.getName()).log(Level.SEVERE, null, ex);
             }

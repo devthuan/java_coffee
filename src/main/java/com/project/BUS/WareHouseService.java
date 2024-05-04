@@ -45,4 +45,8 @@ public class WareHouseService {
     {
         warehousedao.updateNameWareHouse(warehouse);
     }
+    public boolean WareHouseExist(String name) throws Exception
+    {
+        return warehousedao.WareHouseExist(name);
+    }
 }
