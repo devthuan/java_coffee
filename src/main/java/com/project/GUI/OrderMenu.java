@@ -835,7 +835,6 @@ public class OrderMenu extends javax.swing.JPanel {
         private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {
                 if (BuyProductForm == null) {
                         BuyProductForm = new JFrame("Chọn sản phẩm");
-                        BuyProductForm.setAlwaysOnTop(true);
                         BuyProductForm.setSize(1085, 768);
                         BuyProductForm.setPreferredSize(new java.awt.Dimension(1085, 768));
                         BuyProductForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
