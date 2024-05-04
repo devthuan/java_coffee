@@ -1,8 +1,6 @@
 package com.project.DAO;
 
 import java.sql.*;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -34,7 +32,7 @@ public class SupplierDAO {
 
         } catch (SQLException e) {
              if (e.getErrorCode() == 1062) { // Mã lỗi 1062 là mã lỗi của MySQL cho lỗi duy nhất
-                JOptionPane.showMessageDialog(null,"Tên nhà cung cấp đã tồn tại");
+                JOptionPane.showMessageDialog(null, "Tên nhà cung cấp đã tồn tại");
                 return false;
             }
             e.printStackTrace();
@@ -147,7 +145,7 @@ public class SupplierDAO {
 
             PreparedStatement pst = conn.prepareStatement(sql);
 
-           pst.setString(1, search_supplier+"%");
+            pst.setString(1, search_supplier + "%");
 
             ResultSet result_query = pst.executeQuery();
 
@@ -185,7 +183,7 @@ public class SupplierDAO {
 
             PreparedStatement pst = conn.prepareStatement(sql);
 
-           pst.setString(1, search_supplier+"%");
+            pst.setString(1, search_supplier + "%");
 
             ResultSet result_query = pst.executeQuery();
 
@@ -213,7 +211,3 @@ public class SupplierDAO {
     }
 
 
-    public static void main(String[] args) {
-      SearchSupplierByName("N");
-    }
-}
