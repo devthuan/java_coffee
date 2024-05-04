@@ -34,7 +34,8 @@ public class FormLogin extends javax.swing.JFrame {
      */
     public FormLogin() {
         initComponents();
-
+        
+        jTextField1.requestFocus();
         ContentSignUp.setVisible(false);
     }
 

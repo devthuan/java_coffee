@@ -64,7 +64,6 @@ public class DetailAccount extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
-
         jPanel1 = new javax.swing.JPanel();
         titleForm = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -123,7 +122,6 @@ public class DetailAccount extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
-
         setMinimumSize(new java.awt.Dimension(807, 646));
         setPreferredSize(new java.awt.Dimension(756, 654));
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));

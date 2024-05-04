@@ -49,7 +49,7 @@ public class DetailProduct extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
-
+        setTitle("Chi tiết sản phẩm");
         jPanel1 = new javax.swing.JPanel();
         titleForm = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();

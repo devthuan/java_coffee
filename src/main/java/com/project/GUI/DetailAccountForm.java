@@ -86,6 +86,7 @@ public class DetailAccountForm extends javax.swing.JFrame {
         BtnUpdate = new javax.swing.JButton();
         BtnClose = new javax.swing.JButton();
 
+        setTitle("Chi tiết tài khoản");
         setMinimumSize(new java.awt.Dimension(730, 528));
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 

@@ -98,7 +98,6 @@ public class DeliveryBill extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
-
         ReceiptTop = new javax.swing.JPanel();
         BoxBtn = new javax.swing.JPanel();
         BtnAdd = new javax.swing.JButton();

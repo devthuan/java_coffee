@@ -27,6 +27,7 @@ public class FormSupplier extends javax.swing.JFrame {
     public FormSupplier(String titleForm, SupplierDTO data_supplier) {
 
         initComponents();
+        setTitle(titleForm);
         permissionList = PermissionAccount.getInstance();
         jLabel1.setText(titleForm);
         BtnAdd.setText("Thêm");
@@ -49,7 +50,7 @@ public class FormSupplier extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
-
+        setTitle("Thêm nhà cung cấp");
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
