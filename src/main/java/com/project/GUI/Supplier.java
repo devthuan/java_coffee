@@ -4,6 +4,7 @@
  */
 package com.project.GUI;
 
+import java.awt.Cursor;
 import java.awt.event.ComponentAdapter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,6 +36,7 @@ import com.project.Common.Common;
 import com.project.Common.SupplierCommon;
 import com.project.DTO.PermissionAccount;
 import com.project.DTO.SupplierDTO;
+import com.project.Util.Formatter;
 
 /**
  *
@@ -75,6 +77,8 @@ public class Supplier extends javax.swing.JPanel {
                         model.addRow(rowData);
                 }
                 TableSupplier.setModel(model);
+                Formatter.setBoldHeaderTable(TableSupplier);
+                Formatter.centerAlignTableCells(TableSupplier);
         }
 
         /**
@@ -102,6 +106,13 @@ public class Supplier extends javax.swing.JPanel {
                 SupplierCenter = new javax.swing.JPanel();
                 jScrollPane1 = new javax.swing.JScrollPane();
                 TableSupplier = new javax.swing.JTable();
+
+                BtnAdd.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnDetail.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnRemove.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnImportExcel.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnExportExcel.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnRefresh.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
 
                 setMinimumSize(new java.awt.Dimension(1085, 768));
                 setName(""); // NOI18N
@@ -196,7 +207,7 @@ public class Supplier extends javax.swing.JPanel {
                 Filter.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 Filter.setModel(new javax.swing.DefaultComboBoxModel<>(
                                 new String[] { "Theo tên", "Theo email" }));
-                Filter.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+                Filter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
                 Filter.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 FilterActionPerformed(evt);
@@ -213,7 +224,8 @@ public class Supplier extends javax.swing.JPanel {
                 });
 
                 InputSearch.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-                InputSearch.setText("Tìm kiếm.....");
+                // InputSearch.setText("Tìm kiếm.....");
+                Formatter.setPlaceHolder(InputSearch, "Nhập từ khóa tìm kiếm");
                 InputSearch.getDocument().addDocumentListener(new DocumentListener() {
                         @Override
                         public void insertUpdate(DocumentEvent e) {
@@ -333,7 +345,7 @@ public class Supplier extends javax.swing.JPanel {
         private void FilterActionPerformed(java.awt.event.ActionEvent evt) {
                 int option = Filter.getSelectedIndex();
                 option_search = option;
-
+                InputSearch.requestFocus();
         }
 
         private void BtnAddMouseClicked(java.awt.event.MouseEvent evt) {

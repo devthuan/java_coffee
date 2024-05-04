@@ -235,6 +235,7 @@ public class DetailAccountForm extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>
 
     private void BtnUpdateActionPerformed(java.awt.event.ActionEvent evt) {

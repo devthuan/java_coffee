@@ -141,6 +141,7 @@ public class FormUpDateAccount extends javax.swing.JFrame {
         getContentPane().add(signup);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>                        
 
     private void btn_signUpMouseClicked(java.awt.event.MouseEvent evt) {                                        

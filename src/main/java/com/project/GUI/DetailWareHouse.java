@@ -223,6 +223,7 @@ public class DetailWareHouse extends javax.swing.JFrame {
                                 .addGap(30, 30, 30)));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jtfCodeActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jtfCodeActionPerformed

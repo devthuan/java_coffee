@@ -75,38 +75,81 @@ public class ProductDAO {
         return productDTO;
     }
 
-    public ArrayList<ProductDTO> getProductByCategory(int category) {
-        ArrayList<ProductDTO> products = null;
+    public ProductDTO getProductByID_IgnoreActiveState(int product_id) {
+        ProductDTO productDTO = null;
         try {
             Connection conn = mysqlConnect.getConnection();
-            String sql = "Select * from SanPham Where LoaiSanPham_id = ? and is_active = 1";
+            String sql = "Select * from SanPham Where id = ?";
 
             PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setInt(1, category);
+            pst.setInt(1, product_id);
             ResultSet rs = pst.executeQuery();
-
-            products = new ArrayList<>();
 
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String product_name = rs.getString("ten_SP");
-                String url_image = rs.getString("url_anh");
                 float price = rs.getFloat("gia");
-                int is_active = rs.getInt("is_active");
-                int quantity = rs.getInt("so_luong");
-                LocalDateTime createAt = rs.getTimestamp("createdAt").toLocalDateTime();
-                int category_id = rs.getInt("LoaiSanPham_id");
-                products.add(
-                        new ProductDTO(id, product_name, url_image, price, is_active, quantity, category_id, createAt));
-
+                productDTO = new ProductDTO(id, product_name, price);
             }
             mysqlConnect.closeConnection(conn);
         } catch (Exception e) {
             System.out.println(e);
         }
-        return products;
+        return productDTO;
     }
 
+    public static ArrayList<ProductDTO> getProductByCategory(int category) {
+        ArrayList<ProductDTO> listProduct = null;
+        try {
+            // tao ket noi tu database len arraylist
+            Connection con = mysqlConnect.getConnection();
+
+            // viet sql
+            String sql = "SELECT " +
+                    "SanPham.id," +
+                    "ten_SP," +
+                    "url_anh," +
+                    "gia," +
+                    "SanPham.is_active," +
+                    "so_luong," +
+                    "ten_loai," +
+                    "LoaiSanPham.id as loaisp_id, " +
+                    "SanPham.createdAt," +
+                    "SanPham.updatedAt " +
+                    "FROM SanPham " +
+                    "JOIN LoaiSanPham ON SanPham.LoaiSanPham_id = LoaiSanPham.id " +
+                    "WHERE SanPham.is_active = 1 and SanPham.LoaiSanPham_id = ? " +
+                    "ORDER BY  id  ASC ";
+
+            PreparedStatement pst = con.prepareStatement(sql);
+
+            pst.setInt(1, category);
+
+            // nhan du lieu tu database tra ve
+            ResultSet rls = pst.executeQuery();
+            listProduct = new ArrayList<>();
+            while (rls.next()) {
+                int id = rls.getInt("id");
+                String tensp = rls.getString("ten_SP");
+                String anh = rls.getString("url_anh");
+                float gia = rls.getFloat("gia");
+                int hoatdong = rls.getInt("is_active");
+                int soluong = rls.getInt("so_luong");
+                Timestamp ngaylap = rls.getTimestamp("createdAt");
+                LocalDateTime lcdt = ngaylap.toLocalDateTime();
+                String tenloai = rls.getString("ten_loai");
+                int loaisp = rls.getInt("loaisp_id");
+                Timestamp ngaycapnhat = rls.getTimestamp("updatedAt");
+                LocalDateTime ncn = ngaycapnhat != null ? ngaycapnhat.toLocalDateTime() : null;
+                listProduct.add(new ProductDTO(id, tensp, anh, gia, hoatdong, soluong, loaisp, tenloai, lcdt, ncn));
+
+            }
+            mysqlConnect.closeConnection(con);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return listProduct;
+    }
 
     public boolean increaseProductQuantity(int product_id, int quantity) {
         boolean rs = false;
@@ -299,7 +342,8 @@ public class ProductDAO {
 
     }
 
-    // loc san pham
+    // filter products
+
     public boolean decreaseProductQuantity(int product_id, int quantity) {
         boolean rs = false;
         try {

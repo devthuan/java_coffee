@@ -183,6 +183,7 @@ public class CreateProductForm extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>
 
     private void BtnCreateActionPerformed(java.awt.event.ActionEvent evt) {

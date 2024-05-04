@@ -4,6 +4,7 @@
  */
 package com.project.GUI;
 
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 
 import javax.swing.JFileChooser;
@@ -30,8 +32,10 @@ import com.mysql.cj.util.Util;
 import com.project.BUS.EnterCouponBUS;
 import com.project.BUS.SupplierBUS;
 import com.project.Common.Common;
+import com.project.DTO.DeliveryBillDTO;
 import com.project.DTO.EnterCouponDTO;
 import com.project.DTO.PermissionAccount;
+import com.project.DTO.ReceiptDTO;
 import com.project.DTO.SupplierDTO;
 import com.project.Util.Formatter;
 import com.toedter.calendar.JCalendar;
@@ -45,6 +49,7 @@ import com.toedter.calendar.JDayChooser;
 public class Receipt extends javax.swing.JPanel {
         private int option_search = 0;
         private PermissionAccount permissionList;
+        private ArrayList<EnterCouponDTO> list_enterCoupon;
 
         /**
          * Creates new form Supplier
@@ -52,7 +57,7 @@ public class Receipt extends javax.swing.JPanel {
         public Receipt() {
                 initComponents();
                 permissionList = PermissionAccount.getInstance();
-                ArrayList<EnterCouponDTO> list_enterCoupon = EnterCouponBUS.getAllEnterCouponsBUS();
+                list_enterCoupon = EnterCouponBUS.getAllEnterCouponsBUS();
 
                 DefaultTableModel model = new DefaultTableModel();
                 model.addColumn("ID");
@@ -76,6 +81,8 @@ public class Receipt extends javax.swing.JPanel {
                         model.addRow(rowData);
                 }
                 TableReceipt.setModel(model);
+                Formatter.setBoldHeaderTable(TableReceipt);
+                Formatter.centerAlignTableCells(TableReceipt);
         }
 
         /**
@@ -89,7 +96,7 @@ public class Receipt extends javax.swing.JPanel {
 
                 ReceiptTop = new javax.swing.JPanel();
                 BoxBtn = new javax.swing.JPanel();
-                BtnDetail1 = new javax.swing.JButton();
+                BtnAdd = new javax.swing.JButton();
                 BtnDetail = new javax.swing.JButton();
                 BtnRemove = new javax.swing.JButton();
                 BtnExportExcel = new javax.swing.JButton();
@@ -120,6 +127,13 @@ public class Receipt extends javax.swing.JPanel {
                 ValueTotalEnd = new javax.swing.JTextField();
                 BtnFilter = new javax.swing.JButton();
 
+                BtnAdd.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnDetail.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnRemove.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnExportExcel.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnFilter.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+                BtnRefresh.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
+
                 setMinimumSize(new java.awt.Dimension(1085, 768));
                 setName(""); // NOI18N
                 setPreferredSize(new java.awt.Dimension(1085, 768));
@@ -132,17 +146,17 @@ public class Receipt extends javax.swing.JPanel {
                 BoxBtn.setPreferredSize(new java.awt.Dimension(380, 45));
                 BoxBtn.setLayout(new java.awt.GridLayout(1, 4, 10, 0));
 
-                BtnDetail1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-                BtnDetail1.setIcon(new javax.swing.ImageIcon("./src/assets/icon/plus.png")); // NOI18N
-                BtnDetail1.setText("Thêm");
-                BtnDetail1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-                BtnDetail1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-                BtnDetail1.addMouseListener(new java.awt.event.MouseAdapter() {
+                BtnAdd.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+                BtnAdd.setIcon(new javax.swing.ImageIcon("./src/assets/icon/plus.png")); // NOI18N
+                BtnAdd.setText("Thêm");
+                BtnAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+                BtnAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+                BtnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
                         public void mouseClicked(java.awt.event.MouseEvent evt) {
                                 BtnDetail1MouseClicked(evt);
                         }
                 });
-                BoxBtn.add(BtnDetail1);
+                BoxBtn.add(BtnAdd);
 
                 BtnDetail.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 BtnDetail.setIcon(new javax.swing.ImageIcon("./src/assets/icon/info-rgb.png")); // NOI18N
@@ -186,8 +200,8 @@ public class Receipt extends javax.swing.JPanel {
 
                 Filter.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 Filter.setModel(new javax.swing.DefaultComboBoxModel<>(
-                                new String[] { "Tên phiếu nhập", "Tên nhà cung cấp", "Tên nhân viên" }));
-                Filter.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+                                new String[] { "Tất cả", "Tổng hoá đơn tăng gần", "Tổng hoá đơn giảm gần" }));
+                Filter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
                 Filter.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 FilterActionPerformed(evt);
@@ -205,6 +219,7 @@ public class Receipt extends javax.swing.JPanel {
 
                 InputSearch.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 // InputSearch.setText(");
+                Formatter.setPlaceHolder(InputSearch, "Nhập từ khóa tìm kiếm");
                 InputSearch.getDocument().addDocumentListener(new DocumentListener() {
                         @Override
                         public void insertUpdate(DocumentEvent e) {
@@ -463,8 +478,35 @@ public class Receipt extends javax.swing.JPanel {
         }// </editor-fold>
 
         private void FilterActionPerformed(ActionEvent evt) {
+
+                DefaultTableModel model = (DefaultTableModel) TableReceipt.getModel();
+                model.setRowCount(0); // Xóa tất cả các hàng
+
                 int option = Filter.getSelectedIndex();
-                option_search = option;
+                // option_search = option;
+                // InputSearch.requestFocus();
+
+                if (option == 0) {
+                        list_enterCoupon.sort(Comparator.comparing(EnterCouponDTO::getId));
+                } else if (option == 1) {
+                        list_enterCoupon.sort(Comparator.comparing(EnterCouponDTO::getTotalValues));
+                } else if (option == 2) {
+                        list_enterCoupon.sort(Comparator.comparing(EnterCouponDTO::getTotalValues).reversed());
+                }
+
+                for (EnterCouponDTO enterCoupon : list_enterCoupon) {
+                        Object[] rowData = {
+                                        enterCoupon.getId(),
+                                        enterCoupon.getNameEnterCoupon(),
+                                        enterCoupon.getNameEmployee(),
+                                        enterCoupon.getNameSupplier(),
+                                        Formatter.getFormatedPrice(enterCoupon
+                                                        .getTotalValues()),
+                                        Common.formatedDateTime(enterCoupon.getCreatedAt())
+                        };
+                        model.addRow(rowData);
+                }
+
         }
 
         private void ValueTotalEndActionPerformed(java.awt.event.ActionEvent evt) {
@@ -656,14 +698,16 @@ public class Receipt extends javax.swing.JPanel {
 
                 String search_enterCoupon = InputSearch.getText();
                 ArrayList<EnterCouponDTO> list_enterCoupon = null;
-                if (option_search == 0) {
-                        list_enterCoupon = EnterCouponBUS.searchEnterCouponsByNameBUS(search_enterCoupon);
+                list_enterCoupon = EnterCouponBUS.searchEnterCouponsByNameBUS(search_enterCoupon);
+                // if (option_search == 0) {
 
-                } else if (option_search == 1) {
-                        list_enterCoupon = EnterCouponBUS.searchEnterCouponsBySupplierBUS(search_enterCoupon);
-                } else if (option_search == 2) {
-                        list_enterCoupon = EnterCouponBUS.searchEnterCouponsByEmployeeBUS(search_enterCoupon);
-                }
+                // } else if (option_search == 1) {
+                // list_enterCoupon =
+                // EnterCouponBUS.searchEnterCouponsBySupplierBUS(search_enterCoupon);
+                // } else if (option_search == 2) {
+                // list_enterCoupon =
+                // EnterCouponBUS.searchEnterCouponsByEmployeeBUS(search_enterCoupon);
+                // }
 
                 for (EnterCouponDTO enterCoupon : list_enterCoupon) {
                         Object[] rowData = {
@@ -760,7 +804,7 @@ public class Receipt extends javax.swing.JPanel {
         private javax.swing.JPanel BoxTable;
         private javax.swing.JPanel BoxTitle;
         private javax.swing.JButton BtnDetail;
-        private javax.swing.JButton BtnDetail1;
+        private javax.swing.JButton BtnAdd;
         private javax.swing.JButton BtnExportExcel;
         private javax.swing.JButton BtnFilter;
         private javax.swing.JButton BtnRefresh;

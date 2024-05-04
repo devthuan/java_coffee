@@ -16,6 +16,7 @@ import com.project.BUS.StatisticalBUS;
 import com.project.Common.Common;
 import com.project.DTO.StatisticalDTO;
 import com.project.DTO.StatisticalProductDTO;
+import com.project.Util.Formatter;
 import com.toedter.calendar.JDateChooser;
 
 /**
@@ -84,7 +85,8 @@ public class Statistical extends javax.swing.JPanel {
                 Image image2 = icon2.getImage().getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
 
                 nameProduct.setText(bestSeller.getName());
-                PriceProduct.setText(String.valueOf(bestSeller.getPrice()));
+                // PriceProduct.setText(String.valueOf(bestSeller.getPrice()));
+                PriceProduct.setText(Formatter.getFormatedPrice(bestSeller.getPrice()));
                 IconProduct.setIcon(new javax.swing.ImageIcon(image2));
 
                 ImageIcon icon = new javax.swing.ImageIcon(bestRevenue.getImage());
@@ -92,7 +94,8 @@ public class Statistical extends javax.swing.JPanel {
                 Image image = icon.getImage().getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
 
                 nameProductBestSell.setText(bestRevenue.getName());
-                PriceProductBestSell.setText(String.valueOf(bestRevenue.getPrice()));
+                // PriceProductBestSell.setText(String.valueOf(bestRevenue.getPrice()));
+                PriceProductBestSell.setText(Formatter.getFormatedPrice(bestRevenue.getPrice()));
                 IconBestSell.setIcon(new javax.swing.ImageIcon(image));
 
         }
