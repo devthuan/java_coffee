@@ -4,29 +4,27 @@
  */
 package com.project.GUI;
 
+import java.awt.Component;
+import java.awt.Cursor;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import javax.swing.*;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import com.project.BUS.DeliveryBillBUS;
-import com.project.BUS.EnterCouponBUS;
 import com.project.BUS.SupplierBUS;
 import com.project.Common.Common;
 import com.project.DAO.EmployeeDAO;
-import com.project.DAO.WarehouseDAO;
+import com.project.DAO.WareHouseDAO;
 import com.project.DTO.DeliveryBillDTO;
 import com.project.DTO.DetailDeliveryBillDTO;
-import com.project.DTO.DetailEnterCouponDTO;
 import com.project.DTO.EmployeeDTO;
-import com.project.DTO.EnterCouponDTO;
 import com.project.DTO.SupplierDTO;
 import com.project.DTO.WareHouseDTO;
-
-import java.awt.Component;
-import java.awt.Cursor;
 
 /**
  *
@@ -43,7 +41,7 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
      * Creates new form FormSupplier
      */
     public FormCreateDeliveryBill() {
-        list_ingredient = WarehouseDAO.get_all_ingredients();
+        list_ingredient = WareHouseDAO.get_all_ingredients();
         ingredientMap = new HashMap<>();
 
         for (WareHouseDTO wareHouseDTO : list_ingredient) {

@@ -1,8 +1,6 @@
 
 package com.project.DAO;
 
-import com.itextpdf.text.pdf.PdfName;
-import com.project.DTO.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,7 +8,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WarehouseDAO {
+import com.project.DTO.WareHouse;
+import com.project.DTO.WareHouseDTO;
+
+public class WareHouseDAO {
 
     public static ArrayList<WareHouseDTO> get_all_ingredients() {
         ArrayList<WareHouseDTO> list_ingredient = new ArrayList<WareHouseDTO>();
