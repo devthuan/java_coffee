@@ -113,6 +113,7 @@ public class FormDetailDeliveryBill extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
         setTitle("Chi tiết phiếu xuất");
+        setResizable(false);
         Top = new javax.swing.JPanel();
         Ttitle = new javax.swing.JLabel();
         Center = new javax.swing.JPanel();

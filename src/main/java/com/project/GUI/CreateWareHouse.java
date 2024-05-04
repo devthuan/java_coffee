@@ -23,7 +23,7 @@ public class CreateWareHouse extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+        setResizable(false);
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jtfName = new javax.swing.JTextField();

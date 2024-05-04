@@ -78,6 +78,7 @@ public class FormCreateEnterCoupon extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
         setTitle("Tạo phiếu nhập");
+        setResizable(false);
         jLabel5 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();

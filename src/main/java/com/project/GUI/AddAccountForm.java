@@ -36,6 +36,7 @@ public class AddAccountForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
         setTitle("Tạo tài khoản");
+        setResizable(false);
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();

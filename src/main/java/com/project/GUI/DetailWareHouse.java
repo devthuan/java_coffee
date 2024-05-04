@@ -49,7 +49,7 @@ public class DetailWareHouse extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+        setResizable(false);
         jPanel1 = new javax.swing.JPanel();
         jlbCode = new javax.swing.JLabel();
         jtfCode = new javax.swing.JTextField();

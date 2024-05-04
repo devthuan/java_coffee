@@ -50,6 +50,7 @@ public class DetailProduct extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
         setTitle("Chi tiết sản phẩm");
+        setResizable(false);
         jPanel1 = new javax.swing.JPanel();
         titleForm = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
