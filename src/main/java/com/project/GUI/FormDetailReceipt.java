@@ -4,7 +4,6 @@
  */
 package com.project.GUI;
 
-
 import com.itextpdf.io.font.PdfEncodings;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
@@ -13,11 +12,14 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Div;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
 // import com.itextpdf.kernel.font.StandardFonts;
 import com.itextpdf.layout.properties.UnitValue;
+import com.itextpdf.text.Chunk;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,8 +53,8 @@ public class FormDetailReceipt extends javax.swing.JFrame {
 
         valueId.setText(String.valueOf(data.getId()));
         ValueDate.setText(String.valueOf(Common.formatedDateTime(data.getCreatedAt())));
-        ValueCasher.setText(String.valueOf(data.getNameSupplier()));
-        ValuePaymentMethod.setText(String.valueOf(data.getNameEmployee()));
+        ValueCasher.setText(String.valueOf(data.getNameEmployee()));
+        ValuePaymentMethod.setText(String.valueOf(data.getNameSupplier()));
         ValueTotal.setText(String.valueOf(Formatter.getFormatedPrice(data.getTotalValues()) + " VNĐ"));
 
         for (DetailEnterCouponDTO detailEnterCouponDTO : detail_enterCoupon) {
@@ -474,35 +476,39 @@ public class FormDetailReceipt extends javax.swing.JFrame {
 
             // Đoạn văn bản "Phieu nhap hang"
             Paragraph title = new Paragraph("Phiếu nhập hàng");
-            title.setFontSize(18).setTextAlignment(TextAlignment.CENTER);
+            title.setFontSize(18).setTextAlignment(TextAlignment.CENTER).setBold();
             document.add(title);
 
             // Đoạn văn bản "Ma phieu nhap: ..."
-            Paragraph id = new Paragraph("Mã phiếu nhập:                 " + valueId.getText());
-            id.setFontSize(12).setTextAlignment(TextAlignment.LEFT);
+            Paragraph id = new Paragraph("Mã phiếu nhập:                " + valueId.getText());
+            id.setFontSize(12).setTextAlignment(TextAlignment.LEFT).setMarginLeft(100);
+
             document.add(id);
 
             // Đoạn văn bản "Ngay tao: ..."
-            Paragraph createdAt = new Paragraph("Ngày tạo:               " + ValueDate.getText());
-            createdAt.setFontSize(12).setTextAlignment(TextAlignment.LEFT);
+            Paragraph createdAt = new Paragraph("Ngày tạo:                         " + ValueDate.getText());
+            createdAt.setFontSize(12).setTextAlignment(TextAlignment.LEFT).setMarginLeft(100);
+
             document.add(createdAt);
 
             // Đoạn văn bản "Nhan vien nhap hang: ..."
-            Paragraph nameEnterCoupon = new Paragraph("Nhân viên nhập hàng: " + ValueCasher.getText());
-            nameEnterCoupon.setFontSize(12).setTextAlignment(TextAlignment.LEFT);
+            Paragraph nameEnterCoupon = new Paragraph("Nhân viên nhập hàng:      " + ValueCasher.getText());
+            nameEnterCoupon.setFontSize(12).setTextAlignment(TextAlignment.LEFT).setMarginLeft(100);
+
             document.add(nameEnterCoupon);
 
             // Đoạn văn bản "Nha cung cap: ..."
-            Paragraph nameSupplier = new Paragraph("Nhà cung cấp:            " + ValuePaymentMethod.getText());
-            nameSupplier.setFontSize(12).setTextAlignment(TextAlignment.LEFT);
+            Paragraph nameSupplier = new Paragraph("Nhà cung cấp:                  " + ValuePaymentMethod.getText());
+            nameSupplier.setFontSize(12).setTextAlignment(TextAlignment.LEFT).setMarginLeft(100);
 
             document.add(nameSupplier);
 
             createTablePDF(document);
 
             // Đoạn văn bản "Tong gia tri: ..."
-            Paragraph totalValues = new Paragraph("Tổng giá trị:         " + ValueTotal.getText());
-            totalValues.setFontSize(12).setTextAlignment(TextAlignment.LEFT);
+            Paragraph totalValues = new Paragraph("Tổng giá trị:            " + ValueTotal.getText());
+            totalValues.setFontSize(12).setTextAlignment(TextAlignment.LEFT).setMarginLeft(100);
+
             document.add(totalValues);
         } catch (Exception e) {
             e.printStackTrace();
@@ -512,9 +518,9 @@ public class FormDetailReceipt extends javax.swing.JFrame {
     private void createTablePDF(Document document) {
         try {
             // Tạo bảng
-            Table table = new Table(UnitValue.createPercentArray(new float[] { 1, 1, 1 })); // Số cột và tỷ lệ chiều
-                                                                                            // rộng của mỗi cột
-
+            Table table = new Table(UnitValue.createPercentArray(new float[] { 2, 2, 2 })); // Số cột và tỷ lệ chiều
+            table.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            table.setWidth(UnitValue.createPercentValue(60));
             // Tiêu đề của các cột
             table.addCell(createCell("Nguyên liệu", TextAlignment.CENTER));
             table.addCell(createCell("Số lượng", TextAlignment.CENTER));

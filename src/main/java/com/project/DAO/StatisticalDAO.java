@@ -108,7 +108,7 @@ public class StatisticalDAO {
                     "JOIN " +
                     "SanPham SP ON CTHD.SanPham_id = SP.id " +
                     "WHERE " +
-                    "HoaDon.createdAt >= DATE_SUB(CURDATE(), INTERVAL 29 DAY) " +
+                    "HoaDon.createdAt >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) " +
                     "GROUP BY " +
                     "DATE(HoaDon.createdAt) " +
 
@@ -123,7 +123,7 @@ public class StatisticalDAO {
                     "JOIN " +
                     "ChiTietPhieuNhap CTPN ON PhieuNhap.id = CTPN.PhieuNhap_id " +
                     "WHERE " +
-                    "PhieuNhap.createdAt >= DATE_SUB(CURDATE(), INTERVAL 29 DAY) " +
+                    "PhieuNhap.createdAt >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) " +
                     "GROUP BY " +
                     "DATE(PhieuNhap.createdAt) " +
                     ") AS loi_nhuan_ngay " +

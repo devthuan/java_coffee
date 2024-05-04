@@ -19,6 +19,7 @@ import com.project.DTO.CategoryDTO;
 import com.project.DTO.OrderDTO;
 import com.project.DTO.OrderDetailDTO;
 import com.project.DTO.PaymentMethodDTO;
+import com.project.DTO.PermissionAccount;
 import com.project.DTO.ProductDTO;
 import com.project.Util.Formatter;
 
@@ -29,9 +30,11 @@ import com.project.Util.Formatter;
 public class BuyProduct extends JPanel implements AddProductListener {
         private ProductBUS productBUS = new ProductBUS();
         private OrderDAO orderDAO = new OrderDAO();
+        private PermissionAccount permissionList;
 
         public BuyProduct() {
                 initComponents();
+                permissionList = PermissionAccount.getInstance();
         }
 
         private void initComponents() {
@@ -58,7 +61,7 @@ public class BuyProduct extends JPanel implements AddProductListener {
                                 if (choice == JOptionPane.YES_OPTION) {
                                         int paymentMethod_id = pnCarts.PanelBottom.getSelectedPaymentMethodID();
 
-                                        int account_id = 2;
+                                        int account_id = permissionList.getAccountId();
 
                                         OrderDTO orderDTO = new OrderDTO("pending", paymentMethod_id, account_id);
                                         ArrayList<OrderDetailDTO> orderDetails = new ArrayList<>();
@@ -512,9 +515,6 @@ class PanelBottom extends javax.swing.JPanel {
                 GroupButtons.setMinimumSize(new java.awt.Dimension(380, 100));
                 GroupButtons.setPreferredSize(new java.awt.Dimension(380, 100));
 
-
-
-
                 btnOrder.setBackground(new java.awt.Color(255, 153, 102));
                 btnOrder.setFont(new java.awt.Font("Arial", 1, 18));
                 btnOrder.setForeground(new java.awt.Color(255, 255, 255));
@@ -648,7 +648,6 @@ class CartItem extends JPanel {
                 btnRemove.setMinimumSize(new java.awt.Dimension(85, 30));
                 btnRemove.setPreferredSize(new java.awt.Dimension(85, 30));
 
-
                 javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(BottomRight);
                 BottomRight.setLayout(jPanel14Layout);
                 jPanel14Layout.setHorizontalGroup(
@@ -682,8 +681,6 @@ class CartItem extends JPanel {
                 Top.add(Bottom);
                 add(Top);
         }
-
-       
 
         public javax.swing.JLabel Name;
         public javax.swing.JLabel Price;
