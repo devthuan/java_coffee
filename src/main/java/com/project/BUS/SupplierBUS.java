@@ -2,14 +2,14 @@ package com.project.BUS;
 
 import java.util.ArrayList;
 
-import com.project.DAO.SupplierDAO;
+import com.project.DAO.SupplierDao;
 import com.project.DTO.SupplierDTO;
 
 public class SupplierBUS {
 
     public static Boolean createdSupplier(SupplierDTO supplier) {
         try {
-            Boolean result = SupplierDAO.createSupplier(supplier);
+            Boolean result = SupplierDao.createSupplier(supplier);
             return result;
         } catch (Exception e) {
             return false;
@@ -18,7 +18,7 @@ public class SupplierBUS {
 
     public static ArrayList<SupplierDTO> get_all_supplier() {
         try {
-            ArrayList<SupplierDTO> list_supplier = SupplierDAO.get_all_supplier();
+            ArrayList<SupplierDTO> list_supplier = SupplierDao.get_all_supplier();
             if (list_supplier == null) {
                 return null;
             }
@@ -33,7 +33,7 @@ public class SupplierBUS {
     public static Boolean updateSupplier(SupplierDTO supplier) {
         try {
 
-            return SupplierDAO.updateSupplier(supplier);
+            return SupplierDao.updateSupplier(supplier);
         } catch (Exception e) {
             return false;
         }
@@ -42,7 +42,7 @@ public class SupplierBUS {
     public static Boolean removeSupplier(int id) {
         try {
 
-            return SupplierDAO.ChangeIsActiveSupplier(id, false);
+            return SupplierDao.ChangeIsActiveSupplier(id, false);
         } catch (Exception e) {
             return false;
         }
@@ -50,7 +50,7 @@ public class SupplierBUS {
 
     public static ArrayList<SupplierDTO> searchSupplierByNameBUS(String search_supplier) {
         try {
-            ArrayList<SupplierDTO> list_supplier = SupplierDAO.SearchSupplierByName(search_supplier);
+            ArrayList<SupplierDTO> list_supplier = SupplierDao.SearchSupplierByName(search_supplier);
             if (list_supplier == null) {
                 return null;
             }
@@ -64,7 +64,7 @@ public class SupplierBUS {
 
     public static ArrayList<SupplierDTO> searchSupplierByEmailBUS(String search_supplier) {
         try {
-            ArrayList<SupplierDTO> list_supplier = SupplierDAO.SearchSupplierByEmail(search_supplier);
+            ArrayList<SupplierDTO> list_supplier = SupplierDao.SearchSupplierByEmail(search_supplier);
             if (list_supplier == null) {
                 return null;
             }

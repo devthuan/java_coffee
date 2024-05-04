@@ -35,12 +35,13 @@ public class Statistical extends javax.swing.JPanel {
                 ArrayList<StatisticalProductDTO> dataTotalSold = StatisticalBUS.getDataBarChart1Product();
                 ArrayList<StatisticalProductDTO> dataQuantityByProduct = StatisticalBUS.getDataBarChart2Product();
                 ArrayList<StatisticalDTO> dataExpenseWarehouse = StatisticalBUS.getDataChartWarehouses();
-                ArrayList<StatisticalDTO> dataStatisticalIngradient = StatisticalBUS.getDataChartStatisticalIngredient();
+                ArrayList<StatisticalDTO> dataStatisticalIngradient = StatisticalBUS
+                                .getDataChartStatisticalIngredient();
                 HashMap<String, Integer> data_for_item = StatisticalBUS.getDateForItemOverView();
                 HashMap<String, StatisticalProductDTO> dataForProduct = StatisticalBUS.getDataForItemProduct();
 
                 // đổ data ra chart
-                BoxChart.add(LineChart.createLineChart(chartData, "Lợi nhuận 30 ngày"));
+                BoxChart.add(LineChart.createLineChart(chartData, "Lợi nhuận 7 ngày"));
                 ItemChartProduct1.add(BarChart.createChart("Số lượng đã bán ra theo sản phẩm", dataTotalSold));
                 BoxChartProduct2.add(BarChart.createChart("Số lượng còn lại theo sản phẩm", dataQuantityByProduct));
                 jPanel3.add(BarChart.createChart("Giá trị nhập hàng theo 15 ngày gần nhất", dataExpenseWarehouse));
@@ -52,11 +53,10 @@ public class Statistical extends javax.swing.JPanel {
                 BoxChooseDate3.setVisible(false);
                 BoxChooseDate1.setVisible(false);
 
-              
-                // 
+                //
                 // BigDecimal totalProfit = new BigDecimal();
                 // float totalProfit = data_for_item.get("totalProfit");
-              
+
                 int totalProduct = data_for_item.get("totalProduct");
                 int totalOrder = data_for_item.get("totalOrder");
                 int totalSupplier = data_for_item.get("totalSupplier");
@@ -68,9 +68,9 @@ public class Statistical extends javax.swing.JPanel {
                 ValueIngredient.setText(String.valueOf(totalIngredient));
                 ValueOrder.setText(String.valueOf(totalOrder));
                 ValueProduct.setText(String.valueOf(totalProduct));
-                ValueProfit.setText(String.valueOf(Common.formatBigNumber(data_for_item.get("totalProfit")))+ " VNĐ");
+                ValueProfit.setText(String.valueOf(Common.formatBigNumber(data_for_item.get("totalProfit"))) + " VNĐ");
                 ValueSupplier.setText(String.valueOf(totalSupplier));
-                
+
                 StatisticalProductDTO bestSeller = dataForProduct.get("bestSeller");
                 StatisticalProductDTO bestRevenue = dataForProduct.get("bestRevenue");
 
@@ -463,7 +463,7 @@ public class Statistical extends javax.swing.JPanel {
 
                 OptionChartOverView.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
                 OptionChartOverView.setModel(new javax.swing.DefaultComboBoxModel<>(
-                                new String[] { "Doanh thu theo 30 gần nhất", "Doanh thu theo tháng",
+                                new String[] { "Doanh thu theo 7 ngày gần nhất", "Doanh thu theo tháng",
                                                 "Tuỳ chọn ngày" }));
                 OptionChartOverView.setMinimumSize(new java.awt.Dimension(230, 22));
                 OptionChartOverView.setName(""); // NOI18N
