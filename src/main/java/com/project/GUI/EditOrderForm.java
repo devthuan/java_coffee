@@ -300,7 +300,6 @@ public class EditOrderForm extends javax.swing.JFrame {
         jScrollPane1.setMaximumSize(new java.awt.Dimension(1000, 32767));
         jScrollPane1.setPreferredSize(new java.awt.Dimension(1000, 100));
 
-        TableOrderDetail.setEnabled(false);
         TableOrderDetail.setFont(new java.awt.Font("Arial", 0, 14));
         TableOrderDetail.setMinimumSize(new java.awt.Dimension(1000, 150));
         TableOrderDetail.setPreferredSize(new java.awt.Dimension(1000, 200));
