@@ -1,15 +1,16 @@
 
 package com.project.BUS;
 
-import com.project.DAO.*;
-import com.project.DTO.*;
 import java.util.List;
 
+import com.project.DAO.WareHouseDAO;
+import com.project.DTO.WareHouse;
+
 public class WareHouseService {
-    WarehouseDAO warehousedao;
+    WareHouseDAO warehousedao;
 
     public WareHouseService() {
-        warehousedao = new WarehouseDAO();
+        warehousedao = new WareHouseDAO();
     }
 
     public List<WareHouse> getAllWareHouse() throws Exception {

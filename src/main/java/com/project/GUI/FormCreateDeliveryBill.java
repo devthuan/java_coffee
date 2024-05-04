@@ -4,28 +4,27 @@
  */
 package com.project.GUI;
 
+import java.awt.Component;
+import java.awt.Cursor;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import javax.swing.*;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import com.project.BUS.DeliveryBillBUS;
-import com.project.BUS.EnterCouponBUS;
 import com.project.BUS.SupplierBUS;
 import com.project.Common.Common;
 import com.project.DAO.EmployeeDAO;
-import com.project.DAO.WarehouseDAO;
+import com.project.DAO.WareHouseDAO;
 import com.project.DTO.DeliveryBillDTO;
 import com.project.DTO.DetailDeliveryBillDTO;
-import com.project.DTO.DetailEnterCouponDTO;
 import com.project.DTO.EmployeeDTO;
-import com.project.DTO.EnterCouponDTO;
 import com.project.DTO.SupplierDTO;
 import com.project.DTO.WareHouseDTO;
-
-import java.awt.Component;
 
 /**
  *
@@ -42,7 +41,7 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
      * Creates new form FormSupplier
      */
     public FormCreateDeliveryBill() {
-        list_ingredient = WarehouseDAO.get_all_ingredients();
+        list_ingredient = WareHouseDAO.get_all_ingredients();
         ingredientMap = new HashMap<>();
 
         for (WareHouseDTO wareHouseDTO : list_ingredient) {
@@ -116,13 +115,16 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
         jPanel1.setMinimumSize(new java.awt.Dimension(100, 70));
         jPanel1.setPreferredSize(new java.awt.Dimension(722, 70));
 
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Xuất nguyên liệu");
+        jLabel1.setBackground(new java.awt.Color(255, 153, 102));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setPreferredSize(new java.awt.Dimension(37, 50));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
+        jPanel1.setBackground(new java.awt.Color(255, 153, 102));
         jPanel1Layout.setHorizontalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING,
@@ -269,12 +271,15 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
         });
         BoxBtn.add(BtnPlus);
 
-        BtnAdd.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        BtnAdd.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         BtnAdd.setText("Xuất");
         BtnAdd.setBorder(new javax.swing.border.MatteBorder(null));
         BtnAdd.setMaximumSize(new java.awt.Dimension(100, 55));
         BtnAdd.setMinimumSize(new java.awt.Dimension(100, 55));
         BtnAdd.setPreferredSize(new java.awt.Dimension(100, 55));
+        BtnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        BtnAdd.setForeground(new java.awt.Color(255, 255, 255));
+        BtnAdd.setBackground(new java.awt.Color(0, 191, 255));
         BtnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BtnAddMouseClicked(evt);
@@ -287,12 +292,15 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
         });
         BoxBtn.add(BtnAdd);
 
-        BtnClose.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        BtnClose.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         BtnClose.setText("Đóng");
         BtnClose.setBorder(new javax.swing.border.MatteBorder(null));
         BtnClose.setMaximumSize(new java.awt.Dimension(100, 55));
         BtnClose.setMinimumSize(new java.awt.Dimension(100, 55));
         BtnClose.setPreferredSize(new java.awt.Dimension(100, 55));
+        BtnClose.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        BtnClose.setForeground(new java.awt.Color(255, 255, 255));
+        BtnClose.setBackground(java.awt.Color.RED);
         BtnClose.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BtnCloseMouseClicked(evt);

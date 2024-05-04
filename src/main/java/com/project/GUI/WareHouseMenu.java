@@ -429,7 +429,12 @@ public class WareHouseMenu extends javax.swing.JPanel {
         InputSearch.setText("");
         InputSearch.requestFocus();
         try {
-            DefaultTableModel dtm = new DefaultTableModel();
+            DefaultTableModel dtm = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
             TableReceipt.setModel(dtm);
             dtm.addColumn("Mã");
             dtm.addColumn("Tên nguyên liệu");

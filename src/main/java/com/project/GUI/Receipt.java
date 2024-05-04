@@ -59,7 +59,12 @@ public class Receipt extends javax.swing.JPanel {
                 permissionList = PermissionAccount.getInstance();
                 list_enterCoupon = EnterCouponBUS.getAllEnterCouponsBUS();
 
-                DefaultTableModel model = new DefaultTableModel();
+                DefaultTableModel model = new DefaultTableModel() {
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                                return false;
+                        }
+                };
                 model.addColumn("ID");
                 model.addColumn("Tên phiếu nhập");
                 model.addColumn("Nhân viên");

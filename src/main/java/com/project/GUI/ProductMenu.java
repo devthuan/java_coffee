@@ -75,6 +75,10 @@ public class ProductMenu extends javax.swing.JPanel {
                                 }
                                 return super.getColumnClass(columnIndex);
                         }
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                                return false;
+                        }
                 };
 
                 // DefaultTableModel model = new DefaultTableModel();

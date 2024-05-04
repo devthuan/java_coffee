@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 
 import com.project.DTO.SupplierDTO;
 
-public class SupplierDao {
+public class SupplierDAO {
 
     public static Boolean createSupplier(SupplierDTO newSupplier) {
         boolean success = false;
@@ -212,7 +212,4 @@ public class SupplierDao {
         return list_supplier;
     }
 
-    public static void main(String[] args) {
-        SearchSupplierByName("N");
-    }
 }

@@ -52,13 +52,17 @@ public class OrderMenu extends javax.swing.JPanel {
         private PermissionAccount permissionList;
 
         private static ArrayList<PaymentMethodDTO> paymentMethods = new PaymentMethodBUS().getAll();
-        private LinkedHashMap<OrderDTO, Float> orders;
+        private static OrderBUS orderBUS = new OrderBUS();
+        private static EmployeeBUS empBUS = new EmployeeBUS();
 
+        private LinkedHashMap<OrderDTO, Float> orders;
         private ArrayList<EmployeeDTO> empList;
         private ArrayList<AccountDTO> accList;
 
-        private static OrderBUS orderBUS = new OrderBUS();
-        private static EmployeeBUS empBUS = new EmployeeBUS();
+        private EditOrderForm editOrderForm;
+        private OrderDetail orderDetailForm;
+        private BuyProduct BuyProductPanel;
+        private JFrame BuyProductForm;
 
         public OrderMenu() {
                 initComponents();
@@ -829,14 +833,22 @@ public class OrderMenu extends javax.swing.JPanel {
         }
 
         private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {
-                JFrame BuyProductForm = new JFrame("Chọn sản phẩm");
-                BuyProductForm.setAlwaysOnTop(true);
-                BuyProductForm.setSize(1085, 768);
-                BuyProductForm.add(new BuyProduct());
-                BuyProductForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                BuyProductForm.pack();
-                BuyProductForm.setLocationRelativeTo(null);
-                BuyProductForm.setVisible(true);
+                if (BuyProductForm == null) {
+                        BuyProductForm = new JFrame("Chọn sản phẩm");
+                        BuyProductForm.setAlwaysOnTop(true);
+                        BuyProductForm.setSize(1085, 768);
+                        BuyProductForm.setPreferredSize(new java.awt.Dimension(1085, 768));
+                        BuyProductForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        BuyProductForm.pack();
+                        BuyProductForm.setLocationRelativeTo(null);
+                        if (BuyProductPanel == null) {
+                                BuyProductPanel = new BuyProduct();
+                        }
+                        BuyProductForm.add(BuyProductPanel);
+                } else {
+                        BuyProductForm.setVisible(true);
+                }
+
         }
 
         private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {
@@ -848,7 +860,11 @@ public class OrderMenu extends javax.swing.JPanel {
                                 int i = 0;
                                 for (OrderDTO order : orders.keySet()) {
                                         if (order.getId() == orderID) {
-                                                new EditOrderForm(order, empList.get(i), accList.get(i));
+                                                if (editOrderForm != null) {
+                                                        editOrderForm.dispose();
+                                                }
+                                                editOrderForm = new EditOrderForm(order, empList.get(i),
+                                                                accList.get(i));
                                                 return;
                                         }
                                         i++;
@@ -981,7 +997,10 @@ public class OrderMenu extends javax.swing.JPanel {
                         int i = 0;
                         for (OrderDTO order : orders.keySet()) {
                                 if (order.getId() == orderID) {
-                                        new OrderDetail(order, empList.get(i), accList.get(i));
+                                        if (orderDetailForm != null) {
+                                                orderDetailForm.dispose();
+                                        }
+                                        orderDetailForm = new OrderDetail(order, empList.get(i), accList.get(i));
                                         return;
                                 }
                                 i++;

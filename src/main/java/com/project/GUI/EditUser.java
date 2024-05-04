@@ -11,8 +11,6 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 import com.project.BUS.AccountBUS;
@@ -30,18 +28,18 @@ public class EditUser extends javax.swing.JFrame {
         AccountBUS accountBUS;
         ActionBUS actionBUS;
         ArrayList<AccountDTO> accountDTOs;
-        AccountDTO emp_account;
-        ArrayList<DefaultComboBoxModel<String>> models;
 
         public EditUser(int userId) {
+                initComponents();
+                setLocationRelativeTo(null);
                 userService = new UserService();
                 accountBUS = new AccountBUS();
                 actionBUS = new ActionBUS();
+                displayPosition();
                 userService = new UserService();
-                user = userService.getIdUser(userId);
-                emp_account = AccountBUS.getAccountByAccountID(user.getAccountId());
-                initComponents();
+
                 try {
+                        user = userService.getIdUser(userId);
                         jtfCode.setText(String.valueOf(user.getId()));
                         jtfCode.setEnabled(false);
                         jtfname.setText(user.getName());
@@ -49,10 +47,6 @@ public class EditUser extends javax.swing.JFrame {
                         jdcdate.setDate(date);
                         jtfaddress.setText(user.getAddress());
                         cbPosition.setSelectedItem(user.getPosition());
-
-                        setComboBoxEmail(emp_account.getRoleId(), emp_account.getEmail());
-                        cbEmail.setSelectedItem(emp_account.getEmail());
-
                         jtfphone.setText(user.getPhone());
                         jtfsalary.setText((Common.formatBigNumber(user.getSalary())));
                         Timestamp timestamp = user.getDateCreate();
@@ -67,7 +61,8 @@ public class EditUser extends javax.swing.JFrame {
                         ResultSet rs = ps.executeQuery();
                         if (rs.next()) {
 
-                        cbEmail.setSelectedItem(rs.getString("email"));
+
+                                cbEmail.setSelectedItem(rs.getString("email"));
                         }
                 } catch (Exception ex) {
                         Logger.getLogger(EditUser.class.getName()).log(Level.SEVERE, null, ex);
@@ -97,8 +92,6 @@ public class EditUser extends javax.swing.JFrame {
                 btnEdit = new javax.swing.JButton();
                 jLabel1 = new javax.swing.JLabel();
                 cbEmail = new javax.swing.JComboBox<>();
-                displayPosition();
-                setModels();
 
                 setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -414,34 +407,14 @@ public class EditUser extends javax.swing.JFrame {
                                                                 .addContainerGap(19, Short.MAX_VALUE)));
 
                 pack();
-                setLocationRelativeTo(null);
-        }
-
-        private void setModels(){
-                models = new ArrayList<>();
-                ArrayList<AccountDTO> temp_accList;
-
-                int size = cbPosition.getModel().getSize();
-                for (int i = 0; i < size; i++) {
-                        int roleID = i + 1;
-                        temp_accList = accountBUS.getAll_unused(roleID);
-                        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-                        for (AccountDTO acc : temp_accList) {
-                                model.addElement(acc.getEmail());
-                        }
-                        models.add(model);
-                }
-        }
-
-        private void setComboBoxEmail(int roleID, String emp_email){
-                int index = roleID - 1;
-                cbEmail.setModel(models.get(index));
-                cbEmail.insertItemAt(emp_email, 0);
         }
 
         private void btnPositionActionPerformed(java.awt.event.ActionEvent evt) {
 
-                cbEmail.setModel(models.get(cbPosition.getSelectedIndex()));
+// <<<<<<< HEAD
+//                 cbEmail.setModel(models.get(cbPosition.getSelectedIndex()));
+// =======
+// >>>>>>> dd2a7dbb3de975c588c057e635ba15af7eec8938
         }
 
         private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {

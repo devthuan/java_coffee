@@ -61,7 +61,12 @@ public class DeliveryBill extends javax.swing.JPanel {
 
     private void loadData(ArrayList<DeliveryBillDTO> list_deliveryBills) {
 
-        DefaultTableModel model = new DefaultTableModel();
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         model.addColumn("ID");
         model.addColumn("Tên phiếu xuất");
         model.addColumn("Nhân viên");
@@ -149,7 +154,7 @@ public class DeliveryBill extends javax.swing.JPanel {
 
         BtnAdd.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         BtnAdd.setIcon(new javax.swing.ImageIcon("./src/assets/icon/plus.png")); // NOI18N
-        BtnAdd.setText("Tạo");
+        BtnAdd.setText("Thêm");
         BtnAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         BtnAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         BtnAdd.addActionListener(new java.awt.event.ActionListener() {

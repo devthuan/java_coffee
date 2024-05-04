@@ -4,6 +4,8 @@ package com.project.GUI;
 import com.project.BUS.*;
 import com.project.DTO.*;
 import com.project.DAO.*;
+
+import java.awt.Cursor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -70,6 +72,7 @@ public class CreateWareHouse extends javax.swing.JFrame {
 
         jbAdd.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
         jbAdd.setText("Thêm");
+        jbAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
         jbAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

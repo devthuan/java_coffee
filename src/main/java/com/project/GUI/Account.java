@@ -51,7 +51,12 @@ public class Account extends javax.swing.JPanel {
 
         listAccount = AccountBUS.getAllAccount();
         listAccount.sort(Comparator.comparing(AccountDTO::getId));
-        DefaultTableModel model = new DefaultTableModel();
+        DefaultTableModel model = new DefaultTableModel() {
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                                return false;
+                        }
+                };
         model.addColumn("ID");
         model.addColumn("Email");
         model.addColumn("Quyền");
