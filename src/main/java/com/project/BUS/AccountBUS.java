@@ -119,6 +119,9 @@ public class AccountBUS {
     {
         return AccountDAO.getLastAccountId();
     }
+    public ArrayList<AccountDTO> getAll_unused_1(int role_id) {
+        return AccountDAO.getAll_unused_1(role_id);
+    }
     public static void main(String[] args) {
         AccountBUS.login(new AccountDTO("admin@example.com", "admin"));
 

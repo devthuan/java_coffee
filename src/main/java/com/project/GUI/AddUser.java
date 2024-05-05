@@ -305,7 +305,7 @@ public class AddUser extends javax.swing.JFrame {
 
         private void displayPosition() {
                 int roleID = cbPosition.getSelectedIndex() == 0 ? 2 : 3;
-                accountDTOs = accountBUS.getAll_unused(roleID);
+                accountDTOs = accountBUS.getAll_unused_1(roleID);
                 cbEmail.removeAllItems();
                 for (AccountDTO acc : accountDTOs) {
                         cbEmail.addItem(acc.getEmail());
@@ -368,7 +368,7 @@ public class AddUser extends javax.swing.JFrame {
                         user.setSalary(Float.parseFloat(jtfSalary.getText()));
                         System.out.println("hello");
                         int roleID = cbPosition.getSelectedIndex() == 0 ? 2 : 3;
-                        accountDTOs = accountBUS.getAll_unused(roleID);
+                        accountDTOs = accountBUS.getAll_unused_1(roleID);
                         for (AccountDTO acc : accountDTOs) {
                                 System.out.println(acc.getId());
 
@@ -396,7 +396,7 @@ public class AddUser extends javax.swing.JFrame {
                         ArrayList<AccountDTO> accountDTOs = new ArrayList<>();
                         int selectedIndex = cbPosition.getSelectedIndex();
                         int roleID = selectedIndex == 0 ? 2 : 3;
-                        accountDTOs = accountBUS.getAll_unused(roleID);
+                        accountDTOs = accountBUS.getAll_unused_1(roleID);
                         cbEmail.removeAllItems();
                         for (AccountDTO acc : accountDTOs) {
                             cbEmail.addItem(acc.getEmail());
