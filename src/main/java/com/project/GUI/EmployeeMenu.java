@@ -336,7 +336,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         jTable1.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                double[] columnPercentages = { 0.05, 0.1, 0.1, 0.15, 0.15, 0.1, 0.1, 0.15, 0.1 }; // Phần trăm độ rộng
+                double[] columnPercentages = { 0.05, 0.1, 0.1, 0.15, 0.125, 0.1, 0.1, 0.15, 0.125 }; // Phần trăm độ rộng
                                                                                                   // cho từng cột
                 setColumnWidths(jTable1, columnPercentages);
             }
