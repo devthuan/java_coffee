@@ -56,6 +56,7 @@ public class StatisticalDAO {
                     "ChiTietPhieuNhap CTPN ON PhieuNhap.id = CTPN.PhieuNhap_id " +
                     "WHERE " +
                     "PhieuNhap.createdAt BETWEEN ? AND ? " + // Thêm điều kiện ngày tháng ở đây
+                    "AND PhieuNhap.is_active = 1 " +
                     "GROUP BY " +
                     "ngay " +
                     ") AS loi_nhuan_ngay " +
@@ -115,15 +116,16 @@ public class StatisticalDAO {
                     "UNION ALL " +
 
                     "SELECT " +
-                    "0 AS doanh_thu, " +
-                    "SUM(CTPN.don_gia * CTPN.so_luong) AS chi_phi_nhap_hang, " +
-                    "DATE(PhieuNhap.createdAt) AS ngay " +
+                        "0 AS doanh_thu, " +
+                        "SUM(CTPN.don_gia * CTPN.so_luong) AS chi_phi_nhap_hang, " +
+                        "DATE(PhieuNhap.createdAt) AS ngay " +
                     "FROM " +
                     "PhieuNhap " +
                     "JOIN " +
                     "ChiTietPhieuNhap CTPN ON PhieuNhap.id = CTPN.PhieuNhap_id " +
                     "WHERE " +
                     "PhieuNhap.createdAt >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) " +
+                    "AND PhieuNhap.is_active = 1 " +
                     "GROUP BY " +
                     "DATE(PhieuNhap.createdAt) " +
                     ") AS loi_nhuan_ngay " +

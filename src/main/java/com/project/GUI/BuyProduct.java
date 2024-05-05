@@ -61,7 +61,6 @@ public class BuyProduct extends JPanel implements AddProductListener {
                                 if (choice == JOptionPane.YES_OPTION) {
                                         int paymentMethod_id = pnCarts.PanelBottom.getSelectedPaymentMethodID();
 
-
                                         int account_id = PermissionAccount.getInstance().getAccountId();
 
                                         OrderDTO orderDTO = new OrderDTO("pending", paymentMethod_id, account_id);

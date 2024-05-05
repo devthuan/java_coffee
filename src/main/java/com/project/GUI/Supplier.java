@@ -445,11 +445,12 @@ public class Supplier extends javax.swing.JPanel {
                                                 JOptionPane.showMessageDialog(null, "Nhập file excel thành công.");
                                         } else {
                                                 JOptionPane.showMessageDialog(null, "Nhập file excel thất bại.");
-
+                                                
                                         }
                                 }
 
                         } catch (Exception e) {
+                                System.out.println(e);
                                 JOptionPane.showMessageDialog(null, "Có lỗi xảy ra, vui lòng chọn đúng file excel.");
                                 return;
                         }
@@ -537,10 +538,11 @@ public class Supplier extends javax.swing.JPanel {
                                         firstRow = false;
                                         continue;
                                 }
-                                String name_supplier = row.getCell(0).getStringCellValue();
-                                String address = row.getCell(1).getStringCellValue();
-                                String phone = row.getCell(2).getStringCellValue();
-                                String email = row.getCell(3).getStringCellValue();
+                                String name_supplier = getStringValueFromCell(row.getCell(0));
+                                String address = getStringValueFromCell(row.getCell(1));
+                                String phone = getStringValueFromCell(row.getCell(2));
+                                String email = getStringValueFromCell(row.getCell(3));
+
                                 checkValidate = SupplierCommon.validateCreateSupplier(name_supplier, address, phone,
                                                 email);
                         }
@@ -574,6 +576,24 @@ public class Supplier extends javax.swing.JPanel {
                 } catch (IOException ex) {
                         ex.printStackTrace();
                         return false;
+                }
+        }
+
+        // Method to get string value from a cell
+        private String getStringValueFromCell(Cell cell) {
+                if (cell == null) {
+                        return ""; // Return empty string if cell is null
+                }
+
+                switch (cell.getCellType()) {
+                        case STRING:
+                                return cell.getStringCellValue();
+                        case NUMERIC:
+                                // Handle numeric cell
+                                return String.valueOf((int) cell.getNumericCellValue()); // Or format it according to
+                                                                                         // your requirement
+                        default:
+                                return ""; // Return empty string for other cell types
                 }
         }
 
