@@ -1,6 +1,7 @@
 
 package com.project.GUI;
 import com.project.BUS.*;
+import com.project.DAO.mysqlConnect;
 import com.project.DTO.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,6 +11,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -39,6 +42,7 @@ public class ExportUser extends javax.swing.JFrame {
     public static final int COLUMN_INDEX_IDACCOUNT = 8;
     private static CellStyle cellStyleFormatNumber = null;
     UserService userService;
+
     public ExportUser() {
         initComponents();
     }
@@ -166,7 +170,7 @@ public class ExportUser extends javax.swing.JFrame {
         
         cell = row.createCell(COLUMN_INDEX_IDACCOUNT);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Mã tài khoản");
+        cell.setCellValue("Tài khoản");
     }
  
     // Write data
@@ -211,9 +215,16 @@ cell = row.createCell(COLUMN_INDEX_PHONE);
         timestampCell.setCellStyle(timestampStyle);
         
         cell = row.createCell(COLUMN_INDEX_IDACCOUNT);
-        cell.setCellValue(user.getAccountId());
+        cell.setCellValue(getEmailUser(user.getId()));
     }
- 
+    private static String getEmailUser(int id)
+    {   
+        AccountDTO accountDTO = new AccountDTO();
+        AccountBUS accountBUS = new AccountBUS();
+        accountDTO = accountBUS.getIdAccountUser(id);
+        String email = String.valueOf(accountDTO.getEmail());
+        return email;
+    }
     // Create CellStyle for header
     private static CellStyle createStyleForHeader(Sheet sheet) {
         // Create font
