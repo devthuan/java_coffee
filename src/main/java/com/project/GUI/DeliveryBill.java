@@ -137,7 +137,7 @@ public class DeliveryBill extends javax.swing.JPanel {
         BtnExport.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
         BtnFilter.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
         BtnRefresh.setCursor(new java.awt.Cursor(Cursor.HAND_CURSOR));
-        
+
         setMinimumSize(new java.awt.Dimension(1085, 768));
         setName(""); // NOI18N
         setPreferredSize(new java.awt.Dimension(1085, 768));
@@ -636,7 +636,7 @@ public class DeliveryBill extends javax.swing.JPanel {
         model.setRowCount(0); // Xóa tất cả các hàng
 
         // Lấy danh sách nhà cung cấp mới từ SupplierBUS
-        list_deliveryBills = DeliveryBillBUS.getAllDeliveryBill();
+        ArrayList<DeliveryBillDTO> list_deliveryBills = DeliveryBillBUS.getAllDeliveryBill();
 
         // Thêm dữ liệu mới vào JTable
         for (DeliveryBillDTO deliveryBill : list_deliveryBills) {

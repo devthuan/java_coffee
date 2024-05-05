@@ -23,8 +23,8 @@ public class WareHouseDAO {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String name = rs.getString("ten_NL");
-
-                list_ingredient.add(new WareHouseDTO(id, name));
+                int quantity = rs.getInt("so_luong");
+                list_ingredient.add(new WareHouseDTO(id, name, quantity));
             }
 
         } catch (Exception e) {

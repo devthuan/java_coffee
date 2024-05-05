@@ -12,9 +12,10 @@ public class WareHouseDTO {
     private LocalDateTime create_date;
     private LocalDateTime update_date;
 
-    public WareHouseDTO(int id, String name) {
+    public WareHouseDTO(int id, String name, int quantity) {
         this.id = id;
         this.name = name;
+        this.quantity = quantity;
     }
 
     public int getId() {

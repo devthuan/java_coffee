@@ -23,6 +23,7 @@ import com.project.DAO.WareHouseDAO;
 import com.project.DTO.DetailEnterCouponDTO;
 import com.project.DTO.EmployeeDTO;
 import com.project.DTO.EnterCouponDTO;
+import com.project.DTO.PermissionAccount;
 import com.project.DTO.SupplierDTO;
 import com.project.DTO.WareHouseDTO;
 
@@ -57,9 +58,12 @@ public class FormCreateEnterCoupon extends javax.swing.JFrame {
         ArrayList<EmployeeDTO> employees = EmployeeDAO.get_all_employee();
 
         for (EmployeeDTO employeeDTO : employees) {
-            jComboBox3.addItem(employeeDTO.getName());
-            employeeMap.put(employeeDTO.getName(), employeeDTO);
+            if (employeeDTO.getAccount_id() == PermissionAccount.getInstance().getAccountId()) {
+
+                jComboBox3.setText(String.valueOf(employeeDTO.getName()));
+            }
         }
+        jComboBox3.setEnabled(false);
 
         for (SupplierDTO supplierDTO : list_supplier) {
 
@@ -89,7 +93,7 @@ public class FormCreateEnterCoupon extends javax.swing.JFrame {
         jComboBox2 = new javax.swing.JComboBox<>();
         BoxName2 = new javax.swing.JPanel();
         NameSupplier2 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        jComboBox3 = new javax.swing.JTextField();
         BoxName = new javax.swing.JPanel();
         NameSupplier = new javax.swing.JLabel();
         inputName = new javax.swing.JTextField();
@@ -431,17 +435,16 @@ public class FormCreateEnterCoupon extends javax.swing.JFrame {
     private void BtnAddActionPerformed(java.awt.event.ActionEvent evt) {
 
         String valueSupplier = (String) jComboBox2.getSelectedItem();
-        String valueEmployee = (String) jComboBox3.getSelectedItem();
+        // String valueEmployee = (String) jComboBox3.getSelectedItem();
         String valueNameEnterCoupon = inputName.getText();
         boolean checkValidate = Common.ValidateInputString(valueNameEnterCoupon);
         if (!checkValidate) {
             return;
         }
         SupplierDTO supplier = supplierMap.get(valueSupplier);
-        EmployeeDTO employee = employeeMap.get(valueEmployee);
+        int account_id = PermissionAccount.getInstance().getAccountId();
 
-        EnterCouponDTO newEnterCoupon = new EnterCouponDTO(valueNameEnterCoupon, employee.getAccount_id(),
-                supplier.getId());
+        EnterCouponDTO newEnterCoupon = new EnterCouponDTO(valueNameEnterCoupon, account_id, supplier.getId());
         ArrayList<DetailEnterCouponDTO> list_new_detail_coupon = new ArrayList<DetailEnterCouponDTO>();
         // List<String[]> allData = new ArrayList<>();
 
@@ -588,7 +591,7 @@ public class FormCreateEnterCoupon extends javax.swing.JFrame {
     private javax.swing.JLabel NameSupplier2;
     private javax.swing.JTextField inputName;
     private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JTextField jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

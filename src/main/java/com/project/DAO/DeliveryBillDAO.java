@@ -23,32 +23,36 @@ public class DeliveryBillDAO {
     public static boolean createDeliveryBill(DeliveryBillDTO deliveryBill,
             ArrayList<DetailDeliveryBillDTO> list_detail) {
         Connection conn = null;
+        PreparedStatement pst = null;
+        PreparedStatement pst2 = null;
+        ResultSet generatedKeys = null;
         try {
             conn = mysqlConnect.getConnection();
             conn.setAutoCommit(false);
+
             String sql = "INSERT INTO PhieuXuat(ten_phieu_xuat, TaiKhoan_id) VALUES(?,?)";
-            PreparedStatement pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, deliveryBill.getNameDeliveryBill());
             pst.setInt(2, deliveryBill.getAccountId());
 
             int affectedRow = pst.executeUpdate();
             int deliveryBillId = -1;
             if (affectedRow > 0) {
-                ResultSet generatedKeys = pst.getGeneratedKeys();
+                generatedKeys = pst.getGeneratedKeys();
                 if (generatedKeys.next()) {
                     deliveryBillId = generatedKeys.getInt(1);
                     for (DetailDeliveryBillDTO detailDTO : list_detail) {
                         String sql2 = "INSERT INTO ChiTietPhieuXuat (PhieuXuat_id, NguyenLieu_id, so_luong) VALUES (?, ?, ?)";
-                        try (PreparedStatement pst2 = conn.prepareStatement(sql2)) {
-                            pst2.setInt(1, deliveryBillId);
-                            pst2.setInt(2, detailDTO.getIngradientId());
-                            pst2.setInt(3, detailDTO.getQuantity());
-                            pst2.executeUpdate();
-                        }
+                        pst2 = conn.prepareStatement(sql2);
+                        pst2.setInt(1, deliveryBillId);
+                        pst2.setInt(2, detailDTO.getIngradientId());
+                        pst2.setInt(3, detailDTO.getQuantity());
+                        pst2.executeUpdate();
 
                         boolean check = updateQuantityIngredient(conn, detailDTO.getIngradientId(),
                                 detailDTO.getQuantity());
                         if (!check) {
+                            conn.rollback();
                             return false;
                         }
                     }
@@ -72,6 +76,15 @@ public class DeliveryBillDAO {
         } finally {
             // Close resources in finally block to ensure they are always closed
             try {
+                if (pst2 != null) {
+                    pst2.close();
+                }
+                if (generatedKeys != null) {
+                    generatedKeys.close();
+                }
+                if (pst != null) {
+                    pst.close();
+                }
                 if (conn != null) {
                     conn.close();
                 }
@@ -122,9 +135,9 @@ public class DeliveryBillDAO {
                     "NhanVien.ho_va_ten, " +
                     "SUM(ChiTietPhieuXuat.so_luong) AS tong_kg " +
                     "FROM PhieuXuat " +
-                    "JOIN ChiTietPhieuXuat ON PhieuXuat.id = ChiTietPhieuXuat.PhieuXuat_id " +
-                    "JOIN TaiKhoan ON  TaiKhoan.id = PhieuXuat.TaiKhoan_id " +
-                    "JOIN NhanVien ON TaiKhoan.id = NhanVien.TaiKhoan_id " +
+                    "left JOIN ChiTietPhieuXuat ON PhieuXuat.id = ChiTietPhieuXuat.PhieuXuat_id " +
+                    "left JOIN TaiKhoan ON  TaiKhoan.id = PhieuXuat.TaiKhoan_id " +
+                    "left JOIN NhanVien ON TaiKhoan.id = NhanVien.TaiKhoan_id " +
                     "WHERE PhieuXuat.is_active = 1 " +
                     "GROUP BY PhieuXuat.id";
             PreparedStatement pst = conn.prepareStatement(sql);
@@ -367,6 +380,14 @@ public class DeliveryBillDAO {
             return false;
         }
         return false;
+    }
+
+    public static void main(String[] args) {
+        ArrayList<DeliveryBillDTO> getDeliveryl = getDeliveryBill();
+
+        for (DeliveryBillDTO deliveryBillDTO : getDeliveryl) {
+            System.out.println(deliveryBillDTO.getId());
+        }
     }
 
 }

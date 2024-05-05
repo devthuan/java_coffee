@@ -23,6 +23,7 @@ import com.project.DAO.WareHouseDAO;
 import com.project.DTO.DeliveryBillDTO;
 import com.project.DTO.DetailDeliveryBillDTO;
 import com.project.DTO.EmployeeDTO;
+import com.project.DTO.PermissionAccount;
 import com.project.DTO.SupplierDTO;
 import com.project.DTO.WareHouseDTO;
 
@@ -46,7 +47,7 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
 
         for (WareHouseDTO wareHouseDTO : list_ingredient) {
 
-            ingredientMap.put(wareHouseDTO.getName(), wareHouseDTO);
+            ingredientMap.put(wareHouseDTO.getName() + "(" + wareHouseDTO.getQuantity() + ")", wareHouseDTO);
         }
 
         initComponents();
@@ -57,9 +58,13 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
         ArrayList<EmployeeDTO> employees = EmployeeDAO.get_all_employee();
 
         for (EmployeeDTO employeeDTO : employees) {
-            jComboBox3.addItem(employeeDTO.getName());
-            employeeMap.put(employeeDTO.getName(), employeeDTO);
+            if (employeeDTO.getAccount_id() == PermissionAccount.getInstance().getAccountId()) {
+
+                jComboBox3.setText(String.valueOf(employeeDTO.getName()));
+            }
         }
+
+        jComboBox3.setEnabled(false);
 
     }
 
@@ -83,7 +88,7 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
         jComboBox2 = new javax.swing.JComboBox<>();
         BoxName2 = new javax.swing.JPanel();
         NameSupplier2 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        jComboBox3 = new javax.swing.JTextField();
         BoxName = new javax.swing.JPanel();
         NameSupplier = new javax.swing.JLabel();
         inputName = new javax.swing.JTextField();
@@ -356,7 +361,7 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
             JComboBox InputNameIngredientCopy = new JComboBox();
             for (WareHouseDTO wareHouseDTO : list_ingredient) {
 
-                InputNameIngredientCopy.addItem(wareHouseDTO.getName());
+                InputNameIngredientCopy.addItem(wareHouseDTO.getName() + "(" + wareHouseDTO.getQuantity() + ")");
 
             }
             JTextField InputQuantityCopy = new JTextField();
@@ -422,15 +427,16 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
 
     private void BtnAddActionPerformed(java.awt.event.ActionEvent evt) {
 
-        String valueEmployee = (String) jComboBox3.getSelectedItem();
+        // String valueEmployee = (String) jComboBox3.getSelectedItem();
         String valueNameDeliveryBill = inputName.getText();
         boolean checkValidate = Common.ValidateInputString(valueNameDeliveryBill);
         if (!checkValidate) {
             return;
         }
-        EmployeeDTO employee = employeeMap.get(valueEmployee);
 
-        DeliveryBillDTO newDeliveryBillDTO = new DeliveryBillDTO(valueNameDeliveryBill, employee.getAccount_id());
+        int account_id = PermissionAccount.getInstance().getAccountId();
+
+        DeliveryBillDTO newDeliveryBillDTO = new DeliveryBillDTO(valueNameDeliveryBill, account_id);
         ArrayList<DetailDeliveryBillDTO> list_new_detail_delivery = new ArrayList<DetailDeliveryBillDTO>();
         // List<String[]> allData = new ArrayList<>();
 
@@ -489,6 +495,7 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
         // list_new_detail_delivery);
         Boolean check = DeliveryBillBUS.createDeliveryBillBUS(newDeliveryBillDTO, list_new_detail_delivery);
         if (check) {
+          
             JOptionPane.showMessageDialog(null, "Tạo phiếu xuất thành công.");
             this.setVisible(false);
         }
@@ -566,7 +573,7 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
     private javax.swing.JLabel NameSupplier2;
     private javax.swing.JTextField inputName;
     private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JTextField jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
