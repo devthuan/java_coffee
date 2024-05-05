@@ -41,6 +41,7 @@ public class StatisticalDAO {
                     "SanPham SP ON CTHD.SanPham_id = SP.id " +
                     "WHERE " +
                     "HoaDon.createdAt BETWEEN ? AND ? " + // Thêm điều kiện ngày tháng ở đây
+                    "AND HoaDon.trang_thai = 'successful' " + // Thêm điều kiện ngày tháng ở đây
                     "GROUP BY " +
                     "ngay " +
 
@@ -110,15 +111,16 @@ public class StatisticalDAO {
                     "SanPham SP ON CTHD.SanPham_id = SP.id " +
                     "WHERE " +
                     "HoaDon.createdAt >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) " +
+                    "AND HoaDon.trang_thai = 'successful' " +
                     "GROUP BY " +
                     "DATE(HoaDon.createdAt) " +
 
                     "UNION ALL " +
 
                     "SELECT " +
-                        "0 AS doanh_thu, " +
-                        "SUM(CTPN.don_gia * CTPN.so_luong) AS chi_phi_nhap_hang, " +
-                        "DATE(PhieuNhap.createdAt) AS ngay " +
+                    "0 AS doanh_thu, " +
+                    "SUM(CTPN.don_gia * CTPN.so_luong) AS chi_phi_nhap_hang, " +
+                    "DATE(PhieuNhap.createdAt) AS ngay " +
                     "FROM " +
                     "PhieuNhap " +
                     "JOIN " +
@@ -174,6 +176,7 @@ public class StatisticalDAO {
                     "ChiTietHoaDon CTHD ON HoaDon.id = CTHD.HoaDon_id " +
                     "JOIN " +
                     "SanPham SP ON CTHD.SanPham_id = SP.id " +
+                    "WHERE HoaDon.trang_thai = 'successful' " +
                     "GROUP BY " +
                     "DATE_FORMAT(HoaDon.createdAt, '%Y-%m') " +
 
@@ -218,46 +221,43 @@ public class StatisticalDAO {
         try {
             Connection conn = mysqlConnect.getConnection();
 
-            String sql = "SELECT \r\n" + //
-                    "    SUM(doanh_thu) AS tong_doanh_thu,\r\n" + //
-                    "    SUM(chi_phi_nhap_hang) AS tong_chi_phi_nhap_hang,\r\n" + //
-                    "    SUM(doanh_thu) - SUM(chi_phi_nhap_hang) AS loi_nhuan\r\n" + //
-                    "    \r\n" + //
-                    "FROM (\r\n" + //
-                    "    SELECT \r\n" + //
-                    "        SUM(SP.gia * CTHD.so_luong) AS doanh_thu,\r\n" + //
-                    "        0 AS chi_phi_nhap_hang,\r\n" + //
-                    "        DATE_FORMAT(HoaDon.createdAt, '%Y-%m-%d') AS ngay\r\n" + //
-                    "    FROM \r\n" + //
-                    "        HoaDon\r\n" + //
-                    "    JOIN \r\n" + //
-                    "        ChiTietHoaDon CTHD ON HoaDon.id = CTHD.HoaDon_id\r\n" + //
-                    "    JOIN \r\n" + //
-                    "        SanPham SP ON CTHD.SanPham_id = SP.id\r\n" + //
-                    "     WHERE \r\n" + //
-                    "        HoaDon.createdAt BETWEEN '2024-04-13' AND '2024-04-16'  -- Thêm điều kiện ngày tháng ở đây\r\n"
-                    + //
-                    "    GROUP BY \r\n" + //
-                    "        ngay\r\n" + //
-                    "    \r\n" + //
-                    "    UNION ALL\r\n" + //
-                    "    \r\n" + //
-                    "    SELECT \r\n" + //
-                    "        0 AS doanh_thu,\r\n" + //
-                    "        SUM(CTPN.don_gia * CTPN.so_luong) AS chi_phi_nhap_hang,\r\n" + //
-                    "        DATE_FORMAT(PhieuNhap.createdAt, '%Y-%m-%d') AS ngay\r\n" + //
-                    "    FROM \r\n" + //
-                    "        PhieuNhap\r\n" + //
-                    "    JOIN \r\n" + //
-                    "        ChiTietPhieuNhap CTPN ON PhieuNhap.id = CTPN.PhieuNhap_id\r\n" + //
-                    "    WHERE \r\n" + //
-                    "        PhieuNhap.createdAt BETWEEN '2024-04-13' AND '2024-04-16'  -- Thêm điều kiện ngày tháng ở đây\r\n"
-                    + //
-                    "    GROUP BY \r\n" + //
-                    "        ngay\r\n" + //
-                    ") AS loi_nhuan_ngay\r\n" + //
-                    "\r\n" + //
-                    "";
+            String sql = "SELECT\n" +
+                    "    SUM(doanh_thu) AS tong_doanh_thu,\n" +
+                    "    SUM(chi_phi_nhap_hang) AS tong_chi_phi_nhap_hang,\n" +
+                    "    SUM(doanh_thu) - SUM(chi_phi_nhap_hang) AS loi_nhuan\n" +
+                    "FROM\n" +
+                    "    (\n" +
+                    "        SELECT\n" +
+                    "            SUM(SP.gia * CTHD.so_luong) AS doanh_thu,\n" +
+                    "            0 AS chi_phi_nhap_hang,\n" +
+                    "            DATE(HoaDon.createdAt) AS ngay\n" +
+                    "        FROM\n" +
+                    "            HoaDon\n" +
+                    "        JOIN\n" +
+                    "            ChiTietHoaDon CTHD ON HoaDon.id = CTHD.HoaDon_id\n" +
+                    "        JOIN\n" +
+                    "            SanPham SP ON CTHD.SanPham_id = SP.id\n" +
+                    "        WHERE\n" +
+                    "            HoaDon.trang_thai = 'successful'\n" +
+                    "        GROUP BY\n" +
+                    "            DATE(HoaDon.createdAt)\n" +
+                    "\n" +
+                    "        UNION ALL\n" +
+                    "\n" +
+                    "        SELECT\n" +
+                    "            0 AS doanh_thu,\n" +
+                    "            SUM(CTPN.don_gia * CTPN.so_luong) AS chi_phi_nhap_hang,\n" +
+                    "            DATE(PhieuNhap.createdAt) AS ngay\n" +
+                    "        FROM\n" +
+                    "            PhieuNhap\n" +
+                    "        JOIN\n" +
+                    "            ChiTietPhieuNhap CTPN ON PhieuNhap.id = CTPN.PhieuNhap_id\n" +
+                    "        WHERE\n" +
+                    "            PhieuNhap.is_active = 1\n" +
+                    "        GROUP BY\n" +
+                    "            DATE(PhieuNhap.createdAt)\n" +
+                    "    ) AS loi_nhuan_ngay;";
+
             PreparedStatement pst = conn.prepareStatement(sql);
 
             ResultSet result_query = pst.executeQuery();
