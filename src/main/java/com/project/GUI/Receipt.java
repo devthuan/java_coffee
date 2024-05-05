@@ -156,9 +156,14 @@ public class Receipt extends javax.swing.JPanel {
                 BtnAdd.setText("Thêm");
                 BtnAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
                 BtnAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-                BtnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
-                        public void mouseClicked(java.awt.event.MouseEvent evt) {
-                                BtnDetail1MouseClicked(evt);
+                // BtnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+                // public void mouseClicked(java.awt.event.MouseEvent evt) {
+                // BtnAddMouseClicked(evt);
+                // }
+                // });
+                BtnAdd.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                BtnAddMouseClicked(evt);
                         }
                 });
                 BoxBtn.add(BtnAdd);
@@ -728,7 +733,7 @@ public class Receipt extends javax.swing.JPanel {
                 }
         }
 
-        private void BtnDetail1MouseClicked(java.awt.event.MouseEvent evt) {
+        private void BtnAddMouseClicked(java.awt.event.ActionEvent evt) {
                 if (permissionList.hasPermission("CREATE_WAREHOUSE_RECEIPT")) {
                         new FormCreateEnterCoupon().setVisible(true);
 

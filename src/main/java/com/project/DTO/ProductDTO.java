@@ -91,6 +91,13 @@ public class ProductDTO {
         this.price = price;
     }
 
+    public ProductDTO(int id, String product_name, Float price, int quantity) {
+        this.id = id;
+        this.product_name = product_name;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
     public ProductDTO(String product_name, Float price) {
         this.product_name = product_name;
         this.price = price;
