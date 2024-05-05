@@ -41,6 +41,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
     private PermissionAccount permissionList;
     AccountBUS accountBUS;
     AccountDTO accountDTO;
+
     public EmployeeMenu() {
         initComponents();
         permissionList = PermissionAccount.getInstance();
@@ -336,8 +337,9 @@ public class EmployeeMenu extends javax.swing.JPanel {
         jTable1.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                double[] columnPercentages = { 0.05, 0.1, 0.1, 0.15, 0.125, 0.1, 0.1, 0.15, 0.125 }; // Phần trăm độ rộng
-                                                                                                  // cho từng cột
+                double[] columnPercentages = { 0.05, 0.1, 0.1, 0.15, 0.125, 0.1, 0.1, 0.15, 0.125 }; // Phần trăm độ
+                                                                                                     // rộng
+                                                                                                     // cho từng cột
                 setColumnWidths(jTable1, columnPercentages);
             }
         });
@@ -439,80 +441,105 @@ public class EmployeeMenu extends javax.swing.JPanel {
         BufferedInputStream excelBIS = null;
         XSSFWorkbook excelJTableImport = null;
         String defaultCurrentDirectoryPath = "";
-        JFileChooser excelFileChooser = new
-        JFileChooser(defaultCurrentDirectoryPath);
+        JFileChooser excelFileChooser = new JFileChooser(defaultCurrentDirectoryPath);
         FileNameExtensionFilter fnef = new FileNameExtensionFilter("EXCEL FILES",
-        "xls", "xlsx", "xlsm");
+                "xls", "xlsx", "xlsm");
         excelFileChooser.setFileFilter(fnef);
         excelFileChooser.setDialogTitle("Select Excel File");
         int excelChooser = excelFileChooser.showOpenDialog(null);
         if (excelChooser == JFileChooser.APPROVE_OPTION) {
-        try {
-        excelFile = excelFileChooser.getSelectedFile();
-        excelFIS = new FileInputStream(excelFile);
-        excelBIS = new BufferedInputStream(excelFIS);
-        excelJTableImport = new XSSFWorkbook(excelBIS);
-        XSSFSheet excelSheet = excelJTableImport.getSheetAt(0);
-        for (int row = 1; row <= excelSheet.getLastRowNum(); row++)
-        {
-        XSSFRow excelRow = excelSheet.getRow(row);
- 
-           
-    
-            XSSFCell excelName = excelRow.getCell(1);
-            XSSFCell excelDate = excelRow.getCell(2);
-            System.out.println(excelDate);
-            XSSFCell excelAddress = excelRow.getCell(3);
-            XSSFCell excelPosition = excelRow.getCell(4);
-            XSSFCell excelPhone = excelRow.getCell(5);
-            XSSFCell excelSalary = excelRow.getCell(6);
-            XSSFCell excelEmailAccount = excelRow.getCell(7);
-            System.out.println(excelEmailAccount);
-            XSSFCell excelPasswordAccount = excelRow.getCell(8);
-            System.out.println(excelPasswordAccount);
-            boolean check = AccountBUS.createAccountBUS(new AccountDTO(excelEmailAccount.getStringCellValue(), excelPasswordAccount.getStringCellValue(), 3));
-            if (check) {
-                System.out.println(check);
-            }else {
-                System.out.println("fail");
-                JOptionPane.showMessageDialog(this, "Tạo tài khoản thất bại");
-                return;
+            try {
+                excelFile = excelFileChooser.getSelectedFile();
+                excelFIS = new FileInputStream(excelFile);
+                excelBIS = new BufferedInputStream(excelFIS);
+                excelJTableImport = new XSSFWorkbook(excelBIS);
+                XSSFSheet excelSheet = excelJTableImport.getSheetAt(0);
+                for (int row = 1; row <= excelSheet.getLastRowNum(); row++) {
+                    XSSFRow excelRow = excelSheet.getRow(row);
+
+                    if (excelRow == null) {
+                        JOptionPane.showMessageDialog(null, "Import file excel thành công!", "Thông báo",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        return;
+                    }
+
+                    XSSFCell excelName = excelRow.getCell(1);
+                    XSSFCell excelDate = excelRow.getCell(2);
+                    System.out.println(excelDate);
+                    XSSFCell excelAddress = excelRow.getCell(3);
+                    XSSFCell excelPosition = excelRow.getCell(4);
+                    XSSFCell excelPhone = excelRow.getCell(5);
+                    XSSFCell excelSalary = excelRow.getCell(6);
+                    XSSFCell excelEmailAccount = excelRow.getCell(7);
+                    System.out.println(excelEmailAccount);
+                    XSSFCell excelPasswordAccount = excelRow.getCell(8);
+                    String dateRegex = "\\d{1,2}/\\d{1,2}/\\d{4}";
+
+                    if (excelDate.getCellType() == CellType.STRING) {
+                        String dateString = excelDate.getStringCellValue();
+                        if (!dateString.matches(dateRegex)) {
+                            JOptionPane.showMessageDialog(this, "Ngày sinh không hợp lệ! Vui lòng kiểm tra lại.");
+                            return;
+                        }
+                    } 
+                    System.out.println(excelPasswordAccount);
+
+                    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+                    String dateFormat = sdfDate.format(excelDate.getDateCellValue());
+                    User user = new User();
+                    user.setName(excelName.getStringCellValue());
+                    user.setDate(dateFormat);
+                    System.out.println(dateFormat);
+                    user.setAddress(excelAddress.getStringCellValue());
+                    user.setPosition(excelPosition.getStringCellValue());
+                    String phone = "";
+                    String PHONE_REGEX = "^0\\d{9,10}$";
+                    if (excelPhone != null) {
+                        if (excelPhone.getCellType() == CellType.STRING) {
+                            // Nếu ô là kiểu chuỗi
+                            phone = excelPhone.getStringCellValue();
+                            // Nếu ô là kiểu số, chuyển đổi thành chuỗi trước khi gán cho user
+                        } else if (excelPhone.getCellType() == CellType.NUMERIC) {
+                            phone = String.valueOf((int) excelPhone.getNumericCellValue());
+                        }
+
+                    }
+                    if (!phone.matches(PHONE_REGEX)) {
+                        JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ! Vui lòng kiểm tra lại.");
+                        return;
+                    }
+                    
+                    String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}$";
+                    String checkEmail = excelEmailAccount.getStringCellValue();
+                    if(!checkEmail.matches(emailRegex))
+                    {
+                        JOptionPane.showMessageDialog(this, "Email không hợp lệ! Vui lòng kiểm tra lại.");
+                        return;
+                    }
+                    user.setPhone(phone);
+                    System.out.println(phone);
+                    user.setSalary((float) (excelSalary.getNumericCellValue()));
+                    boolean check = AccountBUS.createAccountBUS(new AccountDTO(excelEmailAccount.getStringCellValue(),
+                            excelPasswordAccount.getStringCellValue(), 3));
+                    if (check) {
+                        System.out.println(check);
+                    } else {
+                        System.out.println("fail");
+                        JOptionPane.showMessageDialog(this, "Tạo tài khoản thất bại");
+                        return;
+                    }
+                    int idAccount = accountBUS.getLastAccountId();
+                    user.setAccountId(idAccount);
+
+                    System.out.println(excelSalary.getNumericCellValue());
+                    userservice.addUser(user);
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            int idAccount = accountBUS.getLastAccountId();
-            SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
-            String dateFormat = sdfDate.format(excelDate.getDateCellValue());
-            User user = new User();
-            user.setName(excelName.getStringCellValue());
-            user.setDate(dateFormat);
-            System.out.println(dateFormat);
-            user.setAddress(excelAddress.getStringCellValue());
-            user.setPosition(excelPosition.getStringCellValue());
-            String phone = "";
-            if (excelPhone != null) {
-                if (excelPhone.getCellType() == CellType.STRING) {
-                    // Nếu ô là kiểu chuỗi
-                    phone = excelPhone.getStringCellValue();
-                    // Nếu ô là kiểu số, chuyển đổi thành chuỗi trước khi gán cho user
-                } else if (excelPhone.getCellType() == CellType.NUMERIC) {
-                    phone = String.valueOf((int) excelPhone.getNumericCellValue());
-                } 
-            }
-            user.setPhone(phone);
-            System.out.println(phone);
-            user.setSalary((float) (excelSalary.getNumericCellValue()));
-            user.setAccountId(idAccount);
-            
-            System.out.println(excelSalary.getNumericCellValue());
-            userservice.addUser(user);
-    
         }
-        JOptionPane.showMessageDialog(null, "Import file excel thành công!", "Thông báo",
-        JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
-        e.printStackTrace();
-        }
-        }
-        
+
     }
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {
@@ -558,20 +585,16 @@ public class EmployeeMenu extends javax.swing.JPanel {
         String keyword = inputSearch.getText().trim();
         List<User> users = null;
         if (cbSelect.getSelectedItem().equals("Tìm kiếm theo mã")) {
-            if(keyword.isEmpty())
-            {
+            if (keyword.isEmpty()) {
                 users = userservice.getAllUser();
-            }
-            else 
-            {
+            } else {
                 String integerPattern = "^\\d+$";
-                if(!keyword.matches(integerPattern))
-                {
+                if (!keyword.matches(integerPattern)) {
                     JOptionPane.showMessageDialog(null, "Mã nhân viên phải là một số");
                     inputSearch.requestFocus();
                     return;
                 }
-                
+
                 int id = Integer.parseInt(keyword);
                 users = userservice.searchAllUserById(id);
             }
