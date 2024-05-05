@@ -60,11 +60,13 @@ public class AccountDAO {
                 PreparedStatement pst = con.prepareStatement(sql);
                 pst.setInt(1, accID);
                 ResultSet result = pst.executeQuery();
-                while (result.next()) {
+                if (result.next()) {
                     int id = result.getInt("id");
                     String email = result.getString("email");
                     int role_id = result.getInt("quyen_id");
                     listAccount.add(new AccountDTO(id, email, role_id));
+                } else {
+                    listAccount.add(null);
                 }
 
             }

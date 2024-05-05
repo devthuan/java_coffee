@@ -88,15 +88,14 @@ public class OrderMenu extends javax.swing.JPanel {
                         }
                         empList = empBUS.getEmpList_ByAccountID(accountID_List);
                         accList = AccountBUS.getAllAccount(accountID_List);
-
                         int i = 0;
                         for (OrderDTO o : orders.keySet()) {
                                 Float total = orders.get(o);
-
+                                
                                 dtm.addRow(new Object[] {
                                                 o.getId(),
-                                                accList.get(i).getEmail(),
-                                                empList.get(i).getName(),
+                                                accList.get(i) == null ? "NULL" :accList.get(i).getEmail(),
+                                                empList.get(i) == null ? "NULL" :empList.get(i).getName(),
                                                 Formatter.getFormatedPrice(total),
                                                 paymentMethods.get(o.getPaymentMethod_id() - 1).getPayment_name(),
                                                 Common.formatedDateTime(o.getCreatedAt()),
@@ -840,9 +839,10 @@ public class OrderMenu extends javax.swing.JPanel {
                         BuyProductForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         BuyProductForm.pack();
                         BuyProductForm.setLocationRelativeTo(null);
-                        if (BuyProductPanel == null) {
-                                BuyProductPanel = new BuyProduct();
-                        }
+                        // if (BuyProductPanel == null) {
+                        //         BuyProductPanel = new BuyProduct();
+                        // }
+                        BuyProductPanel = Main.getBuyProduct();
                         BuyProductForm.add(BuyProductPanel);
                 } else {
                         BuyProductForm.setVisible(true);
@@ -855,18 +855,17 @@ public class OrderMenu extends javax.swing.JPanel {
                         int selectedRow = tbTableOrder.getSelectedRow();
                         if (selectedRow != -1) {
                                 int orderID = (int) tbTableOrder.getValueAt(selectedRow, 0);
+                                String emp_email = (String) tbTableOrder.getValueAt(selectedRow, 1);
+                                String emp_name = (String) tbTableOrder.getValueAt(selectedRow, 2);
 
-                                int i = 0;
                                 for (OrderDTO order : orders.keySet()) {
                                         if (order.getId() == orderID) {
-                                                if (editOrderForm != null) {
-                                                        editOrderForm.dispose();
+                                                if (orderDetailForm != null) {
+                                                        orderDetailForm.dispose();
                                                 }
-                                                editOrderForm = new EditOrderForm(order, empList.get(i),
-                                                                accList.get(i));
+                                                editOrderForm = new EditOrderForm(order, emp_name, emp_email);
                                                 return;
                                         }
-                                        i++;
                                 }
                         } else {
                                 JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để xem chi tiết", "Thông báo",
@@ -992,17 +991,17 @@ public class OrderMenu extends javax.swing.JPanel {
                 int selectedRow = tbTableOrder.getSelectedRow();
                 if (selectedRow != -1) {
                         int orderID = (int) tbTableOrder.getValueAt(selectedRow, 0);
+                        String emp_email = (String) tbTableOrder.getValueAt(selectedRow, 1);
+                        String emp_name = (String) tbTableOrder.getValueAt(selectedRow, 2);
 
-                        int i = 0;
                         for (OrderDTO order : orders.keySet()) {
                                 if (order.getId() == orderID) {
                                         if (orderDetailForm != null) {
                                                 orderDetailForm.dispose();
                                         }
-                                        orderDetailForm = new OrderDetail(order, empList.get(i), accList.get(i));
+                                        orderDetailForm = new OrderDetail(order, emp_name, emp_email );
                                         return;
                                 }
-                                i++;
                         }
                 } else {
                         JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để xem chi tiết", "Thông báo",

@@ -71,12 +71,14 @@ public class EmployeeDAO {
                 pst.setInt(1, accID);
                 ResultSet result_query = pst.executeQuery();
 
-                while (result_query.next()) {
+                if (result_query.next()) {
                     int id = result_query.getInt("id");
                     String name = result_query.getString("ho_va_ten");
                     int account_id = result_query.getInt("TaiKhoan_id");
 
                     empList.add(new EmployeeDTO(id, name, account_id));
+                } else {
+                    empList.add(null);
                 }
             }
 

@@ -39,19 +39,20 @@ import com.project.Util.Formatter;
  */
 public class OrderDetail extends javax.swing.JFrame {
 
-    public OrderDetail(OrderDTO order, EmployeeDTO emp, AccountDTO acc) {
+    public OrderDetail(OrderDTO order, String emp_name, String emp_email) {
         setTitle("Chi tiết đơn hàng");
         initComponents();
-        loadData(order, emp, acc);
+        loadData(order, emp_name, emp_email);
     }
 
-    private void loadData(OrderDTO order, EmployeeDTO emp, AccountDTO acc) {
+    private void loadData(OrderDTO order, String emp_name, String emp_email) {
         PaymentMethodDTO paymentMethod = new PaymentMethodBUS().getByID(order.getPaymentMethod_id());
         PaymentMethod.setText(paymentMethod.getPayment_name());
-        Email.setText(acc.getEmail());
-
-        if (emp.getName() != null) {
-            FullName.setText(emp.getName());
+        if(emp_email != null) {
+            Email.setText(emp_email);
+        }
+        if(emp_name != null){
+            FullName.setText(emp_name);
         }
 
         CreatedAt.setText(String.valueOf(Common.formatedDateTime(order.getCreatedAt())));
@@ -194,7 +195,7 @@ public class OrderDetail extends javax.swing.JFrame {
 
         Email.setFont(new java.awt.Font("Arial", 0, 14));
         Email.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Email.setText("");
+        Email.setText("NULL");
         Email.setDisabledTextColor(new java.awt.Color(51, 51, 51));
         Email.setEditable(false);
         Email.setMaximumSize(new java.awt.Dimension(150, 50));

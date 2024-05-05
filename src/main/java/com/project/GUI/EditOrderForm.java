@@ -30,10 +30,10 @@ import com.project.Util.Formatter;
 
 public class EditOrderForm extends javax.swing.JFrame {
 
-    public EditOrderForm(OrderDTO order, EmployeeDTO emp, AccountDTO acc) {
+    public EditOrderForm(OrderDTO order, String emp_name, String emp_email) {
         setTitle("Cập nhật đơn hàng");
         initComponents(order.getOrder_status());
-        loadData(order, emp, acc);
+        loadData(order, emp_name, emp_email);
     }
 
     private static String[] getOrderStatus(String currenStatus) {
@@ -53,13 +53,14 @@ public class EditOrderForm extends javax.swing.JFrame {
         return -1;
     }
 
-    private void loadData(OrderDTO order, EmployeeDTO emp, AccountDTO acc) {
+    private void loadData(OrderDTO order, String emp_name, String emp_email) {
         PaymentMethodDTO paymentMethod = new PaymentMethodBUS().getByID(order.getPaymentMethod_id());
         PaymentMethod.setText(paymentMethod.getPayment_name());
-        Email.setText(acc.getEmail());
-
-        if (emp.getName() != null) {
-            FullName.setText(emp.getName());
+        if (emp_email != null) {
+            Email.setText(emp_email);
+        }
+        if (emp_name != null) {
+            FullName.setText(emp_name);
         }
 
         CreatedAt.setText(String.valueOf(Common.formatedDateTime(order.getCreatedAt())));
