@@ -2,6 +2,7 @@
 package com.project.GUI;
 
 import java.awt.Cursor;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -360,18 +361,19 @@ public class WareHouseMenu extends javax.swing.JPanel {
     }
 
     private void BtnRefreshActionPerformed(java.awt.event.ActionEvent evt) {
+        InputSearch.setText("");
         dtm.setRowCount(0);
-        List<WareHouse> warehouses = null;
-        try {
-            warehouses = wareHouseService.getAllWareHouse();
-        } catch (Exception ex) {
-            Logger.getLogger(EmployeeMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        for (WareHouse warehouse : warehouses) {
-            dtm.addRow(
-                    new Object[] { warehouse.getId(), warehouse.getName(), warehouse.getUnit(), warehouse.getQuantity(),
-                            warehouse.getCreateDate(), warehouse.getUpdateDate() });
-        }
+            try {
+                List<WareHouse> wareHouses = wareHouseService.getAllWareHouse();
+                for(WareHouse warehouse : wareHouses)
+                {
+                    dtm.addRow(new Object[] {warehouse.getId(), warehouse.getName(), warehouse.getUnit(), warehouse.getQuantity(),
+                        warehouse.getCreateDate(), warehouse.getUpdateDate()});
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        
     }
 
     private void BtnDeleteMouseClicked(java.awt.event.MouseEvent evt) {
@@ -428,20 +430,8 @@ public class WareHouseMenu extends javax.swing.JPanel {
     private void FilterActionPerformed(java.awt.event.ActionEvent evt) {
         InputSearch.setText("");
         InputSearch.requestFocus();
+        dtm.setRowCount(0);
         try {
-            DefaultTableModel dtm = new DefaultTableModel() {
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    return false;
-                }
-            };
-            TableReceipt.setModel(dtm);
-            dtm.addColumn("Mã");
-            dtm.addColumn("Tên nguyên liệu");
-            dtm.addColumn("Đơn vị");
-            dtm.addColumn("Số lượng");
-            dtm.addColumn("Ngày tạo");
-            dtm.addColumn("Ngày cập nhật");
             List<WareHouse> warehouses = wareHouseService.getAllWareHouse();
             for (WareHouse warehouse : warehouses) {
                 dtm.addRow(new Object[] { warehouse.getId(), warehouse.getName(), warehouse.getUnit(),
@@ -456,54 +446,39 @@ public class WareHouseMenu extends javax.swing.JPanel {
 
     private void jtfSearchKeyReleased(java.awt.event.KeyEvent evt) {
         String keyword = InputSearch.getText().trim();
-        if (!keyword.isEmpty()) {
-            DefaultTableModel dtm = new DefaultTableModel();
-            TableReceipt.setModel(dtm);
-            dtm.addColumn("Mã");
-            dtm.addColumn("Tên nguyên liệu");
-            dtm.addColumn("Đơn vị");
-            dtm.addColumn("Số lượng");
-            dtm.addColumn("Ngày tạo");
-            dtm.addColumn("Ngày cập nhật");
-            try {
-                List<WareHouse> warehouses = null;
-                if (Filter.getSelectedItem().equals("Tìm kiếm theo mã")) {
+        try {
+            List<WareHouse> warehouses = null;
+            if (Filter.getSelectedItem().equals("Tìm kiếm theo mã")) {
+                if(keyword.isEmpty())
+                {
+                    warehouses = wareHouseService.getAllWareHouse();
+                }
+                else 
+                {
+                    String integerPattern = "^\\d+$";
+                    if(!keyword.matches(integerPattern))
+                    {
+                        JOptionPane.showMessageDialog(null, "Mã kho phải là một số");
+                        InputSearch.requestFocus();
+                        return;
+                    }
                     int id = Integer.parseInt(keyword);
                     warehouses = wareHouseService.searchAllWareHouseById(id);
                 }
-
-                else if (Filter.getSelectedItem().equals("Tìm kiếm theo tên")) {
-                    warehouses = wareHouseService.searchAllWareHouseByName(keyword);
-                }
-                for (WareHouse warehouse : warehouses) {
-                    dtm.addRow(new Object[] { warehouse.getId(), warehouse.getName(), warehouse.getUnit(),
-                            warehouse.getQuantity(),
-                            warehouse.getCreateDate(), warehouse.getUpdateDate() });
-
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(EmployeeMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
-            try {
-                DefaultTableModel dtm = new DefaultTableModel();
-                TableReceipt.setModel(dtm);
-                dtm.addColumn("Mã");
-                dtm.addColumn("Tên nguyên liệu");
-                dtm.addColumn("Đơn vị");
-                dtm.addColumn("Số lượng");
-                dtm.addColumn("Ngày tạo");
-                dtm.addColumn("Ngày cập nhật");
-                List<WareHouse> warehouses = wareHouseService.getAllWareHouse();
-                for (WareHouse warehouse : warehouses) {
-                    dtm.addRow(new Object[] { warehouse.getId(), warehouse.getName(), warehouse.getUnit(),
-                            warehouse.getQuantity(),
-                            warehouse.getCreateDate(), warehouse.getUpdateDate() });
 
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(WareHouse.class.getName()).log(Level.SEVERE, null, ex);
+            else if (Filter.getSelectedItem().equals("Tìm kiếm theo tên")) {
+                warehouses = wareHouseService.searchAllWareHouseByName(keyword);
             }
+            dtm.setRowCount(0);
+            for (WareHouse warehouse : warehouses) {
+                dtm.addRow(new Object[] { warehouse.getId(), warehouse.getName(), warehouse.getUnit(),
+                        warehouse.getQuantity(),
+                        warehouse.getCreateDate(), warehouse.getUpdateDate() });
+
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(EmployeeMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

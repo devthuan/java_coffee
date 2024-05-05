@@ -538,6 +538,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {
         List<User> users = null;
+        inputSearch.setText("");
         users = userservice.getAllUser();
         if (users != null && !users.isEmpty()) {
             loadDataTable(users);
@@ -563,6 +564,14 @@ public class EmployeeMenu extends javax.swing.JPanel {
             }
             else 
             {
+                String integerPattern = "^\\d+$";
+                if(!keyword.matches(integerPattern))
+                {
+                    JOptionPane.showMessageDialog(null, "Mã nhân viên phải là một số");
+                    inputSearch.requestFocus();
+                    return;
+                }
+                
                 int id = Integer.parseInt(keyword);
                 users = userservice.searchAllUserById(id);
             }
