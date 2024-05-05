@@ -82,7 +82,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
         Formatter.setBoldHeaderTable(jTable1);
         Formatter.centerAlignTableCells(jTable1);
     }
-
+    
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 

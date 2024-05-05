@@ -19,7 +19,6 @@ public class AddUser extends javax.swing.JFrame {
         AccountBUS accountBUS;
         ActionBUS actionBUS;
         ArrayList<AccountDTO> accountDTOs;
-
         public AddUser() {
                 initComponents();
                 setLocationRelativeTo(null);
@@ -305,18 +304,14 @@ public class AddUser extends javax.swing.JFrame {
         }
 
         private void displayPosition() {
-                // ArrayList<ActionDTO> actions = actionBUS.getAll();
-                // for (ActionDTO a : actions) {
-                // cbPosition.addItem(a.getName());
-                // }
-
-                accountDTOs = accountBUS.getAll_unused((int) (cbPosition.getSelectedIndex()) + 1);
+                int roleID = cbPosition.getSelectedIndex() == 0 ? 2 : 3;
+                accountDTOs = accountBUS.getAll_unused(roleID);
                 cbEmail.removeAllItems();
                 for (AccountDTO acc : accountDTOs) {
                         cbEmail.addItem(acc.getEmail());
                 }
         }
-
+        
         private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {
                 if (jtfName.getText().trim().isEmpty()) {
                         JOptionPane.showMessageDialog(null, "Họ tên không được để trống!", "Thông báo",
@@ -371,14 +366,17 @@ public class AddUser extends javax.swing.JFrame {
                         user.setPosition((String) cbPosition.getSelectedItem());
                         user.setPhone(jtfPhone.getText());
                         user.setSalary(Float.parseFloat(jtfSalary.getText()));
-
+                        System.out.println("hello");
+                        int roleID = cbPosition.getSelectedIndex() == 0 ? 2 : 3;
+                        accountDTOs = accountBUS.getAll_unused(roleID);
                         for (AccountDTO acc : accountDTOs) {
+                                System.out.println(acc.getId());
+
                                 if (acc.getEmail().equals(cbEmail.getSelectedItem())) {
                                         user.setAccountId(acc.getId());
                                         break;
                                 }
                         }
-
                         boolean rs = userService.addUser(user);
                         if (rs) {
                                 JOptionPane.showMessageDialog(null, "Thêm nhân viên thành công", "Thông báo",
@@ -388,11 +386,24 @@ public class AddUser extends javax.swing.JFrame {
                         } else {
                                 JOptionPane.showMessageDialog(null, "Thêm thất bại", "Lỗi", JOptionPane.ERROR_MESSAGE);
                         }
+                        System.out.println("fail");
+
                 }
         }
 
         private void cbPositionActionPerformed(java.awt.event.ActionEvent evt) {
-
+                try {
+                        ArrayList<AccountDTO> accountDTOs = new ArrayList<>();
+                        int selectedIndex = cbPosition.getSelectedIndex();
+                        int roleID = selectedIndex == 0 ? 2 : 3;
+                        accountDTOs = accountBUS.getAll_unused(roleID);
+                        cbEmail.removeAllItems();
+                        for (AccountDTO acc : accountDTOs) {
+                            cbEmail.addItem(acc.getEmail());
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
         }
 
         private javax.swing.JLabel jLabel1;

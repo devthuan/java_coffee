@@ -401,7 +401,9 @@ public class EditUser extends javax.swing.JFrame {
         }
 
         private void btnPositionActionPerformed(java.awt.event.ActionEvent evt) {
-                accountDTOs = accountBUS.getAllEditUser_unused((int) (cbPosition.getSelectedIndex()) + 1, accountDTO.getId());
+                int selectedIndex = cbPosition.getSelectedIndex();
+                int roleID = selectedIndex == 0 ? 2 : 3;
+                accountDTOs = accountBUS.getAllEditUser_unused(roleID, accountDTO.getId());
                 cbEmail.removeAllItems();
                 for (AccountDTO acc : accountDTOs) {
                         cbEmail.addItem(acc.getEmail());
@@ -485,10 +487,8 @@ public class EditUser extends javax.swing.JFrame {
         }
 
         private void displayPosition() {
-                ArrayList<ActionDTO> actions = new ActionBUS().getAll();
-                for (ActionDTO a : actions) {
-                        cbPosition.addItem(a.getName());
-                }
+                cbPosition.addItem("Quản lý");
+                cbPosition.addItem("Nhân viên bán hàng");
         }
 
         private javax.swing.JLabel jLabel1;
