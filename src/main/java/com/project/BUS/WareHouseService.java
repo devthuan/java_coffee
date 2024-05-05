@@ -48,4 +48,8 @@ public class WareHouseService {
     public void updateNameWareHouse(WareHouse warehouse) throws Exception {
         warehousedao.updateNameWareHouse(warehouse);
     }
+    public boolean WareHouseExist(String name) throws Exception
+    {
+        return warehousedao.WareHouseExist(name);
+    }
 }

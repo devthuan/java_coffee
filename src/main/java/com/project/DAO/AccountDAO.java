@@ -445,4 +445,68 @@ public class AccountDAO {
         }
         return null;
     }
+    public static ArrayList<AccountDTO> getAllEditUser_unused(int role_id , int myId) {
+        ArrayList<AccountDTO> accounts = null;
+        try {
+            Connection conn = mysqlConnect.getConnection();
+
+            String sql = "SELECT * FROM TaiKhoan WHERE TaiKhoan.is_active = 1 AND Quyen_id = ? AND (id = ? OR id NOT IN (SELECT TaiKhoan_id FROM NhanVien))";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, role_id);
+            pst.setInt(2, myId);
+            ResultSet rs = pst.executeQuery();
+
+            accounts = new ArrayList<>();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String email = rs.getString("email");
+                int roleID = rs.getInt("Quyen_id");
+                accounts.add(new AccountDTO(id, email, roleID));
+            }
+            mysqlConnect.closeConnection(conn);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return accounts;
+    }
+    public static AccountDTO getIdAccountUser(int id)
+    {
+        try 
+        {
+            Connection con = mysqlConnect.getConnection();
+            String sql = "SELECT TaiKhoan.id, TaiKhoan.email FROM NhanVien INNER JOIN TaiKhoan ON NhanVien.TaiKhoan_id = TaiKhoan.id WHERE NhanVien.id = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next())
+            {
+                AccountDTO account = new AccountDTO();
+                account.setId(rs.getInt("id"));
+                account.setEmail(rs.getString("email"));
+                return account;
+            }
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+    public static int getLastAccountId() {
+        int lastId = -1;
+        try (Connection conn = mysqlConnect.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT MAX(id) FROM TaiKhoan")) {
+
+            if (rs.next()) {
+                lastId = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lastId;
+    }
 }

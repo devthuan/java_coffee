@@ -14,7 +14,10 @@ public class AccountDTO {
     private int roleId;
     private String nameFunction;
     private EmployeeDTO employee;
-
+    public AccountDTO()
+    {
+        
+    }
     public AccountDTO(int id, String email, String password) {
         this.id = id;
         this.email = email;

@@ -108,7 +108,17 @@ public class AccountBUS {
             return false;
         }
     }
-
+    public ArrayList<AccountDTO> getAllEditUser_unused(int role_id, int myId) {
+        return AccountDAO.getAllEditUser_unused(role_id, myId);
+    }
+    public AccountDTO getIdAccountUser(int id)
+    {
+        return AccountDAO.getIdAccountUser(id);
+    }
+    public int getLastAccountId()
+    {
+        return AccountDAO.getLastAccountId();
+    }
     public static void main(String[] args) {
         AccountBUS.login(new AccountDTO("admin@example.com", "admin"));
 

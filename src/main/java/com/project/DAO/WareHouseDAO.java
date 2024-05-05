@@ -171,4 +171,27 @@ public class WareHouseDAO {
         ps.setInt(2, warehouse.getId());
         ps.executeUpdate();
     }
+    public boolean WareHouseExist(String name)
+    {
+        boolean exist = false;
+        try 
+        {
+            Connection connection = mysqlConnect.getConnection();
+            String sql = "SELECT COUNT(*) FROM NguyenLieu WHERE ten_NL = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                if (count > 0) {
+                    exist = true; 
+                }
+            }
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return exist;
+    }
 }
