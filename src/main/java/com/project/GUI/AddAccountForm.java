@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import com.project.BUS.AccountBUS;
 import com.project.Common.Authen;
 import com.project.DTO.AccountDTO;
+import com.project.DTO.PermissionAccount;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -121,8 +122,15 @@ public class AddAccountForm extends javax.swing.JFrame {
         Address.setVerifyInputWhenFocusTarget(false);
         BoxAddress.add(Address, java.awt.BorderLayout.LINE_START);
 
-        jComboBox1.setModel(
-                new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Manager", "Staff" }));
+        if (PermissionAccount.getInstance().getRoleId() == 1) {
+            jComboBox1.setModel(
+                    new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Manager", "Staff" }));
+        } else {
+            jComboBox1.setModel(
+                    new javax.swing.DefaultComboBoxModel<>(new String[] { "Manager", "Staff" }));
+
+        }
+   
         BoxAddress.add(jComboBox1, java.awt.BorderLayout.CENTER);
 
         jPanel2.add(BoxAddress);
@@ -242,13 +250,12 @@ public class AddAccountForm extends javax.swing.JFrame {
             return;
         }
 
-
-        boolean check = AccountBUS.createAccountBUS(new AccountDTO(email, password1, role_id+1));
+        boolean check = AccountBUS.createAccountBUS(new AccountDTO(email, password1, role_id + 1));
         if (check) {
             JOptionPane.showMessageDialog(this, "Tạo tài khoản thành công");
             this.setVisible(false);
             return;
-        }else {
+        } else {
             JOptionPane.showMessageDialog(this, "Tạo tài khoản thất bại");
             return;
         }

@@ -21,6 +21,7 @@ import com.project.Common.Common;
 import com.project.DAO.mysqlConnect;
 import com.project.DTO.AccountDTO;
 import com.project.DTO.ActionDTO;
+import com.project.DTO.PermissionAccount;
 import com.project.DTO.User;
 
 public class EditUser extends javax.swing.JFrame {
@@ -31,6 +32,7 @@ public class EditUser extends javax.swing.JFrame {
         AccountDTO accountDTO;
         ArrayList<AccountDTO> accountDTOs;
         private int hiddenId;
+
         public EditUser(int userId) {
                 initComponents();
                 setLocationRelativeTo(null);
@@ -44,7 +46,7 @@ public class EditUser extends javax.swing.JFrame {
                         jtfCode.setText(String.valueOf(user.getId()));
                         hiddenId = userId;
                         jtfCode.setEnabled(false);
-                        displayPosition();
+                        // displayPosition();
                         jtfname.setText(user.getName());
                         Date date = Common.convertStringtoDate(user.getDate());
                         jdcdate.setDate(date);
@@ -134,6 +136,17 @@ public class EditUser extends javax.swing.JFrame {
                 jLabel28.setText("Chức vụ");
 
                 cbPosition.setFont(new java.awt.Font("Arial", 0, 14));
+                if (PermissionAccount.getInstance().getRoleId() == 1) {
+                        cbPosition.setModel(
+                                        new javax.swing.DefaultComboBoxModel<>(
+                                                        new String[] { "Admin", "Quản lý", "Nhân viên bán hàng" }));
+                } else {
+
+                        cbPosition.setModel(
+                                        new javax.swing.DefaultComboBoxModel<>(
+                                                        new String[] { "Quản lý", "Nhân viên bán hàng" }));
+
+                }
                 cbPosition.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 btnPositionActionPerformed(evt);
@@ -401,15 +414,20 @@ public class EditUser extends javax.swing.JFrame {
         }
 
         private void btnPositionActionPerformed(java.awt.event.ActionEvent evt) {
-                accountDTOs = accountBUS.getAllEditUser_unused((int) (cbPosition.getSelectedIndex()) + 1, accountDTO.getId());
+
+                int roleID = PermissionAccount.getInstance().getRoleId();
+                accountDTOs = accountBUS.getAllEditUser_unused(roleID, accountDTO.getId());
                 cbEmail.removeAllItems();
                 for (AccountDTO acc : accountDTOs) {
                         cbEmail.addItem(acc.getEmail());
                 }
-                
+                cbEmail.addItem(accountDTO.getEmail());
+
         }
 
         private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {
+              
+
                 if (jtfname.getText().trim().isEmpty()) {
                         JOptionPane.showMessageDialog(null, "Họ tên không được để trống!", "Thông báo",
                                         JOptionPane.INFORMATION_MESSAGE);
@@ -485,10 +503,8 @@ public class EditUser extends javax.swing.JFrame {
         }
 
         private void displayPosition() {
-                ArrayList<ActionDTO> actions = new ActionBUS().getAll();
-                for (ActionDTO a : actions) {
-                        cbPosition.addItem(a.getName());
-                }
+                // cbPosition.addItem("Quản lý");
+                // cbPosition.addItem("Nhân viên bán hàng");
         }
 
         private javax.swing.JLabel jLabel1;

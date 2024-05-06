@@ -62,8 +62,7 @@ public class AccountBUS {
         return AccountDAO.getAllUser();
     }
 
-    public static ArrayList<AccountDTO> getAllAccount(ArrayList<Integer> accountID_List)
-    {
+    public static ArrayList<AccountDTO> getAllAccount(ArrayList<Integer> accountID_List) {
         return AccountDAO.getAllUser(accountID_List);
     }
 
@@ -108,19 +107,37 @@ public class AccountBUS {
             return false;
         }
     }
+
     public ArrayList<AccountDTO> getAllEditUser_unused(int role_id, int myId) {
         return AccountDAO.getAllEditUser_unused(role_id, myId);
     }
-    public AccountDTO getIdAccountUser(int id)
-    {
+
+    public AccountDTO getIdAccountUser(int id) {
         return AccountDAO.getIdAccountUser(id);
     }
-    public int getLastAccountId()
-    {
+
+    public int getLastAccountId() {
         return AccountDAO.getLastAccountId();
     }
-    public static void main(String[] args) {
-        AccountBUS.login(new AccountDTO("admin@example.com", "admin"));
 
+    public static ArrayList<AccountDTO> getAll_unused_1(int role_id) {
+        ArrayList<AccountDTO> list_email = new ArrayList<>();
+        if (role_id == 1) {
+            list_email = AccountDAO.getAll_unused_all();
+        } else {
+            for (AccountDTO accountDTO : AccountDAO.getAll_unused_1(role_id)) {
+                if (accountDTO.getRoleId() == role_id) {
+                    list_email.add(accountDTO);
+                }
+            }
+        }
+        return list_email;
+    }
+
+    public static void main(String[] args) {
+        ArrayList<AccountDTO> getAll_unused = getAll_unused_1(1);
+        for (AccountDTO accountDTO : getAll_unused) {
+            System.out.println(accountDTO.getEmail());
+        }
     }
 }

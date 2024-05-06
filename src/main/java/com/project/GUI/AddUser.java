@@ -12,6 +12,7 @@ import com.project.BUS.UserService;
 import com.project.Common.Common;
 import com.project.DTO.AccountDTO;
 import com.project.DTO.ActionDTO;
+import com.project.DTO.PermissionAccount;
 import com.project.DTO.User;
 
 public class AddUser extends javax.swing.JFrame {
@@ -86,9 +87,18 @@ public class AddUser extends javax.swing.JFrame {
                 jLabel6.setText("Chức vụ");
 
                 cbPosition.setFont(new java.awt.Font("Arial", 0, 16));
-                cbPosition.setModel(
-                                new javax.swing.DefaultComboBoxModel<>(
-                                                new String[] { "Quản lý", "Nhân viên bán hàng" }));
+
+                if (PermissionAccount.getInstance().getRoleId() == 1) {
+                        cbPosition.setModel(
+                                        new javax.swing.DefaultComboBoxModel<>(
+                                                        new String[] { "Admin", "Quản lý", "Nhân viên bán hàng" }));
+                } else {
+
+                        cbPosition.setModel(
+                                        new javax.swing.DefaultComboBoxModel<>(
+                                                        new String[] { "Quản lý", "Nhân viên bán hàng" }));
+
+                }
                 cbPosition.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 cbPositionActionPerformed(evt);
@@ -305,12 +315,8 @@ public class AddUser extends javax.swing.JFrame {
         }
 
         private void displayPosition() {
-                // ArrayList<ActionDTO> actions = actionBUS.getAll();
-                // for (ActionDTO a : actions) {
-                // cbPosition.addItem(a.getName());
-                // }
-
-                accountDTOs = accountBUS.getAll_unused((int) (cbPosition.getSelectedIndex()) + 1);
+                int roleID = PermissionAccount.getInstance().getRoleId();
+                accountDTOs = accountBUS.getAll_unused_1(roleID);
                 cbEmail.removeAllItems();
                 for (AccountDTO acc : accountDTOs) {
                         cbEmail.addItem(acc.getEmail());
@@ -371,14 +377,17 @@ public class AddUser extends javax.swing.JFrame {
                         user.setPosition((String) cbPosition.getSelectedItem());
                         user.setPhone(jtfPhone.getText());
                         user.setSalary(Float.parseFloat(jtfSalary.getText()));
-
+                        System.out.println("hello");
+                        int roleID = cbPosition.getSelectedIndex() == 0 ? 2 : 3;
+                        accountDTOs = accountBUS.getAll_unused_1(roleID);
                         for (AccountDTO acc : accountDTOs) {
+                                System.out.println(acc.getId());
+
                                 if (acc.getEmail().equals(cbEmail.getSelectedItem())) {
                                         user.setAccountId(acc.getId());
                                         break;
                                 }
                         }
-
                         boolean rs = userService.addUser(user);
                         if (rs) {
                                 JOptionPane.showMessageDialog(null, "Thêm nhân viên thành công", "Thông báo",
@@ -388,11 +397,24 @@ public class AddUser extends javax.swing.JFrame {
                         } else {
                                 JOptionPane.showMessageDialog(null, "Thêm thất bại", "Lỗi", JOptionPane.ERROR_MESSAGE);
                         }
+                        System.out.println("fail");
+
                 }
         }
 
         private void cbPositionActionPerformed(java.awt.event.ActionEvent evt) {
-
+                try {
+                        ArrayList<AccountDTO> accountDTOs = new ArrayList<>();
+                        int selectedIndex = cbPosition.getSelectedIndex();
+                        int roleID = selectedIndex == 0 ? 2 : 3;
+                        accountDTOs = accountBUS.getAll_unused_1(roleID);
+                        cbEmail.removeAllItems();
+                        for (AccountDTO acc : accountDTOs) {
+                                cbEmail.addItem(acc.getEmail());
+                        }
+                } catch (Exception e) {
+                        e.printStackTrace();
+                }
         }
 
         private javax.swing.JLabel jLabel1;

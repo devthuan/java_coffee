@@ -387,6 +387,13 @@ public class EmployeeMenu extends javax.swing.JPanel {
             if (selectedRow == -1) {
                 JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên muốn cập nhật");
             } else {
+
+                String position = String.valueOf(jTable1.getValueAt(selectedRow, 4));
+                if (PermissionAccount.getInstance().getRoleId() == 2 && position.equals("Admin")) {
+                    JOptionPane.showMessageDialog(null, "Bạn không thể chỉnh sửa nhân viên có quyền cao hơn.");
+                    return;
+                }
+
                 int userId = Integer.parseInt(String.valueOf(jTable1.getValueAt(selectedRow, 0)));
                 System.out.println(userId);
                 try {
@@ -394,6 +401,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
+
             }
 
         } else {
@@ -481,7 +489,7 @@ public class EmployeeMenu extends javax.swing.JPanel {
                             JOptionPane.showMessageDialog(this, "Ngày sinh không hợp lệ! Vui lòng kiểm tra lại.");
                             return;
                         }
-                    } 
+                    }
                     System.out.println(excelPasswordAccount);
 
                     SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
@@ -508,11 +516,10 @@ public class EmployeeMenu extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ! Vui lòng kiểm tra lại.");
                         return;
                     }
-                    
+
                     String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}$";
                     String checkEmail = excelEmailAccount.getStringCellValue();
-                    if(!checkEmail.matches(emailRegex))
-                    {
+                    if (!checkEmail.matches(emailRegex)) {
                         JOptionPane.showMessageDialog(this, "Email không hợp lệ! Vui lòng kiểm tra lại.");
                         return;
                     }
