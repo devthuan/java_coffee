@@ -12,6 +12,7 @@ import com.project.BUS.UserService;
 import com.project.Common.Common;
 import com.project.DTO.AccountDTO;
 import com.project.DTO.ActionDTO;
+import com.project.DTO.PermissionAccount;
 import com.project.DTO.User;
 
 public class AddUser extends javax.swing.JFrame {
@@ -19,6 +20,7 @@ public class AddUser extends javax.swing.JFrame {
         AccountBUS accountBUS;
         ActionBUS actionBUS;
         ArrayList<AccountDTO> accountDTOs;
+
         public AddUser() {
                 initComponents();
                 setLocationRelativeTo(null);
@@ -85,9 +87,18 @@ public class AddUser extends javax.swing.JFrame {
                 jLabel6.setText("Chức vụ");
 
                 cbPosition.setFont(new java.awt.Font("Arial", 0, 16));
-                cbPosition.setModel(
-                                new javax.swing.DefaultComboBoxModel<>(
-                                                new String[] { "Quản lý", "Nhân viên bán hàng" }));
+
+                if (PermissionAccount.getInstance().getRoleId() == 1) {
+                        cbPosition.setModel(
+                                        new javax.swing.DefaultComboBoxModel<>(
+                                                        new String[] { "Admin", "Quản lý", "Nhân viên bán hàng" }));
+                } else {
+
+                        cbPosition.setModel(
+                                        new javax.swing.DefaultComboBoxModel<>(
+                                                        new String[] { "Quản lý", "Nhân viên bán hàng" }));
+
+                }
                 cbPosition.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 cbPositionActionPerformed(evt);
@@ -304,14 +315,14 @@ public class AddUser extends javax.swing.JFrame {
         }
 
         private void displayPosition() {
-                int roleID = cbPosition.getSelectedIndex() == 0 ? 2 : 3;
+                int roleID = PermissionAccount.getInstance().getRoleId();
                 accountDTOs = accountBUS.getAll_unused_1(roleID);
                 cbEmail.removeAllItems();
                 for (AccountDTO acc : accountDTOs) {
                         cbEmail.addItem(acc.getEmail());
                 }
         }
-        
+
         private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {
                 if (jtfName.getText().trim().isEmpty()) {
                         JOptionPane.showMessageDialog(null, "Họ tên không được để trống!", "Thông báo",
@@ -399,11 +410,11 @@ public class AddUser extends javax.swing.JFrame {
                         accountDTOs = accountBUS.getAll_unused_1(roleID);
                         cbEmail.removeAllItems();
                         for (AccountDTO acc : accountDTOs) {
-                            cbEmail.addItem(acc.getEmail());
+                                cbEmail.addItem(acc.getEmail());
                         }
-                    } catch (Exception e) {
+                } catch (Exception e) {
                         e.printStackTrace();
-                    }
+                }
         }
 
         private javax.swing.JLabel jLabel1;
