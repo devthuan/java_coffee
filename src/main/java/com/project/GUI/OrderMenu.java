@@ -91,11 +91,11 @@ public class OrderMenu extends javax.swing.JPanel {
                         int i = 0;
                         for (OrderDTO o : orders.keySet()) {
                                 Float total = orders.get(o);
-                                
+
                                 dtm.addRow(new Object[] {
                                                 o.getId(),
-                                                accList.get(i) == null ? "NULL" :accList.get(i).getEmail(),
-                                                empList.get(i) == null ? "NULL" :empList.get(i).getName(),
+                                                accList.get(i) == null ? "NULL" : accList.get(i).getEmail(),
+                                                empList.get(i) == null ? "NULL" : empList.get(i).getName(),
                                                 Formatter.getFormatedPrice(total),
                                                 paymentMethods.get(o.getPaymentMethod_id() - 1).getPayment_name(),
                                                 Common.formatedDateTime(o.getCreatedAt()),
@@ -839,10 +839,10 @@ public class OrderMenu extends javax.swing.JPanel {
                         BuyProductForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         BuyProductForm.pack();
                         BuyProductForm.setLocationRelativeTo(null);
-                        // if (BuyProductPanel == null) {
-                        //         BuyProductPanel = new BuyProduct();
-                        // }
-                        BuyProductPanel = Main.getBuyProduct();
+                        if (BuyProductPanel == null) {
+                                BuyProductPanel = new BuyProduct();
+                        }
+                        // BuyProductPanel = Main.getBuyProduct();
                         BuyProductForm.add(BuyProductPanel);
                 } else {
                         BuyProductForm.setVisible(true);
@@ -999,7 +999,7 @@ public class OrderMenu extends javax.swing.JPanel {
                                         if (orderDetailForm != null) {
                                                 orderDetailForm.dispose();
                                         }
-                                        orderDetailForm = new OrderDetail(order, emp_name, emp_email );
+                                        orderDetailForm = new OrderDetail(order, emp_name, emp_email);
                                         return;
                                 }
                         }

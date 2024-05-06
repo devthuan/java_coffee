@@ -28,8 +28,7 @@ public class Main extends javax.swing.JFrame {
 
                 permissionList = PermissionAccount.getInstance();
 
-                buyProduct = new BuyProduct();
-                Right.add(buyProduct).setVisible(true);
+                Right.add(new BuyProduct()).setVisible(true);
 
                 setLocationRelativeTo(null);
 
@@ -51,7 +50,7 @@ public class Main extends javax.swing.JFrame {
                 Image scaledImg = image.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
                 icon = new ImageIcon(scaledImg);
                 setIconImage(icon.getImage());
-                
+
                 Left = new javax.swing.JPanel();
                 Profile = new javax.swing.JPanel();
                 jLabel6 = new javax.swing.JLabel();
@@ -539,7 +538,8 @@ public class Main extends javax.swing.JFrame {
         private void HomeLabelMouseClicked(java.awt.event.MouseEvent evt) {
                 SwitchControl();
 
-                Right.add(buyProduct);
+                Right.add(new BuyProduct());
+                // getBuyProduct();
         }
 
         private void ProductLabelMouseClicked(java.awt.event.MouseEvent evt) {
@@ -707,9 +707,9 @@ public class Main extends javax.swing.JFrame {
         private javax.swing.JLabel jLabel6;
         private javax.swing.JPanel menu;
         // End of variables declaration
-        private static BuyProduct buyProduct;
-        public static BuyProduct getBuyProduct() {
-                return buyProduct;
-        }
+        // private static BuyProduct buyProduct;
+        // public static BuyProduct getBuyProduct() {
+        // return buyProduct;
+        // }
 }
 // abc
