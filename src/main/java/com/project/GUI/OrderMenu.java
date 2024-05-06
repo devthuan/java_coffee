@@ -842,8 +842,8 @@ public class OrderMenu extends javax.swing.JPanel {
                         if (BuyProductPanel == null) {
                                 BuyProductPanel = new BuyProduct();
                         }
-                        // BuyProductPanel = Main.getBuyProduct();
-                        BuyProductForm.add(BuyProductPanel);
+                        BuyProductPanel = Main.getBuyProduct();
+                        // BuyProductForm.add(BuyProductPanel);
                 } else {
                         BuyProductForm.setVisible(true);
                 }
