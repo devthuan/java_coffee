@@ -1,6 +1,8 @@
 package com.project.DAO;
 
 import java.sql.*;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -13,9 +15,9 @@ public class SupplierDAO {
     public static Boolean createSupplier(SupplierDTO newSupplier) {
         boolean success = false;
         try (
-                Connection conn = mysqlConnect.getConnection();
-
-                PreparedStatement pst = conn.prepareStatement(
+            Connection conn = mysqlConnect.getConnection();
+            
+             PreparedStatement pst = conn.prepareStatement(
                         "INSERT INTO NhaCungCap (ten_ncc, dia_chi, dien_thoai, email) VALUES (?, ?, ?, ?)")) {
 
             pst.setString(1, newSupplier.getName_supplier());
@@ -31,8 +33,8 @@ public class SupplierDAO {
             }
 
         } catch (SQLException e) {
-            if (e.getErrorCode() == 1062) { // Mã lỗi 1062 là mã lỗi của MySQL cho lỗi duy nhất
-                JOptionPane.showMessageDialog(null, "Tên nhà cung cấp đã tồn tại");
+             if (e.getErrorCode() == 1062) { // Mã lỗi 1062 là mã lỗi của MySQL cho lỗi duy nhất
+                JOptionPane.showMessageDialog(null,"Tên nhà cung cấp đã tồn tại");
                 return false;
             }
             e.printStackTrace();
@@ -86,7 +88,7 @@ public class SupplierDAO {
             Connection conn = mysqlConnect.getConnection();
 
             String sql = "UPDATE NhaCungCap SET ten_ncc = ?, dia_chi = ?, dien_thoai = ?, email = ? , updatedAt = NOW() WHERE id = ?;";
-
+            
             PreparedStatement pst = conn.prepareStatement(sql);
 
             pst.setString(1, updateSupplier.getName_supplier());
@@ -145,7 +147,7 @@ public class SupplierDAO {
 
             PreparedStatement pst = conn.prepareStatement(sql);
 
-            pst.setString(1, search_supplier + "%");
+           pst.setString(1, search_supplier+"%");
 
             ResultSet result_query = pst.executeQuery();
 
@@ -171,7 +173,7 @@ public class SupplierDAO {
         }
         return list_supplier;
     }
-
+    
     public static ArrayList<SupplierDTO> SearchSupplierByEmail(String search_supplier) {
         ArrayList<SupplierDTO> list_supplier = new ArrayList<>();
 
@@ -183,7 +185,7 @@ public class SupplierDAO {
 
             PreparedStatement pst = conn.prepareStatement(sql);
 
-            pst.setString(1, search_supplier + "%");
+           pst.setString(1, search_supplier+"%");
 
             ResultSet result_query = pst.executeQuery();
 
@@ -209,7 +211,9 @@ public class SupplierDAO {
         }
         return list_supplier;
     }
-}
 
-    
-       
+
+    public static void main(String[] args) {
+      SearchSupplierByName("N");
+    }
+}
