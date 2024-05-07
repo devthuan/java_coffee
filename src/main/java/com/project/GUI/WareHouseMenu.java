@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import com.project.BUS.EmployeeBUS;
 import com.project.BUS.WareHouseService;
 import com.project.DTO.PermissionAccount;
 import com.project.DTO.WareHouse;
@@ -19,6 +20,7 @@ public class WareHouseMenu extends javax.swing.JPanel {
     WareHouseService wareHouseService;
     DefaultTableModel dtm;
     private PermissionAccount permissionList;
+    private EmployeeBUS empBUS = new EmployeeBUS();
 
     public WareHouseMenu() {
         initComponents();
@@ -308,6 +310,13 @@ public class WareHouseMenu extends javax.swing.JPanel {
     }// </editor-fold>
 
     private void BtnImportMouseClicked(java.awt.event.MouseEvent evt) {
+        if (empBUS.getEmpByAccountID(permissionList.getAccountId()) == null) {
+            JOptionPane.showMessageDialog(null, "Tài khoản của bạn chưa cập nhật thông tin nhân viên!",
+                    "Thông báo",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+
+        }
         if (permissionList.hasPermission("CREATE_WAREHOUSE_RECEIPT")) {
             new FormCreateEnterCoupon().setVisible(true);
 
@@ -322,6 +331,13 @@ public class WareHouseMenu extends javax.swing.JPanel {
     }
 
     private void BtnExportMouseClicked(java.awt.event.MouseEvent evt) {
+        if (empBUS.getEmpByAccountID(permissionList.getAccountId()) == null) {
+            JOptionPane.showMessageDialog(null, "Tài khoản của bạn chưa cập nhật thông tin nhân viên!",
+                    "Thông báo",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+
+        }
         if (permissionList.hasPermission("CREATE_WAREHOUSE_DISPATCH_NOTE")) {
             new FormCreateDeliveryBill().setVisible(true);
 
@@ -363,17 +379,17 @@ public class WareHouseMenu extends javax.swing.JPanel {
     private void BtnRefreshActionPerformed(java.awt.event.ActionEvent evt) {
         InputSearch.setText("");
         dtm.setRowCount(0);
-            try {
-                List<WareHouse> wareHouses = wareHouseService.getAllWareHouse();
-                for(WareHouse warehouse : wareHouses)
-                {
-                    dtm.addRow(new Object[] {warehouse.getId(), warehouse.getName(), warehouse.getUnit(), warehouse.getQuantity(),
-                        warehouse.getCreateDate(), warehouse.getUpdateDate()});
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+        try {
+            List<WareHouse> wareHouses = wareHouseService.getAllWareHouse();
+            for (WareHouse warehouse : wareHouses) {
+                dtm.addRow(new Object[] { warehouse.getId(), warehouse.getName(), warehouse.getUnit(),
+                        warehouse.getQuantity(),
+                        warehouse.getCreateDate(), warehouse.getUpdateDate() });
             }
-        
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void BtnDeleteMouseClicked(java.awt.event.MouseEvent evt) {
@@ -449,15 +465,11 @@ public class WareHouseMenu extends javax.swing.JPanel {
         try {
             List<WareHouse> warehouses = null;
             if (Filter.getSelectedItem().equals("Tìm kiếm theo mã")) {
-                if(keyword.isEmpty())
-                {
+                if (keyword.isEmpty()) {
                     warehouses = wareHouseService.getAllWareHouse();
-                }
-                else 
-                {
+                } else {
                     String integerPattern = "^\\d+$";
-                    if(!keyword.matches(integerPattern))
-                    {
+                    if (!keyword.matches(integerPattern)) {
                         JOptionPane.showMessageDialog(null, "Mã kho phải là một số");
                         InputSearch.requestFocus();
                         return;

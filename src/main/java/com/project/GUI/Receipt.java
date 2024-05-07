@@ -29,6 +29,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.mysql.cj.util.Util;
+import com.project.BUS.EmployeeBUS;
 import com.project.BUS.EnterCouponBUS;
 import com.project.BUS.SupplierBUS;
 import com.project.Common.Common;
@@ -50,6 +51,7 @@ public class Receipt extends javax.swing.JPanel {
         private int option_search = 0;
         private PermissionAccount permissionList;
         private ArrayList<EnterCouponDTO> list_enterCoupon;
+        private EmployeeBUS empBUS = new EmployeeBUS();
 
         /**
          * Creates new form Supplier
@@ -734,6 +736,15 @@ public class Receipt extends javax.swing.JPanel {
         }
 
         private void BtnAddMouseClicked(java.awt.event.ActionEvent evt) {
+
+                if (empBUS.getEmpByAccountID(permissionList.getAccountId()) == null) {
+                        JOptionPane.showMessageDialog(null, "Tài khoản của bạn chưa cập nhật thông tin nhân viên!",
+                                        "Thông báo",
+                                        JOptionPane.INFORMATION_MESSAGE);
+                        return;
+
+                }
+
                 if (permissionList.hasPermission("CREATE_WAREHOUSE_RECEIPT")) {
                         new FormCreateEnterCoupon().setVisible(true);
 

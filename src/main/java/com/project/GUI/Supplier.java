@@ -445,7 +445,7 @@ public class Supplier extends javax.swing.JPanel {
                                                 JOptionPane.showMessageDialog(null, "Nhập file excel thành công.");
                                         } else {
                                                 JOptionPane.showMessageDialog(null, "Nhập file excel thất bại.");
-                                                
+
                                         }
                                 }
 
@@ -487,8 +487,8 @@ public class Supplier extends javax.swing.JPanel {
                                         supplier.getAddress(),
                                         supplier.getPhone(),
                                         supplier.getEmail(),
-                                        supplier.getCreatedAt(),
-                                        supplier.getupdatedAt()
+                                        Common.formatedDateTime(supplier.getCreatedAt()),
+                                        Common.formatedDateTime(supplier.getupdatedAt())
                         };
                         model.addRow(rowData);
                 }

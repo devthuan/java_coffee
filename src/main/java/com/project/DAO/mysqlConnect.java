@@ -4,24 +4,24 @@ import java.sql.*;
 
 import javax.swing.JOptionPane;
 
-
 public class mysqlConnect {
     public static Connection getConnection() {
         Connection c = null;
         try {
             // Dang ky MySQL Driver voi DriverManager
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-            
+
             // Các thống số database
-            String url = "jdbc:mySQL://103.130.216.163:3306/phuocthu_java_coffee";
-            String userName = "phuocthu_java";
-            String password = "thuan.java";
+            String url = "jdbc:mySQL://localhost:3306/java_coffee";
+            String userName = "root";
+            String password = "";
             // Tao ket noi
             c = DriverManager.getConnection(url, userName, password);
-            
+
         } catch (Exception e) {
             // TODO: handle exception
-             JOptionPane.showMessageDialog(null, "Không thể kết nối đến cơ sở dữ liệu!","Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Không thể kết nối đến cơ sở dữ liệu!", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
         }
         return c;
     }

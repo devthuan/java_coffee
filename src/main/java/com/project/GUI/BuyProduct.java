@@ -12,6 +12,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.project.BUS.CategoryBUS;
+import com.project.BUS.EmployeeBUS;
 import com.project.BUS.PaymentMethodBUS;
 import com.project.BUS.ProductBUS;
 import com.project.DAO.OrderDAO;
@@ -30,6 +31,7 @@ import com.project.Util.Formatter;
 public class BuyProduct extends JPanel implements AddProductListener {
         private ProductBUS productBUS = new ProductBUS();
         private OrderDAO orderDAO = new OrderDAO();
+        private EmployeeBUS empBUS = new EmployeeBUS();
         private PermissionAccount permissionList;
 
         public BuyProduct() {
@@ -55,7 +57,10 @@ public class BuyProduct extends JPanel implements AddProductListener {
                         if (pnCarts.cartItems.size() == 0) {
                                 JOptionPane.showMessageDialog(this, "Chưa chọn sản phẩm nào", "Thông báo",
                                                 JOptionPane.INFORMATION_MESSAGE);
-                        } else {
+                        } else if (empBUS.getEmpByAccountID(permissionList.getAccountId()) == null) {
+                                JOptionPane.showMessageDialog(null, "Tài khoản này không được cấp quyền bán hàng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        } 
+                        else {
                                 int choice = JOptionPane.showConfirmDialog(this, "Xác nhận đơn hàng", "Xác nhận",
                                                 JOptionPane.OK_CANCEL_OPTION);
                                 if (choice == JOptionPane.YES_OPTION) {

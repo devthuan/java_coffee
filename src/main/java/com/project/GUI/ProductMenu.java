@@ -75,6 +75,7 @@ public class ProductMenu extends javax.swing.JPanel {
                                 }
                                 return super.getColumnClass(columnIndex);
                         }
+
                         @Override
                         public boolean isCellEditable(int row, int column) {
                                 return false;
@@ -213,7 +214,7 @@ public class ProductMenu extends javax.swing.JPanel {
 
                 cmbGia.setModel(
                                 new javax.swing.DefaultComboBoxModel<>(
-                                                new String[] { "Tăng gần", "Giảm gần" }));
+                                                new String[] { "Tăng dần", "Giảm dần" }));
                 cmbGia.setPreferredSize(new java.awt.Dimension(72, 15));
                 PanelTimkiem.add(cmbGia);
 
@@ -224,7 +225,7 @@ public class ProductMenu extends javax.swing.JPanel {
 
                 cmbSoluong.setModel(
                                 new javax.swing.DefaultComboBoxModel<>(
-                                                new String[] { "Tất cả", "Cà phê", "Trà sửa", "Soda" }));
+                                                new String[] { "Tất cả", "Cà phê", "Trà sữa", "Soda" }));
                 PanelTimkiem.add(cmbSoluong);
 
                 // lblLoaisp.setBackground(new java.awt.Color(255, 255, 255));
@@ -816,35 +817,36 @@ public class ProductMenu extends javax.swing.JPanel {
                 }
         }
 
-        private class Highlight extends DefaultTableCellRenderer {
+        // private class Highlight extends DefaultTableCellRenderer {
 
-                DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        // DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 
-                public Component getTableCellRendererComponent(JTable table, Object value,
-                                boolean isSelected, boolean hasFocus, int row, int column) {
+        // public Component getTableCellRendererComponent(JTable table, Object value,
+        // boolean isSelected, boolean hasFocus, int row, int column) {
 
-                        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
-                                        column);
-                        String searchText = txt.getText();
-                        String cellValue = String.valueOf(value);
+        // Component c = super.getTableCellRendererComponent(table, value, isSelected,
+        // hasFocus, row,
+        // column);
+        // String searchText = txt.getText();
+        // String cellValue = String.valueOf(value);
 
-                        // Highlight the cell with yellow background if the cell value matches the
-                        // search text
-                        if (cellValue.equals(searchText)) {
+        // // Highlight the cell with yellow background if the cell value matches the
+        // // search text
+        // if (cellValue.equals(searchText)) {
 
-                                c.setBackground(new Color(204, 204, 204));
-                        } else {
-                                c.setBackground(table.getBackground());
-                        }
-                        for (int i = 0; i < table.getColumnCount(); i++) {
-                                table.getColumnModel().getColumn(i).setCellRenderer(renderer);
-                        }
+        // c.setBackground(new Color(204, 204, 204));
+        // } else {
+        // c.setBackground(table.getBackground());
+        // }
+        // for (int i = 0; i < table.getColumnCount(); i++) {
+        // table.getColumnModel().getColumn(i).setCellRenderer(renderer);
+        // }
 
-                        return c;
+        // return c;
 
-                }
+        // }
 
-        }
+        // }
 
         // Variables declaration - do not modify
         private javax.swing.JPanel Btn;

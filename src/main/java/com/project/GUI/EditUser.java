@@ -415,8 +415,14 @@ public class EditUser extends javax.swing.JFrame {
 
         private void btnPositionActionPerformed(java.awt.event.ActionEvent evt) {
 
-                int roleID = PermissionAccount.getInstance().getRoleId();
-                accountDTOs = accountBUS.getAllEditUser_unused(roleID, accountDTO.getId());
+                int roleID = cbPosition.getSelectedIndex();
+                if (PermissionAccount.getInstance().getRoleId() == 1) {
+                        accountDTOs = accountBUS.getAll_unused(roleID + 1);
+
+                } else {
+
+                        accountDTOs = accountBUS.getAll_unused(roleID + 2);
+                }
                 cbEmail.removeAllItems();
                 for (AccountDTO acc : accountDTOs) {
                         cbEmail.addItem(acc.getEmail());
@@ -426,7 +432,6 @@ public class EditUser extends javax.swing.JFrame {
         }
 
         private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {
-              
 
                 if (jtfname.getText().trim().isEmpty()) {
                         JOptionPane.showMessageDialog(null, "Họ tên không được để trống!", "Thông báo",
