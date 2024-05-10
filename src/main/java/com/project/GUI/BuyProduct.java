@@ -58,9 +58,10 @@ public class BuyProduct extends JPanel implements AddProductListener {
                                 JOptionPane.showMessageDialog(this, "Chưa chọn sản phẩm nào", "Thông báo",
                                                 JOptionPane.INFORMATION_MESSAGE);
                         } else if (empBUS.getEmpByAccountID(permissionList.getAccountId()) == null) {
-                                JOptionPane.showMessageDialog(null, "Tài khoản này không được cấp quyền bán hàng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                        } 
-                        else {
+                                JOptionPane.showMessageDialog(null,
+                                                "Cần cập thông tin nhân viên trước khi thực hiện bán hàng!",
+                                                "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
                                 int choice = JOptionPane.showConfirmDialog(this, "Xác nhận đơn hàng", "Xác nhận",
                                                 JOptionPane.OK_CANCEL_OPTION);
                                 if (choice == JOptionPane.YES_OPTION) {
