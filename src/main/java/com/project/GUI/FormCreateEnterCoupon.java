@@ -400,7 +400,7 @@ public class FormCreateEnterCoupon extends javax.swing.JFrame {
     // }
 
     public void generaUI() {
-        // tạo arrayList lưu trữ cád giá trị cũ
+        // Preserve existing data
         java.util.List<JPanel> existingPanels = new ArrayList<>();
         for (Component component : jPanel7.getComponents()) {
             if (component instanceof JPanel) {
@@ -408,43 +408,50 @@ public class FormCreateEnterCoupon extends javax.swing.JFrame {
             }
         }
 
-        // Clear jPanel7 before adding new components
+        // Adjust the number of panels according to countBoxInput
+        int existingCount = existingPanels.size();
+
+        if (countBoxInput > existingCount) {
+            // Add new components
+            for (int i = existingCount; i < countBoxInput; i++) {
+                JPanel BoxInputCopy = new JPanel();
+                JComboBox<String> InputNameIngredientCopy = new JComboBox<>();
+                for (WareHouseDTO wareHouseDTO : list_ingredient) {
+                    InputNameIngredientCopy.addItem(wareHouseDTO.getName());
+                }
+                JTextField InputQuantityCopy = new JTextField();
+                JTextField InputPriceCopy = new JTextField();
+
+                BoxInputCopy.setMaximumSize(new java.awt.Dimension(700, 35));
+                BoxInputCopy.setMinimumSize(new java.awt.Dimension(700, 35));
+                BoxInputCopy.setPreferredSize(new java.awt.Dimension(700, 35));
+                BoxInputCopy.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
+
+                InputNameIngredientCopy.setFont(new java.awt.Font("Arial", 0, 14));
+                BoxInputCopy.add(InputNameIngredientCopy);
+
+                InputQuantityCopy.setFont(new java.awt.Font("Arial", 0, 14));
+                BoxInputCopy.add(InputQuantityCopy);
+
+                InputPriceCopy.setFont(new java.awt.Font("Arial", 0, 14));
+                BoxInputCopy.add(InputPriceCopy);
+
+                existingPanels.add(BoxInputCopy);
+            }
+        } else if (countBoxInput < existingCount) {
+            // Remove excess components
+            existingPanels = existingPanels.subList(0, countBoxInput);
+        }
+
+        // Clear and revalidate jPanel7 before adding components
         jPanel7.removeAll();
         jPanel7.revalidate();
 
         generaTitleUI();
 
-        // Re-add existing components
+        // Re-add all the components
         for (JPanel panel : existingPanels) {
             jPanel7.add(panel);
-        }
-
-        // Add new components
-        int existingCount = existingPanels.size();
-        for (int i = existingCount; i < countBoxInput; i++) {
-            JPanel BoxInputCopy = new JPanel();
-            JComboBox<String> InputNameIngredientCopy = new JComboBox<>();
-            for (WareHouseDTO wareHouseDTO : list_ingredient) {
-                InputNameIngredientCopy.addItem(wareHouseDTO.getName());
-            }
-            JTextField InputQuantityCopy = new JTextField();
-            JTextField InputPriceCopy = new JTextField();
-
-            BoxInputCopy.setMaximumSize(new java.awt.Dimension(700, 35));
-            BoxInputCopy.setMinimumSize(new java.awt.Dimension(700, 35));
-            BoxInputCopy.setPreferredSize(new java.awt.Dimension(700, 35));
-            BoxInputCopy.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
-
-            InputNameIngredientCopy.setFont(new java.awt.Font("Arial", 0, 14));
-            BoxInputCopy.add(InputNameIngredientCopy);
-
-            InputQuantityCopy.setFont(new java.awt.Font("Arial", 0, 14));
-            BoxInputCopy.add(InputQuantityCopy);
-
-            InputPriceCopy.setFont(new java.awt.Font("Arial", 0, 14));
-            BoxInputCopy.add(InputPriceCopy);
-
-            jPanel7.add(BoxInputCopy);
         }
 
         jPanel7.revalidate();
@@ -565,17 +572,19 @@ public class FormCreateEnterCoupon extends javax.swing.JFrame {
             }
         }
 
-        // for (DetailEnterCouponDTO a : list_new_detail_coupon) {
-        // System.out.println(a.getQuantity());
-        // System.out.println(a.getPrice());
+        for (DetailEnterCouponDTO a : list_new_detail_coupon) {
+            System.out.println(a.getIngredient_id());
+            System.out.println(a.getQuantity());
+            System.out.println(a.getPrice());
 
-        // }
-
-        Boolean check = EnterCouponBUS.createdEnterCoupon(newEnterCoupon, list_new_detail_coupon);
-        if (check) {
-            JOptionPane.showMessageDialog(null, "Tạo phiếu nhập thành công.");
-            this.setVisible(false);
         }
+
+        // Boolean check = EnterCouponBUS.createdEnterCoupon(newEnterCoupon,
+        // list_new_detail_coupon);
+        // if (check) {
+        // JOptionPane.showMessageDialog(null, "Tạo phiếu nhập thành công.");
+        // this.setVisible(false);
+        // }
     }
 
     private void BtnCloseActionPerformed(java.awt.event.ActionEvent evt) {
