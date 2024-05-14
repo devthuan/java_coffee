@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import com.project.BUS.StatisticalBUS;
 import com.project.Common.Common;
@@ -946,7 +947,16 @@ public class Statistical extends javax.swing.JPanel {
 
         private void BtnSearchOverViewActionPerformed(java.awt.event.ActionEvent evt) {
                 Date startDate = InputStartDay.getDate();
+
                 Date endDate = InputEndDay.getDate();
+                Date currentDate = new Date();
+                Date selectedDate = InputEndDay.getDate();
+                if (selectedDate != null && selectedDate.after(currentDate)) {
+                        JOptionPane.showMessageDialog(this, "Ngày không được vượt quá thời gian hiện tại!", "Lỗi",
+                                        JOptionPane.ERROR_MESSAGE);
+                        InputEndDay.setDate(null); // Reset the date chooser
+                        return;
+                }
 
                 String formatedStartDate = Common.formateDate(startDate);
                 String formatedEndDate = Common.formateDate(endDate);
@@ -993,6 +1003,15 @@ public class Statistical extends javax.swing.JPanel {
                 Date startDate = InputStartDay3.getDate();
                 Date endDate = InputEndDay3.getDate();
 
+                Date currentDate = new Date();
+                Date selectedDate = InputEndDay3.getDate();
+                if (selectedDate != null && selectedDate.after(currentDate)) {
+                        JOptionPane.showMessageDialog(this, "Ngày không được vượt quá thời gian hiện tại!", "Lỗi",
+                                        JOptionPane.ERROR_MESSAGE);
+                        InputEndDay3.setDate(null); // Reset the date chooser
+                        return;
+                }
+
                 String formatedStartDate = Common.formateDate(startDate);
                 String formatedEndDate = Common.formateDate(endDate);
 
@@ -1032,6 +1051,15 @@ public class Statistical extends javax.swing.JPanel {
         private void BtnSearchWarehousesActionPerformed(java.awt.event.ActionEvent evt) {
                 Date startDate = InputStartDay1.getDate();
                 Date endDate = InputEndDay1.getDate();
+
+                Date currentDate = new Date();
+                Date selectedDate = InputEndDay1.getDate();
+                if (selectedDate != null && selectedDate.after(currentDate)) {
+                        JOptionPane.showMessageDialog(this, "Ngày không được vượt quá thời gian hiện tại!", "Lỗi",
+                                        JOptionPane.ERROR_MESSAGE);
+                        InputEndDay1.setDate(null); // Reset the date chooser
+                        return;
+                }
 
                 String formatedStartDate = Common.formateDate(startDate);
                 String formatedEndDate = Common.formateDate(endDate);

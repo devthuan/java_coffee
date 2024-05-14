@@ -444,6 +444,15 @@ public class EditUser extends javax.swing.JFrame {
                                         JOptionPane.INFORMATION_MESSAGE);
                         return;
                 }
+
+                Date currentDate = new Date();
+                Date selectedDate = jdcdate.getDate();
+                if (selectedDate != null && selectedDate.after(currentDate)) {
+                        JOptionPane.showMessageDialog(this, "Ngày không được vượt quá thời gian hiện tại!", "Lỗi",
+                                        JOptionPane.ERROR_MESSAGE);
+                        jdcdate.setDate(null); // Reset the date chooser
+                        return;
+                }
                 if (jtfaddress.getText().trim().isEmpty()) {
                         JOptionPane.showMessageDialog(null, "Địa chỉ không được để trống!", "Thông báo",
                                         JOptionPane.INFORMATION_MESSAGE);

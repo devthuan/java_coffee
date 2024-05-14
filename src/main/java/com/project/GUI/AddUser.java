@@ -3,6 +3,7 @@ package com.project.GUI;
 
 import java.awt.Cursor;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
 
@@ -367,7 +368,14 @@ public class AddUser extends javax.swing.JFrame {
                                         JOptionPane.INFORMATION_MESSAGE);
                         return;
                 }
-
+                Date currentDate = new Date();
+                Date selectedDate = jdcDate.getDate();
+                if (selectedDate != null && selectedDate.after(currentDate)) {
+                        JOptionPane.showMessageDialog(this, "Ngày sinh không được vượt quá thời gian hiện tại!", "Lỗi",
+                                        JOptionPane.ERROR_MESSAGE);
+                        jdcDate.setDate(null); // Reset the date chooser
+                        return;
+                }
                 int choice = JOptionPane.showConfirmDialog(null, "Xác nhận thêm nhân viên", "Xác nhận",
                                 JOptionPane.YES_NO_OPTION);
                 if (choice == JOptionPane.YES_OPTION) {

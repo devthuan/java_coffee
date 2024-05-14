@@ -881,6 +881,16 @@ public class OrderMenu extends javax.swing.JPanel {
         private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {
                 Date startDate = dcStartDate.getDate();
                 Date endDate = dcEndDate.getDate();
+
+                Date currentDate = new Date();
+                Date selectedDate = dcEndDate.getDate();
+                if (selectedDate != null && selectedDate.after(currentDate)) {
+                        JOptionPane.showMessageDialog(this, "Ngày không được vượt quá thời gian hiện tại!", "Lỗi",
+                                        JOptionPane.ERROR_MESSAGE);
+                        dcEndDate.setDate(null); // Reset the date chooser
+                        return;
+                }
+
                 String startTotalText = txtInputMinPrice.getText();
                 String endTotalText = txtInputMaxPrice.getText();
 

@@ -484,6 +484,16 @@ public class DeliveryBill extends javax.swing.JPanel {
     private void BtnFilterMouseClicked(java.awt.event.MouseEvent evt) {
         Date startDate = ValueStart.getDate();
         Date endDate = ValueEndDay.getDate();
+
+        Date currentDate = new Date();
+        Date selectedDate = ValueEndDay.getDate();
+        if (selectedDate != null && selectedDate.after(currentDate)) {
+            JOptionPane.showMessageDialog(this, "Ngày không được vượt quá thời gian hiện tại!", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
+            ValueEndDay.setDate(null); // Reset the date chooser
+            return;
+        }
+
         String startTotalText = ValueTotalStart.getText();
         String endTotalText = ValueTotalEnd.getText();
 
