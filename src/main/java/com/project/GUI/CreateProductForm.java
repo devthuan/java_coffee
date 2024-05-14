@@ -71,7 +71,8 @@ public class CreateProductForm extends javax.swing.JFrame {
 
         titleForm.setBackground(new java.awt.Color(255, 153, 102));
         titleForm.setForeground(new java.awt.Color(255, 255, 255));
-        // titleForm.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        // titleForm.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0,
+        // Color.BLACK));
         titleForm.setPreferredSize(new java.awt.Dimension(602, 35));
         titleForm.setLayout(new java.awt.CardLayout());
 
@@ -147,6 +148,7 @@ public class CreateProductForm extends javax.swing.JFrame {
         jPanel11.add(jLabel8, java.awt.BorderLayout.LINE_START);
 
         InputChooseFile.setPreferredSize(new java.awt.Dimension(150, 22));
+        InputChooseFile.setText("Chọn ảnh");
         InputChooseFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 InputChooseFileActionPerformed(evt);

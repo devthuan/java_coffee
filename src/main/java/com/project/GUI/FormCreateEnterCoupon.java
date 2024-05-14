@@ -37,6 +37,7 @@ public class FormCreateEnterCoupon extends javax.swing.JFrame {
     private Map<String, SupplierDTO> supplierMap;
     private Map<String, EmployeeDTO> employeeMap;
     private Map<String, WareHouseDTO> ingredientMap;
+    private Map<String, WareHouseDTO> genertaUI;
 
     /**
      * Creates new form FormSupplier
@@ -356,20 +357,75 @@ public class FormCreateEnterCoupon extends javax.swing.JFrame {
         jPanel7.add(BoxInput);
     }
 
-    public void generaUI() {
+    // public void generaUI() {
 
-        jPanel7.removeAll(); // Clear jPanel7 before adding new components
+    // jPanel7.removeAll(); // Clear jPanel7 before adding new components
+    // jPanel7.revalidate();
+
+    // generaTitleUI();
+
+    // for (int i = 0; i < countBoxInput; i++) {
+    // JPanel BoxInputCopy = new JPanel();
+    // JComboBox InputNameIngredientCopy = new JComboBox();
+    // for (WareHouseDTO wareHouseDTO : list_ingredient) {
+
+    // InputNameIngredientCopy.addItem(wareHouseDTO.getName());
+
+    // }
+    // JTextField InputQuantityCopy = new JTextField();
+    // JTextField InputPriceCopy = new JTextField();
+
+    // BoxInputCopy.setMaximumSize(new java.awt.Dimension(700, 35));
+    // BoxInputCopy.setMinimumSize(new java.awt.Dimension(700, 35));
+    // BoxInputCopy.setPreferredSize(new java.awt.Dimension(700, 35));
+    // BoxInputCopy.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
+
+    // InputNameIngredientCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+    // // InputNameIngredientCopy.setModel(
+    // // new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2",
+    // // "Item 3", "Item 4" }));
+    // BoxInputCopy.add(InputNameIngredientCopy);
+
+    // InputQuantityCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+    // BoxInputCopy.add(InputQuantityCopy);
+
+    // InputPriceCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+    // BoxInputCopy.add(InputPriceCopy);
+
+    // jPanel7.add(BoxInputCopy);
+    // }
+
+    // jPanel7.repaint();
+
+    // }
+
+    public void generaUI() {
+        // tạo arrayList lưu trữ cád giá trị cũ
+        java.util.List<JPanel> existingPanels = new ArrayList<>();
+        for (Component component : jPanel7.getComponents()) {
+            if (component instanceof JPanel) {
+                existingPanels.add((JPanel) component);
+            }
+        }
+
+        // Clear jPanel7 before adding new components
+        jPanel7.removeAll();
         jPanel7.revalidate();
 
         generaTitleUI();
 
-        for (int i = 0; i < countBoxInput; i++) {
+        // Re-add existing components
+        for (JPanel panel : existingPanels) {
+            jPanel7.add(panel);
+        }
+
+        // Add new components
+        int existingCount = existingPanels.size();
+        for (int i = existingCount; i < countBoxInput; i++) {
             JPanel BoxInputCopy = new JPanel();
-            JComboBox InputNameIngredientCopy = new JComboBox();
+            JComboBox<String> InputNameIngredientCopy = new JComboBox<>();
             for (WareHouseDTO wareHouseDTO : list_ingredient) {
-
                 InputNameIngredientCopy.addItem(wareHouseDTO.getName());
-
             }
             JTextField InputQuantityCopy = new JTextField();
             JTextField InputPriceCopy = new JTextField();
@@ -379,23 +435,20 @@ public class FormCreateEnterCoupon extends javax.swing.JFrame {
             BoxInputCopy.setPreferredSize(new java.awt.Dimension(700, 35));
             BoxInputCopy.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
 
-            InputNameIngredientCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-            // InputNameIngredientCopy.setModel(
-            // new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2",
-            // "Item 3", "Item 4" }));
+            InputNameIngredientCopy.setFont(new java.awt.Font("Arial", 0, 14));
             BoxInputCopy.add(InputNameIngredientCopy);
 
-            InputQuantityCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+            InputQuantityCopy.setFont(new java.awt.Font("Arial", 0, 14));
             BoxInputCopy.add(InputQuantityCopy);
 
-            InputPriceCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+            InputPriceCopy.setFont(new java.awt.Font("Arial", 0, 14));
             BoxInputCopy.add(InputPriceCopy);
 
             jPanel7.add(BoxInputCopy);
         }
 
+        jPanel7.revalidate();
         jPanel7.repaint();
-
     }
 
     // event clicked
@@ -511,6 +564,12 @@ public class FormCreateEnterCoupon extends javax.swing.JFrame {
 
             }
         }
+
+        // for (DetailEnterCouponDTO a : list_new_detail_coupon) {
+        // System.out.println(a.getQuantity());
+        // System.out.println(a.getPrice());
+
+        // }
 
         Boolean check = EnterCouponBUS.createdEnterCoupon(newEnterCoupon, list_new_detail_coupon);
         if (check) {
