@@ -542,7 +542,6 @@ public class Main extends javax.swing.JFrame {
                 SwitchControl();
 
                 // Right.add(new BuyProduct());
-
                 Right.add(buyProduct);
         }
 

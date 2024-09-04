@@ -28,6 +28,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.project.BUS.DeliveryBillBUS;
+import com.project.BUS.EmployeeBUS;
 import com.project.BUS.EnterCouponBUS;
 import com.project.BUS.SupplierBUS;
 import com.project.Common.Common;
@@ -46,6 +47,7 @@ public class DeliveryBill extends javax.swing.JPanel {
     private int option_search = 0;
     private PermissionAccount permissionList;
     private ArrayList<DeliveryBillDTO> list_deliveryBills; // array
+    private EmployeeBUS empBUS = new EmployeeBUS();
 
     /**
      * Creates new form Supplier
@@ -558,6 +560,13 @@ public class DeliveryBill extends javax.swing.JPanel {
     }
 
     private void BtnAddActionPerformed(java.awt.event.ActionEvent evt) {
+        if (empBUS.getEmpByAccountID(permissionList.getAccountId()) == null) {
+            JOptionPane.showMessageDialog(null, "Tài khoản của bạn chưa cập nhật thông tin nhân viên!",
+                    "Thông báo",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+
+        }
         if (permissionList.hasPermission("READ_WAREHOUSE_DISPATCH_NOTE")) {
             new FormCreateDeliveryBill().setVisible(true);
 
@@ -635,6 +644,12 @@ public class DeliveryBill extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) TableDeliveryBill.getModel();
         model.setRowCount(0); // Xóa tất cả các hàng
 
+        InputSearch.setText("");
+        ValueStart.setDate(null);
+        ValueEndDay.setDate(null);
+        ValueTotalStart.setText("");
+        ValueTotalEnd.setText("");
+
         // Lấy danh sách nhà cung cấp mới từ SupplierBUS
         ArrayList<DeliveryBillDTO> list_deliveryBills = DeliveryBillBUS.getAllDeliveryBill();
 
@@ -650,6 +665,7 @@ public class DeliveryBill extends javax.swing.JPanel {
             };
             model.addRow(rowData);
         }
+
     }
 
     private void FilterActionPerformed(java.awt.event.ActionEvent evt) {

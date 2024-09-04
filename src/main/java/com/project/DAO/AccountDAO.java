@@ -192,6 +192,31 @@ public class AccountDAO {
             return false;
         }
     }
+    public static boolean addUserForAdmin(AccountDTO account) {
+        try {
+            Connection con = mysqlConnect.getConnection();
+            String insertQuery = "INSERT INTO TaiKhoan (email,password,Quyen_id) VALUES(?,?,?)";
+            PreparedStatement pst = con.prepareStatement(insertQuery);
+            pst.setString(1, account.getEmail());
+            pst.setString(2, account.getPassword());
+            pst.setInt(3, account.getRoleId());
+            int a = pst.executeUpdate();
+            if (a > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLIntegrityConstraintViolationException e) {
+            // Xử lý ngoại lệ khi cố gắng cập nhật một bản ghi với một email đã tồn tại
+            JOptionPane.showMessageDialog(null, "Email đã tồn tại trong cơ sở dữ liệu.");
+            e.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     public static boolean deleteUser(int id) {
         Connection con = mysqlConnect.getConnection();

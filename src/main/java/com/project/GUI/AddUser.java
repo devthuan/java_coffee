@@ -315,12 +315,13 @@ public class AddUser extends javax.swing.JFrame {
         }
 
         private void displayPosition() {
-                int roleID = PermissionAccount.getInstance().getRoleId();
-                accountDTOs = accountBUS.getAll_unused_1(roleID);
+                int roleID = cbPosition.getSelectedIndex();
+                accountDTOs = accountBUS.getAll_unused(roleID + 1);
                 cbEmail.removeAllItems();
                 for (AccountDTO acc : accountDTOs) {
                         cbEmail.addItem(acc.getEmail());
                 }
+                // cbEmail.addItem(accountDTO.getEmail());
         }
 
         private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {
@@ -404,10 +405,16 @@ public class AddUser extends javax.swing.JFrame {
 
         private void cbPositionActionPerformed(java.awt.event.ActionEvent evt) {
                 try {
+
                         ArrayList<AccountDTO> accountDTOs = new ArrayList<>();
-                        int selectedIndex = cbPosition.getSelectedIndex();
-                        int roleID = selectedIndex == 0 ? 2 : 3;
-                        accountDTOs = accountBUS.getAll_unused_1(roleID);
+                        int roleID = cbPosition.getSelectedIndex();
+                        if (PermissionAccount.getInstance().getRoleId() == 1) {
+                                accountDTOs = accountBUS.getAll_unused(roleID + 1);
+
+                        } else {
+
+                                accountDTOs = accountBUS.getAll_unused(roleID + 2);
+                        }
                         cbEmail.removeAllItems();
                         for (AccountDTO acc : accountDTOs) {
                                 cbEmail.addItem(acc.getEmail());

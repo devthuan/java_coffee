@@ -285,7 +285,7 @@ public class StatisticalDAO {
             String sql = "SELECT \r\n" + //
                     "COUNT(SanPham.id) AS total_product\r\n" + //
                     "FROM SanPham\r\n" + //
-                    "";
+                    " where is_active = 1 ";
             PreparedStatement pst = conn.prepareStatement(sql);
 
             ResultSet result_query = pst.executeQuery();
@@ -333,7 +333,7 @@ public class StatisticalDAO {
             String sql = "SELECT \r\n" + //
                     "COUNT(NhaCungCap.id) AS total_supplier\r\n" + //
                     "FROM NhaCungCap\r\n" + //
-                    "";
+                    " where is_active = 1 ";
             PreparedStatement pst = conn.prepareStatement(sql);
 
             ResultSet result_query = pst.executeQuery();
@@ -357,7 +357,7 @@ public class StatisticalDAO {
             String sql = "SELECT \r\n" + //
                     "COUNT(NhanVien.id) AS total_employee\r\n" + //
                     "FROM NhanVien\r\n" + //
-                    "";
+                    " ";
             PreparedStatement pst = conn.prepareStatement(sql);
 
             ResultSet result_query = pst.executeQuery();
@@ -381,7 +381,7 @@ public class StatisticalDAO {
             String sql = "SELECT \r\n" + //
                     "COUNT(NguyenLieu.id) AS total_ingredient\r\n" + //
                     "FROM NguyenLieu\r\n" + //
-                    "";
+                    " where is_active = 1 ";
             PreparedStatement pst = conn.prepareStatement(sql);
 
             ResultSet result_query = pst.executeQuery();

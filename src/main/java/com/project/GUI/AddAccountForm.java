@@ -130,7 +130,7 @@ public class AddAccountForm extends javax.swing.JFrame {
                     new javax.swing.DefaultComboBoxModel<>(new String[] { "Manager", "Staff" }));
 
         }
-   
+
         BoxAddress.add(jComboBox1, java.awt.BorderLayout.CENTER);
 
         jPanel2.add(BoxAddress);
@@ -250,7 +250,7 @@ public class AddAccountForm extends javax.swing.JFrame {
             return;
         }
 
-        boolean check = AccountBUS.createAccountBUS(new AccountDTO(email, password1, role_id + 1));
+        boolean check = AccountBUS.createAccountForAdminBUS(new AccountDTO(email, password1, role_id + 1));
         if (check) {
             JOptionPane.showMessageDialog(this, "Tạo tài khoản thành công");
             this.setVisible(false);

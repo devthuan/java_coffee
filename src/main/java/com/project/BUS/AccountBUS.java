@@ -58,6 +58,12 @@ public class AccountBUS {
         return AccountDAO.addUser(new_account);
     }
 
+    public static boolean createAccountForAdminBUS(AccountDTO new_account) {
+        String hashingPassword = PasswordHasher.hashPassword(new_account.getPassword());
+        new_account.setPassword(hashingPassword);
+        return AccountDAO.addUserForAdmin(new_account);
+    }
+
     public static ArrayList<AccountDTO> getAllAccount() {
         return AccountDAO.getAllUser();
     }
