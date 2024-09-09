@@ -1,22 +1,13 @@
+# yêu cầu:
+## mysql
+## JDK version 21.0.2 trở lên
+## Maven version 3.9.6 trở lên
+## HeidiSQL hoặc công cụ quản lý khác
+
+
 # Cách tải project về và khởi động:
+## Bước 1: Clone project về
+## Bước 2: nhập file database kèm theo project `db_java_coffee.sql`
+## Bước 3: mvn install
+## Bước 4: mvn exec:java để chạy project
 
-## Bước 1: Mọi người clone về 
-## Bước 2: mvn install
-## Bước 3: mvn exec:java để chạy project
-
-# cách đẩy code lên git
-
-## bước 1: git add .
-## bước 2: git commit -m "`lời nhắn`"
-## bước 3: git push origin `name_branch`
-
-note: `name_branch` là tên branch của mỗi người
-
-# kéo code từ git về máy
-## git pull origin `name_branch`
-
-
-
-# tạo nhanh mới và chuyển sang nhánh đó (new branch):
-
-## git checkout -b n`new_branch`
