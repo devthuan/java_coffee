@@ -22,6 +22,7 @@ public class LineChart {
 
     public static ChartPanel createLineChart(HashMap<String, ArrayList<StatisticalDTO>> dataChart, String title) {
         // Tạo dataset
+
         DefaultCategoryDataset dataset = createDataset(dataChart);
 
         // Tạo biểu đồ từ dataset
@@ -65,6 +66,9 @@ public class LineChart {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         // HashMap<String, ArrayList<StatisticalDTO>> chartData =
         // StatisticalBUS.getDataChartOverView();
+        if (chartData == null) {
+            return null;
+        }
 
         ArrayList<StatisticalDTO> revenueData = chartData.get("revenue");
         ArrayList<StatisticalDTO> expenseData = chartData.get("expense");

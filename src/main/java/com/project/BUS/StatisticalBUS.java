@@ -56,6 +56,10 @@ public class StatisticalBUS {
         ArrayList<StatisticalDTO> data_expense = new ArrayList<>();
         ArrayList<StatisticalDTO> data_profit = new ArrayList<>();
 
+        if (data == null || data.size() == 0) {
+            return null;
+        }
+
         for (StatisticalDTO statisticalDTO : data) {
             data_revenue.add(new StatisticalDTO(statisticalDTO.getRevenue(), statisticalDTO.getMonthYear()));
             data_expense.add(new StatisticalDTO(statisticalDTO.getExpense(), statisticalDTO.getMonthYear()));

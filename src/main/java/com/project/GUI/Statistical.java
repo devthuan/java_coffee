@@ -931,6 +931,7 @@ public class Statistical extends javax.swing.JPanel {
                         HashMap<String, ArrayList<StatisticalDTO>> chartData = StatisticalBUS
                                         .getDataChartOverViewByMonth();
                         BoxChart.removeAll();
+                      
                         BoxChart.add(LineChart.createLineChart(chartData, "Lợi nhuận theo từng tháng"));
 
                         // Cập nhật lại giao diện

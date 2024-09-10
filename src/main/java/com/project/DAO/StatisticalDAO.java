@@ -164,19 +164,21 @@ public class StatisticalDAO {
                     "SUM(doanh_thu) AS tong_doanh_thu, " +
                     "SUM(chi_phi_nhap_hang) AS tong_chi_phi_nhap_hang, " +
                     "SUM(doanh_thu) - SUM(chi_phi_nhap_hang) AS loi_nhuan, " +
-                    "DATE_FORMAT(ngay, '%Y-%m') AS thang " +
+                    "thang " +
                     "FROM ( " +
+
                     "SELECT " +
                     "SUM(SP.gia * CTHD.so_luong) AS doanh_thu, " +
                     "0 AS chi_phi_nhap_hang, " +
-                    "DATE_FORMAT(HoaDon.createdAt, '%Y-%m-%d') AS ngay " +
+                    "DATE_FORMAT(HoaDon.createdAt, '%Y-%m') AS thang " +
                     "FROM " +
                     "HoaDon " +
                     "JOIN " +
                     "ChiTietHoaDon CTHD ON HoaDon.id = CTHD.HoaDon_id " +
                     "JOIN " +
                     "SanPham SP ON CTHD.SanPham_id = SP.id " +
-                    "WHERE HoaDon.trang_thai = 'successful' " +
+                    "WHERE " +
+                    "HoaDon.trang_thai = 'successful' " +
                     "GROUP BY " +
                     "DATE_FORMAT(HoaDon.createdAt, '%Y-%m') " +
 
@@ -185,7 +187,7 @@ public class StatisticalDAO {
                     "SELECT " +
                     "0 AS doanh_thu, " +
                     "SUM(CTPN.don_gia * CTPN.so_luong) AS chi_phi_nhap_hang, " +
-                    "DATE_FORMAT(PhieuNhap.createdAt, '%Y-%m-%d') AS ngay " +
+                    "DATE_FORMAT(PhieuNhap.createdAt, '%Y-%m') AS thang " +
                     "FROM " +
                     "PhieuNhap " +
                     "JOIN " +
@@ -194,7 +196,7 @@ public class StatisticalDAO {
                     "DATE_FORMAT(PhieuNhap.createdAt, '%Y-%m') " +
                     ") AS loi_nhuan_ngay " +
                     "GROUP BY " +
-                    "DATE_FORMAT(ngay, '%Y-%m')";
+                    "thang;";
 
             PreparedStatement pst = conn.prepareStatement(sql);
 
