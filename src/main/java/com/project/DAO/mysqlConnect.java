@@ -12,6 +12,7 @@ public class mysqlConnect {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 
             // Các thống số database
+
             String url = "jdbc:mySQL://localhost:3306/java_coffee";
             String userName = "root";
             String password = ".";
