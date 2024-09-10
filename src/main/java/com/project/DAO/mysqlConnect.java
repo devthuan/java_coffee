@@ -14,7 +14,7 @@ public class mysqlConnect {
             // Các thống số database
             String url = "jdbc:mySQL://localhost:3306/java_coffee";
             String userName = "root";
-            String password = "";
+            String password = ".";
             // Tao ket noi
             c = DriverManager.getConnection(url, userName, password);
 

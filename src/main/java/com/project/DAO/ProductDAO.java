@@ -21,7 +21,7 @@ import com.project.DTO.ProductDTO;
 
 public class ProductDAO {
 
-    public ArrayList<ProductDTO> getAll() {
+    public static ArrayList<ProductDTO> getAll() {
         ArrayList<ProductDTO> products = null;
         try {
             Connection conn = mysqlConnect.getConnection();
@@ -363,6 +363,12 @@ public class ProductDAO {
         return rs;
     }
 
-    
+    public static void main(String[] args) {
+        ArrayList<ProductDTO> data = getAll();
+
+        for (ProductDTO productDTO : data) {
+            System.out.println(productDTO.getProduct_name());
+        }
+    }
 
 }
