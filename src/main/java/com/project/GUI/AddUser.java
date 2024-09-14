@@ -315,7 +315,7 @@ public class AddUser extends javax.swing.JFrame {
         }
 
         private void displayPosition() {
-                int roleID = cbPosition.getSelectedIndex();
+                int roleID = PermissionAccount.getInstance().getRoleId();
                 accountDTOs = accountBUS.getAll_unused(roleID + 1);
                 cbEmail.removeAllItems();
                 for (AccountDTO acc : accountDTOs) {
@@ -379,7 +379,7 @@ public class AddUser extends javax.swing.JFrame {
                         user.setPhone(jtfPhone.getText());
                         user.setSalary(Float.parseFloat(jtfSalary.getText()));
                         System.out.println("hello");
-                        int roleID = cbPosition.getSelectedIndex() == 0 ? 2 : 3;
+                        int roleID = cbPosition.getSelectedIndex() == 0 ? 1 : 3;
                         accountDTOs = accountBUS.getAll_unused_1(roleID);
                         for (AccountDTO acc : accountDTOs) {
                                 System.out.println(acc.getId());

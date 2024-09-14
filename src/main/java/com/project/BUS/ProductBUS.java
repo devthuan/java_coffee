@@ -3,6 +3,7 @@ package com.project.BUS;
 import java.util.ArrayList;
 
 import com.project.DAO.ProductDAO;
+import com.project.DTO.DetailRecipeDTO;
 import com.project.DTO.ProductDTO;
 
 public class ProductBUS {
@@ -43,13 +44,23 @@ public class ProductBUS {
     }
 
     public ArrayList<ProductDTO> getProductByCategory(int category) {
-        ArrayList<ProductDTO> products = null;
+        ArrayList<ProductDTO> products = new ArrayList<>(); // Initialize as an empty list
         try {
-            products = productDAO.getProductByCategory(category);
+            ArrayList<ProductDTO> products_check = productDAO.getProductByCategory(category);
+
+            for (ProductDTO productDTO : products_check) {
+                ArrayList<DetailRecipeDTO> check_recipe_product = RecipeBUS.getRecipeByProductId(productDTO.getId());
+                // Add product to 'products' only if it has associated recipes
+                if (!check_recipe_product.isEmpty()) {
+                    products.add(productDTO);
+                }
+            }
+
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace(); // Optionally print the error for debugging
+            return null; // Return null if an exception occurs
         }
-        return products;
+        return products; // Return the filtered list of products
     }
 
     public boolean increaseProductQuantity(int product_id, int quantity) {
@@ -109,6 +120,16 @@ public class ProductBUS {
         }
         return filteredProducts;
 
+    }
+
+    public static void main(String[] args) {
+        // using getProductByCategory
+        ProductBUS productBUS = new ProductBUS();
+
+        ArrayList<ProductDTO> productsInCategory1 = productBUS.getProductByCategory(1);
+        for (ProductDTO product : productsInCategory1) {
+            System.out.println(product.getProduct_name());
+        }
     }
 
 }

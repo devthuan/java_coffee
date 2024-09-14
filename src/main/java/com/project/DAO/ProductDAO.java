@@ -151,25 +151,7 @@ public class ProductDAO {
         return listProduct;
     }
 
-    public boolean increaseProductQuantity(int product_id, int quantity) {
-        boolean rs = false;
-        try {
-            Connection conn = mysqlConnect.getConnection();
-            String sql = "Update SanPham set so_luong = so_luong + ? Where id = ?";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setInt(2, product_id);
-            pst.setInt(1, quantity);
-            int result = pst.executeUpdate();
-            if (result > 0) {
-                rs = true;
-            }
-            mysqlConnect.closeConnection(conn);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return rs;
-    }
-
+   
     public static ArrayList<ProductDTO> allProduct() {
         ArrayList<ProductDTO> listProduct = new ArrayList<>();
         try {
@@ -342,9 +324,26 @@ public class ProductDAO {
 
     }
 
-    // filter products
+    public static boolean increaseProductQuantity(int product_id, int quantity) {
+        boolean rs = false;
+        try {
+            Connection conn = mysqlConnect.getConnection();
+            String sql = "Update SanPham set so_luong = so_luong + ? Where id = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(2, product_id);
+            pst.setInt(1, quantity);
+            int result = pst.executeUpdate();
+            if (result > 0) {
+                rs = true;
+            }
+            mysqlConnect.closeConnection(conn);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return rs;
+    }
 
-    public boolean decreaseProductQuantity(int product_id, int quantity) {
+    public static boolean decreaseProductQuantity(int product_id, int quantity) {
         boolean rs = false;
         try {
             Connection conn = mysqlConnect.getConnection();
@@ -361,6 +360,36 @@ public class ProductDAO {
             System.out.println(e);
         }
         return rs;
+    }
+
+    // get product by id
+    public static ProductDTO getProductById(int id) {
+        ProductDTO product = null;
+        try {
+            Connection conn = mysqlConnect.getConnection();
+            String sql = "Select * from SanPham where id =?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                int productId = rs.getInt("id");
+                String productName = rs.getString("ten_SP");
+                String imageUrl = rs.getString("url_anh");
+                float price = rs.getFloat("gia");
+                int isActive = rs.getInt("is_active");
+                int quantity = rs.getInt("so_luong");
+                int categoryId = rs.getInt("LoaiSanPham_id");
+
+                product = new ProductDTO(productId, productName, imageUrl, price, quantity, categoryId);
+
+            }
+            mysqlConnect.closeConnection(conn);
+            return product;
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
     }
 
     public static void main(String[] args) {

@@ -147,8 +147,8 @@ public class Main extends javax.swing.JFrame {
 
                 menu.setBackground(new java.awt.Color(248, 249, 250));
                 menu.setMaximumSize(null);
-                menu.setMinimumSize(new java.awt.Dimension(160, 402));
-                menu.setPreferredSize(new java.awt.Dimension(160, 402));
+                menu.setMinimumSize(new java.awt.Dimension(200, 402));
+                menu.setPreferredSize(new java.awt.Dimension(200, 402));
 
                 ItemHome.setBackground(new java.awt.Color(248, 249, 250));
                 ItemHome.setAutoscrolls(true);
@@ -295,19 +295,19 @@ public class Main extends javax.swing.JFrame {
 
                 ItemReceipt.setBackground(new java.awt.Color(248, 249, 250));
                 ItemReceipt.setMinimumSize(new java.awt.Dimension(182, 55));
-                ItemReceipt.setPreferredSize(new java.awt.Dimension(182, 55));
+                ItemReceipt.setPreferredSize(new java.awt.Dimension(210, 55));
 
                 ItemReceipt.setLayout(new java.awt.CardLayout(7, 0));
 
                 ReceiptLabel.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
                 ReceiptLabel.setIcon(new javax.swing.ImageIcon("./src/assets/icon/receipt.png")); // NOI18N
-                ReceiptLabel.setText("Nhập, xuất");
+                ReceiptLabel.setText("Nhập, Công thức");
                 ReceiptLabel.setAutoscrolls(true);
                 ReceiptLabel.setIconTextGap(12);
-                ReceiptLabel.setMaximumSize(new java.awt.Dimension(124, 32));
-                ReceiptLabel.setMinimumSize(new java.awt.Dimension(124, 32));
+                ReceiptLabel.setMaximumSize(new java.awt.Dimension(164, 32));
+                ReceiptLabel.setMinimumSize(new java.awt.Dimension(164, 32));
                 ReceiptLabel.setName(""); // NOI18N
-                ReceiptLabel.setPreferredSize(new java.awt.Dimension(124, 32));
+                ReceiptLabel.setPreferredSize(new java.awt.Dimension(154, 32));
                 ReceiptLabel.addMouseListener(new java.awt.event.MouseAdapter() {
                         public void mouseClicked(java.awt.event.MouseEvent evt) {
                                 ReceiptLabelMouseClicked(evt);
@@ -540,9 +540,9 @@ public class Main extends javax.swing.JFrame {
 
         private void HomeLabelMouseClicked(java.awt.event.MouseEvent evt) {
                 SwitchControl();
-
+                BuyProduct purchase = new BuyProduct();
                 // Right.add(new BuyProduct());
-                Right.add(buyProduct);
+                Right.add(purchase);
         }
 
         private void ProductLabelMouseClicked(java.awt.event.MouseEvent evt) {

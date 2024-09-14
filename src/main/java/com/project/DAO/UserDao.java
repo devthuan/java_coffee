@@ -13,8 +13,9 @@ public class UserDao {
         List<User> users = new ArrayList<User>();
         try {
             Connection con = mysqlConnect.getConnection();
-            String sql = "SELECT * FROM NhanVien";
+            String sql = "SELECT * FROM NhanVien where is_active = ?";
             PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, 1); // is_active = 1
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 User user = new User();
@@ -61,9 +62,10 @@ public class UserDao {
         boolean rs = false;
         try {
             Connection con = mysqlConnect.getConnection();
-            String sql = "DELETE FROM NhanVien WHERE id = ?";
+            String sql = "Update NhanVien set is_active = ? WHERE id = ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setInt(1, 0);
+            ps.setInt(2, id);
             rs = ps.executeUpdate() > 0;
 
         } catch (Exception e) {
@@ -97,9 +99,10 @@ public class UserDao {
     public User getIdUser(int id) {
         try {
             Connection con = mysqlConnect.getConnection();
-            String sql = "SELECT * FROM NhanVien WHERE id = ?";
+            String sql = "SELECT * FROM NhanVien WHERE id = ? and is_active = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
+            ps.setInt(2, 1); // is_active = 1
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 User user = new User();
@@ -125,8 +128,9 @@ public class UserDao {
         List<User> users = new ArrayList<User>();
         try {
             Connection con = mysqlConnect.getConnection();
-            String sql = "SELECT * FROM NhanVien WHERE ho_va_ten LIKE '%" + name + "%'";
+            String sql = "SELECT * FROM NhanVien WHERE  ho_va_ten LIKE '%" + name + "%' and is_active = ?";
             PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, 1);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 User user = new User();
@@ -152,9 +156,10 @@ public class UserDao {
         List<User> users = new ArrayList<User>();
         try {
             Connection con = mysqlConnect.getConnection();
-            String sql = "SELECT * FROM NhanVien WHERE id = ?";
+            String sql = "SELECT * FROM NhanVien WHERE id = ? and is_active = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
+            ps.setInt(2, 1);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 User user = new User();
@@ -179,8 +184,9 @@ public class UserDao {
         List<User> users = new ArrayList<User>();
         try {
             Connection con = mysqlConnect.getConnection();
-            String sql = "SELECT * FROM NhanVien WHERE sdt LIKE '%" + phone + "%'";
+            String sql = "SELECT * FROM NhanVien WHERE sdt LIKE '%" + phone + "%' and is_active = ?";
             PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, 1); // is_active = 1
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 User user = new User();
@@ -205,9 +211,10 @@ public class UserDao {
     public User getNameUser(String name) {
         try {
             Connection con = mysqlConnect.getConnection();
-            String sql = "SELECT * FROM NhanVien WHERE ho_va_ten = ?";
+            String sql = "SELECT * FROM NhanVien WHERE ho_va_ten = ? and is_active = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, name);
+            ps.setInt(2, 1); // is_active = 1
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 User user = new User();

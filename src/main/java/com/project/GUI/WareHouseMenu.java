@@ -4,6 +4,7 @@ package com.project.GUI;
 import java.awt.Cursor;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -137,7 +138,7 @@ public class WareHouseMenu extends javax.swing.JPanel {
                 BtnExportMouseClicked(evt);
             }
         });
-        BoxBtn.add(BtnExport);
+        // BoxBtn.add(BtnExport);
 
         BtnDetail.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         BtnDetail.setIcon(new javax.swing.ImageIcon("./src/assets/icon/info-rgb.png")); // NOI18N
@@ -398,11 +399,20 @@ public class WareHouseMenu extends javax.swing.JPanel {
             if (selectedRow == -1) {
                 JOptionPane.showMessageDialog(this, "Vui lòng chọn nguyên liệu muốn xóa");
             } else {
+
                 int choice = JOptionPane.showConfirmDialog(this, "Bạn có thực sự muốn xóa nguyên liệu này ?");
                 if (choice == JOptionPane.YES_OPTION) {
                     int idWareHouse = Integer.parseInt(String.valueOf(TableReceipt.getValueAt(selectedRow, 0)));
                     try {
-                        wareHouseService.deleteWareHouse(idWareHouse);
+                        Map<Boolean, String> respond = wareHouseService.deleteWareHouse(idWareHouse);
+                        if (respond.containsKey(true)) {
+                            JOptionPane.showMessageDialog(this, respond.get(true));
+                            return;
+                        } else {
+                            JOptionPane.showMessageDialog(this, respond.get(false));
+                            return;
+
+                        }
                     } catch (Exception ex) {
                         Logger.getLogger(WareHouseMenu.class.getName()).log(Level.SEVERE, null, ex);
                     }

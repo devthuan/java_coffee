@@ -77,6 +77,25 @@ public class WareHouseDAO {
         ps.executeUpdate();
     }
 
+    public static Boolean decreaseIngredientWarehouse(int id_ingredient, int quantity) throws Exception {
+        try {
+            Connection connection = mysqlConnect.getConnection();
+            String sql = "UPDATE NguyenLieu SET so_luong = so_luong - ?, updatedAt = NOW() WHERE id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, quantity);
+            ps.setInt(2, id_ingredient);
+            int result = ps.executeUpdate();
+            if (result > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+
+    }
+
     public WareHouse getNameWareHouse(String name) throws Exception {
         Connection connection = mysqlConnect.getConnection();
         String sql = "SELECT * FROM NguyenLieu WHERE ten_NL = ?";
@@ -171,11 +190,10 @@ public class WareHouseDAO {
         ps.setInt(2, warehouse.getId());
         ps.executeUpdate();
     }
-    public boolean WareHouseExist(String name)
-    {
+
+    public boolean WareHouseExist(String name) {
         boolean exist = false;
-        try 
-        {
+        try {
             Connection connection = mysqlConnect.getConnection();
             String sql = "SELECT COUNT(*) FROM NguyenLieu WHERE ten_NL = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -184,12 +202,10 @@ public class WareHouseDAO {
             if (rs.next()) {
                 int count = rs.getInt(1);
                 if (count > 0) {
-                    exist = true; 
+                    exist = true;
                 }
             }
-        }
-        catch(SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return exist;

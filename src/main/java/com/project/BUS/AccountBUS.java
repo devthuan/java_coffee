@@ -141,7 +141,8 @@ public class AccountBUS {
     }
 
     public static void main(String[] args) {
-        ArrayList<AccountDTO> getAll_unused = getAll_unused_1(1);
+        AccountBUS account = new AccountBUS();
+        ArrayList<AccountDTO> getAll_unused = account.getAll_unused(3);
         for (AccountDTO accountDTO : getAll_unused) {
             System.out.println(accountDTO.getEmail());
         }

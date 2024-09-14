@@ -14,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -30,11 +31,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import com.project.BUS.DeliveryBillBUS;
 import com.project.BUS.EmployeeBUS;
 import com.project.BUS.EnterCouponBUS;
+import com.project.BUS.RecipeBUS;
 import com.project.BUS.SupplierBUS;
 import com.project.Common.Common;
 import com.project.DTO.DeliveryBillDTO;
 import com.project.DTO.EnterCouponDTO;
 import com.project.DTO.PermissionAccount;
+import com.project.DTO.RecipeDTO;
 import com.project.DTO.SupplierDTO;
 import com.project.Util.Formatter;
 import com.toedter.calendar.JDateChooser;
@@ -46,7 +49,7 @@ import com.toedter.calendar.JDateChooser;
 public class DeliveryBill extends javax.swing.JPanel {
     private int option_search = 0;
     private PermissionAccount permissionList;
-    private ArrayList<DeliveryBillDTO> list_deliveryBills; // array
+    private ArrayList<RecipeDTO> list_recipe; // array
     private EmployeeBUS empBUS = new EmployeeBUS();
 
     /**
@@ -56,12 +59,12 @@ public class DeliveryBill extends javax.swing.JPanel {
         initComponents();
         permissionList = PermissionAccount.getInstance();
 
-        list_deliveryBills = DeliveryBillBUS.getAllDeliveryBill();
+        list_recipe = RecipeBUS.get_all_recipe();
 
-        loadData(list_deliveryBills);
+        loadData(list_recipe);
     }
 
-    private void loadData(ArrayList<DeliveryBillDTO> list_deliveryBills) {
+    private void loadData(ArrayList<RecipeDTO> list_recipe) {
 
         DefaultTableModel model = new DefaultTableModel() {
             @Override
@@ -70,19 +73,17 @@ public class DeliveryBill extends javax.swing.JPanel {
             }
         };
         model.addColumn("ID");
-        model.addColumn("Tên phiếu xuất");
-        model.addColumn("Nhân viên");
-        model.addColumn("Tổng số KG");
+        model.addColumn("Tên công thức");
+        model.addColumn("Mô tả");
+        // model.addColumn("Tổng số KG");
         model.addColumn("Ngày tạo");
 
-        for (DeliveryBillDTO deliveryBill : list_deliveryBills) {
+        for (RecipeDTO recipe : list_recipe) {
             Object[] rowData = {
-                    deliveryBill.getId(),
-                    deliveryBill.getNameDeliveryBill(),
-                    deliveryBill.getNameEmployee(),
-                    Formatter.getFormatedPrice(deliveryBill
-                            .getAmount()),
-                    Common.formatedDateTime(deliveryBill.getCreatedAt()),
+                    recipe.getId(),
+                    recipe.getName_recipe(),
+                    recipe.getDescription(),
+                    Common.formatedDateTime(recipe.getCreatedAt()),
             };
             model.addRow(rowData);
         }
@@ -202,7 +203,7 @@ public class DeliveryBill extends javax.swing.JPanel {
         });
         BoxBtn.add(BtnExport);
 
-        BoxSearch.setBackground(new java.awt.Color(255, 255, 255));
+        // BoxSearch.setBackground(new java.awt.Color(255, 255, 255));
 
         Filter.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         Filter.setModel(
@@ -210,11 +211,11 @@ public class DeliveryBill extends javax.swing.JPanel {
                         new String[] { "ID tăng dần", "ID giảm dần", "Tăng dần tổng số kg",
                                 "Giảm dần tổng số kg" }));
         Filter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Filter.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FilterActionPerformed(evt);
-            }
-        });
+        // Filter.addActionListener(new java.awt.event.ActionListener() {
+        // public void actionPerformed(java.awt.event.ActionEvent evt) {
+        // FilterActionPerformed(evt);
+        // }
+        // });
 
         BtnRefresh.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         BtnRefresh.setIcon(new javax.swing.ImageIcon("./src/assets/icon/refresh.png")); // NOI18N
@@ -251,15 +252,16 @@ public class DeliveryBill extends javax.swing.JPanel {
         BoxSearch.setLayout(BoxSearchLayout);
         BoxSearchLayout.setHorizontalGroup(
                 BoxSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BoxSearchLayout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(Filter, javax.swing.GroupLayout.PREFERRED_SIZE, 130,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(InputSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 221,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(31, 31, 31)
-                                .addComponent(BtnRefresh)));
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                BoxSearchLayout.createSequentialGroup()
+                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(Filter, javax.swing.GroupLayout.PREFERRED_SIZE, 130,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(30, 30, 30)
+                                        .addComponent(InputSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 221,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(31, 31, 31)
+                                        .addComponent(BtnRefresh)));
         BoxSearchLayout.setVerticalGroup(
                 BoxSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(BoxSearchLayout.createSequentialGroup()
@@ -281,7 +283,7 @@ public class DeliveryBill extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon("./src/assets/icon/bill.png")); // NOI18N
-        jLabel1.setText("Quản lý phiếu xuất");
+        jLabel1.setText("Công thức sản phẩm");
         jLabel1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         jLabel1.setIconTextGap(10);
         jPanel1.add(jLabel1, "card2");
@@ -366,38 +368,42 @@ public class DeliveryBill extends javax.swing.JPanel {
 
         ContentFilter.add(ItemFilterEndDay);
 
-        ItemFilterTotalReceiptStart.setBackground(new java.awt.Color(255, 255, 255));
-        ItemFilterTotalReceiptStart.setPreferredSize(new java.awt.Dimension(150, 70));
-        ItemFilterTotalReceiptStart.setLayout(new java.awt.BorderLayout(0, 5));
+        // ItemFilterTotalReceiptStart.setBackground(new java.awt.Color(255, 255, 255));
+        // ItemFilterTotalReceiptStart.setPreferredSize(new java.awt.Dimension(150,
+        // 70));
+        // ItemFilterTotalReceiptStart.setLayout(new java.awt.BorderLayout(0, 5));
 
-        TitleTotalStart.setBackground(new java.awt.Color(255, 255, 255));
-        TitleTotalStart.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        TitleTotalStart.setText("Giá trị từ");
-        TitleTotalStart.setPreferredSize(new java.awt.Dimension(37, 25));
-        ItemFilterTotalReceiptStart.add(TitleTotalStart, java.awt.BorderLayout.PAGE_START);
+        // TitleTotalStart.setBackground(new java.awt.Color(255, 255, 255));
+        // TitleTotalStart.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        // TitleTotalStart.setText("Giá trị từ");
+        // TitleTotalStart.setPreferredSize(new java.awt.Dimension(37, 25));
+        // ItemFilterTotalReceiptStart.add(TitleTotalStart,
+        // java.awt.BorderLayout.PAGE_START);
 
-        ValueTotalStart.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ItemFilterTotalReceiptStart.add(ValueTotalStart, java.awt.BorderLayout.CENTER);
+        // ValueTotalStart.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        // ItemFilterTotalReceiptStart.add(ValueTotalStart,
+        // java.awt.BorderLayout.CENTER);
 
-        ContentFilter.add(ItemFilterTotalReceiptStart);
+        // ContentFilter.add(ItemFilterTotalReceiptStart);
 
-        ItemFilterTotalReceiptEnd.setBackground(new java.awt.Color(255, 255, 255));
-        ItemFilterTotalReceiptEnd.setPreferredSize(new java.awt.Dimension(150, 70));
-        ItemFilterTotalReceiptEnd.setLayout(new java.awt.BorderLayout(0, 5));
+        // ItemFilterTotalReceiptEnd.setBackground(new java.awt.Color(255, 255, 255));
+        // ItemFilterTotalReceiptEnd.setPreferredSize(new java.awt.Dimension(150, 70));
+        // ItemFilterTotalReceiptEnd.setLayout(new java.awt.BorderLayout(0, 5));
 
-        TitleTotalEnd.setBackground(new java.awt.Color(255, 255, 255));
-        TitleTotalEnd.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        TitleTotalEnd.setText("Giá trị đến");
-        TitleTotalEnd.setPreferredSize(new java.awt.Dimension(37, 25));
-        ItemFilterTotalReceiptEnd.add(TitleTotalEnd, java.awt.BorderLayout.PAGE_START);
+        // TitleTotalEnd.setBackground(new java.awt.Color(255, 255, 255));
+        // TitleTotalEnd.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        // TitleTotalEnd.setText("Giá trị đến");
+        // TitleTotalEnd.setPreferredSize(new java.awt.Dimension(37, 25));
+        // ItemFilterTotalReceiptEnd.add(TitleTotalEnd,
+        // java.awt.BorderLayout.PAGE_START);
 
-        ValueTotalEnd.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ValueTotalEnd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ValueTotalEndActionPerformed(evt);
-            }
-        });
-        ItemFilterTotalReceiptEnd.add(ValueTotalEnd, java.awt.BorderLayout.CENTER);
+        // ValueTotalEnd.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        // ValueTotalEnd.addActionListener(new java.awt.event.ActionListener() {
+        // public void actionPerformed(java.awt.event.ActionEvent evt) {
+        // ValueTotalEndActionPerformed(evt);
+        // }
+        // });
+        // ItemFilterTotalReceiptEnd.add(ValueTotalEnd, java.awt.BorderLayout.CENTER);
 
         ContentFilter.add(ItemFilterTotalReceiptEnd);
 
@@ -582,9 +588,9 @@ public class DeliveryBill extends javax.swing.JPanel {
 
             try {
                 int id = (int) TableDeliveryBill.getValueAt(selectedRow, 0);
-                for (DeliveryBillDTO deliveryBillDTO : list_deliveryBills) {
-                    if (deliveryBillDTO.getId() == id) {
-                        new FormDetailDeliveryBill(deliveryBillDTO).setVisible(true);
+                for (RecipeDTO recipeDTO : list_recipe) {
+                    if (recipeDTO.getId() == id) {
+                        new FormDetailDeliveryBill(id).setVisible(true);
 
                     }
                 }
@@ -602,18 +608,21 @@ public class DeliveryBill extends javax.swing.JPanel {
             if (selectedRow != -1) {
                 try {
                     int id = (int) TableDeliveryBill.getValueAt(selectedRow, 0);
-                    String createdAString = (String) TableDeliveryBill.getValueAt(selectedRow, 4);
+                    System.out.println("check id: " + id);
+                    // String createdAString = (String) TableDeliveryBill.getValueAt(selectedRow,
+                    // 4);
                     // Hiển thị hộp thoại xác nhận
                     int option = JOptionPane.showConfirmDialog(null,
                             "Bạn có chắc chắn muốn xoá phiếu xuất này?", "Xác nhận xoá",
                             JOptionPane.YES_NO_OPTION);
+
                     if (option == JOptionPane.YES_OPTION) {
-                        boolean check_remove = DeliveryBillBUS.removeDeliveryBillBUS(id, createdAString);
-                        if (check_remove) {
-                            JOptionPane.showMessageDialog(null,
-                                    "Phiếu xuất đã được xoá thành công.");
-                            // Nếu xoá thành công, cập nhật lại JTable hoặc các thành phần khác cần
-                            // thiết
+
+                        HashMap<Boolean, String> check_remove = RecipeBUS.removeRecipe(id);
+                        if (check_remove.containsKey(true)) {
+                            JOptionPane.showMessageDialog(null, check_remove.get(true));
+                        } else {
+                            JOptionPane.showMessageDialog(null, check_remove.get(false));
                         }
                     }
                 } catch (NumberFormatException e) {
@@ -651,57 +660,59 @@ public class DeliveryBill extends javax.swing.JPanel {
         ValueTotalEnd.setText("");
 
         // Lấy danh sách nhà cung cấp mới từ SupplierBUS
-        ArrayList<DeliveryBillDTO> list_deliveryBills = DeliveryBillBUS.getAllDeliveryBill();
-
-        // Thêm dữ liệu mới vào JTable
-        for (DeliveryBillDTO deliveryBill : list_deliveryBills) {
-            Object[] rowData = {
-                    deliveryBill.getId(),
-                    deliveryBill.getNameDeliveryBill(),
-                    deliveryBill.getNameEmployee(),
-                    Formatter.getFormatedPrice(deliveryBill
-                            .getAmount()),
-                    Common.formatedDateTime(deliveryBill.getCreatedAt()),
-            };
-            model.addRow(rowData);
-        }
+        // ArrayList<DeliveryBillDTO> list_deliveryBills =
+        // DeliveryBillBUS.getAllDeliveryBill();
+        list_recipe = RecipeBUS.get_all_recipe();
+        loadData(list_recipe);
+        // // Thêm dữ liệu mới vào JTable
+        // for (DeliveryBillDTO deliveryBill : list_deliveryBills) {
+        // Object[] rowData = {
+        // deliveryBill.getId(),
+        // deliveryBill.getNameDeliveryBill(),
+        // deliveryBill.getNameEmployee(),
+        // Formatter.getFormatedPrice(deliveryBill
+        // .getAmount()),
+        // Common.formatedDateTime(deliveryBill.getCreatedAt()),
+        // };
+        // model.addRow(rowData);
+        // }
 
     }
 
-    private void FilterActionPerformed(java.awt.event.ActionEvent evt) {
-        int option = Filter.getSelectedIndex();
-        InputSearch.requestFocus();
+    // private void FilterActionPerformed(java.awt.event.ActionEvent evt) {
+    // int option = Filter.getSelectedIndex();
+    // InputSearch.requestFocus();
 
-        DefaultTableModel model = (DefaultTableModel) TableDeliveryBill.getModel();
-        model.setRowCount(0); // Xóa tất cả các hàng
+    // DefaultTableModel model = (DefaultTableModel) TableDeliveryBill.getModel();
+    // model.setRowCount(0); // Xóa tất cả các hàng
 
-        if (option == 0) {
+    // if (option == 0) {
 
-            list_deliveryBills.sort(Comparator.comparing(DeliveryBillDTO::getId));
+    // list_deliveryBills.sort(Comparator.comparing(DeliveryBillDTO::getId));
 
-        } else if (option == 1) {
-            list_deliveryBills.sort(Comparator.comparing(DeliveryBillDTO::getId).reversed());
+    // } else if (option == 1) {
+    // list_deliveryBills.sort(Comparator.comparing(DeliveryBillDTO::getId).reversed());
 
-        } else if (option == 2) {
-            list_deliveryBills.sort(Comparator.comparing(DeliveryBillDTO::getAmount));
+    // } else if (option == 2) {
+    // list_deliveryBills.sort(Comparator.comparing(DeliveryBillDTO::getAmount));
 
-        } else if (option == 3) {
-            list_deliveryBills.sort(Comparator.comparing(DeliveryBillDTO::getAmount).reversed());
+    // } else if (option == 3) {
+    // list_deliveryBills.sort(Comparator.comparing(DeliveryBillDTO::getAmount).reversed());
 
-        }
+    // }
 
-        for (DeliveryBillDTO deliveryBill : list_deliveryBills) {
-            Object[] rowData = {
-                    deliveryBill.getId(),
-                    deliveryBill.getNameDeliveryBill(),
-                    deliveryBill.getNameEmployee(),
-                    Formatter.getFormatedPrice(deliveryBill
-                            .getAmount()),
-                    Common.formatedDateTime(deliveryBill.getCreatedAt()),
-            };
-            model.addRow(rowData);
-        }
-    }
+    // for (DeliveryBillDTO deliveryBill : list_deliveryBills) {
+    // Object[] rowData = {
+    // deliveryBill.getId(),
+    // deliveryBill.getNameDeliveryBill(),
+    // deliveryBill.getNameEmployee(),
+    // Formatter.getFormatedPrice(deliveryBill
+    // .getAmount()),
+    // Common.formatedDateTime(deliveryBill.getCreatedAt()),
+    // };
+    // model.addRow(rowData);
+    // }
+    // }
 
     private void exportToExcel() {
         JFileChooser fileChooser = new JFileChooser(); // Tạo một JFileChooser

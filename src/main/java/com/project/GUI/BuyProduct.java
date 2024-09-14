@@ -13,6 +13,7 @@ import javax.swing.event.ChangeListener;
 
 import com.project.BUS.CategoryBUS;
 import com.project.BUS.EmployeeBUS;
+import com.project.BUS.EnterCouponBUS;
 import com.project.BUS.PaymentMethodBUS;
 import com.project.BUS.ProductBUS;
 import com.project.DAO.OrderDAO;
@@ -58,9 +59,9 @@ public class BuyProduct extends JPanel implements AddProductListener {
                                 JOptionPane.showMessageDialog(this, "Chưa chọn sản phẩm nào", "Thông báo",
                                                 JOptionPane.INFORMATION_MESSAGE);
                         } else if (empBUS.getEmpByAccountID(permissionList.getAccountId()) == null) {
-                                JOptionPane.showMessageDialog(null, "Tài khoản này không được cấp quyền bán hàng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                        } 
-                        else {
+                                JOptionPane.showMessageDialog(null, "Tài khoản này không được cấp quyền bán hàng!",
+                                                "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
                                 int choice = JOptionPane.showConfirmDialog(this, "Xác nhận đơn hàng", "Xác nhận",
                                                 JOptionPane.OK_CANCEL_OPTION);
                                 if (choice == JOptionPane.YES_OPTION) {
@@ -78,11 +79,16 @@ public class BuyProduct extends JPanel implements AddProductListener {
                                         }
 
                                         if (orderDAO.addOrder(orderDTO, orderDetails)) {
+
                                                 for (ProductDTO product : pnCarts.cartItems.keySet()) {
                                                         CartItem cartItem = pnCarts.cartItems.get(product);
                                                         int quantity = (int) cartItem.SpinnerQuantity.getValue();
 
                                                         productBUS.decreaseProductQuantity(product.getId(), quantity);
+
+                                                        EnterCouponBUS.updateQuantityIngredient(product.getId(),
+                                                                        quantity);
+
                                                 }
 
                                                 // Reset
@@ -600,6 +606,7 @@ class CartItem extends JPanel {
                                 }
 
                                 if (currentValue <= 0) {
+
                                         SpinnerQuantity.setValue(1);
                                         JOptionPane.showMessageDialog(null, "Số lượng sản phẩm tối thiểu là 1",
                                                         "Thông báo", JOptionPane.INFORMATION_MESSAGE);

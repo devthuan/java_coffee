@@ -59,7 +59,8 @@ public class EditUser extends javax.swing.JFrame {
                         String formattedDateTime = dateFormat.format(timestamp);
                         jtfCreate.setText(formattedDateTime);
                         jtfCreate.setEnabled(false);
-                        cbEmail.setSelectedItem(accountDTO.getEmail());
+                        cbEmail.setText(accountDTO.getEmail());
+                        cbEmail.setEnabled(false);
                 } catch (Exception ex) {
                         Logger.getLogger(EditUser.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -87,7 +88,7 @@ public class EditUser extends javax.swing.JFrame {
                 cbPosition = new javax.swing.JComboBox<>();
                 btnEdit = new javax.swing.JButton();
                 jLabel1 = new javax.swing.JLabel();
-                cbEmail = new javax.swing.JComboBox<>();
+                cbEmail = new javax.swing.JTextField();
 
                 setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -415,19 +416,19 @@ public class EditUser extends javax.swing.JFrame {
 
         private void btnPositionActionPerformed(java.awt.event.ActionEvent evt) {
 
-                int roleID = cbPosition.getSelectedIndex();
-                if (PermissionAccount.getInstance().getRoleId() == 1) {
-                        accountDTOs = accountBUS.getAll_unused(roleID + 1);
+                // int roleID = cbPosition.getSelectedIndex();
+                // if (PermissionAccount.getInstance().getRoleId() == 1) {
+                // accountDTOs = accountBUS.getAll_unused(roleID + 1);
 
-                } else {
+                // } else {
 
-                        accountDTOs = accountBUS.getAll_unused(roleID + 2);
-                }
-                cbEmail.removeAllItems();
-                for (AccountDTO acc : accountDTOs) {
-                        cbEmail.addItem(acc.getEmail());
-                }
-                cbEmail.addItem(accountDTO.getEmail());
+                // accountDTOs = accountBUS.getAll_unused(roleID + 2);
+                // }
+                // cbEmail.removeAllItems();
+                // for (AccountDTO acc : accountDTOs) {
+                // cbEmail.addItem(acc.getEmail());
+                // }
+                // cbEmail.addItem(accountDTO.getEmail());
 
         }
 
@@ -470,11 +471,11 @@ public class EditUser extends javax.swing.JFrame {
                         jtfsalary.requestFocus();
                         return;
                 }
-                if (cbEmail.getSelectedItem() == null) {
-                        JOptionPane.showMessageDialog(null, "Vui lòng chọn email!", "Thông báo",
-                                        JOptionPane.INFORMATION_MESSAGE);
-                        return;
-                }
+                // if (cbEmail.getSelectedItem() == null) {
+                // JOptionPane.showMessageDialog(null, "Vui lòng chọn email!", "Thông báo",
+                // JOptionPane.INFORMATION_MESSAGE);
+                // return;
+                // }
                 int choice = JOptionPane.showConfirmDialog(null, "Xác nhận cập nhật thông tin nhân viên", "Xác nhận",
                                 JOptionPane.YES_NO_OPTION);
                 if (choice == JOptionPane.YES_OPTION) {
@@ -485,12 +486,12 @@ public class EditUser extends javax.swing.JFrame {
                         user.setPhone(jtfphone.getText());
                         user.setSalary(Float.parseFloat(jtfsalary.getText()));
 
-                        for (AccountDTO acc : accountDTOs) {
-                                if (acc.getEmail().equals(cbEmail.getSelectedItem())) {
-                                        user.setAccountId(acc.getId());
-                                        break;
-                                }
-                        }
+                        // for (AccountDTO acc : accountDTOs) {
+                        // if (acc.getEmail().equals(cbEmail.getSelectedItem())) {
+                        // user.setAccountId(acc.getId());
+                        // break;
+                        // }
+                        // }
 
                         boolean rs = userService.updateUser(user);
                         if (rs) {
@@ -523,7 +524,7 @@ public class EditUser extends javax.swing.JFrame {
         private javax.swing.JLabel jLabel28;
         private javax.swing.JPanel jPanel1;
         private javax.swing.JButton btnEdit;
-        private javax.swing.JComboBox<String> cbEmail;
+        private javax.swing.JTextField cbEmail;
         private javax.swing.JComboBox<String> cbPosition;
         private com.toedter.calendar.JDateChooser jdcdate;
         private javax.swing.JTextField jtfCode;

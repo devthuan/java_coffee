@@ -4,103 +4,77 @@
  */
 package com.project.GUI;
 
-import com.itextpdf.io.font.PdfEncodings;
-import com.itextpdf.kernel.font.PdfFont;
-import com.itextpdf.kernel.font.PdfFontFactory;
-import com.itextpdf.kernel.font.PdfFontFactory.EmbeddingStrategy;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.properties.TextAlignment;
-// import com.itextpdf.kernel.font.StandardFonts;
-import com.itextpdf.layout.properties.UnitValue;
-
+import java.awt.Component;
 import java.awt.Cursor;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
-import com.project.BUS.DeliveryBillBUS;
 import com.project.BUS.EnterCouponBUS;
+import com.project.BUS.ProductBUS;
+import com.project.BUS.RecipeBUS;
+import com.project.BUS.SupplierBUS;
 import com.project.Common.Common;
-import com.project.DTO.DeliveryBillDTO;
-import com.project.DTO.DetailDeliveryBillDTO;
+import com.project.DAO.EmployeeDAO;
+import com.project.DAO.WareHouseDAO;
 import com.project.DTO.DetailEnterCouponDTO;
+import com.project.DTO.DetailRecipeDTO;
+import com.project.DTO.EmployeeDTO;
 import com.project.DTO.EnterCouponDTO;
 import com.project.DTO.PermissionAccount;
-import com.project.Util.Formatter;
+import com.project.DTO.ProductDTO;
+import com.project.DTO.RecipeDTO;
+import com.project.DTO.SupplierDTO;
+import com.project.DTO.WareHouseDTO;
 
 /**
  *
  * @author thuan
  */
 public class FormDetailDeliveryBill extends javax.swing.JFrame {
-    private ArrayList<DetailDeliveryBillDTO> detail_deliveryBill;
-    private PermissionAccount permissionList;
+    public int countBoxInput = 1;
+    private int id_recipe;
+    public ArrayList<WareHouseDTO> list_ingredient;
+    private Map<String, ProductDTO> productMap;
+    private Map<String, EmployeeDTO> employeeMap;
+    private Map<String, WareHouseDTO> ingredientMap;
+    private RecipeDTO recipeDTO;
 
-    /**
-     * Creates new form FormSupplier
-     */
-    public FormDetailDeliveryBill(DeliveryBillDTO data) {
+    public FormDetailDeliveryBill(int id_recipe) {
+        this.id_recipe = id_recipe;
+        recipeDTO = RecipeBUS.detailRecipeByIdBUS(id_recipe);
+
+        list_ingredient = WareHouseDAO.get_all_ingredients();
+        ingredientMap = new HashMap<>();
+
+        for (WareHouseDTO wareHouseDTO : list_ingredient) {
+            ingredientMap.put(wareHouseDTO.getName(), wareHouseDTO);
+        }
+
         initComponents();
-        permissionList = PermissionAccount.getInstance();
 
-        detail_deliveryBill = DeliveryBillBUS.getDetailDeliveryBillBUS(data.getId());
-        loadData(data);
+        productMap = new HashMap<>();
+        employeeMap = new HashMap<>();
+        ArrayList<ProductDTO> list_product = ProductBUS.getAllProduct();
+        ArrayList<EmployeeDTO> employees = EmployeeDAO.get_all_employee();
 
-    }
+        jComboBox3.setText(String.valueOf(recipeDTO.getName_recipe()));
+        inputName.setText(String.valueOf(recipeDTO.getDescription()));
 
-    private void loadData(DeliveryBillDTO data) {
+        for (ProductDTO productDTO : list_product) {
 
-        valueId.setText(String.valueOf(data.getId()));
-        ValueDate.setText(String.valueOf(Common.formatedDateTime(data.getCreatedAt())));
-        ValuePaymentMethod.setText(String.valueOf(data.getNameEmployee()));
-        ValueTotal.setText(String.valueOf(Formatter.getFormatedPrice(data.getAmount())) + " KG");
+            if (recipeDTO.getName_product().equals(productDTO.getProduct_name())) {
+                jComboBox2.setText(recipeDTO.getName_product());
+                productMap.put(recipeDTO.getName_product(), productDTO);
 
-        for (DetailDeliveryBillDTO detailEnterCouponDTO : detail_deliveryBill) {
-            JLabel ValueNameCopy = new JLabel();
-            JLabel ValuePriceCopy = new JLabel();
-            JLabel ValueQuantityCopy = new JLabel();
-            // JLabel ValueSumMoneyCopy = new JLabel();
-            JPanel BoxProductItemCopy = new JPanel();
-
-            BoxProductItemCopy.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1,
-                    0, new java.awt.Color(0, 0, 0)));
-            BoxProductItemCopy.setMaximumSize(new java.awt.Dimension(519, 40));
-            BoxProductItemCopy.setMinimumSize(new java.awt.Dimension(519, 40));
-            BoxProductItemCopy.setPreferredSize(new java.awt.Dimension(519, 40));
-            BoxProductItemCopy.setLayout(new java.awt.GridLayout(1, 4));
-
-            ValueNameCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-            ValueNameCopy.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-            ValueNameCopy.setText(String.valueOf(detailEnterCouponDTO.getNameIngradient()));
-            BoxProductItemCopy.add(ValueNameCopy);
-
-            ValuePriceCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-            ValuePriceCopy.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-            ValuePriceCopy.setText("KG");
-            BoxProductItemCopy.add(ValuePriceCopy);
-
-            ValueQuantityCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-            ValueQuantityCopy.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-            ValueQuantityCopy.setText(String.valueOf(detailEnterCouponDTO.getQuantity()));
-            BoxProductItemCopy.add(ValueQuantityCopy);
-
-            // ValueSumMoneyCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-            // ValueSumMoneyCopy.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-            // ValueSumMoneyCopy.setText(String.valueOf(Common.getFormatedPriceDouble(
-            // detailEnterCouponDTO.getTotalPrice())));
-            // BoxProductItemCopy.add(ValueSumMoneyCopy);
-
-            jPanel1.add(BoxProductItemCopy);
+            } else {
+            }
+            jComboBox2.setEditable(false);
         }
     }
 
@@ -112,315 +86,239 @@ public class FormDetailDeliveryBill extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
-        setTitle("Chi tiết phiếu xuất");
+        setTitle("Chi tiết công thức");
         setResizable(false);
-        Top = new javax.swing.JPanel();
-        Ttitle = new javax.swing.JLabel();
-        Center = new javax.swing.JPanel();
-        BoxInfo = new javax.swing.JPanel();
-        ItemIdOrder = new javax.swing.JPanel();
-        NameId = new javax.swing.JLabel();
-        valueId = new javax.swing.JLabel();
-        ItemDateOrder = new javax.swing.JPanel();
-        NameDate = new javax.swing.JLabel();
-        ValueDate = new javax.swing.JLabel();
-        ItemCasher = new javax.swing.JPanel();
-        NameCasher = new javax.swing.JLabel();
-        ValueCasher = new javax.swing.JLabel();
-        ItemPaymentMethod = new javax.swing.JPanel();
-        NamePaymentMethod = new javax.swing.JLabel();
-        ValuePaymentMethod = new javax.swing.JLabel();
-        BoxProduct = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jLabel5 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        BoxTitleProduct = new javax.swing.JPanel();
-        TitleName = new javax.swing.JLabel();
-        TitlePrice = new javax.swing.JLabel();
-        TitleQuantity = new javax.swing.JLabel();
-        TitleTotalMoney = new javax.swing.JLabel();
-        BoxProductItem = new javax.swing.JPanel();
-        ValueName = new javax.swing.JLabel();
-        ValuePrice = new javax.swing.JLabel();
-        ValueQuantity = new javax.swing.JLabel();
-        ValueSumMoney = new javax.swing.JLabel();
-        BoxProductItem1 = new javax.swing.JPanel();
-        ValueName1 = new javax.swing.JLabel();
-        ValuePrice1 = new javax.swing.JLabel();
-        ValueQuantity1 = new javax.swing.JLabel();
-        ValueSumMoney1 = new javax.swing.JLabel();
-        BoxProductItem2 = new javax.swing.JPanel();
-        ValueName2 = new javax.swing.JLabel();
-        ValuePrice2 = new javax.swing.JLabel();
-        ValueQuantity2 = new javax.swing.JLabel();
-        ValueSumMoney2 = new javax.swing.JLabel();
-        BoxProductItem3 = new javax.swing.JPanel();
-        ValueName3 = new javax.swing.JLabel();
-        ValuePrice3 = new javax.swing.JLabel();
-        ValueQuantity3 = new javax.swing.JLabel();
-        ValueSumMoney3 = new javax.swing.JLabel();
-        BoxProductItem4 = new javax.swing.JPanel();
-        ValueName4 = new javax.swing.JLabel();
-        ValuePrice4 = new javax.swing.JLabel();
-        ValueQuantity4 = new javax.swing.JLabel();
-        ValueSumMoney4 = new javax.swing.JLabel();
-        BoxTotal = new javax.swing.JPanel();
-        ItemTotal = new javax.swing.JPanel();
-        NameTotal = new javax.swing.JLabel();
-        ValueTotal = new javax.swing.JLabel();
-        Bottom = new javax.swing.JPanel();
-        BtnPrint = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        BoxName1 = new javax.swing.JPanel();
+        NameSupplier1 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JTextField();
+        BoxName2 = new javax.swing.JPanel();
+        NameSupplier2 = new javax.swing.JLabel();
+        jComboBox3 = new javax.swing.JTextField();
+        BoxName = new javax.swing.JPanel();
+        NameSupplier = new javax.swing.JLabel();
+        inputName = new javax.swing.JTextField();
+        jPanel6 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jPanel7 = new javax.swing.JPanel();
+        BoxInput = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        BoxInput1 = new javax.swing.JPanel();
+        InputNameIngredient1 = new javax.swing.JComboBox<>();
+        InputQuantity1 = new javax.swing.JTextField();
+        InputPrice1 = new javax.swing.JTextField();
+        BoxBtn = new javax.swing.JPanel();
+        BtnMinus = new javax.swing.JButton();
+        BtnPlus = new javax.swing.JButton();
+        BtnAdd = new javax.swing.JButton();
         BtnClose = new javax.swing.JButton();
+        BtnMinus.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        BtnPlus.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        BtnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        BtnClose.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        int count = 1;
+        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel5.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(96, 153, 102));
+        jLabel5.setText("+");
 
         // setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(519, 600));
+        setMinimumSize(new java.awt.Dimension(722, 453));
 
-        Top.setMaximumSize(new java.awt.Dimension(600, 505));
-        Top.setMinimumSize(new java.awt.Dimension(100, 30));
-        Top.setPreferredSize(new java.awt.Dimension(722, 30));
-        Top.setBackground(new java.awt.Color(255, 153, 102));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        Ttitle.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        Ttitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Ttitle.setBackground(new java.awt.Color(255, 153, 102));
-        Ttitle.setForeground(new java.awt.Color(255, 255, 255));
-        Ttitle.setText("Chi tiết phiếu xuất");
-        Ttitle.setPreferredSize(new java.awt.Dimension(37, 50));
+        jPanel1.setMinimumSize(new java.awt.Dimension(100, 30));
+        jPanel1.setPreferredSize(new java.awt.Dimension(722, 30));
+        jPanel1.setBackground(new java.awt.Color(255, 153, 102));
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setBackground(new java.awt.Color(255, 153, 102));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Chi tiết công thức");
+        jLabel1.setPreferredSize(new java.awt.Dimension(37, 50));
 
-        javax.swing.GroupLayout TopLayout = new javax.swing.GroupLayout(Top);
-        Top.setLayout(TopLayout);
-        TopLayout.setHorizontalGroup(
-                TopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(Ttitle, javax.swing.GroupLayout.Alignment.TRAILING,
-                                javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE));
-        TopLayout.setVerticalGroup(
-                TopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(Ttitle, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE));
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE));
+        jPanel1Layout.setVerticalGroup(
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE));
 
-        getContentPane().add(Top, java.awt.BorderLayout.PAGE_START);
+        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
-        Center.setMaximumSize(new java.awt.Dimension(600, 505));
-        Center.setMinimumSize(new java.awt.Dimension(474, 350));
-        Center.setPreferredSize(new java.awt.Dimension(474, 350));
-        Center.setLayout(new java.awt.BorderLayout());
+        jPanel2.setMaximumSize(new java.awt.Dimension(474, 350));
+        jPanel2.setMinimumSize(new java.awt.Dimension(474, 350));
+        jPanel2.setPreferredSize(new java.awt.Dimension(474, 350));
+        jPanel2.setLayout(new java.awt.BorderLayout());
 
-        BoxInfo.setPreferredSize(new java.awt.Dimension(644, 120));
-        BoxInfo.setLayout(new java.awt.GridLayout(4, 0));
+        jPanel5.setPreferredSize(new java.awt.Dimension(1010, 130));
+        jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 30, 10));
 
-        ItemIdOrder.setPreferredSize(new java.awt.Dimension(644, 25));
-        ItemIdOrder.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 30, 0));
+        BoxName1.setMinimumSize(new java.awt.Dimension(330, 45));
+        BoxName1.setPreferredSize(new java.awt.Dimension(330, 45));
+        BoxName1.setLayout(new java.awt.BorderLayout(10, 0));
 
-        NameId.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        NameId.setText("Mã phiếu xuất:");
-        NameId.setPreferredSize(new java.awt.Dimension(180, 33));
-        ItemIdOrder.add(NameId);
+        NameSupplier1.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        NameSupplier1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        NameSupplier1.setText("Tên sản phẩm");
+        NameSupplier1.setMaximumSize(new java.awt.Dimension(130, 40));
+        NameSupplier1.setMinimumSize(new java.awt.Dimension(130, 40));
+        NameSupplier1.setPreferredSize(new java.awt.Dimension(130, 40));
+        NameSupplier1.setVerifyInputWhenFocusTarget(false);
+        BoxName1.add(NameSupplier1, java.awt.BorderLayout.LINE_START);
 
-        valueId.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        valueId.setText("jLabel3");
-        valueId.setMinimumSize(new java.awt.Dimension(300, 25));
-        valueId.setPreferredSize(new java.awt.Dimension(250, 33));
-        ItemIdOrder.add(valueId);
+        jComboBox2.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
 
-        BoxInfo.add(ItemIdOrder);
+        // jComboBox2.setModel(
+        // new javax.swing.DefaultComboBoxModel<SupplierDTO>(new String[] { "Item 1",
+        // "Item 2", "Item 3", "Item 4" }));
+        BoxName1.add(jComboBox2, java.awt.BorderLayout.CENTER);
 
-        ItemDateOrder.setPreferredSize(new java.awt.Dimension(644, 25));
-        ItemDateOrder.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 30, 0));
+        jPanel5.add(BoxName1);
 
-        NameDate.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        NameDate.setText("Ngày xuất:");
-        NameDate.setPreferredSize(new java.awt.Dimension(180, 33));
-        ItemDateOrder.add(NameDate);
+        BoxName2.setMinimumSize(new java.awt.Dimension(330, 45));
+        BoxName2.setPreferredSize(new java.awt.Dimension(330, 45));
+        BoxName2.setLayout(new java.awt.BorderLayout(10, 0));
 
-        ValueDate.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        ValueDate.setText("jLabel3");
-        ValueDate.setMinimumSize(new java.awt.Dimension(300, 25));
-        ValueDate.setPreferredSize(new java.awt.Dimension(250, 33));
-        ItemDateOrder.add(ValueDate);
+        NameSupplier2.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        NameSupplier2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        NameSupplier2.setText("Tên công thức");
+        NameSupplier2.setMaximumSize(new java.awt.Dimension(130, 40));
+        NameSupplier2.setMinimumSize(new java.awt.Dimension(130, 40));
+        NameSupplier2.setPreferredSize(new java.awt.Dimension(130, 40));
+        NameSupplier2.setVerifyInputWhenFocusTarget(false);
+        BoxName2.add(NameSupplier2, java.awt.BorderLayout.LINE_START);
 
-        BoxInfo.add(ItemDateOrder);
+        jComboBox3.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        // jComboBox3.setModel(
+        // new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2",
+        // "Item 3", "Item 4" }));
+        BoxName2.add(jComboBox3, java.awt.BorderLayout.CENTER);
 
-        // ItemCasher.setPreferredSize(new java.awt.Dimension(644, 25));
-        // ItemCasher.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 30,
-        // 0));
+        jPanel5.add(BoxName2);
 
-        // NameCasher.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        // NameCasher.setText("Nhà cung cấp:");
-        // NameCasher.setPreferredSize(new java.awt.Dimension(180, 33));
-        // ItemCasher.add(NameCasher);
+        BoxName.setMinimumSize(new java.awt.Dimension(330, 45));
+        BoxName.setPreferredSize(new java.awt.Dimension(330, 45));
+        BoxName.setLayout(new java.awt.BorderLayout(10, 0));
 
-        // ValueCasher.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        // ValueCasher.setText("jLabel3");
-        // ValueCasher.setMinimumSize(new java.awt.Dimension(300, 25));
-        // ValueCasher.setPreferredSize(new java.awt.Dimension(250, 33));
-        // ItemCasher.add(ValueCasher);
+        NameSupplier.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        NameSupplier.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        NameSupplier.setText("mô tả công thức");
+        NameSupplier.setMaximumSize(new java.awt.Dimension(130, 40));
+        NameSupplier.setMinimumSize(new java.awt.Dimension(130, 40));
+        NameSupplier.setPreferredSize(new java.awt.Dimension(120, 40));
+        NameSupplier.setVerifyInputWhenFocusTarget(false);
+        BoxName.add(NameSupplier, java.awt.BorderLayout.LINE_START);
 
-        // BoxInfo.add(ItemCasher);
+        inputName.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        BoxName.add(inputName, java.awt.BorderLayout.CENTER);
 
-        ItemPaymentMethod.setPreferredSize(new java.awt.Dimension(644, 25));
-        ItemPaymentMethod.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 30, 0));
+        jPanel5.add(BoxName);
 
-        NamePaymentMethod.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        NamePaymentMethod.setText("Nhân viên cửa hàng:");
-        NamePaymentMethod.setPreferredSize(new java.awt.Dimension(180, 33));
-        ItemPaymentMethod.add(NamePaymentMethod);
+        jPanel2.add(jPanel5, java.awt.BorderLayout.PAGE_START);
 
-        ValuePaymentMethod.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        ValuePaymentMethod.setText("jLabel3");
-        ValuePaymentMethod.setMinimumSize(new java.awt.Dimension(300, 25));
-        ValuePaymentMethod.setPreferredSize(new java.awt.Dimension(250, 33));
-        ItemPaymentMethod.add(ValuePaymentMethod);
+        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        BoxInfo.add(ItemPaymentMethod);
+        jPanel7.setLayout(new javax.swing.BoxLayout(jPanel7, javax.swing.BoxLayout.Y_AXIS));
 
-        Center.add(BoxInfo, java.awt.BorderLayout.PAGE_START);
+        generaUI();
 
-        BoxProduct.setLayout(new javax.swing.BoxLayout(BoxProduct, javax.swing.BoxLayout.LINE_AXIS));
+        jScrollPane2.setViewportView(jPanel7);
 
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+                jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE));
+        jPanel6Layout.setVerticalGroup(
+                jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
+                                .addContainerGap()));
 
-        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.PAGE_AXIS));
+        jPanel2.add(jPanel6, java.awt.BorderLayout.CENTER);
 
-        BoxTitleProduct.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        BoxTitleProduct.setMaximumSize(new java.awt.Dimension(519, 40));
-        BoxTitleProduct.setMinimumSize(new java.awt.Dimension(519, 40));
-        BoxTitleProduct.setPreferredSize(new java.awt.Dimension(519, 40));
-        BoxTitleProduct.setLayout(new java.awt.GridLayout(1, 4));
+        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
-        TitleName.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        TitleName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        TitleName.setText("Sản phẩm");
-        BoxTitleProduct.add(TitleName);
-
-        // TitlePrice.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        // TitlePrice.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        // TitlePrice.setText("Đơn giá");
-        // BoxTitleProduct.add(TitlePrice);
-
-        TitleQuantity.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        TitleQuantity.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        TitleQuantity.setText("Đơn vị");
-        BoxTitleProduct.add(TitleQuantity);
-
-        TitleTotalMoney.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        TitleTotalMoney.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        TitleTotalMoney.setText("Số lượng");
-        BoxTitleProduct.add(TitleTotalMoney);
-
-        jPanel1.add(BoxTitleProduct);
-
-        // BoxProductItem.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1,
-        // 0, new java.awt.Color(0, 0, 0)));
-        // BoxProductItem.setMaximumSize(new java.awt.Dimension(519, 40));
-        // BoxProductItem.setMinimumSize(new java.awt.Dimension(519, 40));
-        // BoxProductItem.setPreferredSize(new java.awt.Dimension(519, 40));
-        // BoxProductItem.setLayout(new java.awt.GridLayout(1, 4));
-
-        // ValueName.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        // ValueName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        // ValueName.setText("test");
-        // BoxProductItem.add(ValueName);
-
-        // ValuePrice.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        // ValuePrice.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        // ValuePrice.setText("0");
-        // BoxProductItem.add(ValuePrice);
-
-        // ValueQuantity.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        // ValueQuantity.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        // ValueQuantity.setText("0");
-        // BoxProductItem.add(ValueQuantity);
-
-        // ValueSumMoney.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        // ValueSumMoney.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        // ValueSumMoney.setText("0");
-        // BoxProductItem.add(ValueSumMoney);
-
-        // jPanel1.add(BoxProductItem);
-
-        jScrollPane1.setViewportView(jPanel1);
-
-        BoxProduct.add(jScrollPane1);
-
-        Center.add(BoxProduct, java.awt.BorderLayout.CENTER);
-
-        BoxTotal.setPreferredSize(new java.awt.Dimension(529, 50));
-
-        ItemTotal.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(0, 0, 0)));
-        ItemTotal.setPreferredSize(new java.awt.Dimension(519, 40));
-        ItemTotal.setLayout(new java.awt.GridLayout(1, 4));
-
-        NameTotal.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        NameTotal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        NameTotal.setText("Tổng cộng");
-        ItemTotal.add(NameTotal);
-
-        ValueTotal.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        ValueTotal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ValueTotal.setText("0 KG");
-        ItemTotal.add(ValueTotal);
-
-        javax.swing.GroupLayout BoxTotalLayout = new javax.swing.GroupLayout(BoxTotal);
-        BoxTotal.setLayout(BoxTotalLayout);
-        BoxTotalLayout.setHorizontalGroup(
-                BoxTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 578, Short.MAX_VALUE)
-                        .addGroup(BoxTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(BoxTotalLayout.createSequentialGroup()
-                                        .addGap(0, 29, Short.MAX_VALUE)
-                                        .addComponent(ItemTotal, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 30, Short.MAX_VALUE))));
-        BoxTotalLayout.setVerticalGroup(
-                BoxTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 50, Short.MAX_VALUE)
-                        .addGroup(BoxTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(BoxTotalLayout.createSequentialGroup()
-                                        .addGap(0, 5, Short.MAX_VALUE)
-                                        .addComponent(ItemTotal, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 5, Short.MAX_VALUE))));
-
-        Center.add(BoxTotal, java.awt.BorderLayout.PAGE_END);
-
-        getContentPane().add(Center, java.awt.BorderLayout.CENTER);
-
-        Bottom.setMaximumSize(new java.awt.Dimension(600, 505));
-        Bottom.setPreferredSize(new java.awt.Dimension(715, 55));
+        BoxBtn.setPreferredSize(new java.awt.Dimension(715, 55));
         java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 20, 0);
         flowLayout1.setAlignOnBaseline(true);
-        Bottom.setLayout(flowLayout1);
+        BoxBtn.setLayout(flowLayout1);
 
-        BtnPrint.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        BtnPrint.setText("In");
-        BtnPrint.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        BtnPrint.setForeground(new java.awt.Color(255, 255, 255));
-        BtnPrint.setBackground(new java.awt.Color(0, 191, 255));
-        // BtnPrint.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        BtnPrint.setMaximumSize(new java.awt.Dimension(100, 55));
-        BtnPrint.setMinimumSize(new java.awt.Dimension(100, 55));
-        BtnPrint.setPreferredSize(new java.awt.Dimension(100, 55));
-        BtnPrint.addMouseListener(new java.awt.event.MouseAdapter() {
+        BtnMinus.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        BtnMinus.setText("-");
+        BtnMinus.setBorder(new javax.swing.border.MatteBorder(null));
+        BtnMinus.setMaximumSize(new java.awt.Dimension(100, 55));
+        BtnMinus.setMinimumSize(new java.awt.Dimension(100, 55));
+        BtnMinus.setPreferredSize(new java.awt.Dimension(100, 55));
+        BtnMinus.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BtnPrintMouseClicked(evt);
+                BtnMinusMouseClicked(evt);
             }
         });
-        BtnPrint.addActionListener(new java.awt.event.ActionListener() {
+        BtnMinus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnPrintActionPerformed(evt);
+                BtnMinusActionPerformed(evt);
             }
         });
-        Bottom.add(BtnPrint);
+        // BoxBtn.add(BtnMinus);
+
+        BtnPlus.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        BtnPlus.setText("+");
+        BtnPlus.setBorder(new javax.swing.border.MatteBorder(null));
+        BtnPlus.setMaximumSize(new java.awt.Dimension(100, 55));
+        BtnPlus.setMinimumSize(new java.awt.Dimension(100, 55));
+        BtnPlus.setPreferredSize(new java.awt.Dimension(100, 55));
+        BtnPlus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnPlusMouseClicked(evt);
+            }
+        });
+        BtnPlus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnPlusActionPerformed(evt);
+            }
+        });
+        // BoxBtn.add(BtnPlus);
+
+        BtnAdd.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        BtnAdd.setText("Chỉnh sửa");
+        BtnAdd.setForeground(new java.awt.Color(255, 255, 255));
+        BtnAdd.setBackground(new java.awt.Color(0, 191, 255));
+        BtnAdd.setBorder(new javax.swing.border.MatteBorder(null));
+        BtnAdd.setMaximumSize(new java.awt.Dimension(100, 55));
+        BtnAdd.setMinimumSize(new java.awt.Dimension(100, 55));
+        BtnAdd.setPreferredSize(new java.awt.Dimension(100, 55));
+        BtnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnAddMouseClicked(evt);
+            }
+        });
+        BtnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnAddActionPerformed(evt);
+            }
+        });
+        BoxBtn.add(BtnAdd);
 
         BtnClose.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         BtnClose.setText("Đóng");
-        BtnClose.setForeground(new java.awt.Color(255, 255, 255));
-        BtnClose.setBackground(java.awt.Color.RED);
-        BtnClose.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        // BtnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        BtnClose.setBorder(new javax.swing.border.MatteBorder(null));
         BtnClose.setMaximumSize(new java.awt.Dimension(100, 55));
         BtnClose.setMinimumSize(new java.awt.Dimension(100, 55));
         BtnClose.setPreferredSize(new java.awt.Dimension(100, 55));
+        BtnClose.setForeground(new java.awt.Color(255, 255, 255));
+        BtnClose.setBackground(java.awt.Color.RED);
         BtnClose.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BtnCloseMouseClicked(evt);
@@ -431,246 +329,274 @@ public class FormDetailDeliveryBill extends javax.swing.JFrame {
                 BtnCloseActionPerformed(evt);
             }
         });
-        Bottom.add(BtnClose);
+        BoxBtn.add(BtnClose);
 
-        getContentPane().add(Bottom, java.awt.BorderLayout.PAGE_END);
+        getContentPane().add(BoxBtn, java.awt.BorderLayout.PAGE_END);
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>
 
-    private void BtnPrintMouseClicked(java.awt.event.MouseEvent evt) {
+    public void generaTitleUI() {
+        BoxInput.setMaximumSize(new java.awt.Dimension(700, 35));
+        BoxInput.setMinimumSize(new java.awt.Dimension(700, 35));
+        BoxInput.setPreferredSize(new java.awt.Dimension(700, 35));
+        BoxInput.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
+
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Tên Nguyên liệu");
+        BoxInput.add(jLabel2);
+
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("đơn vị");
+        BoxInput.add(jLabel3);
+
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("số lượng");
+        BoxInput.add(jLabel4);
+
+        jPanel7.add(BoxInput);
+    }
+
+    public void generaUI() {
+
+        jPanel7.removeAll(); // Clear jPanel7 before adding new components
+        jPanel7.revalidate();
+
+        generaTitleUI();
+
+        for (DetailRecipeDTO item : recipeDTO.getDetailRecipe()) {
+            JPanel BoxInputCopy = new JPanel();
+
+            JTextField InputNameIngredientCopy = new JTextField();
+            JTextField InputQuantityCopy = new JTextField();
+            JTextField InputPriceCopy = new JTextField();
+
+            InputNameIngredientCopy.setText(String.valueOf(item.getName_ingredient()));
+            InputQuantityCopy.setText(String.valueOf(item.getUnit()));
+            InputPriceCopy.setText(String.valueOf(item.getQuantity()));
+
+            InputQuantityCopy.setEditable(false);
+            InputNameIngredientCopy.setEditable(false);
+
+            BoxInputCopy.setMaximumSize(new java.awt.Dimension(700, 35));
+            BoxInputCopy.setMinimumSize(new java.awt.Dimension(700, 35));
+            BoxInputCopy.setPreferredSize(new java.awt.Dimension(700, 35));
+            BoxInputCopy.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
+
+            InputNameIngredientCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+            // InputNameIngredientCopy.setModel(
+            // new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2",
+            // "Item 3", "Item 4" }));
+            BoxInputCopy.add(InputNameIngredientCopy);
+
+            InputQuantityCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+            BoxInputCopy.add(InputQuantityCopy);
+
+            InputPriceCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+            BoxInputCopy.add(InputPriceCopy);
+
+            jPanel7.add(BoxInputCopy);
+        }
+
+        // for (int i = 0; i < countBoxInput; i++) {
+
+        // JPanel BoxInputCopy = new JPanel();
+        // JComboBox InputNameIngredientCopy = new JComboBox();
+        // for (WareHouseDTO wareHouseDTO : list_ingredient) {
+
+        // InputNameIngredientCopy.addItem(wareHouseDTO.getName());
+
+        // }
+        // JTextField InputQuantityCopy = new JTextField();
+        // JTextField InputPriceCopy = new JTextField();
+
+        // BoxInputCopy.setMaximumSize(new java.awt.Dimension(700, 35));
+        // BoxInputCopy.setMinimumSize(new java.awt.Dimension(700, 35));
+        // BoxInputCopy.setPreferredSize(new java.awt.Dimension(700, 35));
+        // BoxInputCopy.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
+
+        // InputNameIngredientCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        // // InputNameIngredientCopy.setModel(
+        // // new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2",
+        // // "Item 3", "Item 4" }));
+        // BoxInputCopy.add(InputNameIngredientCopy);
+
+        // InputQuantityCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        // BoxInputCopy.add(InputQuantityCopy);
+
+        // InputPriceCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        // BoxInputCopy.add(InputPriceCopy);
+
+        // jPanel7.add(BoxInputCopy);
+        // }
+
+        jPanel7.repaint();
+
+    }
+
+    // event clicked
+    private void BtnAddMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
     }
 
-    private void BtnPrintActionPerformed(java.awt.event.ActionEvent evt) {
-        if (permissionList.hasPermission("EXPORT_WAREHOUSE_DISPATCH_NOTE")) {
-            exportToPDF();
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
-            return;
-        }
-
+    private void BtnMinusMouseClicked(java.awt.event.MouseEvent evt) {
+        // TODO add your handling code here:
     }
 
     private void BtnCloseMouseClicked(java.awt.event.MouseEvent evt) {
-        this.setVisible(false);
-    }
-
-    private void BtnCloseActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
 
-    private void exportToPDF() {
-        JFileChooser fileChooser = new JFileChooser();
+    private void BtnMinusActionPerformed(java.awt.event.ActionEvent evt) {
+        if (countBoxInput > 1) {
+            countBoxInput = countBoxInput - 1;
+            generaUI();
 
-        fileChooser.setDialogTitle("Chọn nơi lưu tệp PDF");
-
-        int userSelection = fileChooser.showSaveDialog(this);
-
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File fileToSave = fileChooser.getSelectedFile();
-
-            try {
-
-                String fontPath = "src\\assets\\VietFontsWeb1_ttf\\vuTimes.ttf"; // Đường dẫn đến font Noto Sans Regular
-                PdfWriter writer = new PdfWriter(fileToSave + ".pdf");
-                PdfDocument pdf = new PdfDocument(writer);
-                Document document = new Document(pdf);
-                // Tải font từ file truetype
-                PdfFont font = PdfFontFactory.createFont(fontPath, PdfEncodings.IDENTITY_H,
-                        EmbeddingStrategy.FORCE_EMBEDDED, true);
-                document.setFont(font);
-
-                addComponentsToDocument(document);
-
-                document.close();
-
-                JOptionPane.showMessageDialog(null, "Xuất file PDF thành công.");
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } else {
+            countBoxInput = 1; // Đảm bảo countBoxInput không nhỏ hơn 1
+            generaUI();
         }
+
     }
 
-    private void addComponentsToDocument(Document document) {
-        try {
-            // Tạo font
+    private void BtnPlusMouseClicked(java.awt.event.MouseEvent evt) {
+        countBoxInput = countBoxInput + 1;
+        generaUI();
+    }
 
-            // Đoạn văn bản "Phieu nhap hang"
-            Paragraph title = new Paragraph("Phiếu xuất hàng");
-            title.setFontSize(18).setTextAlignment(TextAlignment.CENTER);
-            document.add(title);
+    private void BtnPlusActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
 
-            // Đoạn văn bản "Ma phieu nhap: ..."
-            Paragraph id = new Paragraph("Mã phiếu xuất:                 " + valueId.getText());
-            id.setFontSize(12).setTextAlignment(TextAlignment.LEFT);
-            document.add(id);
+    private void BtnAddActionPerformed(java.awt.event.ActionEvent evt) {
 
-            // Đoạn văn bản "Ngay tao: ..."
-            Paragraph createdAt = new Paragraph("Ngày xuất:               " + ValueDate.getText());
-            createdAt.setFontSize(12).setTextAlignment(TextAlignment.LEFT);
-            document.add(createdAt);
-
-            // Đoạn văn bản "Nhan vien nhap hang: ..."
-            Paragraph nameEnterCoupon = new Paragraph("Nhân viên xuất hàng: " + ValueCasher.getText());
-            nameEnterCoupon.setFontSize(12).setTextAlignment(TextAlignment.LEFT);
-            document.add(nameEnterCoupon);
-
-            createTablePDF(document);
-
-            // Đoạn văn bản "Tong gia tri: ..."
-            Paragraph totalValues = new Paragraph("Tổng giá trị:         " + ValueTotal.getText() + "KG");
-            totalValues.setFontSize(12).setTextAlignment(TextAlignment.LEFT);
-            document.add(totalValues);
-        } catch (Exception e) {
-            e.printStackTrace();
+        String valueProduct = jComboBox2.getText();
+        String valueNameEnterCoupon = inputName.getText();
+        boolean checkValidate = Common.ValidateInputString(valueNameEnterCoupon);
+        if (!checkValidate) {
+            return;
         }
-    }
+        ProductDTO productDto = productMap.get(valueProduct);
+        System.out.println(valueProduct);
+        System.out.println(productDto.getId());
+        int account_id = PermissionAccount.getInstance().getAccountId();
 
-    private void createTablePDF(Document document) {
-        try {
-            // Tạo bảng
-            Table table = new Table(UnitValue.createPercentArray(new float[] { 1, 1, 1 })); // Số cột và tỷ lệ chiều
-                                                                                            // rộng của mỗi cột
+        ArrayList<DetailRecipeDTO> list_new_detail_recipe = new ArrayList<DetailRecipeDTO>();
 
-            // Tiêu đề của các cột
-            table.addCell(createCell("Nguyên liệu", TextAlignment.CENTER));
-            table.addCell(createCell("Đơn vị", TextAlignment.CENTER));
-            table.addCell(createCell("Số lượng", TextAlignment.CENTER));
+        // Duyệt qua tất cả các thành phần trong jPanel7
+        for (Component component : jPanel7.getComponents()) {
+            // next first loop
 
-            // Dữ liệu của các ô trong bảng
-            // Ví dụ:
+            if (component instanceof JPanel) {
+                JPanel panel = (JPanel) component;
 
-            for (DetailDeliveryBillDTO detailEnterCouponDTO : detail_deliveryBill) {
-                table.addCell(createCell(detailEnterCouponDTO.getNameIngradient(), TextAlignment.CENTER));
-                table.addCell(createCell("KG", TextAlignment.CENTER));
-                table.addCell(createCell(String.valueOf(Common.getFormatedPriceDouble(
-                        detailEnterCouponDTO.getQuantity())), TextAlignment.CENTER));
+                // ứng với JComboBox và hai
+                // JTextField
+                int index = 0;
 
-            }
+                // Khai báo các biến để lưu trữ dữ liệu từ các thành phần con của mỗi JPanel
+                String name = "";
+                String unit = "";
+                int quantity = 0;
+                int id_ingredient = -1;
 
-            // Thêm bảng vào tài liệu
-            document.add(table);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+                // Duyệt qua tất cả các thành phần con của mỗi JPanel
+                for (Component subComponent : panel.getComponents()) {
+                    if (subComponent instanceof JTextField) {
 
-    private static Cell createCell(String text, TextAlignment alignment) {
-        Cell cell = new Cell();
-        cell.add(new Paragraph(text)).setTextAlignment(alignment);
-        return cell;
-    }
+                        JTextField textField = (JTextField) subComponent;
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
-        // (optional) ">
-        /*
-         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
-         * look and feel.
-         * For details see
-         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+                        if (index == 0) { // Nếu là JTextField đầu tiên, lưu vào unit
+
+                            name = textField.getText();
+
+                        } else if (index == 1) { // Nếu là JTextField thứ hai, lưu vào quantity
+
+                            unit = textField.getText();
+
+                        } else if (index == 2) { // Nếu là JTextField thứ hai, lưu vào quantity
+                            try {
+
+                                quantity = Integer.parseInt(textField.getText());
+                                if (!Common.ValidateInputDouble(quantity)) {
+                                    return;
+                                }
+
+                            } catch (NumberFormatException e) {
+
+                                JOptionPane.showMessageDialog(null, "Vui lòng nhập vào là một số");
+                                return;
+                            }
+                        }
+                        index++;
+
+                        for (WareHouseDTO item : list_ingredient) {
+                            if (item.getName().equals(name)) {
+                                id_ingredient = item.getId();
+                                break;
+                            }
+
+                        }
+                    }
                 }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormDetailDeliveryBill.class.getName()).log(
-                    java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormDetailDeliveryBill.class.getName()).log(
-                    java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormDetailDeliveryBill.class.getName()).log(
-                    java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormDetailDeliveryBill.class.getName()).log(
-                    java.util.logging.Level.SEVERE,
-                    null, ex);
-        }
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
 
-        /* Create and display the form */
-        // java.awt.EventQueue.invokeLater(new Runnable() {
-        // public void run() {
-        // new FormDetailDeliveryBill().setVisible(true);
-        // }
-        // });
+                DetailRecipeDTO update_detail_recipe = new DetailRecipeDTO(1, productDto.getId(), id_ingredient,
+                        id_recipe, unit, quantity);
+                list_new_detail_recipe.add(update_detail_recipe);
+
+            }
+        }
+
+        // Kiểm tra xem có thành công chỉnh sửa công thức hay không
+        HashMap<Boolean, String> result = RecipeBUS.updateRecipeBUS(list_new_detail_recipe);
+
+        if (result.containsKey(true)) {
+            JOptionPane.showMessageDialog(null, result.get(true));
+            this.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(null, result.get(false));
+        }
+    }
+
+    private void BtnCloseActionPerformed(java.awt.event.ActionEvent evt) {
+        this.setVisible(false);
+
     }
 
     // Variables declaration - do not modify
-    private javax.swing.JPanel Bottom;
-    private javax.swing.JPanel BoxInfo;
-    private javax.swing.JPanel BoxProduct;
-    private javax.swing.JPanel BoxProductItem;
-    private javax.swing.JPanel BoxProductItem1;
-    private javax.swing.JPanel BoxProductItem2;
-    private javax.swing.JPanel BoxProductItem3;
-    private javax.swing.JPanel BoxProductItem4;
-    private javax.swing.JPanel BoxTitleProduct;
-    private javax.swing.JPanel BoxTotal;
+    private javax.swing.JPanel BoxBtn;
+    private javax.swing.JPanel BoxInput;
+    private javax.swing.JPanel BoxInput1;
+    private javax.swing.JPanel BoxName;
+    private javax.swing.JPanel BoxName1;
+    private javax.swing.JPanel BoxName2;
+    private javax.swing.JButton BtnAdd;
     private javax.swing.JButton BtnClose;
-    private javax.swing.JButton BtnPrint;
-    private javax.swing.JPanel Center;
-    private javax.swing.JPanel ItemCasher;
-    private javax.swing.JPanel ItemDateOrder;
-    private javax.swing.JPanel ItemIdOrder;
-    private javax.swing.JPanel ItemPaymentMethod;
-    private javax.swing.JPanel ItemTotal;
-    private javax.swing.JLabel NameCasher;
-    private javax.swing.JLabel NameDate;
-    private javax.swing.JLabel NameId;
-    private javax.swing.JLabel NamePaymentMethod;
-    private javax.swing.JLabel NameTotal;
-    private javax.swing.JLabel TitleName;
-    private javax.swing.JLabel TitlePrice;
-    private javax.swing.JLabel TitleQuantity;
-    private javax.swing.JLabel TitleTotalMoney;
-    private javax.swing.JPanel Top;
-    private javax.swing.JLabel Ttitle;
-    private javax.swing.JLabel ValueCasher;
-    private javax.swing.JLabel ValueDate;
-    private javax.swing.JLabel ValueName;
-    private javax.swing.JLabel ValueName1;
-    private javax.swing.JLabel ValueName2;
-    private javax.swing.JLabel ValueName3;
-    private javax.swing.JLabel ValueName4;
-    private javax.swing.JLabel ValuePaymentMethod;
-    private javax.swing.JLabel ValuePrice;
-    private javax.swing.JLabel ValuePrice1;
-    private javax.swing.JLabel ValuePrice2;
-    private javax.swing.JLabel ValuePrice3;
-    private javax.swing.JLabel ValuePrice4;
-    private javax.swing.JLabel ValueQuantity;
-    private javax.swing.JLabel ValueQuantity1;
-    private javax.swing.JLabel ValueQuantity2;
-    private javax.swing.JLabel ValueQuantity3;
-    private javax.swing.JLabel ValueQuantity4;
-    private javax.swing.JLabel ValueSumMoney;
-    private javax.swing.JLabel ValueSumMoney1;
-    private javax.swing.JLabel ValueSumMoney2;
-    private javax.swing.JLabel ValueSumMoney3;
-    private javax.swing.JLabel ValueSumMoney4;
-    private javax.swing.JLabel ValueTotal;
+    private javax.swing.JButton BtnMinus;
+    private javax.swing.JButton BtnPlus;
+    private javax.swing.JComboBox<String> InputNameIngredient1;
+    private javax.swing.JTextField InputPrice1;
+    private javax.swing.JTextField InputQuantity1;
+    private javax.swing.JLabel NameSupplier;
+    private javax.swing.JLabel NameSupplier1;
+    private javax.swing.JLabel NameSupplier2;
+    private javax.swing.JTextField inputName;
+    private javax.swing.JTextField jComboBox2;
+    private javax.swing.JTextField jComboBox3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel valueId;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration
 }

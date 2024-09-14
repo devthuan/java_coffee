@@ -627,6 +627,12 @@ public class ProductMenu extends javax.swing.JPanel {
                         if (selectedRow != -1) {
                                 try {
                                         int id = (int) Table.getValueAt(selectedRow, 0);
+                                        int quantity = (int) Table.getValueAt(selectedRow, 4);
+                                        if (quantity > 0) {
+                                                JOptionPane.showMessageDialog(null,
+                                                                "Sản phẩm còn số lượng bán không thể xoá");
+                                                return;
+                                        }
                                         int option = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa ? ",
                                                         "Xác nhận", JOptionPane.YES_NO_OPTION);
                                         if (option == JOptionPane.YES_OPTION) {

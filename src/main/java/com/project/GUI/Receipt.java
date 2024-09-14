@@ -193,7 +193,8 @@ public class Receipt extends javax.swing.JPanel {
                                 BtnRemoveMouseClicked(evt);
                         }
                 });
-                BoxBtn.add(BtnRemove);
+                // layout btn remove
+                // BoxBtn.add(BtnRemove);
 
                 BtnExportExcel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
                 BtnExportExcel.setIcon(new javax.swing.ImageIcon("./src/assets/icon/xls.png")); // NOI18N

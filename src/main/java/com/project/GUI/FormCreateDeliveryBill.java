@@ -15,15 +15,20 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.project.BUS.DeliveryBillBUS;
+import com.project.BUS.EnterCouponBUS;
+import com.project.BUS.ProductBUS;
+import com.project.BUS.RecipeBUS;
 import com.project.BUS.SupplierBUS;
 import com.project.Common.Common;
 import com.project.DAO.EmployeeDAO;
 import com.project.DAO.WareHouseDAO;
-import com.project.DTO.DeliveryBillDTO;
-import com.project.DTO.DetailDeliveryBillDTO;
+import com.project.DTO.DetailEnterCouponDTO;
+import com.project.DTO.DetailRecipeDTO;
 import com.project.DTO.EmployeeDTO;
+import com.project.DTO.EnterCouponDTO;
 import com.project.DTO.PermissionAccount;
+import com.project.DTO.ProductDTO;
+import com.project.DTO.RecipeDTO;
 import com.project.DTO.SupplierDTO;
 import com.project.DTO.WareHouseDTO;
 
@@ -34,7 +39,7 @@ import com.project.DTO.WareHouseDTO;
 public class FormCreateDeliveryBill extends javax.swing.JFrame {
     public int countBoxInput = 1;
     public ArrayList<WareHouseDTO> list_ingredient;
-    private Map<String, SupplierDTO> supplierMap;
+    private Map<String, ProductDTO> productMap;
     private Map<String, EmployeeDTO> employeeMap;
     private Map<String, WareHouseDTO> ingredientMap;
 
@@ -47,25 +52,25 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
 
         for (WareHouseDTO wareHouseDTO : list_ingredient) {
 
-            ingredientMap.put(wareHouseDTO.getName() + "(" + wareHouseDTO.getQuantity() + ")", wareHouseDTO);
+            ingredientMap.put(wareHouseDTO.getName(), wareHouseDTO);
         }
 
         initComponents();
 
-        supplierMap = new HashMap<>();
+        productMap = new HashMap<>();
         employeeMap = new HashMap<>();
         ArrayList<SupplierDTO> list_supplier = SupplierBUS.get_all_supplier();
-        ArrayList<EmployeeDTO> employees = EmployeeDAO.get_all_employee();
+        ArrayList<ProductDTO> list_product = ProductBUS.getAllProduct();
 
-        for (EmployeeDTO employeeDTO : employees) {
-            if (employeeDTO.getAccount_id() == PermissionAccount.getInstance().getAccountId()) {
+        for (ProductDTO productDTO : list_product) {
+            ArrayList<DetailRecipeDTO> check_product_recipe = RecipeBUS.getRecipeByProductId(productDTO.getId());
+            if (check_product_recipe.size() == 0) {
+                jComboBox2.addItem(productDTO.getProduct_name());
 
-                jComboBox3.setText(String.valueOf(employeeDTO.getName()));
+                productMap.put(productDTO.getProduct_name(), productDTO);
+
             }
         }
-
-        jComboBox3.setEnabled(false);
-
     }
 
     /**
@@ -76,7 +81,7 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
-        setTitle("Tạo phiết xuất");
+        setTitle("Tạo mới công thức");
         setResizable(false);
         jLabel5 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -108,6 +113,10 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
         BtnPlus = new javax.swing.JButton();
         BtnAdd = new javax.swing.JButton();
         BtnClose = new javax.swing.JButton();
+        BtnMinus.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        BtnPlus.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        BtnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        BtnClose.setCursor(new Cursor(Cursor.HAND_CURSOR));
         int count = 1;
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
@@ -115,22 +124,22 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
         jLabel5.setText("+");
 
         // setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(822, 453));
+        setMinimumSize(new java.awt.Dimension(722, 453));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
         jPanel1.setMinimumSize(new java.awt.Dimension(100, 30));
         jPanel1.setPreferredSize(new java.awt.Dimension(722, 30));
-
+        jPanel1.setBackground(new java.awt.Color(255, 153, 102));
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Xuất nguyên liệu");
         jLabel1.setBackground(new java.awt.Color(255, 153, 102));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Tạo công thức");
         jLabel1.setPreferredSize(new java.awt.Dimension(37, 50));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
-        jPanel1.setBackground(new java.awt.Color(255, 153, 102));
         jPanel1Layout.setHorizontalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING,
@@ -149,25 +158,25 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
         jPanel5.setPreferredSize(new java.awt.Dimension(1010, 130));
         jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 30, 10));
 
-        // BoxName1.setMinimumSize(new java.awt.Dimension(330, 45));
-        // BoxName1.setPreferredSize(new java.awt.Dimension(330, 45));
-        // BoxName1.setLayout(new java.awt.BorderLayout(10, 0));
+        BoxName1.setMinimumSize(new java.awt.Dimension(330, 45));
+        BoxName1.setPreferredSize(new java.awt.Dimension(330, 45));
+        BoxName1.setLayout(new java.awt.BorderLayout(10, 0));
 
-        // NameSupplier1.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        // NameSupplier1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        // NameSupplier1.setText("Tên nhà cung cấp");
-        // NameSupplier1.setMaximumSize(new java.awt.Dimension(130, 40));
-        // NameSupplier1.setMinimumSize(new java.awt.Dimension(130, 40));
-        // NameSupplier1.setPreferredSize(new java.awt.Dimension(130, 40));
-        // NameSupplier1.setVerifyInputWhenFocusTarget(false);
-        // BoxName1.add(NameSupplier1, java.awt.BorderLayout.LINE_START);
+        NameSupplier1.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        NameSupplier1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        NameSupplier1.setText("Sản phẩm");
+        NameSupplier1.setMaximumSize(new java.awt.Dimension(130, 40));
+        NameSupplier1.setMinimumSize(new java.awt.Dimension(130, 40));
+        NameSupplier1.setPreferredSize(new java.awt.Dimension(130, 40));
+        NameSupplier1.setVerifyInputWhenFocusTarget(false);
+        BoxName1.add(NameSupplier1, java.awt.BorderLayout.LINE_START);
 
-        // jComboBox2.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jComboBox2.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
 
         // jComboBox2.setModel(
         // new javax.swing.DefaultComboBoxModel<SupplierDTO>(new String[] { "Item 1",
         // "Item 2", "Item 3", "Item 4" }));
-        // BoxName1.add(jComboBox2, java.awt.BorderLayout.CENTER);
+        BoxName1.add(jComboBox2, java.awt.BorderLayout.CENTER);
 
         jPanel5.add(BoxName1);
 
@@ -177,7 +186,7 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
 
         NameSupplier2.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
         NameSupplier2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        NameSupplier2.setText("Tên nhân viên");
+        NameSupplier2.setText("Tên công thức");
         NameSupplier2.setMaximumSize(new java.awt.Dimension(130, 40));
         NameSupplier2.setMinimumSize(new java.awt.Dimension(130, 40));
         NameSupplier2.setPreferredSize(new java.awt.Dimension(130, 40));
@@ -198,7 +207,7 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
 
         NameSupplier.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
         NameSupplier.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        NameSupplier.setText("Tên phiếu xuất");
+        NameSupplier.setText("Mô tả");
         NameSupplier.setMaximumSize(new java.awt.Dimension(130, 40));
         NameSupplier.setMinimumSize(new java.awt.Dimension(130, 40));
         NameSupplier.setPreferredSize(new java.awt.Dimension(120, 40));
@@ -278,14 +287,13 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
         BoxBtn.add(BtnPlus);
 
         BtnAdd.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        BtnAdd.setText("Xuất");
+        BtnAdd.setText("Thêm");
+        BtnAdd.setForeground(new java.awt.Color(255, 255, 255));
+        BtnAdd.setBackground(new java.awt.Color(0, 191, 255));
         BtnAdd.setBorder(new javax.swing.border.MatteBorder(null));
         BtnAdd.setMaximumSize(new java.awt.Dimension(100, 55));
         BtnAdd.setMinimumSize(new java.awt.Dimension(100, 55));
         BtnAdd.setPreferredSize(new java.awt.Dimension(100, 55));
-        BtnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        BtnAdd.setForeground(new java.awt.Color(255, 255, 255));
-        BtnAdd.setBackground(new java.awt.Color(0, 191, 255));
         BtnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BtnAddMouseClicked(evt);
@@ -304,7 +312,6 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
         BtnClose.setMaximumSize(new java.awt.Dimension(100, 55));
         BtnClose.setMinimumSize(new java.awt.Dimension(100, 55));
         BtnClose.setPreferredSize(new java.awt.Dimension(100, 55));
-        BtnClose.setCursor(new Cursor(Cursor.HAND_CURSOR));
         BtnClose.setForeground(new java.awt.Color(255, 255, 255));
         BtnClose.setBackground(java.awt.Color.RED);
         BtnClose.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -329,22 +336,22 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
         BoxInput.setMaximumSize(new java.awt.Dimension(700, 35));
         BoxInput.setMinimumSize(new java.awt.Dimension(700, 35));
         BoxInput.setPreferredSize(new java.awt.Dimension(700, 35));
-        BoxInput.setLayout(new java.awt.GridLayout(1, 0, 30, 0));
+        BoxInput.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Tên Nguyên liệu");
+        jLabel2.setText("Loại Nguyên liệu");
         BoxInput.add(jLabel2);
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Số lượng (KG)");
+        jLabel3.setText("đơn vị");
         BoxInput.add(jLabel3);
 
-        // jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        // jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        // jLabel4.setText("Giá");
-        // BoxInput.add(jLabel4);
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Số lượng");
+        BoxInput.add(jLabel4);
 
         jPanel7.add(BoxInput);
     }
@@ -361,11 +368,11 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
             JComboBox InputNameIngredientCopy = new JComboBox();
             for (WareHouseDTO wareHouseDTO : list_ingredient) {
 
-                InputNameIngredientCopy.addItem(wareHouseDTO.getName() + "(" + wareHouseDTO.getQuantity() + ")");
+                InputNameIngredientCopy.addItem(wareHouseDTO.getName());
 
             }
             JTextField InputQuantityCopy = new JTextField();
-            // JTextField InputPriceCopy = new JTextField();
+            JTextField InputPriceCopy = new JTextField();
 
             BoxInputCopy.setMaximumSize(new java.awt.Dimension(700, 35));
             BoxInputCopy.setMinimumSize(new java.awt.Dimension(700, 35));
@@ -381,8 +388,8 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
             InputQuantityCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
             BoxInputCopy.add(InputQuantityCopy);
 
-            // InputPriceCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-            // BoxInputCopy.add(InputPriceCopy);
+            InputPriceCopy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+            BoxInputCopy.add(InputPriceCopy);
 
             jPanel7.add(BoxInputCopy);
         }
@@ -426,22 +433,27 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
     }
 
     private void BtnAddActionPerformed(java.awt.event.ActionEvent evt) {
+        String name_recipe = jComboBox3.getText();
+        String description_recipe = inputName.getText();
+
+        RecipeDTO new_recipe = new RecipeDTO(name_recipe, description_recipe);
+
+        String valueProduct = (String) jComboBox2.getSelectedItem();
+        ProductDTO productDto = productMap.get(valueProduct);
 
         // String valueEmployee = (String) jComboBox3.getSelectedItem();
-        String valueNameDeliveryBill = inputName.getText();
-        boolean checkValidate = Common.ValidateInputString(valueNameDeliveryBill);
+        String valueNameEnterCoupon = inputName.getText();
+        boolean checkValidate = Common.ValidateInputString(valueNameEnterCoupon);
         if (!checkValidate) {
             return;
         }
-
         int account_id = PermissionAccount.getInstance().getAccountId();
 
-        DeliveryBillDTO newDeliveryBillDTO = new DeliveryBillDTO(valueNameDeliveryBill, account_id);
-        ArrayList<DetailDeliveryBillDTO> list_new_detail_delivery = new ArrayList<DetailDeliveryBillDTO>();
-        // List<String[]> allData = new ArrayList<>();
+        ArrayList<DetailRecipeDTO> list_new_detail_recipe = new ArrayList<DetailRecipeDTO>();
 
         // Duyệt qua tất cả các thành phần trong jPanel7
         for (Component component : jPanel7.getComponents()) {
+
             if (component instanceof JPanel) {
                 JPanel panel = (JPanel) component;
 
@@ -451,7 +463,9 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
 
                 // Khai báo các biến để lưu trữ dữ liệu từ các thành phần con của mỗi JPanel
                 String name = "";
+                String unit = "";
                 int quantity = 0;
+                int ingredient_id = -1;
 
                 // Duyệt qua tất cả các thành phần con của mỗi JPanel
                 for (Component subComponent : panel.getComponents()) {
@@ -460,6 +474,12 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
                         JComboBox comboBox = (JComboBox) subComponent;
                         name = comboBox.getSelectedItem().toString();
 
+                        for (WareHouseDTO item : list_ingredient) {
+                            if (item.getName().equals(name)) {
+                                ingredient_id = item.getId();
+                            }
+                        }
+
                     } else if (subComponent instanceof JTextField) {
 
                         JTextField textField = (JTextField) subComponent;
@@ -467,37 +487,57 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
                         if (index == 0) { // Nếu là JTextField đầu tiên, lưu vào quantity
                             try {
 
-                                quantity = Integer.parseInt(textField.getText());
+                                unit = textField.getText();
 
-                                if (!Common.ValidateInputInt(quantity)) {
-                                    return;
-                                }
                             } catch (NumberFormatException e) {
                                 JOptionPane.showMessageDialog(null, "Vui lòng nhập số nguyên");
+                                return;
+                            }
+                        } else if (index == 1) { // Nếu là JTextField thứ hai, lưu vào price
+                            try {
+
+                                quantity = Integer.parseInt(textField.getText());
+
+                                if (!Common.ValidateInputDouble(quantity)) {
+                                    return;
+                                }
+
+                            } catch (NumberFormatException e) {
+
+                                JOptionPane.showMessageDialog(null, "Vui lòng nhập vào là một số");
                                 return;
                             }
                         }
                         index++;
                     }
                 }
+
                 WareHouseDTO wareHouseDTO = ingredientMap.get(name);
 
                 if (wareHouseDTO != null) {
-
-                    DetailDeliveryBillDTO detail = new DetailDeliveryBillDTO(wareHouseDTO.getId(), quantity);
-                    list_new_detail_delivery.add(detail);
+                    DetailRecipeDTO detail = new DetailRecipeDTO(productDto.getId(), ingredient_id, -1, unit, quantity);
+                    list_new_detail_recipe.add(detail);
                 }
 
             }
         }
+        for (DetailRecipeDTO item : list_new_detail_recipe) {
+            System.out.println("id product: " + item.getId_product());
+            System.out.println("id recipe: " + item.getId_recipe());
+            System.out.println("id ingredient: " + item.getId_ingredient());
+            System.out.println("id unit: " + item.getUnit());
+            System.out.println("id quantity: " + item.getQuantity());
+        }
 
-        // Boolean check = EnterCouponBUS.createdEnterCoupon(newEnterCoupon,
-        // list_new_detail_delivery);
-        Boolean check = DeliveryBillBUS.createDeliveryBillBUS(newDeliveryBillDTO, list_new_detail_delivery);
-        if (check) {
-          
-            JOptionPane.showMessageDialog(null, "Tạo phiếu xuất thành công.");
-            this.setVisible(false);
+        // Kiểm tra xem có thành công chỉnh sửa công thức hay không
+        HashMap<Boolean, String> result = RecipeBUS.createdRecipe(new_recipe,
+        list_new_detail_recipe);
+
+        if (result.containsKey(true)) {
+        JOptionPane.showMessageDialog(null, result.get(true));
+        this.setVisible(false);
+        } else {
+        JOptionPane.showMessageDialog(null, result.get(false));
         }
     }
 

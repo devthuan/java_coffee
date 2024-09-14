@@ -1,9 +1,14 @@
 
 package com.project.BUS;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.project.DAO.RecipeDAO;
 import com.project.DAO.WareHouseDAO;
+import com.project.DTO.DetailRecipeDTO;
 import com.project.DTO.WareHouse;
 
 public class WareHouseService {
@@ -29,8 +34,24 @@ public class WareHouseService {
         return warehousedao.getNameWareHouse(name);
     }
 
-    public void deleteWareHouse(int id) throws Exception {
+    public Map<Boolean, String> deleteWareHouse(int id) throws Exception {
+        Map<Boolean, String> respon = new HashMap<>();
+        WareHouse ingredient = warehousedao.getIdWareHouse(id);
+        int quantity = ingredient.getQuantity();
+        if (quantity > 0) {
+            respon.put(false, "Nguyên liệu đang còn tồn kho không thể xoá.");
+            return respon;
+        }
+
+        ArrayList<DetailRecipeDTO> check_recipe = RecipeDAO.getRecipeByIngredientId(id);
+        if (check_recipe.size() > 0) {
+            respon.put(false, "Nguyên liệu đang có công thức này đang sử dụng không thể xoá.");
+            return respon;
+        }
+
         warehousedao.deleteWareHouse(id);
+        respon.put(true, "Xoá nguyên liệu thành công.");
+        return respon;
     }
 
     public List<WareHouse> searchAllWareHouseById(int id) throws Exception {
@@ -48,8 +69,8 @@ public class WareHouseService {
     public void updateNameWareHouse(WareHouse warehouse) throws Exception {
         warehousedao.updateNameWareHouse(warehouse);
     }
-    public boolean WareHouseExist(String name) throws Exception
-    {
+
+    public boolean WareHouseExist(String name) throws Exception {
         return warehousedao.WareHouseExist(name);
     }
 }

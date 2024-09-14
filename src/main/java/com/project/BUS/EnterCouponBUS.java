@@ -3,6 +3,7 @@ package com.project.BUS;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 import javax.swing.JOptionPane;
 
@@ -10,17 +11,34 @@ import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 
 import com.mysql.cj.jdbc.result.UpdatableResultSet;
 import com.project.DAO.EnterCouponDAO;
+import com.project.DAO.ProductDAO;
+import com.project.DAO.WareHouseDAO;
 import com.project.DTO.DetailEnterCouponDTO;
+import com.project.DTO.DetailRecipeDTO;
 import com.project.DTO.EnterCouponDTO;
+import com.project.DTO.WareHouse;
 
 public class EnterCouponBUS {
 
-    public static Boolean createdEnterCoupon(EnterCouponDTO enterCoupon, ArrayList<DetailEnterCouponDTO> new_detail) {
+    public static Boolean createdEnterCoupon(EnterCouponDTO enterCoupon, ArrayList<DetailEnterCouponDTO> new_detail,
+            Map<Integer, Integer> quantity_productMap) {
+
+        if (!new_detail.isEmpty()) {
+            new_detail.remove(0); // Removes the element at index 0 (first element)
+        }
 
         Boolean check = EnterCouponDAO.createEnterCoupon(enterCoupon, new_detail);
 
         if (check) {
+
+            for (Map.Entry<Integer, Integer> entry : quantity_productMap.entrySet()) {
+                int productId = entry.getKey();
+                int quantity = entry.getValue();
+
+                ProductDAO.increaseProductQuantity(productId, quantity); // Correct usage with valid key and value
+            }
             return true;
+
         } else {
             JOptionPane.showMessageDialog(null, "có lỗi xảy ra.");
             return false;
@@ -122,6 +140,25 @@ public class EnterCouponBUS {
         } else {
             JOptionPane.showMessageDialog(null, "Không được phép xóa sau 24 giờ kể từ thời điểm tạo.");
             return false;
+        }
+    }
+
+    public static boolean updateQuantityIngredient(int productId, int quantity) {
+        try {
+
+            ArrayList<DetailRecipeDTO> data_recipe = RecipeBUS.getRecipeByProductId(productId);
+            for (DetailRecipeDTO detailRecipeDTO : data_recipe) {
+                int id_ingredient = detailRecipeDTO.getId_ingredient();
+                int quantity_ingredient = detailRecipeDTO.getQuantity();
+
+                int quantity_ingredient_resume = quantity * quantity_ingredient;
+                WareHouseDAO.decreaseIngredientWarehouse(id_ingredient, quantity_ingredient_resume);
+
+            }
+
+            return true;
+        } catch (Exception e) {
+            return false;// TODO: handle exception
         }
     }
 

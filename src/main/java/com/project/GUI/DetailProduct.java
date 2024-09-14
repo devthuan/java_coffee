@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
@@ -14,7 +15,9 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.project.BUS.ProductBUS;
+import com.project.BUS.RecipeBUS;
 import com.project.Common.Common;
+import com.project.DTO.DetailRecipeDTO;
 import com.project.DTO.PermissionAccount;
 import com.project.DTO.ProductDTO;
 
@@ -27,10 +30,11 @@ public class DetailProduct extends javax.swing.JFrame {
     public DetailProduct(ProductDTO data) {
         initComponents();
         permissionList = PermissionAccount.getInstance();
-        loadDataDetailProduct(data);
+        ArrayList<DetailRecipeDTO> detail_recipe = RecipeBUS.getDetailRecipeByProductId(data.getId());
+        loadDataDetailProduct(data, detail_recipe);
     }
 
-    private void loadDataDetailProduct(ProductDTO data) {
+    private void loadDataDetailProduct(ProductDTO data, ArrayList<DetailRecipeDTO> detail_recipe) {
         jTextField1.setText(String.valueOf(data.getId()));
         jTextField3.setText(String.valueOf(data.getPrice()));
         jTextField2.setText(String.valueOf(data.getProduct_name()));
@@ -41,9 +45,27 @@ public class DetailProduct extends javax.swing.JFrame {
         jTextField6.setText(String.valueOf(data.getUrl_image()));
         jToggleButton1.setIcon(new javax.swing.ImageIcon((data.getUrl_image()))); // NOI18N
 
+        StringBuilder recipeText = new StringBuilder();
+
+        for (DetailRecipeDTO detailRecipeDTO : detail_recipe) {
+            String temp = detailRecipeDTO.getName_ingredient() + "-" + detailRecipeDTO.getQuantity() + "-"
+                    + detailRecipeDTO.getUnit();
+            recipeText.append(temp).append(" | ");
+        }
+
+        // Remove the trailing comma and space
+        if (recipeText.length() > 0) {
+            recipeText.setLength(recipeText.length() - 2);
+        }
+
+        input_recipe.setText(recipeText.toString());
+
         jTextField1.setEditable(false);
+        jTextField3.setEditable(false);
+        jTextField4.setEditable(false);
         jTextField5.setEditable(false);
         jTextField7.setEditable(false);
+        input_recipe.setEditable(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -68,6 +90,7 @@ public class DetailProduct extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jPanel9 = new javax.swing.JPanel();
+        jPanel13 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jPanel10 = new javax.swing.JPanel();
@@ -78,7 +101,9 @@ public class DetailProduct extends javax.swing.JFrame {
         jTextField6 = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         jTextField7 = new javax.swing.JTextField();
+        input_recipe = new javax.swing.JTextField();
         jToggleButton1 = new javax.swing.JToggleButton();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -94,7 +119,8 @@ public class DetailProduct extends javax.swing.JFrame {
         titleForm.setBackground(new java.awt.Color(255, 153, 102));
         titleForm.setPreferredSize(new java.awt.Dimension(602, 35));
         titleForm.setLayout(new java.awt.CardLayout());
-        // titleForm.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, java.awt.Color.BLACK));
+        // titleForm.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0,
+        // java.awt.Color.BLACK));
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -209,6 +235,18 @@ public class DetailProduct extends javax.swing.JFrame {
         jPanel12.add(jTextField7, java.awt.BorderLayout.CENTER);
 
         jPanel3.add(jPanel12);
+
+        jPanel13.setPreferredSize(new java.awt.Dimension(390, 40));
+        jPanel13.setRequestFocusEnabled(false);
+        jPanel13.setLayout(new java.awt.BorderLayout(20, 0));
+
+        jLabel10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel10.setText("Công thức");
+        jLabel10.setPreferredSize(new java.awt.Dimension(92, 17));
+        jPanel13.add(jLabel10, java.awt.BorderLayout.LINE_START);
+        jPanel13.add(input_recipe, java.awt.BorderLayout.CENTER);
+
+        jPanel3.add(jPanel13);
 
         jToggleButton1.setPreferredSize(new java.awt.Dimension(180, 180));
         jPanel3.add(jToggleButton1);
@@ -435,6 +473,7 @@ public class DetailProduct extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -446,6 +485,7 @@ public class DetailProduct extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
@@ -453,6 +493,7 @@ public class DetailProduct extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField5;
     private javax.swing.JButton jTextField6;
     private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField input_recipe;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JPanel titleForm;
     // End of variables declaration
