@@ -151,7 +151,6 @@ public class ProductDAO {
         return listProduct;
     }
 
-   
     public static ArrayList<ProductDTO> allProduct() {
         ArrayList<ProductDTO> listProduct = new ArrayList<>();
         try {
@@ -200,6 +199,29 @@ public class ProductDAO {
             e.printStackTrace();
         }
         return listProduct;
+    }
+
+    public static boolean productExists(String nameProduct) {
+        try {
+            // tao ket noi tu database len arraylist
+            Connection con = mysqlConnect.getConnection();
+            String sql = "SELECT COUNT(*) FROM SanPham WHERE ten_SP = ? and is_active = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, nameProduct);
+            pst.setInt(2, 1);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0;
+
+            } else {
+                return false;
+            }
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            return false;
+        }
     }
 
     // tim kiem

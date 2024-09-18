@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.project.BUS.ProductBUS;
+import com.project.DAO.ProductDAO;
 import com.project.DTO.ProductDTO;
 
 /**
@@ -237,7 +238,10 @@ public class CreateProductForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Giá trị không hợp lệ");
             return;
         }
-
+        if(ProductDAO.productExists(nameProduct)){
+            JOptionPane.showMessageDialog(null, "Tên sản phẩm đã tồn tại");
+            return;
+        }
         boolean check = ProductBUS
                 .createProductBUS(new ProductDTO(nameProduct, urlImage, price, quantity, category_id + 1));
 

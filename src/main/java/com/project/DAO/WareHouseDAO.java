@@ -195,9 +195,10 @@ public class WareHouseDAO {
         boolean exist = false;
         try {
             Connection connection = mysqlConnect.getConnection();
-            String sql = "SELECT COUNT(*) FROM NguyenLieu WHERE ten_NL = ?";
+            String sql = "SELECT COUNT(*) FROM NguyenLieu WHERE ten_NL = ? and is_active = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, name);
+            ps.setInt(2, 1);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 int count = rs.getInt(1);

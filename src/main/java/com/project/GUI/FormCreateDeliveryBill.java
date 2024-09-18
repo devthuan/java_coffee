@@ -371,10 +371,7 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
                 InputNameIngredientCopy.addItem(wareHouseDTO.getName());
 
             }
-            JComboBox InputQuantityCopy = new JComboBox();
-            InputQuantityCopy.addItem("gram");
-            InputQuantityCopy.addItem("ml");
-
+            JTextField InputQuantityCopy = new JTextField();
             JTextField InputPriceCopy = new JTextField();
 
             BoxInputCopy.setMaximumSize(new java.awt.Dimension(700, 35));
@@ -534,13 +531,13 @@ public class FormCreateDeliveryBill extends javax.swing.JFrame {
 
         // Kiểm tra xem có thành công chỉnh sửa công thức hay không
         HashMap<Boolean, String> result = RecipeBUS.createdRecipe(new_recipe,
-                list_new_detail_recipe);
+        list_new_detail_recipe);
 
         if (result.containsKey(true)) {
-            JOptionPane.showMessageDialog(null, result.get(true));
-            this.setVisible(false);
+        JOptionPane.showMessageDialog(null, result.get(true));
+        this.setVisible(false);
         } else {
-            JOptionPane.showMessageDialog(null, result.get(false));
+        JOptionPane.showMessageDialog(null, result.get(false));
         }
     }
 

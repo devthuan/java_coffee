@@ -86,6 +86,7 @@ public class ProductBUS {
     }
 
     public static boolean deleteProductBUS(int id) {
+        
         return ProductDAO.deleteProductDAO(id);
     }
 

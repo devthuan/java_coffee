@@ -372,11 +372,11 @@ public class FormDetailDeliveryBill extends javax.swing.JFrame {
             JPanel BoxInputCopy = new JPanel();
 
             JTextField InputNameIngredientCopy = new JTextField();
-            JTextField InputQuantityCopy = new JTextField();
+            JComboBox InputQuantityCopy = new JComboBox();
             JTextField InputPriceCopy = new JTextField();
 
             InputNameIngredientCopy.setText(String.valueOf(item.getName_ingredient()));
-            InputQuantityCopy.setText(String.valueOf(item.getUnit()));
+            InputQuantityCopy.addItem(item.getUnit());
             InputPriceCopy.setText(String.valueOf(item.getQuantity()));
 
             InputQuantityCopy.setEditable(false);
