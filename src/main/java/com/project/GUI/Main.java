@@ -72,7 +72,9 @@ public class Main extends javax.swing.JFrame {
                 ItemWarehouse = new javax.swing.JPanel();
                 WarehouseLabel = new javax.swing.JLabel();
                 ItemReceipt = new javax.swing.JPanel();
+                ItemIngredient = new javax.swing.JPanel();
                 ReceiptLabel = new javax.swing.JLabel();
+                IngredientLabel = new javax.swing.JLabel();
                 ItemSupplier = new javax.swing.JPanel();
                 SupplierLabel = new javax.swing.JLabel();
                 ItemStatistical = new javax.swing.JPanel();
@@ -277,7 +279,7 @@ public class Main extends javax.swing.JFrame {
 
                 WarehouseLabel.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
                 WarehouseLabel.setIcon(new javax.swing.ImageIcon("./src/assets/icon/warehouse.png")); // NOI18N
-                WarehouseLabel.setText("Kho");
+                WarehouseLabel.setText("Nguyên liệu");
                 WarehouseLabel.setAutoscrolls(true);
                 WarehouseLabel.setIconTextGap(12);
                 WarehouseLabel.setMaximumSize(new java.awt.Dimension(124, 32));
@@ -301,7 +303,7 @@ public class Main extends javax.swing.JFrame {
 
                 ReceiptLabel.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
                 ReceiptLabel.setIcon(new javax.swing.ImageIcon("./src/assets/icon/receipt.png")); // NOI18N
-                ReceiptLabel.setText("Nhập, Công thức");
+                ReceiptLabel.setText("Phiếu nhập");
                 ReceiptLabel.setAutoscrolls(true);
                 ReceiptLabel.setIconTextGap(12);
                 ReceiptLabel.setMaximumSize(new java.awt.Dimension(164, 32));
@@ -316,6 +318,30 @@ public class Main extends javax.swing.JFrame {
                 ItemReceipt.add(ReceiptLabel, "card2");
 
                 menu.add(ItemReceipt);
+
+                ItemIngredient.setBackground(new java.awt.Color(248, 249, 250));
+                ItemIngredient.setMinimumSize(new java.awt.Dimension(182, 55));
+                ItemIngredient.setPreferredSize(new java.awt.Dimension(210, 55));
+
+                ItemIngredient.setLayout(new java.awt.CardLayout(7, 0));
+
+                IngredientLabel.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+                IngredientLabel.setIcon(new javax.swing.ImageIcon("./src/assets/icon/receipt.png")); // NOI18N
+                IngredientLabel.setText("Công thức");
+                IngredientLabel.setAutoscrolls(true);
+                IngredientLabel.setIconTextGap(12);
+                IngredientLabel.setMaximumSize(new java.awt.Dimension(164, 32));
+                IngredientLabel.setMinimumSize(new java.awt.Dimension(164, 32));
+                IngredientLabel.setName(""); // NOI18N
+                IngredientLabel.setPreferredSize(new java.awt.Dimension(154, 32));
+                IngredientLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseClicked(java.awt.event.MouseEvent evt) {
+                                IngredientLabelMouseClicked(evt);
+                        }
+                });
+                ItemIngredient.add(IngredientLabel, "card2");
+
+                menu.add(ItemIngredient);
 
                 ItemSupplier.setBackground(new java.awt.Color(248, 249, 250));
                 ItemSupplier.setMinimumSize(new java.awt.Dimension(182, 55));
@@ -496,6 +522,7 @@ public class Main extends javax.swing.JFrame {
                 addHoverCursorListener(EmployeeLabel);
                 addHoverCursorListener(WarehouseLabel);
                 addHoverCursorListener(ReceiptLabel);
+                addHoverCursorListener(IngredientLabel);
                 addHoverCursorListener(SupplierLabel);
                 addHoverCursorListener(StatisticalLabel);
                 addHoverCursorListener(jLabel12);
@@ -512,6 +539,7 @@ public class Main extends javax.swing.JFrame {
                 addHoverMenu(ReceiptLabel, ItemReceipt);
                 addHoverMenu(SupplierLabel, ItemSupplier);
                 addHoverMenu(StatisticalLabel, ItemStatistical);
+                addHoverMenu(IngredientLabel, ItemIngredient);
 
         }
 
@@ -525,6 +553,7 @@ public class Main extends javax.swing.JFrame {
                 addClickEffect(ReceiptLabel, ItemReceipt);
                 addClickEffect(SupplierLabel, ItemSupplier);
                 addClickEffect(StatisticalLabel, ItemStatistical);
+                addClickEffect(IngredientLabel, ItemIngredient);
         }
 
         private void SwitchControl() {
@@ -602,6 +631,19 @@ public class Main extends javax.swing.JFrame {
                                 || permissionList.hasPermission("CREATE_WAREHOUSE_DISPATCH_NOTE")) {
                         SwitchControl();
                         Right.add(new ReceiptDeliveryBill()).setVisible(true);
+
+                } else {
+                        JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
+                        return;
+                }
+
+        }
+
+        private void IngredientLabelMouseClicked(java.awt.event.MouseEvent evt) {
+                if (permissionList.hasPermission("READ_WAREHOUSE_RECEIPT")
+                                || permissionList.hasPermission("CREATE_WAREHOUSE_DISPATCH_NOTE")) {
+                        SwitchControl();
+                        Right.add(new Recipe()).setVisible(true);
 
                 } else {
                         JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập");
@@ -693,6 +735,7 @@ public class Main extends javax.swing.JFrame {
         private javax.swing.JPanel ItemOrder;
         private javax.swing.JPanel ItemProduct;
         private javax.swing.JPanel ItemReceipt;
+        private javax.swing.JPanel ItemIngredient;
         private javax.swing.JPanel ItemStatistical;
         private javax.swing.JPanel ItemSupplier;
         private javax.swing.JPanel ItemWarehouse;
@@ -701,6 +744,7 @@ public class Main extends javax.swing.JFrame {
         private javax.swing.JLabel ProductLabel;
         private javax.swing.JPanel Profile;
         private javax.swing.JLabel ReceiptLabel;
+        private javax.swing.JLabel IngredientLabel;
         private javax.swing.JPanel Right;
         private javax.swing.JLabel StatisticalLabel;
         private javax.swing.JLabel SupplierLabel;
@@ -717,3 +761,4 @@ public class Main extends javax.swing.JFrame {
         }
 }
 // abc
+// IngredientLabel ItemIngredient

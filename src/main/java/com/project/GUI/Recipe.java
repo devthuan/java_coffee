@@ -9,12 +9,12 @@ package com.project.GUI;
  *
  * @author thuan
  */
-public class ReceiptDeliveryBill extends javax.swing.JPanel {
+public class Recipe extends javax.swing.JPanel {
 
     /**
      * Creates new form ReceiptDeliveryBill
      */
-    public ReceiptDeliveryBill() {
+    public Recipe() {
         initComponents();
     }
 
@@ -36,8 +36,8 @@ public class ReceiptDeliveryBill extends javax.swing.JPanel {
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
         jTabbedPane1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTabbedPane1.addTab("Phiếu nhập", ReceiptComponent);
-        // jTabbedPane1.addTab("Công thức", deliveryBill);
+        // jTabbedPane1.addTab("Phiếu nhập", ReceiptComponent);
+        jTabbedPane1.addTab("Công thức", deliveryBill);
 
         add(jTabbedPane1);
     }// </editor-fold>
